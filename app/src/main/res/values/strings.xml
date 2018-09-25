@@ -1,0 +1,31 @@
+<resources>
+
+    <!--app_name-->
+    <string name="app_name">Traveling</string>
+
+    <!--MainActivity   主页-->
+    <string name="activity_main">主页</string>
+
+    <!--fragment_home-->
+    <string name="fragment_home">首页</string>
+
+    <!--fragment_friends-->
+    <string name="fragment_friends">结伴</string>
+
+    <!--fragment_message-->
+    <string name="fragment_message">消息</string>
+
+    <!--fragment_my-->
+    <string name="fragment_my">我的</string>
+
+    <!--fragment_new-->
+    <string name="fragment_new">最新</string>
+
+    <!--fragment_recommend-->
+    <string name="fragment_recommend">推荐</string>
+
+    <!--fragment_focus_on-->
+    <string name="fragment_focus_on">关注</string>
+
+
+</resources>
