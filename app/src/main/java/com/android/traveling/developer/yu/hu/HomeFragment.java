@@ -77,9 +77,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         //预加载  todo
         viewPager.setOffscreenPageLimit(2);
 
-        //默认显示"推荐"
-        viewPager.setCurrentItem(1);
-
         //设置适配器
         //这里要使用getChildFragmentManager 否则HomeFragment再次创建时，子Fragment不会显示
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
@@ -100,6 +97,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 return titles.get(position);
             }
         });
+
+        //默认显示"推荐"
+        viewPager.setCurrentItem(1);
+
         //绑定
         tabLayout.setupWithViewPager(viewPager);
     }
