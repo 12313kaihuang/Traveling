@@ -34,6 +34,7 @@ import java.util.List;
 
 public class RecommendFragment extends Fragment {
 
+    private boolean isFirst = true;
 
     //SmartRefreshLayout
     private SmartRefreshLayout refreshLayout;
@@ -44,7 +45,11 @@ public class RecommendFragment extends Fragment {
         LogUtil.d("RecommendFragment onCreate");
         View view = inflater.inflate(R.layout.fragment_recommend, container, false);
         initView(view);
-        refreshLayout.autoRefresh();    //自动刷新
+        if (isFirst) {
+            refreshLayout.autoRefresh();    //自动刷新
+            isFirst = false;
+        }
+
         return view;
     }
 
