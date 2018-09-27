@@ -8,6 +8,7 @@
 
     <!--fragment_home-->
     <string name="fragment_home">首页</string>
+    <string name="voice_in">语音输入</string>
 
     <!--fragment_friends-->
     <string name="fragment_friends">结伴</string>

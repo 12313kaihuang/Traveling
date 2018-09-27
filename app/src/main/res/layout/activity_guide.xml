@@ -49,7 +49,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="25dp"
         android:layout_marginTop="25dp"
-        android:src="@drawable/guide_blank"
-        android:contentDescription="@string/guide_back" />
+        android:contentDescription="@string/guide_back"
+        android:src="@drawable/guide_blank" />
 
 </RelativeLayout>

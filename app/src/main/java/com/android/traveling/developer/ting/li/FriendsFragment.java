@@ -1,4 +1,4 @@
-package com.android.traveling.fragment;
+package com.android.traveling.developer.ting.li;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.traveling.R;
+import com.android.traveling.fragment.BaseFragment;
 
 /**
  * 项目名：Traveling

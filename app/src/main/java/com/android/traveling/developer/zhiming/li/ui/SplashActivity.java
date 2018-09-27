@@ -67,7 +67,7 @@ public class SplashActivity extends AppCompatActivity {
             //是第一次运行
             SharedPreferencesUtil.putBoolean(this, StaticClass.IS_FIRST_RUN, false);
         }
-        return true;
+        return isFirstRunning;
     }
 
     @Override

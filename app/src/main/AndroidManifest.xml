@@ -20,7 +20,8 @@
         </activity>
 
         <!--主页-->
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <!--引导页-->
         <activity android:name=".developer.zhiming.li.ui.GuideActivity"

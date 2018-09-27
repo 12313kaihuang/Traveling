@@ -6,10 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.android.traveling.fragment.FriendsFragment;
-import com.android.traveling.fragment.HomeFragment;
-import com.android.traveling.fragment.MessageFragment;
-import com.android.traveling.fragment.MyFragment;
+import com.android.traveling.developer.ting.li.FriendsFragment;
+import com.android.traveling.developer.yu.hu.HomeFragment;
+import com.android.traveling.developer.jiaming.liu.MessageFragment;
+import com.android.traveling.developer.zhiming.li.MyFragment;
 import com.android.traveling.util.UtilTools;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;
@@ -22,10 +22,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //去掉阴影
-        //noinspection ConstantConditions
-        getSupportActionBar().setElevation(0);
 
         initView();
     }

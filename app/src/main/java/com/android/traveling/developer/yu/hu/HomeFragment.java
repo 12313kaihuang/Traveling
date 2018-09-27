@@ -1,4 +1,4 @@
-package com.android.traveling.fragment;
+package com.android.traveling.developer.yu.hu;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,26 +10,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.design.widget.TabLayout;
+import android.widget.ImageView;
 
 import com.android.traveling.developer.yu.hu.fragment.FocusOnFragment;
 import com.android.traveling.developer.yu.hu.fragment.NewFragment;
 import com.android.traveling.developer.yu.hu.fragment.RecommendFragment;
 import com.android.traveling.R;
+import com.android.traveling.fragment.BaseFragment;
 import com.android.traveling.util.LogUtil;
+import com.android.traveling.util.UtilTools;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 项目名：Traveling
- * 包名：  com.android.traveling.fragment
+ * 包名：  com.android.traveling.developer.yu.hu
  * 文件名：HomeFragment
  * 创建者：HY
  * 创建时间：2018/9/22 13:59
  * 描述：  首页
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     ViewPager viewPager;
     //Title
@@ -66,9 +69,16 @@ public class HomeFragment extends BaseFragment {
     private void initView(View view) {
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
-        LogUtil.d("initView");
+
+        //搜索图标
+        ImageView home_search = view.findViewById(R.id.home_search);
+        home_search.setOnClickListener(this);
+
         //预加载  todo
         viewPager.setOffscreenPageLimit(2);
+
+        //默认显示"推荐"
+        viewPager.setCurrentItem(1);
 
         //设置适配器
         //这里要使用getChildFragmentManager 否则HomeFragment再次创建时，子Fragment不会显示
@@ -94,4 +104,14 @@ public class HomeFragment extends BaseFragment {
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.home_search:
+                UtilTools.toast(getContext(),"点击了搜索图标");
+                break;
+            default:
+                 break;
+        }
+    }
 }

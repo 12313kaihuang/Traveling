@@ -1,4 +1,4 @@
-package com.android.traveling.fragment;
+package com.android.traveling.developer.jiaming.liu;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,10 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.traveling.R;
+import com.android.traveling.fragment.BaseFragment;
 
 /**
  * 项目名：Traveling
- * 包名：  com.android.traveling.fragment
+ * 包名：  com.android.traveling.developer.jiaming.liu
  * 文件名：MessageFragment
  * 创建者：HY
  * 创建时间：2018/9/22 13:59
