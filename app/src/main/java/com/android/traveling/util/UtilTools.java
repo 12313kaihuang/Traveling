@@ -21,12 +21,13 @@ import android.widget.Toast;
 public class UtilTools {
 
     //设置字体
-    public static void setFont(Context context, TextView textView) {
-        Typeface fontType = Typeface.createFromAsset(context.getAssets(), "fonts/FONT.TTF");
+    public static void setFont(Context context, TextView textView,String fontId) {
+        Typeface fontType = Typeface.createFromAsset(context.getAssets(), fontId);
         textView.setTypeface(fontType);
     }
 
     //Toast
+    @SuppressWarnings("SameParameterValue")
     public static void toast(Context context, String text) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }

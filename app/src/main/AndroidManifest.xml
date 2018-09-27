@@ -10,13 +10,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".developer.zhiming.li.ui.SplashActivity"
+            android:theme="@style/NoActionBarFullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--主页-->
+        <activity android:name=".MainActivity"/>
+
+        <!--引导页-->
+        <activity android:name=".developer.zhiming.li.ui.GuideActivity"
+            android:theme="@style/NoActionBarFullscreen"/>
     </application>
 
 </manifest>

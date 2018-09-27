@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.design.widget.TabLayout;
 
-import com.android.traveling.HY.fragment.FocusOnFragment;
-import com.android.traveling.HY.fragment.NewFragment;
-import com.android.traveling.HY.fragment.RecommendFragment;
+import com.android.traveling.developer.yu.hu.fragment.FocusOnFragment;
+import com.android.traveling.developer.yu.hu.fragment.NewFragment;
+import com.android.traveling.developer.yu.hu.fragment.RecommendFragment;
 import com.android.traveling.R;
 import com.android.traveling.util.LogUtil;
 

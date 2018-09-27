@@ -27,5 +27,14 @@
     <!--fragment_focus_on-->
     <string name="fragment_focus_on">关注</string>
 
+    <!--activity_guide-->
+    <string name="activity_guide">引导页</string>
+    <string name="guide_point">小圆点</string>
+    <string name="guide_start">进入主页</string>
+    <string name="guide_back">跳过</string>
+    <string name="smart">智能</string>
+    <string name="concise">简洁</string>
+    <string name="strong">強大</string>
+
 
 </resources>

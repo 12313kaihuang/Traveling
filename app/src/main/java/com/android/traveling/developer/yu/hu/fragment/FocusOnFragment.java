@@ -1,4 +1,4 @@
-package com.android.traveling.HY.fragment;
+package com.android.traveling.developer.yu.hu.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +13,7 @@ import com.android.traveling.util.LogUtil;
 
 /**
  * 项目名：Traveling
- * 包名：  com.android.traveling.fragment
+ * 包名：  com.android.traveling.developer.yu.hu.fragment
  * 文件名：MyFragment
  * 创建者：HY
  * 创建时间：2018/9/22 13:59

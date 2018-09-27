@@ -24,4 +24,10 @@ public class StaticClass {
     //版本更新
     public static final String CHECK_UPDATE_URL = "http://47.106.131.58:8080/traveling/config.json";
 
+    //fontId
+    public static final String FONT = "fonts/FONT.TTF";
+    public static final String HANGOVER = "fonts/HangoverScript.ttf";
+    public static final String HANGOVER_BOLD = "fonts/HangoverScript Bold.ttf";
+
+
 }

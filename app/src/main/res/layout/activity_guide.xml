@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/guide_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/guide_point1"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/point_on"
+            android:contentDescription="@string/guide_point" />
+
+        <ImageView
+            android:id="@+id/guide_point2"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/point_off"
+            android:contentDescription="@string/guide_point" />
+
+        <ImageView
+            android:id="@+id/guide_point3"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/point_off"
+            android:contentDescription="@string/guide_point" />
+
+    </LinearLayout>
+
+    <!--放在下面才不会被ViewPager遮挡住导致无法点击-->
+    <ImageView
+        android:id="@+id/guide_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/guide_blank"
+        android:contentDescription="@string/guide_back" />
+
+</RelativeLayout>
