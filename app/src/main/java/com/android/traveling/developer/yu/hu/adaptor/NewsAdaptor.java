@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.entity.News;
+import com.android.traveling.util.LogUtil;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ import java.util.List;
  * 描述：  获取信息列表
  */
 
-public class NewsAdaptor extends BaseAdapter{
+public class NewsAdaptor extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater;
@@ -51,25 +53,31 @@ public class NewsAdaptor extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.news_item, null);
             //初始化viewHolder
             //viewHolder.xxx = convertView.findViewById()
+            viewHolder.title = convertView.findViewById(R.id.recommend_title);
             convertView.setTag(viewHolder);
-        }else {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
-
         }
 
         news = newsList.get(position);
+        LogUtil.d("position=" + position + " title=" + news.getTitle());
         //viewHolder.xx.setText(news.getImgUrl())
+        if (news.getTitle() != null) {
+            viewHolder.title.setText(news.getTitle());
+        }else {
+            viewHolder.title.setText(R.string.list_item_title);
+        }
 
         return convertView;
     }
 
     class ViewHolder {
-
+        public TextView title;
     }
 }
