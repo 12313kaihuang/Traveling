@@ -68,12 +68,14 @@ public class RecommendFragment extends Fragment {
 
         //点击事件
         recommend_listView.setOnItemClickListener((parent, view1, position, id) -> {
-
-            startActivity(new Intent(getContext(), NewsActivity.class));
+            News news = newsList.get(position);
+            Intent intent = new Intent(getContext(), NewsActivity.class);
+            intent.putExtra("news", news);
+            startActivity(intent);
         });
 
-        //noinspection Convert2Lambda
         //上拉刷新
+        //noinspection Convert2Lambda
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {

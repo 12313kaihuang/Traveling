@@ -1,10 +1,13 @@
 package com.android.traveling.developer.yu.hu.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
 import com.android.traveling.R;
+import com.android.traveling.developer.yu.hu.entity.News;
 import com.android.traveling.ui.BackableActivity;
 
 /**
@@ -22,5 +25,14 @@ public class NewsActivity extends BackableActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
+
+        Intent intent = getIntent();
+        News news = (News) intent.getSerializableExtra("news");
+        TextView textview = findViewById(R.id.textview);
+        if (news.getTitle() != null) {
+            textview.setText(news.getTitle());
+        }else {
+            textview.setText(R.string.list_item_title);
+        }
     }
 }

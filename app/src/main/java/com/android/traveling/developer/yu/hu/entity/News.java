@@ -1,5 +1,7 @@
 package com.android.traveling.developer.yu.hu.entity;
 
+import java.io.Serializable;
+
 /**
  * 项目名：Traveling
  * 包名：  com.android.traveling.developer.yu.hu.entity
@@ -9,7 +11,7 @@ package com.android.traveling.developer.yu.hu.entity;
  * 描述：  游记攻略等信息的实体类
  */
 
-public class News {
+public class News implements Serializable{
 
     //标题
     private String title;
