@@ -26,6 +26,10 @@
         <!--引导页-->
         <activity android:name=".developer.zhiming.li.ui.GuideActivity"
             android:theme="@style/NoActionBarFullscreen"/>
+
+        <!--游记/攻略引导页-->
+        <activity android:name=".developer.yu.hu.ui.NewsActivity"
+            android:label="眉山一日游"/>
     </application>
 
 </manifest>

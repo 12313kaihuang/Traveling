@@ -37,5 +37,13 @@
     <string name="concise">简洁</string>
     <string name="strong">強大</string>
 
+    <!--news_item-->
+    <string name="list_item_title">眉山一日游</string>
+    <string name="list_item_content">眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游
+        眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游</string>
+    <string name="list_item_info">65330浏览·392顶</string>
+    <string name="str_image">图片</string>
 
+    <!--activity_news_detail-->
+    <string name="activity_news_detail">游记/攻略详情</string>
 </resources>
