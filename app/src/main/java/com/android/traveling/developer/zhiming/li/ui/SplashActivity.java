@@ -30,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        initVIew();
+        initView();
 
         //延时两秒进入主页或者引导页
         Handler handler = new Handler();
@@ -51,11 +51,11 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     //初始化view
-    private void initVIew() {
+    private void initView() {
 
         TextView tv_splash = findViewById(R.id.tv_splash);
         //设置字体
-        UtilTools.setFont(this, tv_splash,StaticClass.HANGOVER_BOLD);
+        UtilTools.setFont(this, tv_splash,StaticClass.SPLASH_FONT);
     }
 
 

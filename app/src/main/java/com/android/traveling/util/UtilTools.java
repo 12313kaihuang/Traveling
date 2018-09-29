@@ -26,6 +26,12 @@ public class UtilTools {
         textView.setTypeface(fontType);
     }
 
+    //设置默认字体
+    public static void setDefaultFontType(Context context, TextView textView) {
+        Typeface fontType = Typeface.createFromAsset(context.getAssets(), StaticClass.NORMAL_FONT);
+        textView.setTypeface(fontType);
+    }
+
     //Toast
     @SuppressWarnings("SameParameterValue")
     public static void toast(Context context, String text) {

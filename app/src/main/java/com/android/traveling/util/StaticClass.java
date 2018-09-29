@@ -28,6 +28,8 @@ public class StaticClass {
     public static final String FONT = "fonts/FONT.TTF";
     public static final String HANGOVER = "fonts/HangoverScript.ttf";
     public static final String HANGOVER_BOLD = "fonts/HangoverScript Bold.ttf";
+    public static final String SPLASH_FONT = "fonts/splash.TTF";
+    public static final String NORMAL_FONT = "fonts/normalFont.TTF";
 
 
 }

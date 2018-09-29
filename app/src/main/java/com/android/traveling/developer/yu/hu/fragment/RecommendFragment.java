@@ -34,29 +34,21 @@ import java.util.List;
 
 public class RecommendFragment extends Fragment {
 
-    private boolean isFirst = true;
-
-    //SmartRefreshLayout
-    private SmartRefreshLayout refreshLayout;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         LogUtil.d("RecommendFragment onCreate");
         View view = inflater.inflate(R.layout.fragment_recommend, container, false);
-        initView(view);
-        if (isFirst) {
-            refreshLayout.autoRefresh();    //自动刷新
-            isFirst = false;
-        }
 
+        initView(view);
         return view;
     }
 
     //初始化View
     private void initView(View view) {
         ListView recommend_listView = view.findViewById(R.id.recommend_listView);
-        refreshLayout = view.findViewById(R.id.recommend_refreshLayout);
+        SmartRefreshLayout refreshLayout1 = view.findViewById(R.id.recommend_refreshLayout);
 
         //解析数据
         List<News> newsList = new ArrayList<>();
@@ -78,7 +70,7 @@ public class RecommendFragment extends Fragment {
 
         //上拉刷新
         //noinspection Convert2Lambda
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+        refreshLayout1.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 new Handler().postDelayed(() -> {
@@ -94,7 +86,7 @@ public class RecommendFragment extends Fragment {
         });
 
         //下拉加载更多
-        refreshLayout.setOnLoadMoreListener(refreshLayout -> new Handler().postDelayed(() -> {
+        refreshLayout1.setOnLoadMoreListener(refreshLayout -> new Handler().postDelayed(() -> {
             for (int i = 0; i < 5; i++) {
                 News news = new News();
                 news.setTitle("加载的更多的item" + i);

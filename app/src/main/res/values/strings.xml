@@ -19,6 +19,15 @@
     <!--fragment_my-->
     <string name="fragment_my">我的</string>
     <string name="to_guide_pager">进入引导页</string>
+    <string name="ic_sort">更多</string>
+    <string name="ic_share">分享</string>
+    <string name="user_status">未登录</string>
+    <string name="to_vip"><![CDATA[成为黑卡会员 >]]></string>
+    <string name="num_zero">0</string>
+    <string name="focus">关注</string>
+    <string name="collections">获赞与收藏</string>
+    <string name="edit_user">编辑个人资料</string>
+    <string name="fans">粉丝</string>
 
     <!--fragment_new-->
     <string name="fragment_new">最新</string>

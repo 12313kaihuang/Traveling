@@ -3,7 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="gray1">#EFF3F5</color>
     <color name="gray2">#CFCFCF</color>
     <color name="gray3">#CCCCCC</color>
+    <color name="gray4">#CDCDCD</color>
+    <color name="gold">#E7CD9E</color>
 </resources>
