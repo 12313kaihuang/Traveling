@@ -66,7 +66,6 @@ public class NewsAdaptor extends BaseAdapter {
         }
 
         news = newsList.get(position);
-        LogUtil.d("position=" + position + " title=" + news.getTitle());
         //viewHolder.xx.setText(news.getImgUrl())
         if (news.getTitle() != null) {
             viewHolder.title.setText(news.getTitle());
