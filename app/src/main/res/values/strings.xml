@@ -28,6 +28,7 @@
     <string name="collections">获赞与收藏</string>
     <string name="edit_user">编辑个人资料</string>
     <string name="fans">粉丝</string>
+    <string name="to_login_pager">退出登录</string>
 
     <!--fragment_new-->
     <string name="fragment_new">最新</string>
