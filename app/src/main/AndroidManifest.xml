@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.traveling">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".application.BaseApplication"
         android:allowBackup="true"
@@ -10,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".developer.zhiming.li.ui.SplashActivity"
+        <activity
+            android:name=".developer.zhiming.li.ui.SplashActivity"
             android:theme="@style/NoActionBarFullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,16 +23,29 @@
         </activity>
 
         <!--主页 -->
-        <activity android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <!--引导页-->
-        <activity android:name=".developer.zhiming.li.ui.GuideActivity"
-            android:theme="@style/NoActionBarFullscreen"/>
+        <activity
+            android:name=".developer.zhiming.li.ui.GuideActivity"
+            android:theme="@style/NoActionBarFullscreen" />
 
         <!--游记/攻略引导页-->
-        <activity android:name=".developer.yu.hu.ui.NewsActivity"
-            android:label="眉山一日游"/>
+        <activity
+            android:name=".developer.yu.hu.ui.NewsActivity"
+            android:label="眉山一日游" />
+
+        <!--登录-->
+        <activity
+            android:name=".developer.zhiming.li.ui.LoginActivity"
+            android:theme="@style/NoActionBarFullscreen" />
+
+        <!--服务条款-->
+        <activity
+            android:name=".developer.zhiming.li.ui.ServiceTermsActivity"
+            android:label="服务条款" />
     </application>
 
 </manifest>
