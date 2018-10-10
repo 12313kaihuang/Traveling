@@ -57,4 +57,18 @@
 
     <!--activity_news_detail-->
     <string name="activity_news_detail">游记/攻略详情</string>
+
+    <!--activity_login-->
+    <string name="login">登陆</string>
+    <string name="forget">忘记密码？</string>
+    <string name="register">新用户注册</string>
+    <string name="service_text">登录即代表阅读并同意</string>
+    <string name="service_terms">服务条款</string>
+    <string name="default_username">admin</string>
+
+    <!--activity_register-->
+    <string name="activity_register">注册</string>
+    <string name="tv_username">用户名：</string>
+    <string name="tv_password">密码：</string>
+    <string name="tv_email">邮箱：</string>
 </resources>

@@ -24,6 +24,9 @@ public class StaticClass {
     //版本更新
     public static final String CHECK_UPDATE_URL = "http://47.106.131.58:8080/traveling/config.json";
 
+    //服务条款
+    public static final String SERVICE_TERMS_URL = "https://www.baidu.com";
+
     //fontId
     public static final String FONT = "fonts/FONT.TTF";
     public static final String HANGOVER = "fonts/HangoverScript.ttf";
