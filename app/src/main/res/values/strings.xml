@@ -58,6 +58,17 @@
     <!--activity_news_detail-->
     <string name="activity_news_detail">游记/攻略详情</string>
 
+    <!--friends_news_item-->
+    <string name="list_friends_item_username">沙啦沙啦</string>
+    <string name="list_friends_item_content">一起去稻城吗</string>
+    <string name="list_friends_item_time">2018.10.01-2018.10.07</string>
+    <string name="list_friends_item_site">稻城</string>
+    <string name="list_friends_item_browse">5浏览</string>
+    <string name="list_friends_item_publishtime">3分钟前</string>
+    
+    <!--activity_friendsnews_detail-->
+    <string name="detail_friends_news_discuss">评论</string>
+    <string name="detail_friends_news_chat">私聊</string>
     <!--activity_login-->
     <string name="login">登陆</string>
     <string name="forget">忘记密码？</string>

@@ -27,20 +27,32 @@
             </intent-filter>
         </activity>
 
-        <!--主页 -->
+        <!-- 主页 -->
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!--引导页-->
+        <!-- 引导页 -->
         <activity
             android:name=".developer.zhiming.li.ui.GuideActivity"
             android:theme="@style/NoActionBarFullscreen" />
 
-        <!--游记/攻略引导页-->
+        <!-- 游记/攻略引导页 -->
         <activity
             android:name=".developer.yu.hu.ui.NewsActivity"
             android:label="眉山一日游" />
+
+        <!-- 聊天消息页 -->
+        <activity android:name=".developer.jiaming.liu.Activity.ChatActivity" />
+        <!-- 编辑文本页 -->
+        <activity
+            android:name=".developer.jiaming.liu.Activity.AddNoteActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity android:name=".developer.jiaming.liu.Activity.NoticeActivity" />
+        <activity android:name=".developer.jiaming.liu.Activity.ChatMoreActivity"></activity>
+
+        <activity android:name=".developer.ting.li.ui.FriendsNewsActivity"
+            ></activity>
 
         <!--登录-->
         <activity

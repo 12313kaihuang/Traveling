@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".developer.jiaming.liu.Activity.NoticeActivity">
+    <include
+        android:id="@+id/id_notice_title"
+        layout="@layout/titlbar_basic">
+    </include>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/id_notice_reflash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray2" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/id_notice_noticerecycleview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray1"></android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</android.support.constraint.ConstraintLayout>
