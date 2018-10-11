@@ -12,4 +12,7 @@
     <color name="gray3">#CCCCCC</color>
     <color name="gray4">#CDCDCD</color>
     <color name="gold">#E7CD9E</color>
+    <color name="et_blue">#BB14A5E2</color>
+    <color name="blue">#14A5E2</color>
+    <color name="badge_yellow">#F8E6A1</color>
 </resources>
