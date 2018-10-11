@@ -1,18 +1,26 @@
 package com.android.traveling;
 
+
+import android.content.Intent;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
-import com.android.traveling.developer.ting.li.FriendsFragment;
+import com.android.traveling.developer.jiaming.liu.Activity.AddNoteActivity;
+import com.android.traveling.developer.ting.li.ui.FriendsFragment;
+
+
 import com.android.traveling.developer.yu.hu.HomeFragment;
 import com.android.traveling.developer.jiaming.liu.MessageFragment;
 import com.android.traveling.developer.zhiming.li.MyFragment;
-import com.android.traveling.util.UtilTools;
 import com.android.traveling.viewpager.NoScrollViewPager;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;
@@ -105,14 +113,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.center_btn:
-                UtilTools.toast(this, "点击了中间的按钮");
+            case R.id.center_btn: {
+                showBottomDialog();
                 break;
+            }
+            case R.id.id_dialog_centeradd_travels:{
+                Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+                intent.putExtra("type","游记");
+                startActivity(intent);
+                break;
+            }
+            case R.id.id_dialog_centeradd_strategy:{
+                Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+                intent.putExtra("type","攻略");
+                startActivity(intent);
+                break;
+            }
+            case R.id.id_dialog_centeradd_friends: {
+                Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+                intent.putExtra("type", "结伴");
+                startActivity(intent);
+                break;
+            }
         }
     }
 
     private void setCurrentFragment(int position) {
         //去除滚动效果
         viewPager.setCurrentItem(position);
+    }
+    private void showBottomDialog() {
+        final BottomSheetDialog dialog=new BottomSheetDialog(this);
+        View dialogView= LayoutInflater.from(this).inflate(R.layout.dialog_centeradd,null);
+        LinearLayout travels = dialogView.findViewById(R.id.id_dialog_centeradd_travels);
+        LinearLayout strategy = dialogView.findViewById(R.id.id_dialog_centeradd_strategy);
+        LinearLayout friends = dialogView.findViewById(R.id.id_dialog_centeradd_friends);
+        ImageButton cancel = dialogView.findViewById(R.id.id_dialog_centeradd_cancel);
+        travels.setOnClickListener(this);
+        strategy.setOnClickListener(this);
+        friends.setOnClickListener(this);
+
+        cancel.setOnClickListener(v -> dialog.dismiss());
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(dialogView);
+        dialog.show();
     }
 }

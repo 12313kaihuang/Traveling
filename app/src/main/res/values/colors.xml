@@ -2,15 +2,18 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorblue_btn">#3399ff</color>
     <color name="colorAccent">#FF4081</color>
     <color name="red">#FF0000</color>
     <color name="white">#FFFFFF</color>
+    <color name="white1">#FBFBF9F9</color>
     <color name="black">#000000</color>
     <color name="gray1">#EFF3F5</color>
     <color name="gray2">#CFCFCF</color>
     <color name="gray3">#CCCCCC</color>
     <color name="gray4">#CDCDCD</color>
     <color name="gold">#E7CD9E</color>
+    <color name="lightblue">#87CEEB</color>
     <color name="et_blue">#BB14A5E2</color>
     <color name="blue">#14A5E2</color>
     <color name="badge_yellow">#F8E6A1</color>

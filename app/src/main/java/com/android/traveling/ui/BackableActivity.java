@@ -31,7 +31,6 @@ public class BackableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //显示返回键
-
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
