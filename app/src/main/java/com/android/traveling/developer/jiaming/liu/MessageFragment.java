@@ -12,8 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.jiaming.liu.Activity.ChatActivity;
-import com.android.traveling.developer.jiaming.liu.Adapter.ChatAdapter;
+import com.android.traveling.developer.jiaming.liu.activity.ChatActivity;
+import com.android.traveling.developer.jiaming.liu.adapter.ChatAdapter;
 import com.android.traveling.developer.jiaming.liu.Item.ChatItem;
 import com.android.traveling.fragment.BaseFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;

@@ -14,7 +14,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.android.traveling.developer.jiaming.liu.Activity.AddNoteActivity;
+import com.android.traveling.developer.jiaming.liu.activity.AddNoteActivity;
 import com.android.traveling.developer.ting.li.ui.FriendsFragment;
 
 

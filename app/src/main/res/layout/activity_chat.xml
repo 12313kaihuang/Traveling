@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".developer.jiaming.liu.Activity.ChatActivity">
+    tools:context=".developer.jiaming.liu.activity.ChatActivity">
     <include
         android:id="@+id/id_chat_title"
         layout="@layout/titlebar_chat"></include>

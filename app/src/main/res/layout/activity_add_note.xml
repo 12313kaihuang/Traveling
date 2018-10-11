@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".developer.jiaming.liu.Activity.AddNoteActivity">
+    tools:context=".developer.jiaming.liu.activity.AddNoteActivity">
 
     <include
         android:id="@+id/id_addnote_title"

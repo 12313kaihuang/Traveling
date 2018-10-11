@@ -61,7 +61,7 @@
     <!--friends_news_item-->
     <string name="list_friends_item_username">沙啦沙啦</string>
     <string name="list_friends_item_content">一起去稻城吗</string>
-    <string name="list_friends_item_time">2018.10.01-2018.10.07</string>
+    <string name="list_friends_item_time">2018.10.01–2018.10.07</string>
     <string name="list_friends_item_site">稻城</string>
     <string name="list_friends_item_browse">5浏览</string>
     <string name="list_friends_item_publishtime">3分钟前</string>
@@ -81,5 +81,19 @@
     <string name="activity_register">注册</string>
     <string name="tv_username">用户名：</string>
     <string name="tv_password">密码：</string>
+    <string name="tv_password2">确认密码：</string>
+    <string name="input_pass">请输入密码</string>
     <string name="tv_email">邮箱：</string>
+    <string name="textView">我已阅读并同意</string>
+    <string name="username">请输入用户名/昵称</string>
+    <string name="input_email">请输入验证所需邮箱</string>
+
+    <!--activity_forget_pass-->
+    <string name="activity_forget_pass">找回密码</string>
+    <string name="email">邮箱：</string>
+    <string name="pass">新密码：</string>
+    <string name="hint_email">注册时所用邮箱</string>
+    <string name="new_pass">请输入新密码</string>
+    <string name="repeat_pass">请再次输入密码</string>
+    <string name="default_email">2356048622@qq.com</string>
 </resources>

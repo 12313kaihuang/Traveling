@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white1"
-    tools:context=".developer.jiaming.liu.Activity.ChatMoreActivity">
+    tools:context=".developer.jiaming.liu.activity.ChatMoreActivity">
 
     <include
         android:id="@+id/id_chatmore_title"

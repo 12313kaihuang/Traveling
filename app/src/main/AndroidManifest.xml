@@ -43,16 +43,16 @@
             android:label="眉山一日游" />
 
         <!-- 聊天消息页 -->
-        <activity android:name=".developer.jiaming.liu.Activity.ChatActivity" />
+        <activity android:name=".developer.jiaming.liu.activity.ChatActivity" />
         <!-- 编辑文本页 -->
         <activity
-            android:name=".developer.jiaming.liu.Activity.AddNoteActivity"
+            android:name=".developer.jiaming.liu.activity.AddNoteActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity android:name=".developer.jiaming.liu.Activity.NoticeActivity" />
-        <activity android:name=".developer.jiaming.liu.Activity.ChatMoreActivity"></activity>
+        <activity android:name=".developer.jiaming.liu.activity.NoticeActivity" />
+        <activity android:name=".developer.jiaming.liu.activity.ChatMoreActivity"/>
 
         <activity android:name=".developer.ting.li.ui.FriendsNewsActivity"
-            ></activity>
+            />
 
         <!--登录-->
         <activity
@@ -67,6 +67,10 @@
         <!--注册-->
         <activity android:name=".developer.zhiming.li.ui.RegisterActivity"
             android:label="注册"/>
+
+        <!--忘记密码-->
+        <activity android:name=".developer.zhiming.li.ui.ForgetPassActivity"
+            android:label="忘记密码"/>
 
 
     </application>

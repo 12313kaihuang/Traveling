@@ -1,4 +1,4 @@
-package com.android.traveling.developer.jiaming.liu.Adapter;
+package com.android.traveling.developer.jiaming.liu.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

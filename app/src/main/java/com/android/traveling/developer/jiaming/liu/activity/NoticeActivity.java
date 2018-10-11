@@ -1,6 +1,5 @@
-package com.android.traveling.developer.jiaming.liu.Activity;
+package com.android.traveling.developer.jiaming.liu.activity;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;

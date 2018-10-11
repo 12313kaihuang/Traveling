@@ -55,6 +55,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         TextView login_register = findViewById(R.id.login_register);
         login_register.setOnClickListener(this);
 
+        //忘记密码
+        TextView login_forget_pass = findViewById(R.id.login_forget_pass);
+        login_forget_pass.setOnClickListener(this);
+
         username = findViewById(R.id.login_login);
         password = findViewById(R.id.login_password);
     }
@@ -100,6 +104,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.service_terms:
                 startActivity(new Intent(this, ServiceTermsActivity.class));
+                break;
+            case R.id.login_forget_pass:
+                startActivity(new Intent(this, ForgetPassActivity.class));
                 break;
         }
     }

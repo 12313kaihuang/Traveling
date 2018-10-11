@@ -1,4 +1,4 @@
-package com.android.traveling.developer.jiaming.liu.Activity;
+package com.android.traveling.developer.jiaming.liu.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +10,11 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.jiaming.liu.Adapter.ChatMessageAdapter;
+import com.android.traveling.developer.jiaming.liu.adapter.ChatMessageAdapter;
 import com.android.traveling.developer.jiaming.liu.Item.ChatMessageItem;
 
 import java.util.ArrayList;
