@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".developer.zhiming.li.ui.SplashActivity"
+        <activity
+            android:name=".developer.zhiming.li.ui.SplashActivity"
             android:theme="@style/NoActionBarFullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,17 +20,29 @@
             </intent-filter>
         </activity>
 
-        <!--主页-->
-        <activity android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <!-- 主页 -->
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!--引导页-->
-        <activity android:name=".developer.zhiming.li.ui.GuideActivity"
-            android:theme="@style/NoActionBarFullscreen"/>
+        <!-- 引导页 -->
+        <activity
+            android:name=".developer.zhiming.li.ui.GuideActivity"
+            android:theme="@style/NoActionBarFullscreen" />
 
-        <!--游记/攻略引导页-->
-        <activity android:name=".developer.yu.hu.ui.NewsActivity"
-            android:label="眉山一日游"/>
+        <!-- 游记/攻略引导页 -->
+        <activity
+            android:name=".developer.yu.hu.ui.NewsActivity"
+            android:label="眉山一日游" />
+
+        <!-- 聊天消息页 -->
+        <activity android:name=".developer.jiaming.liu.Activity.ChatActivity" />
+        <!-- 编辑文本页 -->
+        <activity
+            android:name=".developer.jiaming.liu.Activity.AddNoteActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity android:name=".developer.jiaming.liu.Activity.NoticeActivity" />
+        <activity android:name=".developer.jiaming.liu.Activity.ChatMoreActivity"></activity>
     </application>
 
 </manifest>

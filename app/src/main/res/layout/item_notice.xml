@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="horizontal">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/id_notice_headpicture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/login_bg"
+        android:layout_margin="5dp"
+        />
+    <TextView
+        android:id="@+id/id_notice_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="别人的评论及点赞通知"
+        android:layout_gravity="center"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_margin="5dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"/>
+    <ImageView
+        android:id="@+id/id_notice_owncontentinmage"
+        android:layout_width="65dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:src="@drawable/user_bg"/>
+</LinearLayout>
