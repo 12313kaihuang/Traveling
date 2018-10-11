@@ -76,6 +76,7 @@
     <string name="service_text">登录即代表阅读并同意</string>
     <string name="service_terms">服务条款</string>
     <string name="default_username">admin</string>
+    <string name="other_login">其他方式登录</string>
 
     <!--activity_register-->
     <string name="activity_register">注册</string>
@@ -96,4 +97,7 @@
     <string name="new_pass">请输入新密码</string>
     <string name="repeat_pass">请再次输入密码</string>
     <string name="default_email">2356048622@qq.com</string>
+    <string name="login_by_wechat">微信登录</string>
+    <string name="login_by_qq">qq登录</string>
+    <string name="login_by_weibo">微博登录</string>
 </resources>

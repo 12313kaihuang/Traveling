@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +62,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         username = findViewById(R.id.login_login);
         password = findViewById(R.id.login_password);
+
+        //其他方式登录
+        ImageView ic_wechat = findViewById(R.id.ic_wechat);
+        ImageView ic_qq = findViewById(R.id.ic_qq);
+        ImageView ic_weibo = findViewById(R.id.ic_weibo);
+        ic_wechat.setOnClickListener(this);
+        ic_qq.setOnClickListener(this);
+        ic_weibo.setOnClickListener(this);
     }
 
     @Override
@@ -107,6 +116,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.login_forget_pass:
                 startActivity(new Intent(this, ForgetPassActivity.class));
+                break;
+            case R.id.ic_wechat:
+                UtilTools.toast(this, "微信登录");
+                break;
+            case R.id.ic_qq:
+                UtilTools.toast(this, "qq登录");
+                break;
+            case R.id.ic_weibo:
+                UtilTools.toast(this, "微博登录");
                 break;
         }
     }

@@ -10,7 +10,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="85dp"
+        android:layout_marginTop="55dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_traveling"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,6 +112,53 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
+    <TextView
+        android:id="@+id/tv_other_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="22dp"
+        android:text="@string/other_login"
+        android:textColor="@color/white_dark"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_forget_pass" />
+
+
+    <LinearLayout
+        android:id="@+id/LL_other_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/tv_other_login"
+        app:layout_constraintTop_toBottomOf="@+id/tv_other_login">
+
+        <ImageView
+            android:id="@+id/ic_wechat"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/login_by_wechat"
+            android:src="@drawable/ic_wechat" />
+
+        <ImageView
+            android:id="@+id/ic_qq"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@string/login_by_qq"
+            android:src="@drawable/ic_qq" />
+
+        <ImageView
+            android:id="@+id/ic_weibo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@string/login_by_weibo"
+            android:src="@drawable/ic_weibo" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

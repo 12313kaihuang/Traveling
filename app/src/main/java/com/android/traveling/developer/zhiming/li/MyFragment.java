@@ -16,6 +16,7 @@ import com.android.traveling.developer.zhiming.li.ui.LoginActivity;
 import com.android.traveling.fragment.BaseFragment;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
+import com.avos.avoscloud.AVUser;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,6 +36,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my, container, false);
         LogUtil.d("MyFragment  onCreateView");
+
+        AVUser currentUser = AVUser.getCurrentUser();
+        if (currentUser != null) {
+            UtilTools.toast(getContext(),currentUser.getUsername());
+        }else {
+            UtilTools.toast(getContext(),"currentUser is null");
+        }
+
         initView(view);
         return view;
     }
@@ -45,8 +54,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         TextView tv_toGuide = view.findViewById(R.id.tv_toGuide);
         tv_toGuide.setOnClickListener(v -> startActivity(new Intent(getActivity(), GuideActivity.class)));
 
+        //退出登录
         TextView tv_to_login = view.findViewById(R.id.tv_to_login);
         tv_to_login.setOnClickListener(v -> {
+            //登出
+            AVUser currentUser = AVUser.getCurrentUser();
+            if (currentUser != null) {
+                AVUser.logOut();
+            }
             startActivity(new Intent(getActivity(), LoginActivity.class));
             if (getActivity() != null) {
                 getActivity().finish();

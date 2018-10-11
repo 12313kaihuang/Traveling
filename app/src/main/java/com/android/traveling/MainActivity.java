@@ -22,6 +22,7 @@ import com.android.traveling.developer.yu.hu.HomeFragment;
 import com.android.traveling.developer.jiaming.liu.MessageFragment;
 import com.android.traveling.developer.zhiming.li.MyFragment;
 import com.android.traveling.viewpager.NoScrollViewPager;
+import com.avos.avoscloud.AVUser;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;
 
@@ -157,5 +158,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(dialogView);
         dialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }
