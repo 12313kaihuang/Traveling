@@ -42,9 +42,6 @@
             android:label="眉山一日游"/>
         <activity android:name=".developer.ting.li.ui.FriendsNewsActivity"
             ></activity>
-        <activity
-            android:name=".developer.yu.hu.ui.NewsActivity"
-            android:label="眉山一日游" />
 
         <!--登录-->
         <activity
