@@ -23,6 +23,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    //为了解决部分第三方库重复打包了META-INF的问题
+    packagingOptions{
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -42,6 +51,14 @@ dependencies {
     //circleImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     //SmartRefreshLayout
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
-    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'//没有使用特殊Header，可以不加这行
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'//没有使用特殊Header，可以不加这行
+
+
+    implementation ('com.android.support:support-v4:27.1.1')
+
+    // LeanCloud 基础包
+    implementation ('cn.leancloud.android:avoscloud-sdk:v4.7.3')
+    //BadgeView
+    implementation 'q.rorbin:badgeview:1.1.3'
 }

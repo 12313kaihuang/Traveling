@@ -1,6 +1,7 @@
 package com.android.traveling.developer.yu.hu.adaptor;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,9 @@ import com.android.traveling.developer.yu.hu.entity.News;
 import com.android.traveling.util.LogUtil;
 
 import java.util.List;
+
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 /**
  * 项目名：Traveling
@@ -60,6 +64,17 @@ public class NewsAdaptor extends BaseAdapter {
             //初始化viewHolder
             //viewHolder.xxx = convertView.findViewById()
             viewHolder.title = convertView.findViewById(R.id.recommend_title);
+
+            //badge
+            viewHolder.badge1 = new QBadgeView(context)
+                    .bindTarget(convertView.findViewById(R.id.badge_tag1))
+                    .setBadgeBackgroundColor(0xFFF8E6A1)
+                    .setBadgeTextColor(0xFFFFFFFF)
+                    .setBadgePadding(5,true)
+                    .setBadgeGravity(Gravity.CENTER)
+                    .setBadgeTextSize(12,true)
+                    .setBadgeText("游记");
+
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -78,5 +93,6 @@ public class NewsAdaptor extends BaseAdapter {
 
     class ViewHolder {
         public TextView title;
+        Badge badge1;
     }
 }
