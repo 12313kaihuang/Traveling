@@ -48,7 +48,7 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
         user.fetchInBackground(new GetCallback<AVObject>() {
             @Override
             public void done(AVObject avObject, AVException e) {
-                username.setText(user.getUsername());
+                username.setText(user.getString("nick_name"));
 
                 String s_signature = user.getString("signature");
                 if (s_signature != null) {

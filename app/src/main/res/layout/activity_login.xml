@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg">
@@ -44,7 +45,7 @@
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
         android:paddingTop="10dp"
-        android:text="@string/default_username"
+        android:text="@string/default_phone"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -94,24 +95,24 @@
         android:id="@+id/login_forget_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="15dp"
         android:text="@string/forget"
         android:textColor="#14A5E2"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
     <TextView
         android:id="@+id/login_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="15dp"
         android:text="@string/register"
         android:textColor="#14A5E2"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/login_forget_pass"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
     <TextView

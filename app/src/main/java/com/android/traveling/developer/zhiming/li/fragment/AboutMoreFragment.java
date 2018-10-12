@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.zhiming.li.MyFragment;
 import com.android.traveling.developer.zhiming.li.ui.LoginActivity;
 import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
 import com.android.traveling.util.LogUtil;

@@ -80,18 +80,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (!isInputEmpty()) {
                     AVUser.logInInBackground(username.getText().toString(),
                             password.getText().toString(), new LogInCallback<AVUser>() {
-                                @Override
-                                public void done(AVUser avUser, AVException e) {
-                                    if (e == null) {
-                                        UtilTools.toast(LoginActivity.this, "登录成功");
-                                        LoginActivity.this.finish();
-                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    } else {
-                                        //                                showProgress(false);
-                                        toastException(e);
-                                    }
-                                }
-                            });
+                        @Override
+                        public void done(AVUser avUser, AVException e) {
+                            if (e == null) {
+                                UtilTools.toast(LoginActivity.this, "登录成功");
+                                LoginActivity.this.finish();
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            } else {
+                                toastException(e);
+                            }
+                        }
+                    });
+
                 }
                 break;
             case R.id.login_register:
@@ -117,8 +117,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //根据异常码打印出错误信息
     private void toastException(AVException e) {
-        Toast.makeText(LoginActivity.this,
-                "e.code:" + e.getCode() + e.getMessage(), Toast.LENGTH_SHORT).show();
 
         switch (e.getCode()) {
             case 211:
@@ -126,12 +124,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 UtilTools.toast(LoginActivity.this,
                         "未找到该用户，请核对您输入的用户名");
                 break;
+            case 215:
+                //手机号未被验证
+                UtilTools.toast(LoginActivity.this,
+                        "该手机尚未通过验证");
+                break;
             case 216:
                 //邮箱未被验证
                 UtilTools.toast(LoginActivity.this,
-                        "该用户邮箱尚未通过验证，请查看邮件并验证成功后再次登录");
+                        "该邮箱尚未通过验证，请查看邮件并验证成功后再次登录");
+                break;
+            default:
+                Toast.makeText(LoginActivity.this,
+                        "e.code:" + e.getCode() + e.getMessage(), Toast.LENGTH_SHORT).show();
                 break;
         }
+
     }
 
     //判断输入是否为空

@@ -1,7 +1,5 @@
 package com.android.traveling.developer.zhiming.li;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -55,9 +53,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private void initData() {
         AVUser currentUser = AVUser.getCurrentUser();
         if (currentUser != null) {
-            my_user_status.setText(currentUser.getUsername());
+            my_user_status.setText(currentUser.getString("nick_name"));
         }else {
-            my_user_status.setText(getString(R.string.default_username));
+            my_user_status.setText(getString(R.string.not_login));
         }
     }
 

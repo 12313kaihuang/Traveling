@@ -79,6 +79,7 @@
 
     <!--activity_login-->
     <string name="login">登陆</string>
+    <string name="not_login">未登陆</string>
     <string name="forget">忘记密码？</string>
     <string name="register">新用户注册</string>
     <string name="service_text">登录即代表阅读并同意</string>
@@ -108,6 +109,7 @@
     <string name="new_pass">请输入新密码</string>
     <string name="repeat_pass">请再次输入密码</string>
     <string name="default_email">2356048622@qq.com</string>
+    <string name="default_phone">17716142440</string>
     <string name="login_hint_pass">请输入密码</string>
     <string name="login_hint_phone_num">请输入手机号</string>
 
