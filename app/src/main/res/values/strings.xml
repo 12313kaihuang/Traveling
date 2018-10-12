@@ -50,10 +50,13 @@
 
     <!--news_item-->
     <string name="list_item_title">眉山一日游</string>
-    <string name="list_item_content">眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游
+    <string name="list_item_content">眉山一日游：眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游
         眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游</string>
     <string name="list_item_info">65330浏览·392顶</string>
     <string name="str_image">图片</string>
+    <string name="like">喜欢</string>
+    <string name="like_num">515</string>
+    <string name="commit_num">72</string>
 
     <!--activity_news_detail-->
     <string name="activity_news_detail">游记/攻略详情</string>
@@ -65,10 +68,15 @@
     <string name="list_friends_item_site">稻城</string>
     <string name="list_friends_item_browse">5浏览</string>
     <string name="list_friends_item_publishtime">3分钟前</string>
+    <string name="news_item_username">依云</string>
+    <string name="news_item_time">1天前</string>
+    <string name="news_item_level">LV.2</string>
+    <string name="news_item_focus">+关注</string>
     
     <!--activity_friendsnews_detail-->
     <string name="detail_friends_news_discuss">评论</string>
     <string name="detail_friends_news_chat">私聊</string>
+
     <!--activity_login-->
     <string name="login">登陆</string>
     <string name="forget">忘记密码？</string>
@@ -77,6 +85,9 @@
     <string name="service_terms">服务条款</string>
     <string name="default_username">admin</string>
     <string name="other_login">其他方式登录</string>
+    <string name="login_by_wechat">微信登录</string>
+    <string name="login_by_qq">qq登录</string>
+    <string name="login_by_weibo">微博登录</string>
 
     <!--activity_register-->
     <string name="activity_register">注册</string>
@@ -97,7 +108,6 @@
     <string name="new_pass">请输入新密码</string>
     <string name="repeat_pass">请再次输入密码</string>
     <string name="default_email">2356048622@qq.com</string>
-    <string name="login_by_wechat">微信登录</string>
-    <string name="login_by_qq">qq登录</string>
-    <string name="login_by_weibo">微博登录</string>
+    <string name="login_hint_pass">请输入密码</string>
+    <string name="login_hint_phone_num">请输入手机号</string>
 </resources>
