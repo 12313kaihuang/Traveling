@@ -72,6 +72,12 @@
         <activity android:name=".developer.zhiming.li.ui.ForgetPassActivity"
             android:label="忘记密码"/>
 
+        <!--编辑个人资料-->
+        <activity android:name=".developer.zhiming.li.ui.UserEditActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:label="设置个人信息"/>
+
 
     </application>
 

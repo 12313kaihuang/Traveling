@@ -88,21 +88,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     } else {
                                         //                                showProgress(false);
-                                        Toast.makeText(LoginActivity.this,
-                                                "e.code:" + e.getCode() + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                                        switch (e.getCode()) {
-                                            case 211:
-                                                //找不到用户
-                                                UtilTools.toast(LoginActivity.this,
-                                                        "未找到该用户，请核对您输入的用户名");
-                                                break;
-                                            case 216:
-                                                //邮箱未被验证
-                                                UtilTools.toast(LoginActivity.this,
-                                                        "该用户邮箱尚未通过验证，请查看邮件并验证成功后再次登录");
-                                                break;
-                                        }
+                                        toastException(e);
                                     }
                                 }
                             });
@@ -125,6 +111,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.ic_weibo:
                 UtilTools.toast(this, "微博登录");
+                break;
+        }
+    }
+
+    //根据异常码打印出错误信息
+    private void toastException(AVException e) {
+        Toast.makeText(LoginActivity.this,
+                "e.code:" + e.getCode() + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        switch (e.getCode()) {
+            case 211:
+                //找不到用户
+                UtilTools.toast(LoginActivity.this,
+                        "未找到该用户，请核对您输入的用户名");
+                break;
+            case 216:
+                //邮箱未被验证
+                UtilTools.toast(LoginActivity.this,
+                        "该用户邮箱尚未通过验证，请查看邮件并验证成功后再次登录");
                 break;
         }
     }

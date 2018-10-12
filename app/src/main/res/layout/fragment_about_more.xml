@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="match_parent"
+    android:background="@color/gray4"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="@string/about_more"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/about_edit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_edit"
+        android:gravity="center_vertical"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:text="@string/about_edit"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/about_bind"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_bind"
+        android:gravity="center_vertical"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:text="@string/about_bind"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/about_message"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_about_message"
+        android:gravity="center_vertical"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:text="@string/about_message"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/about_privacy"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_privacy"
+        android:gravity="center_vertical"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:text="@string/about_privacy"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/about_more"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_about_more"
+        android:gravity="center_vertical"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:text="@string/about_traveling"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/about_logout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_logout"
+        android:gravity="center_vertical"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:text="@string/about_logout"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white" />
+</LinearLayout>

@@ -30,6 +30,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginLeft="5dp"
             android:hint="Type someThing Here"
+            android:text="@string/list_item_content"
             android:background="@drawable/editsharp"
             android:maxLength="100"/>
         <Button

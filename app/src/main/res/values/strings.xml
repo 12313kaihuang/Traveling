@@ -72,7 +72,7 @@
     <string name="news_item_time">1天前</string>
     <string name="news_item_level">LV.2</string>
     <string name="news_item_focus">+关注</string>
-    
+
     <!--activity_friendsnews_detail-->
     <string name="detail_friends_news_discuss">评论</string>
     <string name="detail_friends_news_chat">私聊</string>
@@ -110,4 +110,24 @@
     <string name="default_email">2356048622@qq.com</string>
     <string name="login_hint_pass">请输入密码</string>
     <string name="login_hint_phone_num">请输入手机号</string>
+
+    <!--fragment_about_more-->
+    <string name="about_more">更多</string>
+    <string name="about_traveling">关于Traveling</string>
+    <string name="about_logout">退出当前账号</string>
+    <string name="about_edit">编辑个人资料</string>
+    <string name="about_bind">账号绑定与设置</string>
+    <string name="about_message">消息设置</string>
+    <string name="about_privacy">隐私设置</string>
+
+    <!--activity_user_edit-->
+    <string name="user_edit">编辑个人信息</string>
+    <string name="user_edit_back">返回</string>
+    <string name="user_edit_save">保存</string>
+    <string name="user_edit_bg">设置背景</string>
+    <string name="user_edit_username">昵称</string>
+    <string name="gender">性别</string>
+    <string name="live_area">所在地</string>
+    <string name="signature">签名</string>
+    <string name="input_signature">输入签名</string>
 </resources>

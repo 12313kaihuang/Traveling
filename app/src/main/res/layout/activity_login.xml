@@ -28,7 +28,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/img_login"
         app:layout_constraintStart_toEndOf="@+id/img_login" />
 
-
     <EditText
         android:id="@+id/login_login"
         android:layout_width="match_parent"
