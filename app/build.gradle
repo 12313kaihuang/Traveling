@@ -61,4 +61,8 @@ dependencies {
     implementation ('cn.leancloud.android:avoscloud-sdk:v4.7.3')
     //BadgeView
     implementation 'q.rorbin:badgeview:1.1.3'
+    //okhttp3
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

@@ -1,5 +1,6 @@
 package com.android.traveling.developer.yu.hu.adaptor;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -54,6 +55,7 @@ public class NewsAdaptor extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -97,9 +99,8 @@ public class NewsAdaptor extends BaseAdapter {
             }
 
         });
-        viewHolder.news_item_like_num.setOnClickListener(v -> {
-            viewHolder.news_item_like.callOnClick();
-        });
+        viewHolder.news_item_like_num.setOnClickListener(v ->
+                viewHolder.news_item_like.callOnClick());
 
         news = newsList.get(position);
         //viewHolder.xx.setText(news.getImgUrl())

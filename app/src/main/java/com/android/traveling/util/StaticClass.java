@@ -34,5 +34,7 @@ public class StaticClass {
     public static final String SPLASH_FONT = "fonts/splash.TTF";
     public static final String NORMAL_FONT = "fonts/normalFont.TTF";
 
-
+    /*json url*/
+    //news
+    public static final String LASTEST_NEWS = "http://47.106.131.58:8080/traveling/news.json";
 }

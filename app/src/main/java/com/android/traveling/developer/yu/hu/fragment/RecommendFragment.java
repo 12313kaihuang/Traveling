@@ -14,14 +14,27 @@ import android.widget.ListView;
 import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.adaptor.NewsAdaptor;
 import com.android.traveling.developer.yu.hu.entity.News;
+import com.android.traveling.developer.yu.hu.gson.ResultNews;
 import com.android.traveling.developer.yu.hu.ui.NewsActivity;
 import com.android.traveling.util.LogUtil;
+import com.android.traveling.util.MyOkhttp;
+import com.android.traveling.util.StaticClass;
+import com.android.traveling.util.UtilTools;
+import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 项目名：Traveling
@@ -38,7 +51,7 @@ public class RecommendFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        LogUtil.d("RecommendFragment onCreate");
+        LogUtil.d("RecommendFragment onCreateView");
         View view = inflater.inflate(R.layout.fragment_recommend, container, false);
 
         initView(view);
@@ -56,6 +69,7 @@ public class RecommendFragment extends Fragment {
             News news = new News();
             newsList.add(news);
         }
+        sendHttpRequest();
 
         NewsAdaptor newsAdaptor = new NewsAdaptor(getActivity(), newsList);
         recommend_listView.setAdapter(newsAdaptor);
@@ -95,6 +109,30 @@ public class RecommendFragment extends Fragment {
             newsAdaptor.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
         }, 1000));
+    }
+
+    //网络请求数据
+    private void sendHttpRequest() {
+        MyOkhttp.get(StaticClass.LASTEST_NEWS, new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                UtilTools.toast(getContext(),"加载失败，请检查您的网络是否通畅");
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                //noinspection ConstantConditions
+                String result = response.body().string();
+                LogUtil.d(result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    ResultNews resultNews = new Gson().fromJson(jsonObject.toString(), ResultNews.class);
+                    LogUtil.d(resultNews.getNewsList().get(0).getId());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 
