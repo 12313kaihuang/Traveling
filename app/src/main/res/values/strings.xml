@@ -139,4 +139,8 @@
     <string name="live_area">所在地</string>
     <string name="signature">签名</string>
     <string name="input_signature">输入签名</string>
+
+    <!--load_progressbar-->
+    <string name="loading">加载中..</string>
+    <string name="load_faild">加载失败，点击重试</string>
 </resources>

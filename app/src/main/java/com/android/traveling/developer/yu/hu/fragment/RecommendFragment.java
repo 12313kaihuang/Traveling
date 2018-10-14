@@ -9,7 +9,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.adaptor.NewsAdaptor;
@@ -50,6 +53,10 @@ public class RecommendFragment extends Fragment {
     private List<News> newsList;
     private NewsAdaptor newsAdaptor;
     private ListView recommend_listView;
+    private FrameLayout load_progressbar;
+
+    private TextView tv_load_faild;
+    private LinearLayout loading;
 
     @Nullable
     @Override
@@ -63,6 +70,11 @@ public class RecommendFragment extends Fragment {
 
     //初始化View
     private void initView(View view) {
+
+        load_progressbar = view.findViewById(R.id.load_progressbar);
+        tv_load_faild = view.findViewById(R.id.tv_load_faild);
+        loading = view.findViewById(R.id.loading);
+
         recommend_listView = view.findViewById(R.id.recommend_listView);
         SmartRefreshLayout refreshLayout1 = view.findViewById(R.id.recommend_refreshLayout);
 
@@ -98,6 +110,13 @@ public class RecommendFragment extends Fragment {
 
         //下拉加载更多
         refreshLayout1.setOnLoadMoreListener(this::LoadMore);
+
+        //加载失败 重新加载
+        tv_load_faild.setOnClickListener(v -> {
+            tv_load_faild.setVisibility(View.INVISIBLE);
+            loading.setVisibility(View.VISIBLE);
+            sendHttpRequest();
+        });
     }
 
     //加载更多
@@ -150,7 +169,15 @@ public class RecommendFragment extends Fragment {
         MyOkhttp.get(StaticClass.LASTEST_NEWS, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                UtilTools.toast(getContext(), "加载失败，请检查您的网络是否通畅");
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        loading.setVisibility(View.INVISIBLE);
+                        tv_load_faild.setVisibility(View.VISIBLE);
+                        UtilTools.toast(getContext(), "加载失败，请检查您的网络是否通畅");
+                    });
+                }else {
+                   LogUtil.e("sendHttpRequest onFailure getActivity() = null");
+                }
             }
 
             @Override
@@ -170,6 +197,7 @@ public class RecommendFragment extends Fragment {
                         getActivity().runOnUiThread(() -> {
                             newsAdaptor = new NewsAdaptor(getActivity(), newsList);
                             recommend_listView.setAdapter(newsAdaptor);
+                            load_progressbar.setVisibility(View.INVISIBLE);
                         });
                     } else {
                         UtilTools.toast(getContext(), "返回数据状态有误");
