@@ -60,6 +60,9 @@
     <string name="like">喜欢</string>
     <string name="like_num">515</string>
     <string name="commit_num">72</string>
+    <string name="news_flag1">游记</string>
+    <string name="news_flag2">攻略</string>
+    <string name="news_flag3">问答</string>
 
     <!--activity_news_detail-->
     <string name="activity_news_detail">游记/攻略详情</string>

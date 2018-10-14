@@ -15,9 +15,11 @@ import java.util.List;
  */
 
 @SuppressWarnings("unused")
-public class News implements Serializable{
+public class News implements Serializable {
 
     private String id;
+
+    private int flag;
 
     //发布人
     @SerializedName("releasepeople")
@@ -36,7 +38,7 @@ public class News implements Serializable{
 
     private int comments;
 
-    public class Img implements Serializable{
+    public class Img implements Serializable {
         private String url;
 
         public String getUrl() {
@@ -111,4 +113,13 @@ public class News implements Serializable{
     public void setComments(int comments) {
         this.comments = comments;
     }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
 }

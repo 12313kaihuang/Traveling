@@ -41,4 +41,7 @@ public class StaticClass {
 
     //颜色
     public static final int FOCUS_ON_TEXT_COLOR = 0xFFBFC1C4;
+    public static final int NEWS_FLAG1_COLOR = 0xFFF4DB75;
+    public static final int NEWS_FLAG2_COLOR = 0xFFF98080;
+    public static final int NEWS_FLAG3_COLOR = 0xFF6EDFD2;
 }

@@ -3,7 +3,6 @@ package com.android.traveling.developer.yu.hu.adaptor;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +12,13 @@ import android.widget.TextView;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.gson.News;
+import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import q.rorbin.badgeview.Badge;
-import q.rorbin.badgeview.QBadgeView;
 
 /**
  * 项目名：Traveling
@@ -76,16 +74,16 @@ public class NewsAdaptor extends BaseAdapter {
 
         //加载View
         News news = newsList.get(position);
-        LoadViewData(viewHolder, news);
+        LoadViewData(viewHolder, news, position);
 
         //添加点击事件
-        addEvent(viewHolder,news);
+        addEvent(viewHolder, news);
 
         return convertView;
     }
 
     //加载界面数据
-    private void LoadViewData(ViewHolder viewHolder, News news) {
+    private void LoadViewData(ViewHolder viewHolder, News news, int p) {
         //viewHolder.xx.setText(news.getImgUrl())
         viewHolder.tv_username.setText(news.getReleasePeople().getNickName());
         viewHolder.tv_time.setText(news.getTime());
@@ -99,19 +97,43 @@ public class NewsAdaptor extends BaseAdapter {
         Picasso.get().load(news.getImgList().get(0).getUrl()).into(viewHolder.list_item_icon);
 
         //是否已关注
-        setFocus(viewHolder,news.getReleasePeople().isFocus());
+        setFocus(viewHolder, news.getReleasePeople().isFocus());
+        //设置news类别
+        LogUtil.d("position:" + p + " flag:" + news.getFlag());
+        setFlag(viewHolder, news.getFlag());
+        notifyDataSetChanged();
+    }
 
-
+    //设置news类别
+    private void setFlag(ViewHolder viewHolder, int flag) {
+        LogUtil.d("flag:" + flag);
+        switch (flag) {
+            case 1:
+                viewHolder.tv_flag.setText(R.string.news_flag1);
+                viewHolder.tv_flag.setTextColor(StaticClass.NEWS_FLAG1_COLOR);
+                viewHolder.tv_flag.setBackgroundResource(R.drawable.news_flag1_bg);
+                break;
+            case 2:
+                viewHolder.tv_flag.setText(R.string.news_flag2);
+                viewHolder.tv_flag.setTextColor(StaticClass.NEWS_FLAG2_COLOR);
+                viewHolder.tv_flag.setBackgroundResource(R.drawable.news_flag2_bg);
+                break;
+            case 3:
+                viewHolder.tv_flag.setText(R.string.news_flag3);
+                viewHolder.tv_flag.setTextColor(StaticClass.NEWS_FLAG3_COLOR);
+                viewHolder.tv_flag.setBackgroundResource(R.drawable.news_flag3_bg);
+                break;
+        }
     }
 
     //设置是否关注 isFocus为true则设置成已关注
-    private void setFocus(ViewHolder viewHolder,boolean isFocus) {
+    private void setFocus(ViewHolder viewHolder, boolean isFocus) {
         viewHolder.tv_focus.setTextSize(12);
         if (isFocus) {
             viewHolder.tv_focus.setText(context.getString(R.string.news_item_focus_on));
             viewHolder.tv_focus.setTextColor(StaticClass.FOCUS_ON_TEXT_COLOR);
             viewHolder.tv_focus.setBackgroundResource(R.drawable.news_item_focus_bg2);
-        }else {
+        } else {
             viewHolder.tv_focus.setText(context.getString(R.string.news_item_focus));
             viewHolder.tv_focus.setTextColor(Color.BLACK);
             viewHolder.tv_focus.setBackgroundResource(R.drawable.news_item_focus_bg);
@@ -132,19 +154,12 @@ public class NewsAdaptor extends BaseAdapter {
         viewHolder.list_item_content = convertView.findViewById(R.id.list_item_content);
         viewHolder.list_item_icon = convertView.findViewById(R.id.list_item_icon);
 
-        //badge
-        viewHolder.badge1 = new QBadgeView(context)
-                .bindTarget(convertView.findViewById(R.id.badge_tag1))
-                .setBadgeBackgroundColor(0xFFF8E6A1)
-                .setBadgeTextColor(0xFFFFFFFF)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.CENTER)
-                .setBadgeTextSize(12, true)
-                .setBadgeText("游记");
+        viewHolder.tv_flag = convertView.findViewById(R.id.news_flag);
+
     }
 
     //设置点击事件
-    private void addEvent(ViewHolder viewHolder,News news) {
+    private void addEvent(ViewHolder viewHolder, News news) {
         //喜欢的点击事件
         viewHolder.news_item_like.setOnClickListener(v -> {
             if (viewHolder.isLiked) {
@@ -165,11 +180,11 @@ public class NewsAdaptor extends BaseAdapter {
 
 
         //关注 未关注的点击事件
-        viewHolder.tv_focus.setOnClickListener( v ->{
-            setFocus(viewHolder,!news.getReleasePeople().isFocus());
+        viewHolder.tv_focus.setOnClickListener(v -> {
+            setFocus(viewHolder, !news.getReleasePeople().isFocus());
             if (news.getReleasePeople().isFocus()) {
                 news.getReleasePeople().setFocus(false);
-            }else {
+            } else {
                 news.getReleasePeople().setFocus(true);
             }
         });
@@ -184,9 +199,9 @@ public class NewsAdaptor extends BaseAdapter {
         TextView tv_time;
         TextView tv_level;
         TextView tv_focus;
+        TextView tv_flag;
         TextView list_item_content;
 
-        Badge badge1;
 
         ImageView news_item_like;
         TextView news_item_like_num;

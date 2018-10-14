@@ -61,8 +61,8 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/news_item_focus_bg"
         android:text="@string/news_item_focus"
-        android:textSize="12sp"
         android:textColor="@color/black"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_level" />
 
@@ -93,26 +93,30 @@
         app:layout_constraintStart_toStartOf="@+id/list_item_icon"
         app:layout_constraintTop_toBottomOf="@+id/list_item_icon" />
 
-
-    <TextView
-        android:id="@+id/badge_tag1"
-        android:layout_width="40dp"
+    <LinearLayout
+        android:id="@+id/badge_tag"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/list_item_content"
-        app:layout_constraintTop_toBottomOf="@+id/list_item_content" />
+        app:layout_constraintTop_toBottomOf="@+id/list_item_content">
 
-    <!--<TextView-->
-    <!--android:id="@+id/badge_tag1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content" />-->
-    <!--<TextView-->
-    <!--android:id="@+id/badge_tag1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content" />-->
+        <TextView
+            android:id="@+id/news_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:background="@drawable/news_flag1_bg"
+            android:gravity="center"
+            android:text="@string/news_flag1"
+            android:textColor="@color/news_flag1_color"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/LL"
@@ -121,9 +125,9 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/badge_tag1"
+        app:layout_constraintBottom_toBottomOf="@+id/badge_tag"
         app:layout_constraintEnd_toEndOf="@+id/list_item_content"
-        app:layout_constraintTop_toTopOf="@+id/badge_tag1">
+        app:layout_constraintTop_toTopOf="@+id/badge_tag">
 
         <ImageView
             android:id="@+id/news_item_like"
@@ -137,8 +141,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
-            android:paddingStart="3dp"
             android:paddingEnd="0dp"
+            android:paddingStart="3dp"
             android:text="@string/like_num"
             android:textColor="@color/black" />
 
@@ -153,8 +157,8 @@
             android:id="@+id/news_item_commit_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="3dp"
             android:paddingEnd="0dp"
+            android:paddingStart="3dp"
             android:text="@string/commit_num"
             android:textColor="@color/black" />
     </LinearLayout>

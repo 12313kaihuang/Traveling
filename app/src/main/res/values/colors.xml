@@ -20,4 +20,7 @@
     <color name="badge_yellow">#F8E6A1</color>
     <color name="focus_on_bg">#F6F7F9</color>
     <color name="focus_on_text_color">#BFC1C4</color>
+    <color name="news_flag1_color">#F4DB75</color>
+    <color name="news_flag2_color">#F98080</color>
+    <color name="news_flag3_color">#6EDFD2</color>
 </resources>
