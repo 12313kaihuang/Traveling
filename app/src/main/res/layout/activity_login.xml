@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg">
@@ -37,41 +36,29 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
         android:background="@drawable/et_bg"
-        android:hint="@string/login_hint_phone_num"
-        android:inputType="text"
+        android:hint="@string/input_phone"
+        android:inputType="number"
         android:labelFor="@id/login_login"
         android:maxLines="1"
+        android:maxLength="11"
         android:paddingBottom="10dp"
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
         android:paddingTop="10dp"
-        android:text="@string/default_phone"
-        android:textColorHint="@color/white"
+        android:text=""
         android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_login" />
 
-    <EditText
-        android:textColorHint="@color/white"
-        android:id="@+id/login_password"
+
+    <include
+        android:id="@+id/login_fl"
+        layout="@layout/login_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/et_bg"
-        android:hint="@string/login_hint_pass"
-        android:inputType="textPassword"
-        android:labelFor="@+id/login_password"
-        android:paddingBottom="10dp"
-        android:paddingEnd="5dp"
-        android:paddingStart="5dp"
-        android:paddingTop="10dp"
-        android:text="@string/default_username"
-        android:textColor="@color/white"
-        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_login" />
@@ -83,37 +70,65 @@
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/blue_bg"
+        android:background="@drawable/btn_gray_bg"
         android:text="@string/login"
+        android:enabled="false"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_password" />
+        app:layout_constraintTop_toBottomOf="@+id/login_fl" />
+
+    <LinearLayout
+        android:id="@+id/LL_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/btn_login"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login">
+
+        <TextView
+            android:id="@+id/login_by_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_by_email"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/cut_line"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="3dp"
+            android:background="@color/blue"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/login_by_verified"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_by_password"
+            android:textColor="@color/blue"
+            android:textSize="14sp" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/login_forget_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="15dp"
         android:text="@string/forget"
-        android:textColor="#14A5E2"
+        android:textColor="@color/blue"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/btn_login"
+        app:layout_constraintTop_toTopOf="@+id/LL_login" />
 
-    <TextView
-        android:id="@+id/login_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/register"
-        android:textColor="#14A5E2"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/login_forget_pass"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
     <TextView
         android:id="@+id/tv_other_login"
@@ -125,7 +140,7 @@
         android:textColor="@color/white_dark"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_forget_pass" />
+        app:layout_constraintTop_toBottomOf="@+id/LL_login" />
 
 
     <LinearLayout

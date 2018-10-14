@@ -1,15 +1,5 @@
 package com.android.traveling.developer.yu.hu.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.android.traveling.R;
-import com.android.traveling.util.LogUtil;
 
 /**
  * 项目名：Traveling
@@ -20,20 +10,20 @@ import com.android.traveling.util.LogUtil;
  * 描述：  关注
  */
 
-public class FocusOnFragment extends Fragment {
+public class FocusOnFragment extends RecommendFragment {
 
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        LogUtil.d("FocusOnFragment onCreate");
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        LogUtil.d("FocusOnFragment onCreate");
-        return inflater.inflate(R.layout.fragment_focus_on, container, false);
-    }
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        LogUtil.d("FocusOnFragment onCreate");
+//    }
+//
+//    @Nullable
+//    @Override
+//    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+//        LogUtil.d("FocusOnFragment onCreate");
+//        return inflater.inflate(R.layout.fragment_focus_on, container, false);
+//    }
 
 }

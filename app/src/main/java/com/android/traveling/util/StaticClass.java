@@ -44,4 +44,9 @@ public class StaticClass {
     public static final int NEWS_FLAG1_COLOR = 0xFFF4DB75;
     public static final int NEWS_FLAG2_COLOR = 0xFFF98080;
     public static final int NEWS_FLAG3_COLOR = 0xFF6EDFD2;
+
+    //登录方式
+    public static final int LOGIN_BY_VERIFIED = 1;
+    public static final int LOGIN_BY_PHONE = 2;
+    public static final int LOGIN_BY_EMAIL = 3;
 }

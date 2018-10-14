@@ -87,7 +87,15 @@
     <!--activity_login-->
     <string name="login">登陆</string>
     <string name="not_login">未登陆</string>
-    <string name="forget">忘记密码？</string>
+    <string name="login_by_email">邮箱账号</string>
+    <string name="login_by_phone">手机账号</string>
+    <string name="input_phone">请输入手机号</string>
+    <string name="input_email">请输入邮箱账号</string>
+    <string name="input_verified_code">请输入验证码</string>
+    <string name="login_by_verified">验证码登录</string>
+    <string name="login_by_password">账号密码登录</string>
+    <string name="get_verified_code">获取验证码</string>
+    <string name="forget">忘记密码</string>
     <string name="register">新用户注册</string>
     <string name="service_text">登录即代表阅读并同意</string>
     <string name="service_terms">服务条款</string>
@@ -99,14 +107,13 @@
 
     <!--activity_register-->
     <string name="activity_register">注册</string>
-    <string name="tv_username">用户名：</string>
+    <string name="tv_username">账号：</string>
     <string name="tv_password">密码：</string>
     <string name="tv_password2">确认密码：</string>
     <string name="input_pass">请输入密码</string>
     <string name="tv_email">邮箱：</string>
     <string name="textView">我已阅读并同意</string>
-    <string name="username">请输入用户名/昵称</string>
-    <string name="input_email">请输入验证所需邮箱</string>
+    <string name="username">请输入手机号或邮箱</string>
 
     <!--activity_forget_pass-->
     <string name="activity_forget_pass">找回密码</string>

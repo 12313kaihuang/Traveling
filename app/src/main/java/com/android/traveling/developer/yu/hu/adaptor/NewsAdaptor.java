@@ -106,7 +106,6 @@ public class NewsAdaptor extends BaseAdapter {
 
     //设置news类别
     private void setFlag(ViewHolder viewHolder, int flag) {
-        LogUtil.d("flag:" + flag);
         switch (flag) {
             case 1:
                 viewHolder.tv_flag.setText(R.string.news_flag1);
