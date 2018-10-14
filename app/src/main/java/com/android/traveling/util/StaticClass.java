@@ -37,4 +37,5 @@ public class StaticClass {
     /*json url*/
     //news
     public static final String LASTEST_NEWS = "http://47.106.131.58:8080/traveling/news.json";
+    public static final String LOAD_MORE_NEWS = "http://47.106.131.58:8080/traveling/loadMore.json";
 }

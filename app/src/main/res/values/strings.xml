@@ -3,6 +3,9 @@
     <!--app_name-->
     <string name="app_name">Traveling</string>
 
+    <string name="level">%1s%2s</string>
+    <string name="content">%1s:%2s</string>
+
     <!--MainActivity   主页-->
     <string name="activity_main">主页</string>
 

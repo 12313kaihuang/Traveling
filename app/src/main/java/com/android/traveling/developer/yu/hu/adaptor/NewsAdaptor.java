@@ -2,6 +2,7 @@ package com.android.traveling.developer.yu.hu.adaptor;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.yu.hu.entity.News;
+import com.android.traveling.developer.yu.hu.gson.News;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -32,7 +35,6 @@ public class NewsAdaptor extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private List<News> newsList;
-    private News news;
 
     public NewsAdaptor(Context context, List<News> newsList) {
         this.context = context;
@@ -64,26 +66,55 @@ public class NewsAdaptor extends BaseAdapter {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.news_item, null);
             //初始化viewHolder
-            //viewHolder.xxx = convertView.findViewById()
-            viewHolder.news_item_like = convertView.findViewById(R.id.news_item_like);
-            viewHolder.news_item_like_num = convertView.findViewById(R.id.news_item_like_num);
-
-            //badge
-            viewHolder.badge1 = new QBadgeView(context)
-                    .bindTarget(convertView.findViewById(R.id.badge_tag1))
-                    .setBadgeBackgroundColor(0xFFF8E6A1)
-                    .setBadgeTextColor(0xFFFFFFFF)
-                    .setBadgePadding(5, true)
-                    .setBadgeGravity(Gravity.CENTER)
-                    .setBadgeTextSize(12, true)
-                    .setBadgeText("游记");
-
+            initView(convertView, viewHolder);
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        //添加点击事件
+        addEvent(viewHolder);
 
+        //加载View
+        News news = newsList.get(position);
+        //viewHolder.xx.setText(news.getImgUrl())
+        viewHolder.tv_username.setText(news.getReleasePeople().getNickName());
+        viewHolder.tv_time.setText(news.getTime());
+        viewHolder.tv_level.setText(String.format(context.getString(R.string.level), "LV."
+                , news.getReleasePeople().getLevel()));
+        viewHolder.news_item_like_num.setText(String.valueOf(news.getLike()));
+        viewHolder.news_item_commit_num.setText(String.valueOf(news.getComments()));
+        viewHolder.list_item_content.setText(String.format(context.getString(R.string.content),
+                news.getTitle(), news.getContent()));
+        Picasso.get().load(news.getReleasePeople().getImgUrl()).into(viewHolder.user_bg);
+        Picasso.get().load(news.getImgList().get(0).getUrl()).into(viewHolder.list_item_icon);
+
+        return convertView;
+    }
+
+    private void initView(View convertView, ViewHolder viewHolder) {
+        viewHolder.user_bg = convertView.findViewById(R.id.user_bg);
+        viewHolder.tv_username = convertView.findViewById(R.id.tv_username);
+        viewHolder.tv_time = convertView.findViewById(R.id.tv_time);
+        viewHolder.tv_level = convertView.findViewById(R.id.tv_level);
+        viewHolder.news_item_like = convertView.findViewById(R.id.news_item_like);
+        viewHolder.news_item_like_num = convertView.findViewById(R.id.news_item_like_num);
+        viewHolder.news_item_commit_num = convertView.findViewById(R.id.news_item_commit_num);
+        viewHolder.list_item_content = convertView.findViewById(R.id.list_item_content);
+        viewHolder.list_item_icon = convertView.findViewById(R.id.list_item_icon);
+
+        //badge
+        viewHolder.badge1 = new QBadgeView(context)
+                .bindTarget(convertView.findViewById(R.id.badge_tag1))
+                .setBadgeBackgroundColor(0xFFF8E6A1)
+                .setBadgeTextColor(0xFFFFFFFF)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.CENTER)
+                .setBadgeTextSize(12, true)
+                .setBadgeText("游记");
+    }
+
+    private void addEvent(ViewHolder viewHolder) {
         //喜欢的点击事件
         viewHolder.news_item_like.setOnClickListener(v -> {
             if (viewHolder.isLiked) {
@@ -101,22 +132,22 @@ public class NewsAdaptor extends BaseAdapter {
         });
         viewHolder.news_item_like_num.setOnClickListener(v ->
                 viewHolder.news_item_like.callOnClick());
-
-        news = newsList.get(position);
-        //viewHolder.xx.setText(news.getImgUrl())
-
-        //            viewHolder.title.setText(R.string.list_item_title);
-
-        return convertView;
     }
 
 
     class ViewHolder {
-        public TextView title;
+        CircleImageView user_bg;
+        ImageView list_item_icon;
+        TextView tv_username;
+        TextView tv_time;
+        TextView tv_level;
+        TextView list_item_content;
+
         Badge badge1;
 
         ImageView news_item_like;
         TextView news_item_like_num;
+        TextView news_item_commit_num;
         Boolean isLiked = false;
     }
 }

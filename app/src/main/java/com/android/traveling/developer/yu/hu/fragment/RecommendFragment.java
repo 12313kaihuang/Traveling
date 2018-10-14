@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.adaptor.NewsAdaptor;
-import com.android.traveling.developer.yu.hu.entity.News;
+import com.android.traveling.developer.yu.hu.gson.News;
 import com.android.traveling.developer.yu.hu.gson.ResultNews;
 import com.android.traveling.developer.yu.hu.ui.NewsActivity;
 import com.android.traveling.util.LogUtil;
@@ -47,6 +47,9 @@ import okhttp3.Response;
 
 public class RecommendFragment extends Fragment {
 
+    private List<News> newsList;
+    private NewsAdaptor newsAdaptor;
+    private ListView recommend_listView;
 
     @Nullable
     @Override
@@ -60,19 +63,12 @@ public class RecommendFragment extends Fragment {
 
     //初始化View
     private void initView(View view) {
-        ListView recommend_listView = view.findViewById(R.id.recommend_listView);
+        recommend_listView = view.findViewById(R.id.recommend_listView);
         SmartRefreshLayout refreshLayout1 = view.findViewById(R.id.recommend_refreshLayout);
 
         //解析数据
-        List<News> newsList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            News news = new News();
-            newsList.add(news);
-        }
+        newsList = new ArrayList<>();
         sendHttpRequest();
-
-        NewsAdaptor newsAdaptor = new NewsAdaptor(getActivity(), newsList);
-        recommend_listView.setAdapter(newsAdaptor);
 
         //点击事件
         recommend_listView.setOnItemClickListener((parent, view1, position, id) -> {
@@ -82,33 +78,71 @@ public class RecommendFragment extends Fragment {
             startActivity(intent);
         });
 
+
         //上拉刷新
         //noinspection Convert2Lambda
         refreshLayout1.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 new Handler().postDelayed(() -> {
-                    for (int i = 0; i < 5; i++) {
-                        News news = new News();
-                        news.setTitle("刷新的item" + i);
-                        newsList.add(0,news);
-                    }
-                    newsAdaptor.notifyDataSetChanged();
-                    refreshLayout.finishRefresh();
-                }, 1000);
+                    //                                    for (int i = 0; i < 5; i++) {
+                    //                                        News news = new News();
+                    //                                        news.setTitle("刷新的item" + i);
+                    //                                        newsList.add(0, news);
+                    //                                    }
+                    //                                    newsAdaptor.notifyDataSetChanged();
+                    refreshLayout.finishRefresh(false);
+                }, 500);
             }
         });
 
         //下拉加载更多
-        refreshLayout1.setOnLoadMoreListener(refreshLayout -> new Handler().postDelayed(() -> {
-            for (int i = 0; i < 5; i++) {
-                News news = new News();
-                news.setTitle("加载的更多的item" + i);
-                newsList.add(news);
+        refreshLayout1.setOnLoadMoreListener(this::LoadMore);
+    }
+
+    //加载更多
+    private void LoadMore(RefreshLayout refreshLayout) {
+        MyOkhttp.get(StaticClass.LOAD_MORE_NEWS, new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                if (getActivity() != null) {
+                    refreshLayout.finishLoadMore(false);    //加载失败
+                } else {
+                    LogUtil.e("RecommendFragment LoadMore() onFailure getActivity = null");
+                }
+
             }
-            newsAdaptor.notifyDataSetChanged();
-            refreshLayout.finishLoadMore();
-        }, 1000));
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                //noinspection ConstantConditions
+                String result = response.body().string();
+                try {
+                    //在调用了response.body().string()方法之后，response中的流会被关闭
+                    JSONObject jsonObject = new JSONObject(result);
+                    ResultNews resultNews = new Gson().fromJson(jsonObject.toString(),
+                            ResultNews.class);
+                    if (getActivity() != null) {
+                        if (resultNews.getStatus() == 1) {
+                            getActivity().runOnUiThread(() -> {
+                                newsList.addAll(resultNews.getNewsList());
+                                newsAdaptor.notifyDataSetChanged();
+                                refreshLayout.finishLoadMore();
+                            });
+                        } else {
+                            getActivity().runOnUiThread(() -> {
+                                refreshLayout.finishLoadMore(false);    //加载失败
+                            });
+                        }
+                    } else {
+                        LogUtil.e("RecommendFragment getActivity = null");
+                    }
+
+                } catch (JSONException | NullPointerException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     //网络请求数据
@@ -116,7 +150,7 @@ public class RecommendFragment extends Fragment {
         MyOkhttp.get(StaticClass.LASTEST_NEWS, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                UtilTools.toast(getContext(),"加载失败，请检查您的网络是否通畅");
+                UtilTools.toast(getContext(), "加载失败，请检查您的网络是否通畅");
             }
 
             @Override
@@ -127,7 +161,21 @@ public class RecommendFragment extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     ResultNews resultNews = new Gson().fromJson(jsonObject.toString(), ResultNews.class);
-                    LogUtil.d(resultNews.getNewsList().get(0).getId());
+
+                    //状态正确
+                    if (resultNews.getStatus() == 1) {
+                        newsList = resultNews.getNewsList();
+
+                        //noinspection ConstantConditions
+                        getActivity().runOnUiThread(() -> {
+                            newsAdaptor = new NewsAdaptor(getActivity(), newsList);
+                            recommend_listView.setAdapter(newsAdaptor);
+                        });
+                    } else {
+                        UtilTools.toast(getContext(), "返回数据状态有误");
+                    }
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

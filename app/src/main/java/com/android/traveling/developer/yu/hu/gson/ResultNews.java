@@ -16,16 +16,16 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class ResultNews {
 
-    private String status;
+    private int status;
 
     @SerializedName("news")
     private List<News> newsList;
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

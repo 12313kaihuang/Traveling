@@ -2,6 +2,8 @@ package com.android.traveling.developer.yu.hu.gson;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * 项目名：Traveling
  * 包名：  com.android.traveling.developer.yu.hu.gson
@@ -12,7 +14,7 @@ import com.google.gson.annotations.SerializedName;
  */
 
 @SuppressWarnings("unused")
-public class ReleasePeople {
+public class ReleasePeople implements Serializable{
 
     //头像资源
     @SerializedName("headportrait")

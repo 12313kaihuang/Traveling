@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.yu.hu.entity.News;
+import com.android.traveling.developer.yu.hu.gson.News;
 import com.android.traveling.ui.BackableActivity;
 
 /**
@@ -18,20 +18,26 @@ import com.android.traveling.ui.BackableActivity;
  * 描述：  游记/攻略详情页面
  */
 
-public class NewsActivity extends BackableActivity{
+public class NewsActivity extends BackableActivity {
+
+    TextView textView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
 
+        initView();
+
         Intent intent = getIntent();
         News news = (News) intent.getSerializableExtra("news");
-        TextView textview = findViewById(R.id.textview);
-        if (news.getTitle() != null) {
-            textview.setText(news.getTitle());
-        }else {
-            textview.setText(R.string.list_item_title);
-        }
+        setTitle(news.getTitle());  //设置标题
+
+        textView.setText(news.getTitle());
+
+    }
+
+    private void initView() {
+        textView = findViewById(R.id.textview);
     }
 }

@@ -2,6 +2,7 @@ package com.android.traveling.developer.yu.hu.gson;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  */
 
 @SuppressWarnings("unused")
-public class News {
+public class News implements Serializable{
 
     private String id;
 
@@ -35,7 +36,7 @@ public class News {
 
     private int comments;
 
-    public class Img {
+    public class Img implements Serializable{
         private String url;
 
         public String getUrl() {
