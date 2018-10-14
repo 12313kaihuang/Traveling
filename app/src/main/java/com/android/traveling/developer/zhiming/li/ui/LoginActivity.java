@@ -40,7 +40,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private EditText username;
     private EditText password;
+    private EditText verified_code;
+    private Button btn_login;
     private inputContent inputContent = new inputContent();
+
+    private boolean usernameVaild = false;
+    private boolean veridiedCodeVaild = false;
+    private boolean passwordVaild = false;
 
     //登录方式
     private int loginMode = StaticClass.LOGIN_BY_VERIFIED;
@@ -50,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView cut_line;
     private TextView login_by_verified;
     private LinearLayout LL_verified;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //初始化View
     private void initView() {
-        Button btn_login = findViewById(R.id.btn_login);
+        btn_login = findViewById(R.id.btn_login);
         btn_login.setOnClickListener(this);
 
         TextView service_terms = findViewById(R.id.service_terms);
@@ -77,6 +84,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         username = findViewById(R.id.login_login);
         password = findViewById(R.id.login_password);
+        verified_code = findViewById(R.id.login_verified_code);
         cut_line = findViewById(R.id.cut_line);
         LL_verified = findViewById(R.id.LL_verified);
         login_by_password = findViewById(R.id.login_by_password);
@@ -106,7 +114,60 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                switch (loginMode) {
+                    case StaticClass.LOGIN_BY_VERIFIED:
+                        if (s.length() == StaticClass.PHONE_MAX_LENGTH) {
+                            usernameVaild = true;
+                            if (veridiedCodeVaild) {
+                                setLoginEnabled(true);
+                            }
+                        } else {
+                            setLoginEnabled(false);
+                            if (usernameVaild) {
+                                usernameVaild = false;
+                            }
+                        }
+                        break;
+                    case StaticClass.LOGIN_BY_PHONE:
+                        break;
+                    case StaticClass.LOGIN_BY_EMAIL:
+                        break;
+                }
+            }
 
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        verified_code.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                switch (loginMode) {
+                    case StaticClass.LOGIN_BY_VERIFIED:
+                        if (s.length() == StaticClass.VERIFIED_CODE_MAX_LENGTH) {
+                            veridiedCodeVaild = true;
+                            if (usernameVaild) {
+                                setLoginEnabled(true);
+                            }
+                        } else {
+                            setLoginEnabled(false);
+                            if (veridiedCodeVaild) {
+                                veridiedCodeVaild = false;
+                            }
+                        }
+                        break;
+                    case StaticClass.LOGIN_BY_PHONE:
+                        break;
+                    case StaticClass.LOGIN_BY_EMAIL:
+                        break;
+                }
             }
 
             @Override
@@ -117,13 +178,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    //设置登录按钮是否可点击
+    private void setLoginEnabled(boolean isEnabled) {
+        if (isEnabled) {
+            btn_login.setEnabled(true);
+            btn_login.setBackgroundResource(R.drawable.blue_bg);
+        } else {
+            btn_login.setEnabled(false);
+            btn_login.setBackgroundResource(R.drawable.btn_gray_bg);
+        }
+
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
                 if (!isInputEmpty()) {
                     Login();
-
                 }
                 break;
             case R.id.service_terms:

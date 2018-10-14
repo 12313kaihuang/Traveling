@@ -23,7 +23,6 @@ import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.MyOkhttp;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
-import com.avos.avoscloud.AVUser;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;

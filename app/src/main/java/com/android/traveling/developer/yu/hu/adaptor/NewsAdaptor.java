@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.gson.News;
-import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.squareup.picasso.Picasso;
 
@@ -74,7 +73,7 @@ public class NewsAdaptor extends BaseAdapter {
 
         //加载View
         News news = newsList.get(position);
-        LoadViewData(viewHolder, news, position);
+        LoadViewData(viewHolder, news);
 
         //添加点击事件
         addEvent(viewHolder, news);
@@ -83,7 +82,7 @@ public class NewsAdaptor extends BaseAdapter {
     }
 
     //加载界面数据
-    private void LoadViewData(ViewHolder viewHolder, News news, int p) {
+    private void LoadViewData(ViewHolder viewHolder, News news) {
         //viewHolder.xx.setText(news.getImgUrl())
         viewHolder.tv_username.setText(news.getReleasePeople().getNickName());
         viewHolder.tv_time.setText(news.getTime());
@@ -99,7 +98,6 @@ public class NewsAdaptor extends BaseAdapter {
         //是否已关注
         setFocus(viewHolder, news.getReleasePeople().isFocus());
         //设置news类别
-        LogUtil.d("position:" + p + " flag:" + news.getFlag());
         setFlag(viewHolder, news.getFlag());
         notifyDataSetChanged();
     }

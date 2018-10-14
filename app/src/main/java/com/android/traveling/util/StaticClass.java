@@ -49,4 +49,9 @@ public class StaticClass {
     public static final int LOGIN_BY_VERIFIED = 1;
     public static final int LOGIN_BY_PHONE = 2;
     public static final int LOGIN_BY_EMAIL = 3;
+
+    //最大长度
+    public static final int PHONE_MAX_LENGTH = 11;
+    public static final int VERIFIED_CODE_MAX_LENGTH = 6;
+    public static final int EMAIL_MAX_LENGTH = 50;
 }
