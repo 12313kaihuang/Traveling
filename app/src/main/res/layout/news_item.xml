@@ -60,10 +60,8 @@
         android:layout_marginEnd="28dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/news_item_focus_bg"
-        android:padding="3dp"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp"
         android:text="@string/news_item_focus"
+        android:textSize="12sp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_level" />
@@ -139,7 +137,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
-            android:layout_marginStart="3dp"
+            android:paddingStart="3dp"
+            android:paddingEnd="0dp"
             android:text="@string/like_num"
             android:textColor="@color/black" />
 
@@ -154,7 +153,8 @@
             android:id="@+id/news_item_commit_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
+            android:paddingStart="3dp"
+            android:paddingEnd="0dp"
             android:text="@string/commit_num"
             android:textColor="@color/black" />
     </LinearLayout>

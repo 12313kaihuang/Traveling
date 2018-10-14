@@ -38,4 +38,7 @@ public class StaticClass {
     //news
     public static final String LASTEST_NEWS = "http://47.106.131.58:8080/traveling/news.json";
     public static final String LOAD_MORE_NEWS = "http://47.106.131.58:8080/traveling/loadMore.json";
+
+    //颜色
+    public static final int FOCUS_ON_TEXT_COLOR = 0xFFBFC1C4;
 }

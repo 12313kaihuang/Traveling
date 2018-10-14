@@ -18,4 +18,6 @@
     <color name="et_blue">#BB14A5E2</color>
     <color name="blue">#14A5E2</color>
     <color name="badge_yellow">#F8E6A1</color>
+    <color name="focus_on_bg">#F6F7F9</color>
+    <color name="focus_on_text_color">#BFC1C4</color>
 </resources>
