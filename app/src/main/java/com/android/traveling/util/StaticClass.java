@@ -59,6 +59,9 @@ public class StaticClass {
     //检测email的正则表达式
     public static final String EMAIL_REGULAR = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
 
+    //Bmob AppId
+    public static final String BMOB_APPLICATION_ID = "839622a09a889d9c7473c5ab04c606cf";
+
     //短信模板
-    public static final String SMS_REGISTER_Template = "register";
+    public static final String BMOB_SMS_TEMPLATE = "register";
 }

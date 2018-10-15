@@ -32,6 +32,9 @@ android {
     lintOptions {
         abortOnError false
     }
+
+//    **兼容Android6.0系统所需，如果这句话报错，可在dependencies标签下使用compile 'cn.bmob.android:http-legacy:1.0'**
+            useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -67,4 +70,25 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
+    implementation ('cn.bmob.android:bmob-sdk:3.6.5') {
+        exclude group: 'com.google.code.gson'
+        exclude group: 'com.squareup.okio'
+    }
+    //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
+    implementation 'cn.bmob.android:http-legacy:1.0'
+
+    configurations {
+        all*.exclude group: 'com.google.code.gson'
+        all*.exclude group: 'com.squareup.okio'
+    }
 }
+
+//解决冲突Program type already present 方法2
+configurations.all {
+    resolutionStrategy.force 'com.squareup.okio:okio:1.14.0'
+    resolutionStrategy.force 'com.google.code.gson:gson:2.8.5'
+}
+
+

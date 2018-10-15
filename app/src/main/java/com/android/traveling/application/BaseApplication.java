@@ -1,18 +1,11 @@
 package com.android.traveling.application;
 
 import android.app.Application;
-import android.content.Context;
 
-import com.android.traveling.R;
+import com.android.traveling.util.StaticClass;
 import com.avos.avoscloud.AVOSCloud;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+
+import cn.bmob.v3.Bmob;
 
 /**
  * 项目名：Traveling
@@ -37,5 +30,7 @@ public class BaseApplication extends Application {
         // 放在 SDK 初始化语句 AVOSCloud.initialize() 后面，只需要调用一次即可
         AVOSCloud.setDebugLogEnabled(true);
 
+        //Bmob初始化
+        Bmob.initialize(this, StaticClass.BMOB_APPLICATION_ID);
     }
 }

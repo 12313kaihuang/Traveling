@@ -10,6 +10,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,14 +25,14 @@ import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVOSCloud;
-import com.avos.avoscloud.AVSMS;
-import com.avos.avoscloud.AVSMSOption;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
-import com.avos.avoscloud.RequestMobileCodeCallback;
 
 import java.util.regex.Pattern;
+
+import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 
 
 /**
@@ -318,7 +319,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void getVerifiedCode() {
         if (usernameValid) {
             verifiedTimer.start();
-            // TODO: 2018/10/15  
+            BmobSMS.requestSMSCode(username.getText().toString()
+                    , StaticClass.BMOB_SMS_TEMPLATE, new QueryListener<Integer>() {
+
+                        @Override
+                        public void done(Integer smsId, BmobException ex) {
+                            if (ex == null) {//验证码发送成功
+                                Log.i("smile", "短信id：" + smsId);//用于查询本次短信发送详情
+                                UtilTools.toast(LoginActivity.this,"验证码发送成功，请注意查收！");
+                            } else {
+                                toastException(ex);
+                            }
+                        }
+                    });
+
 
         } else {
             UtilTools.toast(this, "请输入正确的手机号码");
@@ -465,6 +479,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     //根据异常码打印出错误信息
+    private void toastException(BmobException e) {
+        switch (e.getErrorCode()) {
+            case 1:
+
+                break;
+            default:
+                Toast.makeText(LoginActivity.this,
+                        "e.code:" + e.getErrorCode() + e.getMessage(), Toast.LENGTH_SHORT).show();
+                LogUtil.d("e.code:" + e.getErrorCode() + e.getMessage());
+                break;
+        }
+    }
+
+
     private void toastException(AVException e) {
 
         switch (e.getCode()) {
