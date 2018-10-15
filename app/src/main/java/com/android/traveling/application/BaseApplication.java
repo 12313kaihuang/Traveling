@@ -36,5 +36,6 @@ public class BaseApplication extends Application {
         AVOSCloud.initialize(this,"WSYL5OvdOhS1y2m1AMefmgcB-gzGzoHsz","zgFTp1Vn0gEhGC2lMphmayW1");
         // 放在 SDK 初始化语句 AVOSCloud.initialize() 后面，只需要调用一次即可
         AVOSCloud.setDebugLogEnabled(true);
+
     }
 }

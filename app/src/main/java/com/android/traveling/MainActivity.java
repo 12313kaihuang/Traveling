@@ -1,6 +1,7 @@
 package com.android.traveling;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
@@ -22,7 +23,6 @@ import com.android.traveling.developer.yu.hu.HomeFragment;
 import com.android.traveling.developer.jiaming.liu.MessageFragment;
 import com.android.traveling.developer.zhiming.li.MyFragment;
 import com.android.traveling.viewpager.NoScrollViewPager;
-import com.avos.avoscloud.AVUser;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;
 
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     private void showBottomDialog() {
         final BottomSheetDialog dialog=new BottomSheetDialog(this);
-        View dialogView= LayoutInflater.from(this).inflate(R.layout.dialog_centeradd,null);
+        @SuppressLint("InflateParams") View dialogView= LayoutInflater.from(this).inflate(R.layout.dialog_centeradd,null);
         LinearLayout travels = dialogView.findViewById(R.id.id_dialog_centeradd_travels);
         LinearLayout strategy = dialogView.findViewById(R.id.id_dialog_centeradd_strategy);
         LinearLayout friends = dialogView.findViewById(R.id.id_dialog_centeradd_friends);

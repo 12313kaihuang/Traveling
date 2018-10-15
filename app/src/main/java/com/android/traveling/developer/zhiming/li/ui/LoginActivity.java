@@ -2,6 +2,7 @@ package com.android.traveling.developer.zhiming.li.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -19,11 +20,16 @@ import android.widget.Toast;
 
 import com.android.traveling.MainActivity;
 import com.android.traveling.R;
+import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.AVSMS;
+import com.avos.avoscloud.AVSMSOption;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
+import com.avos.avoscloud.RequestMobileCodeCallback;
 
 import java.util.regex.Pattern;
 
@@ -44,10 +50,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText password;
     private EditText verified_code;
     private Button btn_login;
+    private Button btn_verified_code;
     private inputContent inputContent = new inputContent();
 
     //输入是否合法
-    private boolean usernameValid = false;
+    private boolean usernameValid = false;  //手机号
     private boolean emailValid = false;
     private boolean verifiedCodeValid = false;
     private boolean loginEnable = false;
@@ -61,19 +68,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView login_by_verified;
     private LinearLayout LL_verified;
 
+    private VerifiedTimer verifiedTimer;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        verifiedTimer = new VerifiedTimer(60000, 1000);
         initView();
     }
 
     //初始化View
     private void initView() {
+        ImageView back = findViewById(R.id.back);
+        back.setOnClickListener(this);
+
         btn_login = findViewById(R.id.btn_login);
         btn_login.setOnClickListener(this);
+
+        btn_verified_code = findViewById(R.id.btn_verified_code);
+        btn_verified_code.setOnClickListener(this);
 
         TextView service_terms = findViewById(R.id.service_terms);
         service_terms.setOnClickListener(this);
@@ -142,7 +158,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     StaticClass.PASSWORD_MIN_LENGTH) {
                                 setLoginEnabled(true);
                             }
-                        }else {
+                        } else {
                             if (usernameValid) {
                                 usernameValid = false;
                             }
@@ -159,7 +175,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     StaticClass.PASSWORD_MIN_LENGTH) {
                                 setLoginEnabled(true);
                             }
-                        }else {
+                        } else {
                             if (emailValid) {
                                 emailValid = false;
                             }
@@ -231,7 +247,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (loginMode == StaticClass.LOGIN_BY_EMAIL && emailValid) {
                         setLoginEnabled(true);
                     }
-                }else {
+                } else {
 
                     if (loginEnable) {
                         setLoginEnabled(false);
@@ -288,6 +304,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.login_by_verified:
                 changeLoginMode();
                 break;
+            case R.id.btn_verified_code:
+                getVerifiedCode();
+                break;
+            case R.id.back:
+                onBackPressed();
+                break;
+        }
+    }
+
+    //signUpOrLoginByMobilePhoneInBackground(  requestLoginSmsCodeInBackground
+    //获取验证码
+    private void getVerifiedCode() {
+        if (usernameValid) {
+            verifiedTimer.start();
+            // TODO: 2018/10/15  
+
+        } else {
+            UtilTools.toast(this, "请输入正确的手机号码");
         }
     }
 
@@ -344,7 +378,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
 
 
-
         } else {
             setInputType(StaticClass.LOGIN_BY_VERIFIED);
 
@@ -367,7 +400,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (username.getText().toString().length() == StaticClass.PHONE_MAX_LENGTH
                     && verified_code.getText().toString().length() == StaticClass.VERIFIED_CODE_MAX_LENGTH) {
                 setLoginEnabled(true);
-            }else {
+            } else {
                 setLoginEnabled(false);
             }
         }
@@ -377,7 +410,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void changeLoginEnabled(boolean isEnabled) {
         if (password.getText().toString().length() >= 5 && isEnabled) {
             setLoginEnabled(true);
-        }else {
+        } else {
             setLoginEnabled(false);
         }
     }
@@ -440,6 +473,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 UtilTools.toast(LoginActivity.this,
                         "未找到该用户，请核对您输入的用户名或密码");
                 break;
+            case 214:
+                //找不到用户
+                UtilTools.toast(LoginActivity.this,
+                        "该手机号码已被注册");
+                break;
             case 215:
                 //手机号未被验证
                 UtilTools.toast(LoginActivity.this,
@@ -453,6 +491,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             default:
                 Toast.makeText(LoginActivity.this,
                         "e.code:" + e.getCode() + e.getMessage(), Toast.LENGTH_SHORT).show();
+                LogUtil.d("e.code:" + e.getCode() + e.getMessage());
                 break;
         }
 
@@ -469,6 +508,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return true;
         }
         return false;
+    }
+
+    class VerifiedTimer extends CountDownTimer {
+
+        private boolean hasSet = false;
+
+        VerifiedTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            if (!hasSet) {
+                btn_verified_code.setBackgroundResource(R.drawable.btn_verified_bg2);
+                btn_verified_code.setEnabled(false);
+            }
+            btn_verified_code.setText(getString(R.string.verifiedMilliSecond,
+                    millisUntilFinished / 1000));
+        }
+
+        @Override
+        public void onFinish() {
+            btn_verified_code.setBackgroundResource(R.drawable.btn_verified_bg);
+            btn_verified_code.setText("重新发送");
+            btn_verified_code.setEnabled(true);
+        }
     }
 
 

@@ -58,4 +58,7 @@ public class StaticClass {
 
     //检测email的正则表达式
     public static final String EMAIL_REGULAR = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
+
+    //短信模板
+    public static final String SMS_REGISTER_Template = "register";
 }

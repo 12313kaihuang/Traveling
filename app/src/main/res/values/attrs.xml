@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="VerifiedButton">
+        <attr name="totalSeconds" format="integer"/>
+        <attr name="intervalSeconds" format="integer"/>
+        <attr name="normalBackground" format="color" />
+        <attr name="verifiedBackground" format="color" />
+    </declare-styleable>
+
+</resources>

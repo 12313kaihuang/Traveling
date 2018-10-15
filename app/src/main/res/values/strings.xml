@@ -5,6 +5,7 @@
 
     <string name="level">%1s%2s</string>
     <string name="content">%1s:%2s</string>
+    <string name="verifiedMilliSecond">重新发送(%1ds)</string>
 
     <!--MainActivity   主页-->
     <string name="activity_main">主页</string>

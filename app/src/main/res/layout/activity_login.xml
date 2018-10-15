@@ -6,15 +6,26 @@
     android:background="@drawable/login_bg">
 
     <ImageView
+        android:id="@+id/back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:contentDescription="@string/user_edit_back"
+        android:src="@drawable/ic_back_strong"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
         android:id="@+id/img_login"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="60dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_traveling"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/back" />
 
     <TextView
         android:id="@+id/tv_login"
@@ -34,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/et_bg"
         android:hint="@string/input_phone"
         android:inputType="number"
@@ -69,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/btn_gray_bg"
         android:text="@string/login"
         android:enabled="false"

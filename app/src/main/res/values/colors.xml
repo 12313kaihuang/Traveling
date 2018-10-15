@@ -13,6 +13,7 @@
     <color name="gray2">#CFCFCF</color>
     <color name="gray3">#CCCCCC</color>
     <color name="gray4">#CDCDCD</color>
+    <color name="verified_gray">#80C8CACC</color>
     <color name="loading_color">#8A8A8A</color>
     <color name="gold">#E7CD9E</color>
     <color name="lightblue">#87CEEB</color>

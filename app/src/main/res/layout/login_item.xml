@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/et_bg"
         android:hint="@string/login_hint_pass"
         android:maxLength="20"
@@ -36,10 +36,10 @@
             android:id="@+id/login_verified_code"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="12dp"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_weight="8"
+            android:layout_marginTop="10dp"
+            android:layout_weight="3"
             android:background="@drawable/et_bg"
             android:hint="@string/input_verified_code"
             android:maxLength="6"
@@ -55,12 +55,13 @@
             android:textSize="20sp" />
 
         <Button
+            android:id="@+id/btn_verified_code"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_gravity="bottom"
             android:layout_marginBottom="2dp"
             android:layout_marginEnd="15dp"
-            android:layout_weight="5"
+            android:layout_weight="2"
             android:background="@drawable/btn_verified_bg"
             android:text="@string/get_verified_code"
             android:textColor="@color/white" />
