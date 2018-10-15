@@ -54,4 +54,8 @@ public class StaticClass {
     public static final int PHONE_MAX_LENGTH = 11;
     public static final int VERIFIED_CODE_MAX_LENGTH = 6;
     public static final int EMAIL_MAX_LENGTH = 50;
+    public static final int PASSWORD_MIN_LENGTH = 5;
+
+    //检测email的正则表达式
+    public static final String EMAIL_REGULAR = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
 }

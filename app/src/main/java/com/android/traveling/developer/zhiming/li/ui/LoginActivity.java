@@ -25,6 +25,8 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
 
+import java.util.regex.Pattern;
+
 
 /**
  * 项目名：Traveling
@@ -44,9 +46,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button btn_login;
     private inputContent inputContent = new inputContent();
 
-    private boolean usernameVaild = false;
-    private boolean veridiedCodeVaild = false;
-    private boolean passwordVaild = false;
+    //输入是否合法
+    private boolean usernameValid = false;
+    private boolean emailValid = false;
+    private boolean verifiedCodeValid = false;
+    private boolean loginEnable = false;
 
     //登录方式
     private int loginMode = StaticClass.LOGIN_BY_VERIFIED;
@@ -92,6 +96,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login_by_password.setOnClickListener(this);
         login_by_verified.setOnClickListener(this);
 
+        //输入账号密码时监听事件
         addTextChangedListener();
 
         //其他方式登录
@@ -117,20 +122,52 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 switch (loginMode) {
                     case StaticClass.LOGIN_BY_VERIFIED:
                         if (s.length() == StaticClass.PHONE_MAX_LENGTH) {
-                            usernameVaild = true;
-                            if (veridiedCodeVaild) {
+                            usernameValid = true;
+                            if (verifiedCodeValid) {
                                 setLoginEnabled(true);
                             }
                         } else {
-                            setLoginEnabled(false);
-                            if (usernameVaild) {
-                                usernameVaild = false;
+                            if (usernameValid) {
+                                usernameValid = false;
+                            }
+                            if (loginEnable) {
+                                setLoginEnabled(false);
                             }
                         }
                         break;
                     case StaticClass.LOGIN_BY_PHONE:
+                        if (s.length() == StaticClass.PHONE_MAX_LENGTH) {
+                            usernameValid = true;
+                            if (password.getText().toString().length() >=
+                                    StaticClass.PASSWORD_MIN_LENGTH) {
+                                setLoginEnabled(true);
+                            }
+                        }else {
+                            if (usernameValid) {
+                                usernameValid = false;
+                            }
+
+                            if (loginEnable) {
+                                setLoginEnabled(false);
+                            }
+                        }
                         break;
                     case StaticClass.LOGIN_BY_EMAIL:
+                        if (Pattern.matches(StaticClass.EMAIL_REGULAR, s.toString())) {
+                            emailValid = true;
+                            if (password.getText().toString().length() >=
+                                    StaticClass.PASSWORD_MIN_LENGTH) {
+                                setLoginEnabled(true);
+                            }
+                        }else {
+                            if (emailValid) {
+                                emailValid = false;
+                            }
+
+                            if (loginEnable) {
+                                setLoginEnabled(false);
+                            }
+                        }
                         break;
                 }
             }
@@ -152,14 +189,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 switch (loginMode) {
                     case StaticClass.LOGIN_BY_VERIFIED:
                         if (s.length() == StaticClass.VERIFIED_CODE_MAX_LENGTH) {
-                            veridiedCodeVaild = true;
-                            if (usernameVaild) {
+                            verifiedCodeValid = true;
+                            if (usernameValid) {
                                 setLoginEnabled(true);
                             }
                         } else {
-                            setLoginEnabled(false);
-                            if (veridiedCodeVaild) {
-                                veridiedCodeVaild = false;
+                            if (loginEnable) {
+                                setLoginEnabled(false);
+                            }
+
+                            if (verifiedCodeValid) {
+                                verifiedCodeValid = false;
                             }
                         }
                         break;
@@ -176,18 +216,47 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length() >= StaticClass.PASSWORD_MIN_LENGTH) {
+                    if (loginMode == StaticClass.LOGIN_BY_PHONE && usernameValid) {
+                        setLoginEnabled(true);
+                    }
+                    if (loginMode == StaticClass.LOGIN_BY_EMAIL && emailValid) {
+                        setLoginEnabled(true);
+                    }
+                }else {
+
+                    if (loginEnable) {
+                        setLoginEnabled(false);
+                    }
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
     //设置登录按钮是否可点击
     private void setLoginEnabled(boolean isEnabled) {
+        loginEnable = isEnabled;
+        btn_login.setEnabled(isEnabled);
         if (isEnabled) {
-            btn_login.setEnabled(true);
             btn_login.setBackgroundResource(R.drawable.blue_bg);
         } else {
-            btn_login.setEnabled(false);
             btn_login.setBackgroundResource(R.drawable.btn_gray_bg);
         }
-
     }
 
     @Override
@@ -264,21 +333,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             login_forget_pass.setVisibility(View.VISIBLE);
             cut_line.setVisibility(View.VISIBLE);
             login_by_verified.setText(getString(R.string.login_by_verified));
-            if (passwordMode) {
+            if (passwordMode) { //由验证码登录换为手机账号登录
                 setInputType(StaticClass.LOGIN_BY_PHONE);
-            } else {
+                changeLoginEnabled(usernameValid);
+            } else {            //由验证码登录换为邮箱账号登录
                 setInputType(StaticClass.LOGIN_BY_EMAIL);
                 username.setHint(getString(R.string.input_email));
                 username.setText(inputContent.email);
+                changeLoginEnabled(emailValid);
             }
+
+
 
         } else {
             setInputType(StaticClass.LOGIN_BY_VERIFIED);
+
             if (passwordMode) {
                 inputContent.phoneNumber = username.getText().toString();
+
             } else {
                 inputContent.email = username.getText().toString();
                 username.setText(inputContent.phoneNumber);
+
             }
             LL_verified.setVisibility(View.VISIBLE);
             password.setVisibility(View.INVISIBLE);
@@ -287,6 +363,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             cut_line.setVisibility(View.GONE);
             username.setHint(getString(R.string.input_phone));
             login_by_verified.setText(getString(R.string.login_by_password));
+
+            if (username.getText().toString().length() == StaticClass.PHONE_MAX_LENGTH
+                    && verified_code.getText().toString().length() == StaticClass.VERIFIED_CODE_MAX_LENGTH) {
+                setLoginEnabled(true);
+            }else {
+                setLoginEnabled(false);
+            }
+        }
+    }
+
+    //切换登录方式时设置登录按钮是否可点击
+    private void changeLoginEnabled(boolean isEnabled) {
+        if (password.getText().toString().length() >= 5 && isEnabled) {
+            setLoginEnabled(true);
+        }else {
+            setLoginEnabled(false);
         }
     }
 
@@ -301,6 +393,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 inputContent.email = username.getText().toString();
                 username.setText(inputContent.phoneNumber);
+                changeLoginEnabled(usernameValid);
                 break;
             case StaticClass.LOGIN_BY_PHONE:
                 passwordMode = false;
@@ -310,6 +403,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 inputContent.phoneNumber = username.getText().toString();
                 username.setText(inputContent.email);
+                changeLoginEnabled(emailValid);
                 break;
 
         }
@@ -344,7 +438,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case 211:
                 //找不到用户
                 UtilTools.toast(LoginActivity.this,
-                        "未找到该用户，请核对您输入的用户名");
+                        "未找到该用户，请核对您输入的用户名或密码");
                 break;
             case 215:
                 //手机号未被验证
