@@ -13,14 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
+import com.android.traveling.developer.zhiming.li.entity.MyUser;
 import com.android.traveling.developer.zhiming.li.ui.GuideActivity;
 import com.android.traveling.developer.zhiming.li.ui.LoginActivity;
 import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
 import com.android.traveling.fragment.BaseFragment;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
-import com.avos.avoscloud.AVUser;
 
+import cn.bmob.v3.BmobUser;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -51,12 +52,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     //初始化数据
     private void initData() {
-        AVUser currentUser = AVUser.getCurrentUser();
+        MyUser currentUser = BmobUser.getCurrentUser(MyUser.class);
+
         if (currentUser != null) {
-            my_user_status.setText(currentUser.getString("nick_name"));
+            my_user_status.setText(currentUser.getNickName());
         }else {
             my_user_status.setText(getString(R.string.not_login));
         }
+
     }
 
     //初始化view
@@ -72,9 +75,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         TextView tv_to_login = view.findViewById(R.id.tv_to_login);
         tv_to_login.setOnClickListener(v -> {
             //登出
-            AVUser currentUser = AVUser.getCurrentUser();
+            MyUser currentUser = BmobUser.getCurrentUser(MyUser.class);
             if (currentUser != null) {
-                AVUser.logOut();
+                BmobUser.logOut();
             }
             startActivity(new Intent(getActivity(), LoginActivity.class));
             if (getActivity() != null) {
@@ -133,7 +136,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.my_user_bg: //点击了头像
             case R.id.my_edit_userData: //点击了编辑个人资料
-                if (AVUser.getCurrentUser() != null) {
+                if (BmobUser.getCurrentUser() != null) {
                     startActivity(new Intent(getActivity(), UserEditActivity.class));
                 }else {
                     UtilTools.toast(getContext(),"未登录状态无法编辑个人信息");

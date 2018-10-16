@@ -65,9 +65,6 @@ public class RecommendFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recommend, container, false);
 
         initView(view);
-//        AVUser user = AVUser.getCurrentUser();
-//        boolean emailVerified = user.getBoolean("emailVerified");
-//        UtilTools.toast(getContext(),"邮箱是否已验证："+emailVerified);
         return view;
     }
 

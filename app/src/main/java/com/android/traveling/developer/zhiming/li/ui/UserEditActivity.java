@@ -9,12 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
+import com.android.traveling.developer.zhiming.li.entity.MyUser;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.GetCallback;
+
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * 项目名：Traveling
@@ -27,7 +28,7 @@ import com.avos.avoscloud.GetCallback;
 
 public class UserEditActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private AVUser user;
+    private MyUser user;
     private EditText username;
     private EditText gender;
     private EditText live_area;
@@ -41,35 +42,9 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
         initData();
     }
 
-    //初始化数据
-    private void initData() {
-
-        //同步对象
-        user.fetchInBackground(new GetCallback<AVObject>() {
-            @Override
-            public void done(AVObject avObject, AVException e) {
-                username.setText(user.getString("nick_name"));
-
-                String s_signature = user.getString("signature");
-                if (s_signature != null) {
-                    signature.setText(s_signature);
-                }
-                String s_live_area = user.getString("live_area");
-                if (s_live_area != null) {
-                    live_area.setText(s_live_area);
-                }
-                String s_gender = user.getString("gender");
-                if (s_gender != null) {
-                    gender.setText(s_gender);
-                }
-            }
-        });
-
-    }
-
     //初始化View
     private void initView() {
-        user = AVUser.getCurrentUser();
+        user = BmobUser.getCurrentUser(MyUser.class);
         username = findViewById(R.id.username);
         gender = findViewById(R.id.gender);
         live_area = findViewById(R.id.live_area);
@@ -81,17 +56,38 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
         img_back.setOnClickListener(this);
     }
 
+
+    //初始化数据
+    private void initData() {
+
+        username.setText(user.getNickName());
+        signature.setText(user.getSignature());
+        live_area.setText(user.getLiveArea());
+        gender.setText(user.getGender());
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.save:
-                user.put("username", username.getText().toString());
-                user.put("signature", signature.getText().toString());
-                user.put("gender", gender.getText().toString());
-                user.put("live_area", live_area.getText().toString());
-                user.saveInBackground();
-                UtilTools.toast(this, "保存成功");
-                onBackPressed();
+                MyUser newUser = BmobUser.getCurrentUser(MyUser.class);
+                newUser.setNickName(username.getText().toString());
+                newUser.setSignature(signature.getText().toString());
+                newUser.setGender(gender.getText().toString());
+                newUser.setLiveArea(live_area.getText().toString());
+                newUser.update(user.getObjectId(),new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if(e==null){
+                            UtilTools.toast(UserEditActivity.this, "保存成功");
+                            onBackPressed();
+                        }else{
+                            UtilTools.toast(UserEditActivity.this,
+                                    "更新用户信息失败:" + e.getMessage());
+                        }
+                    }
+                });
+
                 break;
             case R.id.img_back:
                 onBackPressed();

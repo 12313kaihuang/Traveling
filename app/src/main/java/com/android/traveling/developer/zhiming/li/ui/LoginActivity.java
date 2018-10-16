@@ -8,9 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,18 +19,19 @@ import android.widget.Toast;
 
 import com.android.traveling.MainActivity;
 import com.android.traveling.R;
+import com.android.traveling.developer.zhiming.li.entity.MyUser;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.LogInCallback;
 
 import java.util.regex.Pattern;
 
 import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.SaveListener;
 
 
 /**
@@ -280,9 +279,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                if (!isInputEmpty()) {
-                    Login();
-                }
+                Login();
                 break;
             case R.id.service_terms:
                 startActivity(new Intent(this, ServiceTermsActivity.class));
@@ -318,15 +315,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     //获取验证码
     private void getVerifiedCode() {
         if (usernameValid) {
-            verifiedTimer.start();
+
             BmobSMS.requestSMSCode(username.getText().toString()
                     , StaticClass.BMOB_SMS_TEMPLATE, new QueryListener<Integer>() {
 
                         @Override
                         public void done(Integer smsId, BmobException ex) {
                             if (ex == null) {//验证码发送成功
-                                Log.i("smile", "短信id：" + smsId);//用于查询本次短信发送详情
-                                UtilTools.toast(LoginActivity.this,"验证码发送成功，请注意查收！");
+                                LogUtil.d("短信id：" + smsId);//用于查询本次短信发送详情
+                                verifiedTimer.start();
+                                UtilTools.toast(LoginActivity.this, "验证码发送成功，请注意查收！");
                             } else {
                                 toastException(ex);
                             }
@@ -343,10 +341,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void Login() {
         switch (loginMode) {
             case StaticClass.LOGIN_BY_VERIFIED:
-
+                loginByVerifiedCode();
                 break;
             case StaticClass.LOGIN_BY_PHONE:
-
+                loginByPhone();
                 break;
             case StaticClass.LOGIN_BY_EMAIL:
                 loginByEmail();
@@ -354,21 +352,63 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
+    //验证码登录
+    private void loginByVerifiedCode() {
+        MyUser user = new MyUser();
+        user.setMobilePhoneNumber(username.getText().toString());
+        user.setNickName(getString(R.string.init_username));
+        user.setGender(StaticClass.GENDER_SECRET);
+        user.setLiveArea(getString(R.string.area_status));
+        user.signOrLogin(verified_code.getText().toString(), new SaveListener<MyUser>() {
+
+            @Override
+            public void done(MyUser user, BmobException e) {
+                if (e == null) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    LoginActivity.this.finish();
+                } else {
+                    UtilTools.toast(LoginActivity.this, "失败:" + e.getMessage());
+                }
+            }
+        });
+
+    }
+
+    //手机账号登录
+    private void loginByPhone() {
+        BmobUser.loginByAccount(username.getText().toString()
+                , password.getText().toString(), new LogInListener<MyUser>() {
+
+            @Override
+            public void done(MyUser user, BmobException e) {
+                if(user!=null){
+                    UtilTools.toast(LoginActivity.this, "登录成功");
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    LoginActivity.this.finish();
+                } else {
+                    toastException(e);
+                }
+            }
+        });
+    }
+
     //邮箱账号登录
     private void loginByEmail() {
-        AVUser.logInInBackground(username.getText().toString(),
-                password.getText().toString(), new LogInCallback<AVUser>() {
-                    @Override
-                    public void done(AVUser avUser, AVException e) {
-                        if (e == null) {
-                            UtilTools.toast(LoginActivity.this, "登录成功");
-                            LoginActivity.this.finish();
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        } else {
-                            toastException(e);
-                        }
-                    }
-                });
+        BmobUser.loginByAccount(username.getText().toString(),
+                password.getText().toString(), new LogInListener<MyUser>() {
+
+            @Override
+            public void done(MyUser user, BmobException e) {
+                if(user!=null){
+                    UtilTools.toast(LoginActivity.this, "登录成功");
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    LoginActivity.this.finish();
+                } else {
+                    toastException(e);
+                }
+            }
+        });
     }
 
     //切换登录方式
@@ -493,50 +533,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void toastException(AVException e) {
 
-        switch (e.getCode()) {
-            case 211:
-                //找不到用户
-                UtilTools.toast(LoginActivity.this,
-                        "未找到该用户，请核对您输入的用户名或密码");
-                break;
-            case 214:
-                //找不到用户
-                UtilTools.toast(LoginActivity.this,
-                        "该手机号码已被注册");
-                break;
-            case 215:
-                //手机号未被验证
-                UtilTools.toast(LoginActivity.this,
-                        "该手机尚未通过验证");
-                break;
-            case 216:
-                //邮箱未被验证
-                UtilTools.toast(LoginActivity.this,
-                        "该邮箱尚未通过验证，请查看邮件并验证成功后再次登录");
-                break;
-            default:
-                Toast.makeText(LoginActivity.this,
-                        "e.code:" + e.getCode() + e.getMessage(), Toast.LENGTH_SHORT).show();
-                LogUtil.d("e.code:" + e.getCode() + e.getMessage());
-                break;
-        }
-
-    }
-
-    //判断输入是否为空
-    private boolean isInputEmpty() {
-        if (TextUtils.isEmpty(username.getText().toString())) {
-            UtilTools.toast(this, "用户名不能为空！");
-            return true;
-        }
-        if (TextUtils.isEmpty(password.getText().toString())) {
-            UtilTools.toast(this, "密码不能为空");
-            return true;
-        }
-        return false;
-    }
 
     class VerifiedTimer extends CountDownTimer {
 

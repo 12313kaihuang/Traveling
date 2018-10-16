@@ -64,4 +64,9 @@ public class StaticClass {
 
     //短信模板
     public static final String BMOB_SMS_TEMPLATE = "register";
+
+    //性别
+    public static final String GENDER_SECRET = "保密";
+    public static final String GENDER_MALE = "男";
+    public static final String GENDER_FEMALE = "女";
 }
