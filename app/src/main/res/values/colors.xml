@@ -25,4 +25,6 @@
     <color name="news_flag1_color">#F4DB75</color>
     <color name="news_flag2_color">#F98080</color>
     <color name="news_flag3_color">#6EDFD2</color>
+    <color name="bind_yellow">#FFE247</color>
+    <color name="bind_gray">#D8D8D8</color>
 </resources>

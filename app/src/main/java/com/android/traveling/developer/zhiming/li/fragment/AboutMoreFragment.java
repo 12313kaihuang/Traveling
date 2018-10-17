@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.zhiming.li.entity.MyUser;
+import com.android.traveling.developer.zhiming.li.ui.AccountBindActivity;
 import com.android.traveling.developer.zhiming.li.ui.ConfigActivity;
 import com.android.traveling.developer.zhiming.li.ui.LoginActivity;
 import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
@@ -96,7 +97,7 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
                 break;
             case R.id.about_bind:
                 if (BmobUser.getCurrentUser() != null) {
-                    UtilTools.toast(getContext(), "账号绑定");
+                    startActivity(new Intent(getActivity(), AccountBindActivity.class));
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }

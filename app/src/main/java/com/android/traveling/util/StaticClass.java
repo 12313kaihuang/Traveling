@@ -73,4 +73,7 @@ public class StaticClass {
     //广播
     public static final String BROADCAST_LOGIN = "com.traveling.broadcast.LOGIN";
     public static final String BROADCAST_LOGOUT = "com.traveling.broadcast.LOGOUT";
+
+    //手机格式转换
+    public static final String FORMAT_PHONE_REGEX = "(\\d{3})\\d{4}(\\d{4})";
 }

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/bind_uid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingEnd="0dp"
+        android:paddingStart="12dp"
+        android:paddingTop="5dp"
+        android:text="@string/bind_uid"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="22dp">
+
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_phone"
+            android:gravity="center_vertical"
+            android:text="@string/bind_phone"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/bind_phone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/bind_phone_num"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btn_phone"
+            android:layout_width="62dp"
+            android:layout_height="33dp"
+            android:background="@color/bind_gray"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/bind_change"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="12dp"
+        android:background="@color/gray2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="22dp">
+
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_email"
+            android:gravity="center_vertical"
+            android:text="@string/bind_email"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/bind_email"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/bind_phone_num"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btn_email"
+            android:layout_width="62dp"
+            android:layout_height="33dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/bind_yellow"
+            android:text="@string/bind_bind"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+</LinearLayout>

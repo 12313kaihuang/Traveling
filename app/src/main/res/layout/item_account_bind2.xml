@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/bind_uid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingEnd="0dp"
+            android:paddingStart="12dp"
+            android:paddingTop="5dp"
+            android:text="@string/bind_other_account"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:paddingEnd="15dp"
+            android:paddingStart="0dp"
+            android:text="@string/other_bind"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="22dp">
+
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_qq_not_bind"
+            android:gravity="center_vertical"
+            android:text="@string/bind_qq"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/bind_qq"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/bind_phone_num"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btn_qq"
+            android:layout_width="62dp"
+            android:layout_height="33dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/bind_gray"
+            android:text="@string/bind_cancel"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="20dp"
+        android:background="@color/gray2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="22dp">
+
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_wechat_not_bind"
+            android:gravity="center_vertical"
+            android:text="@string/bind_wechat"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/bind_wechat"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btn_wechat"
+            android:layout_width="62dp"
+            android:layout_height="33dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/bind_yellow"
+            android:text="@string/bind_bind"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="20dp"
+        android:background="@color/gray2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="22dp">
+
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_weibo_not_bind"
+            android:gravity="center_vertical"
+            android:text="@string/bind_weibo"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/bind_weibo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btn_weibo"
+            android:layout_width="62dp"
+            android:layout_height="33dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/bind_yellow"
+            android:text="@string/bind_bind"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+</LinearLayout>

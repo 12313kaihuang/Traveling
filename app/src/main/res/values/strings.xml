@@ -160,4 +160,18 @@
 
     <!--activity_config-->
     <string name="version">当前版本:%1s</string>
+
+    <!--item_account_bind1-->
+    <string name="bind_uid">安全绑定当前账号(UID:%1s)</string>
+    <string name="bind_phone">手机号</string>
+    <string name="bind_phone_num">已绑定%1s</string>
+    <string name="bind_change">修改</string>
+    <string name="bind_email">邮箱</string>
+    <string name="bind_bind">绑定</string>
+    <string name="bind_other_account">第三方账号登录</string>
+    <string name="other_bind">绑定账号均可登录</string>
+    <string name="bind_qq">QQ</string>
+    <string name="bind_wechat">微信</string>
+    <string name="bind_weibo">微博</string>
+    <string name="bind_cancel">解绑</string>
 </resources>
