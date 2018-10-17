@@ -84,6 +84,14 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="设置个人信息"/>
 
+        <!--账号绑定与设置-->
+        <activity android:name=".developer.zhiming.li.ui.AccountBindActivity"
+            android:label="账号绑定与设置"/>
+
+        <!--关于-->
+        <activity android:name=".developer.zhiming.li.ui.ConfigActivity"
+            android:label="关于"/>
+
 
     </application>
 

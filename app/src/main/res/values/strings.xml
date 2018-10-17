@@ -134,10 +134,14 @@
     <string name="about_more">更多</string>
     <string name="about_traveling">关于Traveling</string>
     <string name="about_logout">退出当前账号</string>
+    <string name="about_login">登录/注册</string>
     <string name="about_edit">编辑个人资料</string>
+    <string name="about_area">常住地</string>
+    <string name="about_live_area">常住地：%1s</string>
     <string name="about_bind">账号绑定与设置</string>
     <string name="about_message">消息设置</string>
     <string name="about_privacy">隐私设置</string>
+    <string name="about_clear_cache">清除缓存</string>
 
     <!--activity_user_edit-->
     <string name="user_edit">编辑个人信息</string>
@@ -153,4 +157,7 @@
     <!--load_progressbar-->
     <string name="loading">加载中..</string>
     <string name="load_faild">加载失败，点击重试</string>
+
+    <!--activity_config-->
+    <string name="version">当前版本:%1s</string>
 </resources>

@@ -365,7 +365,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void done(MyUser user, BmobException e) {
                 if (e == null) {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
                     LoginActivity.this.finish();
                 } else {
                     UtilTools.toast(LoginActivity.this, "失败:" + e.getMessage());
@@ -384,7 +384,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void done(MyUser user, BmobException e) {
                 if(user!=null){
                     UtilTools.toast(LoginActivity.this, "登录成功");
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
                     LoginActivity.this.finish();
                 } else {
                     toastException(e);
@@ -402,7 +402,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void done(MyUser user, BmobException e) {
                 if(user!=null){
                     UtilTools.toast(LoginActivity.this, "登录成功");
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
                     LoginActivity.this.finish();
                 } else {
                     toastException(e);

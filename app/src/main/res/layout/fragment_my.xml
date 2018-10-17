@@ -44,19 +44,6 @@
             android:text="@string/to_guide_pager"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/tv_to_login"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/red_bg"
-            android:gravity="center"
-            android:text="@string/to_login_pager"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
     </LinearLayout>
 
     <fragment

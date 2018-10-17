@@ -69,4 +69,8 @@ public class StaticClass {
     public static final String GENDER_SECRET = "保密";
     public static final String GENDER_MALE = "男";
     public static final String GENDER_FEMALE = "女";
+
+    //广播
+    public static final String BROADCAST_LOGIN = "com.traveling.broadcast.LOGIN";
+    public static final String BROADCAST_LOGOUT = "com.traveling.broadcast.LOGOUT";
 }
