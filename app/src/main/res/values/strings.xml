@@ -154,4 +154,7 @@
     <string name="pass_hint">5–20位数字或字母密码</string>
     <string name="on_loading">加载中，请稍后..</string>
     <string name="on_login">正在登陆..</string>
+
+    <!--activity_news_setting-->
+    <string name="push_voice">推送声音</string>
 </resources>

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.traveling.R;
+import com.android.traveling.developer.zhiming.li.ui.NewsSettingActivity;
 import com.android.traveling.entity.MyUser;
 import com.android.traveling.developer.zhiming.li.ui.AccountBindActivity;
 import com.android.traveling.developer.zhiming.li.ui.ConfigActivity;
@@ -83,11 +84,15 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
         TextView about_edit = view.findViewById(R.id.about_edit);
         TextView about_bind = view.findViewById(R.id.about_bind);
         TextView about_privacy = view.findViewById(R.id.about_privacy);
+        TextView clear_cache = view.findViewById(R.id.clear_cache);
+        TextView message_setting = view.findViewById(R.id.message_setting);
         about_edit.setOnClickListener(this);
         about_logout.setOnClickListener(this);
         about_bind.setOnClickListener(this);
         about_privacy.setOnClickListener(this);
         about_more.setOnClickListener(this);
+        clear_cache.setOnClickListener(this);
+        message_setting.setOnClickListener(this);
 
 
     }
@@ -137,6 +142,12 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
                 break;
             case R.id.about_more:
                 startActivity(new Intent(getActivity(), ConfigActivity.class));
+                break;
+            case R.id.clear_cache:
+                UtilTools.toast(getContext(), "清除缓存");
+                break;
+            case R.id.message_setting:
+                startActivity(new Intent(getActivity(), NewsSettingActivity.class));
                 break;
         }
     }
