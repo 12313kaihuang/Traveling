@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +16,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.traveling.MainActivity;
 import com.android.traveling.R;
-import com.android.traveling.developer.zhiming.li.entity.MyUser;
+import com.android.traveling.entity.MyUser;
+import com.android.traveling.util.MyCustomDialog;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private LinearLayout LL_verified;
 
     private VerifiedTimer verifiedTimer;
+    private MyCustomDialog loginDialog;
 
 
     @Override
@@ -82,6 +83,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //初始化View
     private void initView() {
+
+        loginDialog = MyCustomDialog.getLoginDialog(this);
+        loginDialog.setCancelable(false);  //屏幕外点击无效
+
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(this);
 
@@ -285,7 +290,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(this, ServiceTermsActivity.class));
                 break;
             case R.id.login_forget_pass:
-                startActivity(new Intent(this, ForgetPassActivity.class));
+                UtilTools.toast(this,"忘记密码");
                 break;
             case R.id.ic_wechat:
                 UtilTools.toast(this, "微信登录");
@@ -311,7 +316,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    //signUpOrLoginByMobilePhoneInBackground(  requestLoginSmsCodeInBackground
+
     //获取验证码
     private void getVerifiedCode() {
         if (usernameValid) {
@@ -326,7 +331,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 verifiedTimer.start();
                                 UtilTools.toast(LoginActivity.this, "验证码发送成功，请注意查收！");
                             } else {
-                                toastException(ex);
+                                UtilTools.toastException(LoginActivity.this,ex);
                             }
                         }
                     });
@@ -339,6 +344,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //登录
     private void Login() {
+        loginDialog.show();
         switch (loginMode) {
             case StaticClass.LOGIN_BY_VERIFIED:
                 loginByVerifiedCode();
@@ -359,12 +365,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         user.setMobilePhoneNumber(username.getText().toString());
         user.setNickName(getString(R.string.init_username));
         user.setGender(StaticClass.GENDER_SECRET);
-        user.setLiveArea(getString(R.string.area_status));
+        user.setLiveArea("");
+        user.setHasPass(false);
         user.signOrLogin(verified_code.getText().toString(), new SaveListener<MyUser>() {
 
             @Override
             public void done(MyUser user, BmobException e) {
                 if (e == null) {
+                    loginDialog.dismiss();
                     sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
                     LoginActivity.this.finish();
                 } else {
@@ -383,11 +391,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void done(MyUser user, BmobException e) {
                 if(user!=null){
+                    loginDialog.dismiss();
                     UtilTools.toast(LoginActivity.this, "登录成功");
                     sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
                     LoginActivity.this.finish();
                 } else {
-                    toastException(e);
+                    UtilTools.toastException(LoginActivity.this,e);
                 }
             }
         });
@@ -401,11 +410,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void done(MyUser user, BmobException e) {
                 if(user!=null){
-                    UtilTools.toast(LoginActivity.this, "登录成功");
-                    sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
-                    LoginActivity.this.finish();
+                    loginDialog.dismiss();
+                    if (TextUtils.isEmpty(user.getEmail())){
+                        UtilTools.toast(LoginActivity.this,"该邮箱账号不存在！");
+                    }else {
+                        if (user.getEmailVerified()) {
+                            sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
+                            LoginActivity.this.finish();
+                        }else {
+                            UtilTools.toast(LoginActivity.this,"登录失败,验证邮箱后才能使用邮箱账号登录");
+                        }
+                    }
                 } else {
-                    toastException(e);
+                    UtilTools.toastException(LoginActivity.this,e);
                 }
             }
         });
@@ -516,20 +533,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
 
-    }
-
-    //根据异常码打印出错误信息
-    private void toastException(BmobException e) {
-        switch (e.getErrorCode()) {
-            case 1:
-
-                break;
-            default:
-                Toast.makeText(LoginActivity.this,
-                        "e.code:" + e.getErrorCode() + e.getMessage(), Toast.LENGTH_SHORT).show();
-                LogUtil.d("e.code:" + e.getErrorCode() + e.getMessage());
-                break;
-        }
     }
 
 

@@ -16,10 +16,15 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <!--自定义Dialog1 正在登陆-->
+    <!--自定义Dialog 弹出方式-->
     <style name="pop_anim_style">
         <item name="android:windowEnterAnimation">@anim/pop_in</item>
         <item name="android:windowExitAnimation">@anim/pop_out</item>
+    </style>
+
+    <style name="Theme_loading_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
 </resources>

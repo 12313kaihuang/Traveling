@@ -76,7 +76,6 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/about_message"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="0.5dp"
@@ -104,7 +103,6 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/about_clear_cache"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="0.5dp"

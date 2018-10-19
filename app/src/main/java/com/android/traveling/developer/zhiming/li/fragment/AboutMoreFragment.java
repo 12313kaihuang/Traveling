@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.zhiming.li.entity.MyUser;
+import com.android.traveling.entity.MyUser;
 import com.android.traveling.developer.zhiming.li.ui.AccountBindActivity;
 import com.android.traveling.developer.zhiming.li.ui.ConfigActivity;
 import com.android.traveling.developer.zhiming.li.ui.LoginActivity;
@@ -39,7 +39,6 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
 
     private TextView about_area;
     private TextView about_logout;
-    private TextView about_more;
 
     @Nullable
     @Override
@@ -62,8 +61,16 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
         if (BmobUser.getCurrentUser() != null) {
             about_area.setText(getString(R.string.about_live_area,
                     BmobUser.getCurrentUser(MyUser.class).getLiveArea()));
+            about_logout.setCompoundDrawablesWithIntrinsicBounds( getResources().
+                            getDrawable(R.drawable.ic_logout,null),null,
+                    null,null);
+            about_logout.setText(getResources().getString(R.string.about_logout));
         }else {
             about_area.setText(getString(R.string.about_area));
+            about_logout.setCompoundDrawablesWithIntrinsicBounds( getResources().
+                            getDrawable(R.drawable.ic_about_login,null),null,
+                    null,null);
+            about_logout.setText(getResources().getString(R.string.about_login));
         }
     }
 
@@ -71,7 +78,7 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
 
         about_area = view.findViewById(R.id.about_area);
         about_logout = view.findViewById(R.id.about_logout);
-        about_more = view.findViewById(R.id.about_more);
+        TextView about_more = view.findViewById(R.id.about_more);
 
         TextView about_edit = view.findViewById(R.id.about_edit);
         TextView about_bind = view.findViewById(R.id.about_bind);
@@ -134,14 +141,9 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-
     //退出登录操作
     private void Logout() {
         initData();
-        about_logout.setCompoundDrawablesWithIntrinsicBounds( getResources().
-                        getDrawable(R.drawable.ic_about_login,null),null,
-                null,null);
-        about_logout.setText(getResources().getString(R.string.about_login));
         Intent intent = new Intent();
         intent.setAction(StaticClass.BROADCAST_LOGOUT);
         //noinspection ConstantConditions
@@ -152,10 +154,7 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
     private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            about_logout.setCompoundDrawablesWithIntrinsicBounds( getResources().
-                            getDrawable(R.drawable.ic_logout,null),null,
-                    null,null);
-            about_logout.setText(getResources().getString(R.string.about_logout));
+            initData();
         }
     };
 

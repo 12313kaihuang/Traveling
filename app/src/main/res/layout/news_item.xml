@@ -119,7 +119,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/LL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -146,7 +145,6 @@
             android:textColor="@color/black" />
 
         <ImageView
-            android:id="@+id/news_item_commit"
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:contentDescription="@string/like"

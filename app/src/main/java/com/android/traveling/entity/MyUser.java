@@ -1,4 +1,4 @@
-package com.android.traveling.developer.zhiming.li.entity;
+package com.android.traveling.entity;
 
 import android.text.TextUtils;
 
@@ -9,7 +9,7 @@ import cn.bmob.v3.BmobUser;
 
 /**
  * 项目名：Traveling
- * 包名：  com.android.traveling.developer.zhiming.li.entity
+ * 包名：  com.android.traveling.entity
  * 文件名：MyUser
  * 创建者：HY
  * 创建时间：2018/10/16 14:42
@@ -20,13 +20,15 @@ import cn.bmob.v3.BmobUser;
 public class MyUser extends BmobUser {
 
     @SerializedName("nickname")
-    private String nickName;    //昵称
+    private String nickName = "Traveling用户";    //昵称
 
     private String gender;      //性别
 
     private String signature;   //签名
 
     private String liveArea;    //所在地
+
+    private boolean hasPass;
 
     public String getGender() {
         return gender == null ? StaticClass.GENDER_SECRET : gender;
@@ -65,5 +67,13 @@ public class MyUser extends BmobUser {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public boolean isHasPass() {
+        return hasPass;
+    }
+
+    public void setHasPass(boolean hasPass) {
+        this.hasPass = hasPass;
     }
 }

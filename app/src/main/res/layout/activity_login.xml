@@ -155,7 +155,6 @@
 
 
     <LinearLayout
-        android:id="@+id/LL_other_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -198,7 +197,6 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
-            android:id="@+id/text_service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/service_text"

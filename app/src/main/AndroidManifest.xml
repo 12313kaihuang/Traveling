@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--允许读取手机状态 用于创建BmobInstallation-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
         android:name=".application.BaseApplication"
@@ -71,12 +72,8 @@
             android:label="服务条款" />
 
         <!--注册-->
-        <activity android:name=".developer.zhiming.li.ui.RegisterActivity"
-            android:label="注册"/>
 
         <!--忘记密码-->
-        <activity android:name=".developer.zhiming.li.ui.ForgetPassActivity"
-            android:label="忘记密码"/>
 
         <!--编辑个人资料-->
         <activity android:name=".developer.zhiming.li.ui.UserEditActivity"
@@ -91,6 +88,10 @@
         <!--关于-->
         <activity android:name=".developer.zhiming.li.ui.ConfigActivity"
             android:label="关于"/>
+
+        <!--绑定邮箱-->
+        <activity android:name=".developer.zhiming.li.ui.BindEmailActivity"
+            android:label="绑定邮箱"/>
 
 
     </application>

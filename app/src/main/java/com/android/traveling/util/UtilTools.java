@@ -7,6 +7,10 @@ import android.graphics.Typeface;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.traveling.developer.zhiming.li.ui.LoginActivity;
+
+import cn.bmob.v3.exception.BmobException;
+
 
 /**
  * 项目名：Traveling
@@ -21,7 +25,7 @@ import android.widget.Toast;
 public class UtilTools {
 
     //设置字体
-    public static void setFont(Context context, TextView textView,String fontId) {
+    public static void setFont(Context context, TextView textView, String fontId) {
         Typeface fontType = Typeface.createFromAsset(context.getAssets(), fontId);
         textView.setTypeface(fontType);
     }
@@ -40,6 +44,7 @@ public class UtilTools {
 
     /**
      * 获取版本信息
+     *
      * @param context 上下文
      * @return 返回versionName，出错则返回null
      */
@@ -54,4 +59,20 @@ public class UtilTools {
         }
     }
 
+    //根据异常码打印出错误信息
+    public static void toastException(Context context, BmobException e) {
+        switch (e.getErrorCode()) {
+            case 101:
+                UtilTools.toast(context, "用户名或密码错误");
+                break;
+            case 9024:
+                UtilTools.toast(context, "先登录才能同步云端user");
+                break;
+            default:
+                Toast.makeText(context,
+                        "e.code:" + e.getErrorCode() + e.getMessage(), Toast.LENGTH_SHORT).show();
+                LogUtil.d("e.code:" + e.getErrorCode() + e.getMessage());
+                break;
+        }
+    }
 }

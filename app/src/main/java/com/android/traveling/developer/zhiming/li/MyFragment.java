@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.zhiming.li.entity.MyUser;
+import com.android.traveling.entity.MyUser;
 import com.android.traveling.developer.zhiming.li.ui.GuideActivity;
 import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
 import com.android.traveling.fragment.BaseFragment;

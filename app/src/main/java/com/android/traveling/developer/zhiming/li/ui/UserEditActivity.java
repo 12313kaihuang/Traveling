@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.zhiming.li.entity.MyUser;
+import com.android.traveling.entity.MyUser;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
 
@@ -51,7 +51,7 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
         signature = findViewById(R.id.signature);
         ImageView img_back = findViewById(R.id.img_back);
         TextView save = findViewById(R.id.save);
-
+        LogUtil.d("刚进来"+user.getNickName());
         save.setOnClickListener(this);
         img_back.setOnClickListener(this);
     }
@@ -87,7 +87,6 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
                         }
                     }
                 });
-
                 break;
             case R.id.img_back:
                 onBackPressed();

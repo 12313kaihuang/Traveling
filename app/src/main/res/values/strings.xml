@@ -8,7 +8,6 @@
     <string name="verifiedMilliSecond">重新发送(%1ds)</string>
 
     <!--MainActivity   主页-->
-    <string name="activity_main">主页</string>
 
     <!--fragment_home-->
     <string name="fragment_home">首页</string>
@@ -26,7 +25,6 @@
     <string name="ic_sort">更多</string>
     <string name="ic_share">分享</string>
     <string name="user_status">未登录</string>
-    <string name="area_status">未设置</string>
     <string name="init_username">Traveling用户</string>
     <string name="to_vip"><![CDATA[成为黑卡会员 >]]></string>
     <string name="num_zero">0</string>
@@ -34,7 +32,6 @@
     <string name="collections">获赞与收藏</string>
     <string name="edit_user">编辑个人资料</string>
     <string name="fans">粉丝</string>
-    <string name="to_login_pager">退出登录</string>
 
     <!--fragment_new-->
     <string name="fragment_new">最新</string>
@@ -46,7 +43,6 @@
     <string name="fragment_focus_on">关注</string>
 
     <!--activity_guide-->
-    <string name="activity_guide">引导页</string>
     <string name="guide_point">小圆点</string>
     <string name="guide_start">进入主页</string>
     <string name="guide_back">跳过</string>
@@ -55,10 +51,8 @@
     <string name="strong">強大</string>
 
     <!--news_item-->
-    <string name="list_item_title">眉山一日游</string>
     <string name="list_item_content">眉山一日游：眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游
         眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游</string>
-    <string name="list_item_info">65330浏览·392顶</string>
     <string name="str_image">图片</string>
     <string name="like">喜欢</string>
     <string name="like_num">515</string>
@@ -99,36 +93,19 @@
     <string name="login_by_password">账号密码登录</string>
     <string name="get_verified_code">获取验证码</string>
     <string name="forget">忘记密码</string>
-    <string name="register">新用户注册</string>
     <string name="service_text">登录即代表阅读并同意</string>
     <string name="service_terms">服务条款</string>
-    <string name="default_username">admin</string>
     <string name="other_login">其他方式登录</string>
     <string name="login_by_wechat">微信登录</string>
     <string name="login_by_qq">qq登录</string>
     <string name="login_by_weibo">微博登录</string>
 
     <!--activity_register-->
-    <string name="activity_register">注册</string>
-    <string name="tv_username">账号：</string>
     <string name="tv_password">密码：</string>
-    <string name="tv_password2">确认密码：</string>
-    <string name="input_pass">请输入密码</string>
-    <string name="tv_email">邮箱：</string>
-    <string name="textView">我已阅读并同意</string>
-    <string name="username">请输入手机号或邮箱</string>
 
     <!--activity_forget_pass-->
-    <string name="activity_forget_pass">找回密码</string>
     <string name="email">邮箱：</string>
-    <string name="pass">新密码：</string>
-    <string name="hint_email">注册时所用邮箱</string>
-    <string name="new_pass">请输入新密码</string>
-    <string name="repeat_pass">请再次输入密码</string>
-    <string name="default_email">2356048622@qq.com</string>
-    <string name="default_phone">17716142440</string>
     <string name="login_hint_pass">请输入密码</string>
-    <string name="login_hint_phone_num">请输入手机号</string>
 
     <!--fragment_about_more-->
     <string name="about_more">更多</string>
@@ -152,7 +129,6 @@
     <string name="gender">性别</string>
     <string name="live_area">所在地</string>
     <string name="signature">签名</string>
-    <string name="input_signature">输入签名</string>
 
     <!--load_progressbar-->
     <string name="loading">加载中..</string>
@@ -174,4 +150,8 @@
     <string name="bind_wechat">微信</string>
     <string name="bind_weibo">微博</string>
     <string name="bind_cancel">解绑</string>
+    <string name="confirm">确定</string>
+    <string name="pass_hint">5–20位数字或字母密码</string>
+    <string name="on_loading">加载中，请稍后..</string>
+    <string name="on_login">正在登陆..</string>
 </resources>

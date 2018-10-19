@@ -25,7 +25,6 @@
                 android:background="@drawable/user_bg">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/user_edit_img"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
                     android:layout_gravity="center_horizontal"
@@ -35,7 +34,6 @@
                     app:civ_border_width="2dp" />
 
                 <TextView
-                    android:id="@+id/edit_bg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
