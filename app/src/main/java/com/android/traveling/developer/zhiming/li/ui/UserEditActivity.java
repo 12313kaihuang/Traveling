@@ -9,13 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.entity.MyUser;
+import com.android.traveling.entity.user.TravelingUser;
+import com.android.traveling.entity.user.User;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
 
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.UpdateListener;
+
 
 /**
  * 项目名：Traveling
@@ -28,7 +27,7 @@ import cn.bmob.v3.listener.UpdateListener;
 
 public class UserEditActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private MyUser user;
+    private User user;
     private EditText username;
     private EditText gender;
     private EditText live_area;
@@ -44,7 +43,7 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
 
     //初始化View
     private void initView() {
-        user = BmobUser.getCurrentUser(MyUser.class);
+        user = TravelingUser.getCurrentUser();
         username = findViewById(R.id.username);
         gender = findViewById(R.id.gender);
         live_area = findViewById(R.id.live_area);
@@ -62,7 +61,7 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
 
         username.setText(user.getNickName());
         signature.setText(user.getSignature());
-        live_area.setText(user.getLiveArea());
+        live_area.setText(user.getArea());
         gender.setText(user.getGender());
     }
 
@@ -70,23 +69,28 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.save:
-                MyUser newUser = BmobUser.getCurrentUser(MyUser.class);
-                newUser.setNickName(username.getText().toString());
-                newUser.setSignature(signature.getText().toString());
-                newUser.setGender(gender.getText().toString());
-                newUser.setLiveArea(live_area.getText().toString());
-                newUser.update(user.getObjectId(),new UpdateListener() {
-                    @Override
-                    public void done(BmobException e) {
-                        if(e==null){
-                            UtilTools.toast(UserEditActivity.this, "保存成功");
-                            onBackPressed();
-                        }else{
-                            UtilTools.toast(UserEditActivity.this,
-                                    "更新用户信息失败:" + e.getMessage());
-                        }
-                    }
-                });
+                User newUser = TravelingUser.getCurrentUser();
+                if (newUser != null) {
+                    newUser.setNickName(username.getText().toString());
+                    newUser.setSignature(signature.getText().toString());
+                    newUser.setGender(gender.getText().toString());
+                    newUser.setArea(live_area.getText().toString());
+                    UtilTools.toast(this,"更改");
+                    //                newUser.update(user.getObjectId(),new UpdateListener() {
+                    //                    @Override
+                    //                    public void done(BmobException e) {
+                    //                        if(e==null){
+                    //                            UtilTools.toast(UserEditActivity.this, "保存成功");
+                    //                            onBackPressed();
+                    //                        }else{
+                    //                            UtilTools.toast(UserEditActivity.this,
+                    //                                    "更新用户信息失败:" + e.getMessage());
+                    //                        }
+                    //                    }
+                    //                });
+                }else {
+                    UtilTools.toast(this,"currentUser = null");
+                }
                 break;
             case R.id.img_back:
                 onBackPressed();
