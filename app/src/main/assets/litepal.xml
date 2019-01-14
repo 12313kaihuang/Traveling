@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="traveling" />
+    <version value="2" />
+    <list>
+        <mapping class="com.android.traveling.entity.user.User" />
+    </list>
+</litepal>

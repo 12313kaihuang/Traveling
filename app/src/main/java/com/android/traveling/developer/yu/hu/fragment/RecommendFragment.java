@@ -121,7 +121,9 @@ public class RecommendFragment extends Fragment {
 
     //加载更多
     private void LoadMore(RefreshLayout refreshLayout) {
-        MyOkhttp.get(StaticClass.LOAD_MORE_NEWS, new Callback() {
+        String url = StaticClass.LOAD_MORE_NEWS + "?lastId=" + newsList.get(newsList.size()-1).getId();
+        System.out.println("lastId:"+newsList.get(newsList.size()-1).getId());
+        MyOkhttp.get(url, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 if (getActivity() != null) {

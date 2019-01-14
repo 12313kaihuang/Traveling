@@ -5,6 +5,8 @@ import android.app.Application;
 import com.android.traveling.util.StaticClass;
 import com.tencent.bugly.crashreport.CrashReport;
 
+import org.litepal.LitePal;
+
 import cn.bmob.v3.Bmob;
 
 /**
@@ -29,5 +31,8 @@ public class BaseApplication extends Application {
         Bmob.initialize(this, StaticClass.BMOB_APPLICATION_ID);
         //bugly
         CrashReport.initCrashReport(getApplicationContext(), StaticClass.BUGLY_APP_ID, true);
+
+        //litepal
+        LitePal.initialize(this);
     }
 }

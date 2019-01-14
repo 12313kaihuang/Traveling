@@ -3,6 +3,7 @@ package com.android.traveling.developer.zhiming.li.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -19,6 +20,9 @@ import android.widget.TextView;
 
 import com.android.traveling.R;
 import com.android.traveling.entity.MyUser;
+import com.android.traveling.entity.msg.LoginMsg;
+import com.android.traveling.entity.msg.Msg;
+import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.util.MyCustomDialog;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
@@ -32,6 +36,9 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -290,7 +297,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(this, ServiceTermsActivity.class));
                 break;
             case R.id.login_forget_pass:
-                UtilTools.toast(this,"忘记密码");
+                UtilTools.toast(this, "忘记密码");
                 break;
             case R.id.ic_wechat:
                 UtilTools.toast(this, "微信登录");
@@ -331,7 +338,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 verifiedTimer.start();
                                 UtilTools.toast(LoginActivity.this, "验证码发送成功，请注意查收！");
                             } else {
-                                UtilTools.toastException(LoginActivity.this,ex);
+                                UtilTools.toastException(LoginActivity.this, ex);
                             }
                         }
                     });
@@ -371,8 +378,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void done(MyUser user, BmobException e) {
+                loginDialog.dismiss();
                 if (e == null) {
-                    loginDialog.dismiss();
                     sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
                     LoginActivity.this.finish();
                 } else {
@@ -383,23 +390,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    //手机账号登录
+    //手机号密码登录
     private void loginByPhone() {
-        BmobUser.loginByAccount(username.getText().toString()
-                , password.getText().toString(), new LogInListener<MyUser>() {
+        TravelingUser.loginByPass(username.getText().toString()
+                , password.getText().toString(),
+                new Callback<LoginMsg>() {
+                    @Override
+                    public void onResponse(@NonNull Call<LoginMsg> call, @NonNull Response<LoginMsg> response) {
+                        loginDialog.dismiss();
+                        LoginMsg loginMsg = response.body();
+                        if (loginMsg != null) {
+                            if (loginMsg.getStatus() == Msg.correctStatus) {
+                                sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
+                                LoginActivity.this.finish();
+                            } else {
+                                UtilTools.toast(LoginActivity.this, loginMsg.getInfo());
+                            }
+                        }
 
-            @Override
-            public void done(MyUser user, BmobException e) {
-                if(user!=null){
-                    loginDialog.dismiss();
-                    UtilTools.toast(LoginActivity.this, "登录成功");
-                    sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
-                    LoginActivity.this.finish();
-                } else {
-                    UtilTools.toastException(LoginActivity.this,e);
-                }
-            }
-        });
+                        System.out.println("body=" + response.body());
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<LoginMsg> call, @NonNull Throwable t) {
+                        loginDialog.dismiss();
+                        UtilTools.toast(LoginActivity.this, "登录失败");
+                    }
+                });
+
+
     }
 
     //邮箱账号登录
@@ -407,25 +426,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         BmobUser.loginByAccount(username.getText().toString(),
                 password.getText().toString(), new LogInListener<MyUser>() {
 
-            @Override
-            public void done(MyUser user, BmobException e) {
-                if(user!=null){
-                    loginDialog.dismiss();
-                    if (TextUtils.isEmpty(user.getEmail())){
-                        UtilTools.toast(LoginActivity.this,"该邮箱账号不存在！");
-                    }else {
-                        if (user.getEmailVerified()) {
-                            sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
-                            LoginActivity.this.finish();
-                        }else {
-                            UtilTools.toast(LoginActivity.this,"登录失败,验证邮箱后才能使用邮箱账号登录");
+                    @Override
+                    public void done(MyUser user, BmobException e) {
+                        loginDialog.dismiss();
+                        if (user != null) {
+                            loginDialog.dismiss();
+                            if (TextUtils.isEmpty(user.getEmail())) {
+                                UtilTools.toast(LoginActivity.this, "该邮箱账号不存在！");
+                            } else {
+                                if (user.getEmailVerified()) {
+                                    sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
+                                    LoginActivity.this.finish();
+                                } else {
+                                    UtilTools.toast(LoginActivity.this, "登录失败,验证邮箱后才能使用邮箱账号登录");
+                                }
+                            }
+                        } else {
+                            UtilTools.toastException(LoginActivity.this, e);
                         }
                     }
-                } else {
-                    UtilTools.toastException(LoginActivity.this,e);
-                }
-            }
-        });
+                });
     }
 
     //切换登录方式
@@ -534,8 +554,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
     }
-
-
 
 
     class VerifiedTimer extends CountDownTimer {

@@ -16,16 +16,18 @@ import android.widget.TextView;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.zhiming.li.ui.NewsSettingActivity;
-import com.android.traveling.entity.MyUser;
 import com.android.traveling.developer.zhiming.li.ui.AccountBindActivity;
 import com.android.traveling.developer.zhiming.li.ui.ConfigActivity;
 import com.android.traveling.developer.zhiming.li.ui.LoginActivity;
 import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
+import com.android.traveling.entity.user.TravelingUser;
+import com.android.traveling.entity.user.User;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
 
 import cn.bmob.v3.BmobUser;
+
 
 /**
  * 项目名：Traveling
@@ -59,9 +61,10 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
     }
 
     private void initData() {
-        if (BmobUser.getCurrentUser() != null) {
-            about_area.setText(getString(R.string.about_live_area,
-                    BmobUser.getCurrentUser(MyUser.class).getLiveArea()));
+        User currentUser = TravelingUser.getCurrentUser();
+        LogUtil.d(currentUser==null?"aboutMore current=null":"aboutMore current="+currentUser);
+        if (currentUser != null) {
+            about_area.setText(getString(R.string.about_live_area,currentUser.getArea()));
             about_logout.setCompoundDrawablesWithIntrinsicBounds( getResources().
                             getDrawable(R.drawable.ic_logout,null),null,
                     null,null);
@@ -101,21 +104,21 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.about_edit:
-                if (BmobUser.getCurrentUser() != null) {
+                if (TravelingUser.getCurrentUser() != null) {
                     startActivity(new Intent(getActivity(), UserEditActivity.class));
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
                 break;
             case R.id.about_bind:
-                if (BmobUser.getCurrentUser() != null) {
+                if (TravelingUser.getCurrentUser() != null) {
                     startActivity(new Intent(getActivity(), AccountBindActivity.class));
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
                 break;
             case R.id.about_privacy:
-                if (BmobUser.getCurrentUser() != null) {
+                if (TravelingUser.getCurrentUser() != null) {
                     UtilTools.toast(getContext(), "隐私设置");
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -123,13 +126,13 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
                 break;
             case R.id.about_logout:
 
-                if (BmobUser.getCurrentUser() != null) {
+                if (TravelingUser.getCurrentUser() != null) {
 
                     //noinspection ConstantConditions
                     new AlertDialog.Builder(getContext())
                             .setMessage("确定要退出登录吗？")
                             .setPositiveButton("确定", (dialog, which) -> {
-                                BmobUser.logOut();
+                                TravelingUser.logout();
                                 Logout();
                             })
                             .setNegativeButton("取消", (dialog, which) -> {

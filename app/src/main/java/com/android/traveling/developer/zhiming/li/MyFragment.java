@@ -16,15 +16,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.entity.MyUser;
 import com.android.traveling.developer.zhiming.li.ui.GuideActivity;
 import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
+import com.android.traveling.entity.user.TravelingUser;
+import com.android.traveling.entity.user.User;
 import com.android.traveling.fragment.BaseFragment;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
 
-import cn.bmob.v3.BmobUser;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -59,18 +59,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         return view;
     }
 
-    //初始化数据
-    private void initData() {
-        MyUser currentUser = BmobUser.getCurrentUser(MyUser.class);
-
-        if (currentUser != null) {
-            my_user_status.setText(currentUser.getNickName());
-        } else {
-            my_user_status.setText(getString(R.string.not_login));
-        }
-
-    }
-
     //初始化view
     private void initView(View view) {
         setDefaultFont(view);
@@ -92,6 +80,24 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         my_to_vip.setOnClickListener(this);
         my_edit_userData.setOnClickListener(this);
     }
+
+
+    //初始化数据
+    private void initData() {
+        User currentUser = TravelingUser.getCurrentUser();
+
+        LogUtil.d(currentUser == null ? "Myfargment current=null" : "Myfargment current=" + currentUser);
+        if (currentUser != null) {
+            LogUtil.d("MyFragment currentUser!=null");
+            LogUtil.d("currentUser.getNickName()" + currentUser.getNickName());
+            my_user_status.setText(currentUser.getNickName());
+        } else {
+            LogUtil.d("MyFragment currentUser=null");
+            my_user_status.setText(getString(R.string.not_login));
+        }
+
+    }
+
 
     //设置字体
     private void setDefaultFont(View view) {
@@ -130,7 +136,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.my_user_bg: //点击了头像
             case R.id.my_edit_userData: //点击了编辑个人资料
-                if (BmobUser.getCurrentUser() != null) {
+                if (TravelingUser.getCurrentUser() != null) {
                     startActivity(new Intent(getActivity(), UserEditActivity.class));
                 } else {
                     UtilTools.toast(getContext(), "未登录状态无法编辑个人信息");
@@ -160,7 +166,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         LogUtil.d("MyFragment onResume");
-        MyUser currentUser = BmobUser.getCurrentUser(MyUser.class);
+        User currentUser = TravelingUser.getCurrentUser();
 
         if (currentUser != null) {
             my_user_status.setText(currentUser.getNickName());

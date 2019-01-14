@@ -37,7 +37,9 @@ public class StaticClass {
     /*json url*/
     //news
     public static final String LASTEST_NEWS = "http://47.106.131.58:8080/traveling/news.json";
+//    public static final String LASTEST_NEWS = "http://47.106.131.58:8081/traveling/news";
     public static final String LOAD_MORE_NEWS = "http://47.106.131.58:8080/traveling/loadMore.json";
+//    public static final String LOAD_MORE_NEWS = "http://47.106.131.58:8081/traveling/loadMore";
 
     //颜色
     public static final int FOCUS_ON_TEXT_COLOR = 0xFFBFC1C4;
@@ -78,4 +80,8 @@ public class StaticClass {
 
     //手机格式转换
     public static final String FORMAT_PHONE_REGEX = "(\\d{3})\\d{4}(\\d{4})";
+
+    public static final String URL = "http://47.106.131.58:8081/traveling-0.0.1-SNAPSHOT/";
+    public static final String IMG_URL = URL + "imgs/";
+    public static final String VERIFY_EMAIL_URL = URL + "verifyEmail?code=";
 }
