@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.android.traveling.developer.zhiming.li.ui.LoginActivity;
 
 import cn.bmob.v3.exception.BmobException;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -36,7 +38,11 @@ public class UtilTools {
         textView.setTypeface(fontType);
     }
 
-    //Toast
+    /**
+     * text
+     * @param context 上下文
+     * @param text 需要显示的文字
+     */
     @SuppressWarnings("SameParameterValue")
     public static void toast(Context context, String text) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
@@ -59,7 +65,11 @@ public class UtilTools {
         }
     }
 
-    //根据异常码打印出错误信息
+    /**
+     * 根据异常码打印出错误信息
+     * @param context 上下文
+     * @param e exception
+     */
     public static void toastException(Context context, BmobException e) {
         switch (e.getErrorCode()) {
             case 101:
@@ -75,4 +85,15 @@ public class UtilTools {
                 break;
         }
     }
+
+    /**
+     *
+     * 获取retrofit对象
+     * @return retrofit对象
+     */
+    public static Retrofit getRetrofit(){
+        return new Retrofit.Builder().baseUrl(StaticClass.URL)
+                .addConverterFactory(GsonConverterFactory.create()).build();
+    }
+
 }

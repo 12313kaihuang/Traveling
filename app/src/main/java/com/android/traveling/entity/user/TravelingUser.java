@@ -4,6 +4,7 @@ package com.android.traveling.entity.user;
 import android.support.annotation.NonNull;
 
 import com.android.traveling.entity.msg.LoginMsg;
+import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 
 import org.litepal.LitePal;
@@ -28,18 +29,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TravelingUser {
 
     public static User getCurrentUser() {
-        //        User user = new User();
-        //        user.setPhoneNumber("17714445");
-        //        user.setUserId(4);
-        //        user.save();
-        //        System.out.println("00000userId="+user.getUserId());
         List<User> users = LitePal.findAll(User.class);
-        //        LitePal.deleteAll(User.class);
         if (users.size() != 0) {
             return users.get(0);
         } else {
             return null;
         }
+    }
+
+    static void setCurrentUser(User user) {
+        if (user.getUserId() == 0) {
+            return;
+        }
+        LitePal.deleteAll(User.class);   //清除数据
+        LogUtil.d("setCurrentUser user="+user);
+        user.save();
+        LogUtil.d("currentUser="+getCurrentUser());
     }
 
     public static void logout() {

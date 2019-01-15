@@ -1,6 +1,7 @@
 package com.android.traveling.entity.user;
 
 import com.android.traveling.entity.msg.LoginMsg;
+import com.android.traveling.entity.msg.Msg;
 
 import retrofit2.Call;
 import retrofit2.http.POST;
@@ -20,4 +21,7 @@ public interface UserService {
     @POST("loginByPass")
     Call<LoginMsg> loginByPass(@Query("phoneNumber") String phoneNumber, @Query("password") String password);
 
+    @POST("updateUser")
+    Call<Msg> update(@Query("id") int id, @Query("nickName") String nickName,
+                     @Query("signature") String signature, @Query("area") String area);
 }

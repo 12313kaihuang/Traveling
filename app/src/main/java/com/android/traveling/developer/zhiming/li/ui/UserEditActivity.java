@@ -1,6 +1,7 @@
 package com.android.traveling.developer.zhiming.li.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,11 +10,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
+import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -50,7 +55,6 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
         signature = findViewById(R.id.signature);
         ImageView img_back = findViewById(R.id.img_back);
         TextView save = findViewById(R.id.save);
-        LogUtil.d("刚进来"+user.getNickName());
         save.setOnClickListener(this);
         img_back.setOnClickListener(this);
     }
@@ -75,19 +79,26 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
                     newUser.setSignature(signature.getText().toString());
                     newUser.setGender(gender.getText().toString());
                     newUser.setArea(live_area.getText().toString());
-                    UtilTools.toast(this,"更改");
-                    //                newUser.update(user.getObjectId(),new UpdateListener() {
-                    //                    @Override
-                    //                    public void done(BmobException e) {
-                    //                        if(e==null){
-                    //                            UtilTools.toast(UserEditActivity.this, "保存成功");
-                    //                            onBackPressed();
-                    //                        }else{
-                    //                            UtilTools.toast(UserEditActivity.this,
-                    //                                    "更新用户信息失败:" + e.getMessage());
-                    //                        }
-                    //                    }
-                    //                });
+                    newUser.update(new Callback<Msg>() {
+                        @Override
+                        public void onResponse(@NonNull Call<Msg> call, @NonNull Response<Msg> response) {
+                            Msg msg = response.body();
+                            if (msg != null) {
+                                UtilTools.toast(UserEditActivity.this,msg.getInfo());
+                                if (msg.getStatus() == Msg.correctStatus) {
+                                    onBackPressed();
+                                }
+                            }else {
+                                UtilTools.toast(UserEditActivity.this,"出错了 msg为空");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<Msg> call, @NonNull Throwable t) {
+
+                            UtilTools.toast(UserEditActivity.this,"出错了 onFailure");
+                        }
+                    });
                 }else {
                     UtilTools.toast(this,"currentUser = null");
                 }

@@ -1,12 +1,20 @@
 package com.android.traveling.entity.user;
 
 
+import android.support.annotation.NonNull;
 
-import android.content.pm.PackageManager;
+import com.android.traveling.entity.msg.Msg;
+import com.android.traveling.util.LogUtil;
+import com.android.traveling.util.UtilTools;
 
 import org.litepal.crud.LitePalSupport;
 
 import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by HY
@@ -15,8 +23,8 @@ import java.util.Date;
  * user表  存储用户信息
  */
 
-@SuppressWarnings("unused")
-public class User extends LitePalSupport{
+@SuppressWarnings({"unused", "WeakerAccess"})
+public class User extends LitePalSupport {
 
     private Integer id;
 
@@ -201,5 +209,40 @@ public class User extends LitePalSupport{
                 ", area='" + area + '\'' +
                 ", level=" + level +
                 '}';
+    }
+
+    private void update(){
+
+    }
+
+    /**
+     * 编辑个人资料页面修改个人信息
+     * @param callback 回调接口callback
+     */
+    public void update(Callback<Msg> callback) {
+        if (userId == 0) {
+            LogUtil.d("User.update()  userId没对");
+        } else {
+            //创建Retrofit对象  注意url后面有一个'/'。
+            Retrofit retrofit = UtilTools.getRetrofit();
+            // 获取UserService对象
+            UserService userService = retrofit.create(UserService.class);
+            Call<Msg> update = userService.update(userId, nickName, signature, area);
+            update.enqueue(new Callback<Msg>() {
+                @Override
+                public void onResponse(@NonNull Call<Msg> call, @NonNull Response<Msg> response) {
+                    Msg msg = response.body();
+                    if (msg != null && msg.getStatus() == Msg.correctStatus) {
+                        save();
+                    }
+                    callback.onResponse(call, response);
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<Msg> call, @NonNull Throwable t) {
+                    callback.onFailure(call, t);
+                }
+            });
+        }
     }
 }
