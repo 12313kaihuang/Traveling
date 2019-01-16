@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
+import com.android.traveling.util.UtilTools;
 
 import org.litepal.LitePal;
 
@@ -28,6 +29,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TravelingUser {
 
+    /**
+     * 获取当前登录的角色信息
+     * @return 当前登录的User
+     */
     public static User getCurrentUser() {
         List<User> users = LitePal.findAll(User.class);
         if (users.size() != 0) {
@@ -37,20 +42,59 @@ public class TravelingUser {
         }
     }
 
-    static void setCurrentUser(User user) {
-        if (user.getUserId() == 0) {
+    /**
+     * 从远程数据库更新本地User
+     * @param userCallback 回调接口
+     */
+    public static void refresh(UserCallback userCallback) {
+        User currentUser = getCurrentUser();
+        if (currentUser == null) {
+            userCallback.onFiled("currentUser == null");
             return;
         }
-        LitePal.deleteAll(User.class);   //清除数据
-        LogUtil.d("setCurrentUser user="+user);
-        user.save();
-        LogUtil.d("currentUser="+getCurrentUser());
+        //创建Retrofit对象  注意url后面有一个'/'。
+        Retrofit retrofit = UtilTools.getRetrofit();
+        // 获取UserService对象
+        UserService userService = retrofit.create(UserService.class);
+        Call<LoginMsg> call = userService.findUser(currentUser.getUserId());//谨记是userId
+        call.enqueue(new Callback<LoginMsg>() {
+            @Override
+            public void onResponse(@NonNull Call<LoginMsg> call, @NonNull Response<LoginMsg> response) {
+                LogUtil.d("response="+response.toString());
+                LoginMsg msg = response.body();
+                if (msg == null) {
+                    userCallback.onFiled("LoginMsg == null");
+                }else {
+                    if (msg.getStatus() == LoginMsg.errorStatus) {
+                        userCallback.onFiled(msg.getInfo());
+                    }else {
+                        //更新成功
+                        getCurrentUser().refresh(msg.getUser());  //更新currentUser
+                        userCallback.onSuccess(msg.getUser());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<LoginMsg> call, @NonNull Throwable t) {
+                userCallback.onFiled("onFailure t=" + t.getMessage());
+            }
+        });
     }
 
+    /**
+     * 退出登录
+     */
     public static void logout() {
         LitePal.deleteAll(User.class);   //清除数据
     }
 
+    /**
+     * 手机密码登录
+     * @param phoneNumber 手机号码
+     * @param password 密码
+     * @param callback 回调接口
+     */
     public static void loginByPass(String phoneNumber, String password, Callback<LoginMsg> callback) {
         //创建Retrofit对象  注意url后面有一个'/'。
         Retrofit retrofit = new Retrofit.Builder().baseUrl(StaticClass.URL)

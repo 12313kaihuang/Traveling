@@ -140,7 +140,7 @@
     <!--item_account_bind1-->
     <string name="bind_uid">安全绑定当前账号(UID:%1s)</string>
     <string name="bind_phone">手机号</string>
-    <string name="bind_phone_num">已绑定%1s</string>
+    <string name="bind_phone_num">%1s</string>
     <string name="bind_change">修改</string>
     <string name="bind_email">邮箱</string>
     <string name="bind_bind">绑定</string>

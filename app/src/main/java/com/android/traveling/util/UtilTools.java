@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,13 +40,24 @@ public class UtilTools {
     }
 
     /**
-     * text
+     * toast
+     *
      * @param context 上下文
-     * @param text 需要显示的文字
+     * @param text    需要显示的文字
      */
     @SuppressWarnings("SameParameterValue")
     public static void toast(Context context, String text) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * toast
+     * @param context 上下文
+     * @param text 需要显示的文字
+     * @param duration 显示时长
+     */
+    public static void toast(Context context, String text, int duration) {
+        Toast.makeText(context, text, duration).show();
     }
 
     /**
@@ -67,8 +79,9 @@ public class UtilTools {
 
     /**
      * 根据异常码打印出错误信息
+     *
      * @param context 上下文
-     * @param e exception
+     * @param e       exception
      */
     public static void toastException(Context context, BmobException e) {
         switch (e.getErrorCode()) {
@@ -87,11 +100,11 @@ public class UtilTools {
     }
 
     /**
-     *
      * 获取retrofit对象
+     *
      * @return retrofit对象
      */
-    public static Retrofit getRetrofit(){
+    public static Retrofit getRetrofit() {
         return new Retrofit.Builder().baseUrl(StaticClass.URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
     }

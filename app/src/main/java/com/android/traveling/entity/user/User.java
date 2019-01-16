@@ -3,6 +3,7 @@ package com.android.traveling.entity.user;
 
 import android.support.annotation.NonNull;
 
+import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
@@ -211,23 +212,41 @@ public class User extends LitePalSupport {
                 '}';
     }
 
-    private void update(){
-
+    /**
+     * 更新User
+     *
+     * @param user user
+     */
+    public void refresh(User user) {
+        this.nickName = user.nickName;
+        this.phoneNumber = user.phoneNumber;
+        this.password = user.password;
+        this.phoneNumberVerified = user.phoneNumberVerified;
+        this.email = user.email;
+        this.emailVerified = user.emailVerified;
+        this.img = user.img;
+        this.signature = user.signature;
+        this.gender = user.gender;
+        this.birthday = user.birthday;
+        this.area = user.area;
+        this.level = user.level;
+        save();
     }
 
     /**
-     * 编辑个人资料页面修改个人信息
+     * currentUser 编辑个人资料页面修改个人信息
+     *
      * @param callback 回调接口callback
      */
     public void update(Callback<Msg> callback) {
         if (userId == 0) {
-            LogUtil.d("User.update()  userId没对");
+            LogUtil.d("User.refresh()  userId没对");
         } else {
             //创建Retrofit对象  注意url后面有一个'/'。
             Retrofit retrofit = UtilTools.getRetrofit();
             // 获取UserService对象
             UserService userService = retrofit.create(UserService.class);
-            Call<Msg> update = userService.update(userId, nickName, signature, area);
+            Call<Msg> update = userService.update(userId, nickName, signature, area, gender);
             update.enqueue(new Callback<Msg>() {
                 @Override
                 public void onResponse(@NonNull Call<Msg> call, @NonNull Response<Msg> response) {
@@ -244,5 +263,45 @@ public class User extends LitePalSupport {
                 }
             });
         }
+    }
+
+    /**
+     * currentUser 绑定邮箱
+     *
+     * @param userCallback 回调接口
+     */
+    public void bindEmail(String password, UserCallback userCallback) {
+
+        //创建Retrofit对象  注意url后面有一个'/'。
+        Retrofit retrofit = UtilTools.getRetrofit();
+        // 获取UserService对象
+        UserService userService = retrofit.create(UserService.class);
+        Call<LoginMsg> call;
+        if (password != null) {
+            call = userService.bindEmailAndPass(userId, email, password);
+        } else {
+            call = userService.bindEmail(userId, email);
+        }
+        call.enqueue(new Callback<LoginMsg>() {
+            @Override
+            public void onResponse(@NonNull Call<LoginMsg> call, @NonNull Response<LoginMsg> response) {
+                LoginMsg body = response.body();
+                if (body == null) {
+                    userCallback.onFiled("body == null");
+                } else {
+                    if (body.getStatus() == Msg.correctStatus) {
+                        refresh(body.getUser()); //更新currentUser
+                        userCallback.onSuccess(body.getUser());
+                    } else {
+                        userCallback.onFiled("status == errorStatus");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<LoginMsg> call, @NonNull Throwable t) {
+                userCallback.onFiled("onFailure e=" + t.getMessage());
+            }
+        });
     }
 }

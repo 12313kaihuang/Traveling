@@ -324,7 +324,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    //获取验证码
+    /**
+     * 获取验证码
+     */
     private void getVerifiedCode() {
         if (usernameValid) {
 
@@ -349,7 +351,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    //登录
+    /**
+     * 登录
+     */
     private void Login() {
         loginDialog.show();
         switch (loginMode) {
@@ -421,7 +425,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    //邮箱账号登录
+    /**
+     * 邮箱账号登录
+     */
     private void loginByEmail() {
         BmobUser.loginByAccount(username.getText().toString(),
                 password.getText().toString(), new LogInListener<MyUser>() {

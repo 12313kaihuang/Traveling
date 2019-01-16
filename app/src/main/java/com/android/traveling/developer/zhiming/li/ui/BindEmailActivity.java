@@ -7,18 +7,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.traveling.R;
-import com.android.traveling.entity.MyUser;
+import com.android.traveling.entity.user.TravelingUser;
+import com.android.traveling.entity.user.User;
+import com.android.traveling.entity.user.UserCallback;
 import com.android.traveling.ui.BackableActivity;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
 
 import java.util.regex.Pattern;
 
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * 项目名：Traveling
@@ -46,17 +46,9 @@ public class BindEmailActivity extends BackableActivity implements View.OnClickL
         initData();
     }
 
-    private void initData() {
-        MyUser user = BmobUser.getCurrentUser(MyUser.class);
-        if (user.isHasPass()) {
-            ll_pass.setVisibility(View.GONE);
-            needPass = false;
-        } else {
-            ll_pass.setVisibility(View.VISIBLE);
-            needPass = true;
-        }
-    }
-
+    /**
+     * 初始化view
+     */
     private void initView() {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
@@ -66,40 +58,86 @@ public class BindEmailActivity extends BackableActivity implements View.OnClickL
         btn_bind_email.setOnClickListener(this);
     }
 
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        User user = TravelingUser.getCurrentUser();
+        if (user == null) {
+            return;
+        }
+        if (user.getPassword() != null) {
+            ll_pass.setVisibility(View.GONE);
+            needPass = false;
+        } else {
+            ll_pass.setVisibility(View.VISIBLE);
+            needPass = true;
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_bind_email:
                 if (inputValid()) {
-                    MyUser user = BmobUser.getCurrentUser(MyUser.class);
-                    user.setUsername(email.getText().toString());
-                    user.setEmail(email.getText().toString());
-                    user.setEmailVerified(false);
-                    if (needPass) {
-                        user.setPassword(password.getText().toString());
+                    User currentUser = TravelingUser.getCurrentUser();
+                    if (currentUser == null) {
+                        break;
                     }
-                    BmobUser.requestEmailVerify(email.getText().toString(), new UpdateListener() {
+                    currentUser.setEmail(email.getText().toString());
+                    if (needPass) {
+                        currentUser.setPassword(password.getText().toString());
+                    }
+                    currentUser.bindEmail(email.getText().toString(), new UserCallback() {
                         @Override
-                        public void done(BmobException e) {
-                            if(e==null){
-                                user.update(user.getObjectId(), new UpdateListener() {
-                                    @Override
-                                    public void done(BmobException e) {
-                                        UtilTools.toast(BindEmailActivity.this,
-                                                "绑定成功，请到" + email.getText().toString() + "邮箱中进行激活。");
-                                        finish();
-                                    }
-                                });
-                            }else{
-                                UtilTools.toastException(BindEmailActivity.this,e);
-                            }
+                        public void onSuccess(User user) {
+                            UtilTools.toast(BindEmailActivity.this,
+                                    "邮件已发送，点击链接验证后即可成功绑定，请及时查收", Toast.LENGTH_SHORT);
+                            finish();
+                        }
+
+                        @Override
+                        public void onFiled(String info) {
+                            UtilTools.toast(BindEmailActivity.this,info);
+                            finish();
                         }
                     });
+
+
+                    //                    MyUser user = BmobUser.getCurrentUser(MyUser.class);
+                    //                    user.setUsername(email.getText().toString());
+                    //                    user.setEmail(email.getText().toString());
+                    //                    user.setEmailVerified(false);
+                    //                    if (needPass) {
+                    //                        user.setPassword(password.getText().toString());
+                    //                    }
+                    //                    BmobUser.requestEmailVerify(email.getText().toString(), new UpdateListener() {
+                    //                        @Override
+                    //                        public void done(BmobException e) {
+                    //                            if(e==null){
+                    //                                user.update(user.getObjectId(), new UpdateListener() {
+                    //                                    @Override
+                    //                                    public void done(BmobException e) {
+                    //                                        UtilTools.toast(BindEmailActivity.this,
+                    //                                                "绑定成功，请到" + email.getText().toString() + "邮箱中进行激活。");
+                    //                                        finish();
+                    //                                    }
+                    //                                });
+                    //                            }else{
+                    //                                UtilTools.toastException(BindEmailActivity.this,e);
+                    //                            }
+                    //                        }
+                    //                    });
                 }
                 break;
         }
     }
 
+    /**
+     * email输入是否合法
+     *
+     * @return 判断email输入是否合法
+     */
     private boolean inputValid() {
 
         if (TextUtils.isEmpty(email.getText().toString())) {
