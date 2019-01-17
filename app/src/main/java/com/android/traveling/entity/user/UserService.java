@@ -30,6 +30,16 @@ public interface UserService {
     Call<LoginMsg> loginByPass(@Query("phoneNumber") String phoneNumber, @Query("password") String password);
 
     /**
+     * 邮箱密码登录
+     * @param email 邮箱
+     * @param password 密码
+     * @return LoginMsg
+     */
+    @POST("loginByEmail")
+    Call<LoginMsg> loginByEmail(@Query("email") String email, @Query("password") String password);
+
+
+    /**
      * 更新用户
      *
      * @param id        userId
@@ -71,4 +81,5 @@ public interface UserService {
      */
     @GET("bindEmailAndPass")
     Call<LoginMsg> bindEmailAndPass(@Query("userId") int userId, @Query("email") String email,@Query("password")String password);
+
 }

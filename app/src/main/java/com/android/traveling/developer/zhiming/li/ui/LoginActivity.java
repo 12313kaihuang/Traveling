@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +22,8 @@ import com.android.traveling.entity.MyUser;
 import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.user.TravelingUser;
+import com.android.traveling.entity.user.User;
+import com.android.traveling.entity.user.UserCallback;
 import com.android.traveling.util.MyCustomDialog;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
@@ -31,9 +32,7 @@ import com.android.traveling.util.UtilTools;
 import java.util.regex.Pattern;
 
 import cn.bmob.v3.BmobSMS;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 import retrofit2.Call;
@@ -370,7 +369,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    //验证码登录
+    /**
+     * 验证码登录
+     */
     private void loginByVerifiedCode() {
         MyUser user = new MyUser();
         user.setMobilePhoneNumber(username.getText().toString());
@@ -394,7 +395,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    //手机号密码登录
+    /**
+     * 手机号密码登录
+     */
     private void loginByPhone() {
         TravelingUser.loginByPass(username.getText().toString()
                 , password.getText().toString(),
@@ -429,27 +432,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * 邮箱账号登录
      */
     private void loginByEmail() {
-        BmobUser.loginByAccount(username.getText().toString(),
-                password.getText().toString(), new LogInListener<MyUser>() {
+        TravelingUser.loginByEmail(username.getText().toString(),
+                password.getText().toString(), new UserCallback() {
+                    @Override
+                    public void onSuccess(User user) {
+                        loginDialog.dismiss();
+                        sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
+                        LoginActivity.this.finish();
+                    }
 
                     @Override
-                    public void done(MyUser user, BmobException e) {
+                    public void onFiled(String info) {
                         loginDialog.dismiss();
-                        if (user != null) {
-                            loginDialog.dismiss();
-                            if (TextUtils.isEmpty(user.getEmail())) {
-                                UtilTools.toast(LoginActivity.this, "该邮箱账号不存在！");
-                            } else {
-                                if (user.getEmailVerified()) {
-                                    sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
-                                    LoginActivity.this.finish();
-                                } else {
-                                    UtilTools.toast(LoginActivity.this, "登录失败,验证邮箱后才能使用邮箱账号登录");
-                                }
-                            }
-                        } else {
-                            UtilTools.toastException(LoginActivity.this, e);
-                        }
+                        UtilTools.toast(LoginActivity.this, "登录失败:" + info);
                     }
                 });
     }

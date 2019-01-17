@@ -4,6 +4,7 @@ package com.android.traveling.entity.user;
 import android.support.annotation.NonNull;
 
 import com.android.traveling.entity.msg.LoginMsg;
+import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
@@ -31,6 +32,7 @@ public class TravelingUser {
 
     /**
      * 获取当前登录的角色信息
+     *
      * @return 当前登录的User
      */
     public static User getCurrentUser() {
@@ -44,6 +46,7 @@ public class TravelingUser {
 
     /**
      * 从远程数据库更新本地User
+     *
      * @param userCallback 回调接口
      */
     public static void refresh(UserCallback userCallback) {
@@ -60,14 +63,14 @@ public class TravelingUser {
         call.enqueue(new Callback<LoginMsg>() {
             @Override
             public void onResponse(@NonNull Call<LoginMsg> call, @NonNull Response<LoginMsg> response) {
-                LogUtil.d("response="+response.toString());
+                LogUtil.d("response=" + response.toString());
                 LoginMsg msg = response.body();
                 if (msg == null) {
                     userCallback.onFiled("LoginMsg == null");
-                }else {
+                } else {
                     if (msg.getStatus() == LoginMsg.errorStatus) {
                         userCallback.onFiled(msg.getInfo());
-                    }else {
+                    } else {
                         //更新成功
                         getCurrentUser().refresh(msg.getUser());  //更新currentUser
                         userCallback.onSuccess(msg.getUser());
@@ -91,9 +94,10 @@ public class TravelingUser {
 
     /**
      * 手机密码登录
+     *
      * @param phoneNumber 手机号码
-     * @param password 密码
-     * @param callback 回调接口
+     * @param password    密码
+     * @param callback    回调接口
      */
     public static void loginByPass(String phoneNumber, String password, Callback<LoginMsg> callback) {
         //创建Retrofit对象  注意url后面有一个'/'。
@@ -125,4 +129,43 @@ public class TravelingUser {
         });
     }
 
+
+    /**
+     * 邮箱登录
+     * @param email 邮箱
+     * @param password 密码
+     * @param userCallback 回调接口
+     */
+    public static void loginByEmail(String email, String password, UserCallback userCallback) {
+        //创建Retrofit对象  注意url后面有一个'/'。
+        Retrofit retrofit = UtilTools.getRetrofit();
+        // 获取UserService对象
+        UserService userService = retrofit.create(UserService.class);
+        Call<LoginMsg> call = userService.loginByEmail(email, password);
+        //异步请求
+        call.enqueue(new Callback<LoginMsg>() {
+            @Override
+            public void onResponse(@NonNull Call<LoginMsg> call, @NonNull Response<LoginMsg> response) {
+                LoginMsg loginMsg = response.body();
+                if (loginMsg == null) {
+                    userCallback.onFiled("loginMsg == null");
+                } else {
+                    if (loginMsg.getStatus() == Msg.errorStatus) {
+                        userCallback.onFiled(loginMsg.getInfo());
+                    } else {
+                        LitePal.deleteAll(User.class);   //清除数据
+                        User user = loginMsg.getUser();
+                        user.setUserId(user.getId());
+                        user.save();                    //存入user
+                        userCallback.onSuccess(user);  //登录成功
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<LoginMsg> call, @NonNull Throwable t) {
+                userCallback.onFiled("onFailure t=" + t.getMessage());
+            }
+        });
+    }
 }
