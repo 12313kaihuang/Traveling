@@ -18,26 +18,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.entity.MyUser;
 import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.entity.user.UserCallback;
+import com.android.traveling.entity.user.UserService;
 import com.android.traveling.util.MyCustomDialog;
-import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
 
 import java.util.regex.Pattern;
 
-import cn.bmob.v3.BmobSMS;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.QueryListener;
-import cn.bmob.v3.listener.SaveListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 /**
@@ -314,7 +310,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 changeLoginMode();
                 break;
             case R.id.btn_verified_code:
-                getVerifiedCode();
+                sendVerifiedCode();
                 break;
             case R.id.back:
                 onBackPressed();
@@ -324,27 +320,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     /**
-     * 获取验证码
+     * 发送验证码
      */
-    private void getVerifiedCode() {
+    private void sendVerifiedCode() {
         if (usernameValid) {
-
-            BmobSMS.requestSMSCode(username.getText().toString()
-                    , StaticClass.BMOB_SMS_TEMPLATE, new QueryListener<Integer>() {
-
-                        @Override
-                        public void done(Integer smsId, BmobException ex) {
-                            if (ex == null) {//验证码发送成功
-                                LogUtil.d("短信id：" + smsId);//用于查询本次短信发送详情
-                                verifiedTimer.start();
-                                UtilTools.toast(LoginActivity.this, "验证码发送成功，请注意查收！");
-                            } else {
-                                UtilTools.toastException(LoginActivity.this, ex);
-                            }
+            //创建Retrofit对象  注意url后面有一个'/'。
+            Retrofit retrofit = UtilTools.getRetrofit();
+            // 获取UserService对象
+            UserService userService = retrofit.create(UserService.class);
+            Call<Msg> call = userService.sendVerifiedCode(username.getText().toString());
+            call.enqueue(new Callback<Msg>() {
+                @Override
+                public void onResponse(@NonNull Call<Msg> call, @NonNull Response<Msg> response) {
+                    Msg msg = response.body();
+                    if (msg == null) {
+                        UtilTools.toast(LoginActivity.this, "msg == null");
+                    } else {
+                        if (msg.getStatus() == Msg.errorStatus) {
+                            UtilTools.toast(LoginActivity.this, "errInfo=" + msg.getInfo());
+                        } else {
+                            verifiedTimer.start();
+                            UtilTools.toast(LoginActivity.this, "验证码发送成功，请注意查收！");
                         }
-                    });
+                    }
+                }
 
-
+                @Override
+                public void onFailure(@NonNull Call<Msg> call, @NonNull Throwable t) {
+                    UtilTools.toast(LoginActivity.this, "onFailure t =" + t.getMessage());
+                }
+            });
         } else {
             UtilTools.toast(this, "请输入正确的手机号码");
         }
@@ -373,25 +378,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * 验证码登录
      */
     private void loginByVerifiedCode() {
-        MyUser user = new MyUser();
-        user.setMobilePhoneNumber(username.getText().toString());
-        user.setNickName(getString(R.string.init_username));
-        user.setGender(StaticClass.GENDER_SECRET);
-        user.setLiveArea("");
-        user.setHasPass(false);
-        user.signOrLogin(verified_code.getText().toString(), new SaveListener<MyUser>() {
+        TravelingUser.loginByCode(username.getText().toString(), verified_code.getText().toString(),
+                new UserCallback() {
+                    @Override
+                    public void onSuccess(User user) {
+                        loginDialog.dismiss();
+                        sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
+                        LoginActivity.this.finish();
+                    }
 
-            @Override
-            public void done(MyUser user, BmobException e) {
-                loginDialog.dismiss();
-                if (e == null) {
-                    sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
-                    LoginActivity.this.finish();
-                } else {
-                    UtilTools.toast(LoginActivity.this, "失败:" + e.getMessage());
-                }
-            }
-        });
+                    @Override
+                    public void onFiled(String info) {
+                        loginDialog.dismiss();
+                        UtilTools.toast(LoginActivity.this, "登录失败:" + info);
+                    }
+                });
 
     }
 

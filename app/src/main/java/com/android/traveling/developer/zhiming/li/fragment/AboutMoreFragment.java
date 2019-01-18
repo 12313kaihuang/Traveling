@@ -26,7 +26,6 @@ import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
 
-import cn.bmob.v3.BmobUser;
 
 
 /**

@@ -7,7 +7,6 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import org.litepal.LitePal;
 
-import cn.bmob.v3.Bmob;
 
 /**
  * 项目名：Traveling
@@ -27,8 +26,6 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //Bmob初始化
-        Bmob.initialize(this, StaticClass.BMOB_APPLICATION_ID);
         //bugly
         CrashReport.initCrashReport(getApplicationContext(), StaticClass.BUGLY_APP_ID, true);
 

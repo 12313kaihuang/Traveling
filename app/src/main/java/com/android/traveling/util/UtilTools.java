@@ -4,13 +4,10 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.support.design.widget.BaseTransientBottomBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.traveling.developer.zhiming.li.ui.LoginActivity;
 
-import cn.bmob.v3.exception.BmobException;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -77,27 +74,6 @@ public class UtilTools {
         }
     }
 
-    /**
-     * 根据异常码打印出错误信息
-     *
-     * @param context 上下文
-     * @param e       exception
-     */
-    public static void toastException(Context context, BmobException e) {
-        switch (e.getErrorCode()) {
-            case 101:
-                UtilTools.toast(context, "用户名或密码错误");
-                break;
-            case 9024:
-                UtilTools.toast(context, "先登录才能同步云端user");
-                break;
-            default:
-                Toast.makeText(context,
-                        "e.code:" + e.getErrorCode() + e.getMessage(), Toast.LENGTH_SHORT).show();
-                LogUtil.d("e.code:" + e.getErrorCode() + e.getMessage());
-                break;
-        }
-    }
 
     /**
      * 获取retrofit对象

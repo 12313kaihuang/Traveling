@@ -20,6 +20,23 @@ import retrofit2.http.Query;
 public interface UserService {
 
     /**
+     * 发送验证码
+     * @param phoneNumber 手机号
+     * @return Msg
+     */
+    @GET("sendVerifiedCode")
+    Call<Msg> sendVerifiedCode(@Query("phoneNumber") String phoneNumber);
+
+    /**
+     * 手机验证码登录
+     * @param phoneNumber 手机号
+     * @param verificationCode 验证码
+     * @return LoginMsg
+     */
+    @POST("loginByCode")
+    Call<LoginMsg> loginByCode(@Query("phoneNumber") String phoneNumber, @Query("verificationCode") String verificationCode);
+
+    /**
      * 手机号密码登录
      *
      * @param phoneNumber 手机号

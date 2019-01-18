@@ -85,10 +85,12 @@ public class BindEmailActivity extends BackableActivity implements View.OnClickL
                         break;
                     }
                     currentUser.setEmail(email.getText().toString());
+                    String pass = null;
                     if (needPass) {
+                        pass = password.getText().toString();
                         currentUser.setPassword(password.getText().toString());
                     }
-                    currentUser.bindEmail(email.getText().toString(), new UserCallback() {
+                    currentUser.bindEmail(pass, new UserCallback() {
                         @Override
                         public void onSuccess(User user) {
                             UtilTools.toast(BindEmailActivity.this,
@@ -98,36 +100,10 @@ public class BindEmailActivity extends BackableActivity implements View.OnClickL
 
                         @Override
                         public void onFiled(String info) {
-                            UtilTools.toast(BindEmailActivity.this,info);
+                            UtilTools.toast(BindEmailActivity.this, info);
                             finish();
                         }
                     });
-
-
-                    //                    MyUser user = BmobUser.getCurrentUser(MyUser.class);
-                    //                    user.setUsername(email.getText().toString());
-                    //                    user.setEmail(email.getText().toString());
-                    //                    user.setEmailVerified(false);
-                    //                    if (needPass) {
-                    //                        user.setPassword(password.getText().toString());
-                    //                    }
-                    //                    BmobUser.requestEmailVerify(email.getText().toString(), new UpdateListener() {
-                    //                        @Override
-                    //                        public void done(BmobException e) {
-                    //                            if(e==null){
-                    //                                user.update(user.getObjectId(), new UpdateListener() {
-                    //                                    @Override
-                    //                                    public void done(BmobException e) {
-                    //                                        UtilTools.toast(BindEmailActivity.this,
-                    //                                                "绑定成功，请到" + email.getText().toString() + "邮箱中进行激活。");
-                    //                                        finish();
-                    //                                    }
-                    //                                });
-                    //                            }else{
-                    //                                UtilTools.toastException(BindEmailActivity.this,e);
-                    //                            }
-                    //                        }
-                    //                    });
                 }
                 break;
         }

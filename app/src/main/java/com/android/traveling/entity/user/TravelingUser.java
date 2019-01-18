@@ -93,6 +93,44 @@ public class TravelingUser {
     }
 
     /**
+     * 手机验证码登录
+     * @param phoneNumber 手机号码
+     * @param verificationCode 验证码
+     * @param userCallback 回调接口
+     */
+    public static void loginByCode(String phoneNumber, String verificationCode, UserCallback userCallback) {
+        //创建Retrofit对象  注意url后面有一个'/'。
+        Retrofit retrofit = UtilTools.getRetrofit();
+        // 获取UserService对象
+        UserService userService = retrofit.create(UserService.class);
+        Call<LoginMsg> call = userService.loginByCode(phoneNumber, verificationCode);
+        call.enqueue(new Callback<LoginMsg>() {
+            @Override
+            public void onResponse(@NonNull Call<LoginMsg> call, @NonNull Response<LoginMsg> response) {
+                LoginMsg loginMsg = response.body();
+                if (loginMsg == null) {
+                    userCallback.onFiled("loginMsg == null");
+                } else {
+                    if (loginMsg.getStatus() == Msg.errorStatus) {
+                        userCallback.onFiled(loginMsg.getInfo());
+                    } else {
+                        LitePal.deleteAll(User.class);   //清除数据
+                        User user = loginMsg.getUser();
+                        user.setUserId(user.getId());
+                        user.save();                    //存入user
+                        userCallback.onSuccess(user);  //登录成功
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<LoginMsg> call, @NonNull Throwable t) {
+                userCallback.onFiled("onFailure t=" + t.getMessage());
+            }
+        });
+    }
+
+    /**
      * 手机密码登录
      *
      * @param phoneNumber 手机号码
