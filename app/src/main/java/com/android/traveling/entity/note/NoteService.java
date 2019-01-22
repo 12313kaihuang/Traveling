@@ -24,4 +24,7 @@ public interface NoteService {
     @GET("news")
     Call<NoteMsg> getNewest();
 
+    @GET("loadMore")
+    Call<NoteMsg> loadMore(@Query("lastId")int lastId);
+
 }

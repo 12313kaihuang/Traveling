@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
@@ -116,6 +118,45 @@ public class RecommendFragment extends Fragment {
 
     //加载更多
     private void LoadMore(RefreshLayout refreshLayout) {
+        //创建Retrofit对象  注意url后面有一个'/'。
+        Retrofit retrofit = UtilTools.getRetrofit();
+        // 获取NoteService对象
+        NoteService noteService = retrofit.create(NoteService.class);
+        Call<NoteMsg> call = noteService.loadMore(noteList.get(noteList.size() - 1).getId());
+        call.enqueue(new Callback<NoteMsg>() {
+            @Override
+            public void onResponse(@NonNull Call<NoteMsg> call, @NonNull Response<NoteMsg> response) {
+                NoteMsg noteMsg = response.body();
+                if (noteMsg == null) {
+                    LogUtil.e("noteMsg = null");
+                } else {
+                    if (getActivity() != null) {
+                        if (noteMsg.getStatus() == Msg.correctStatus) {
+                            getActivity().runOnUiThread(() -> {
+                                noteList.addAll(noteMsg.getNotes());
+                                newsAdaptor.notifyDataSetChanged();
+                                refreshLayout.finishLoadMore();
+                            });
+                        } else {
+                            getActivity().runOnUiThread(() -> {
+                                refreshLayout.finishLoadMore(false);    //加载失败
+                            });
+                        }
+                    } else {
+                        LogUtil.e("LoadMore = null");
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NoteMsg> call, @NonNull Throwable t) {
+                LogUtil.e("LoadMore onFailure t=" + t);
+                if (getActivity() != null) {
+                    refreshLayout.finishLoadMore(false);    //加载失败
+                }
+            }
+        });
         //        String url = StaticClass.LOAD_MORE_NEWS + "?lastId=" + noteList.get(noteList.size() - 1).getId();
         //        System.out.println("lastId:" + noteList.get(noteList.size() - 1).getId());
         //        MyOkhttp.get(url, new Callback() {
@@ -172,7 +213,7 @@ public class RecommendFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<NoteMsg> call, @NonNull retrofit2.Response<NoteMsg> response) {
                 NoteMsg noteMsg = response.body();
-                LogUtil.d("notemsg="+noteMsg);
+                LogUtil.d("notemsg=" + noteMsg);
                 if (noteMsg == null) {
                     LogUtil.e("noteMsg == null");
                 } else {
@@ -208,49 +249,6 @@ public class RecommendFragment extends Fragment {
                 }
             }
         });
-        //        MyOkhttp.get(StaticClass.LASTEST_NEWS, new Callback() {
-        //            @Override
-        //            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-        //                if (getActivity() != null) {
-        //                    getActivity().runOnUiThread(() -> {
-        //                        loading.setVisibility(View.INVISIBLE);
-        //                        tv_load_faild.setVisibility(View.VISIBLE);
-        //                        UtilTools.toast(getContext(), "加载失败，请检查您的网络是否通畅");
-        //                    });
-        //                }else {
-        //                   LogUtil.e("sendHttpRequest onFailure getActivity() = null");
-        //                }
-        //            }
-        //
-        //            @Override
-        //            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-        //                //noinspection ConstantConditions
-        //                String result = response.body().string();
-        //                LogUtil.d(result);
-        //                try {
-        //                    JSONObject jsonObject = new JSONObject(result);
-        //                    ResultNews resultNews = new Gson().fromJson(jsonObject.toString(), ResultNews.class);
-        //
-        //                    //状态正确
-        //                    if (resultNews.getStatus() == 1) {
-        //                        noteList = resultNews.getNewsList();
-        //
-        //                        //noinspection ConstantConditions
-        //                        getActivity().runOnUiThread(() -> {
-        //                            newsAdaptor = new NewsAdaptor(getActivity(), noteList);
-        //                            recommend_listView.setAdapter(newsAdaptor);
-        //                            load_progressbar.setVisibility(View.INVISIBLE);
-        //                        });
-        //                    } else {
-        //                        UtilTools.toast(getContext(), "返回数据状态有误");
-        //                    }
-        //
-        //
-        //                } catch (JSONException e) {
-        //                    e.printStackTrace();
-        //                }
-        //            }
-        //        });
     }
 
 
