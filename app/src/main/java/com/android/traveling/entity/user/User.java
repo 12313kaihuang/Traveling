@@ -293,7 +293,7 @@ public class User extends LitePalSupport {
                         refresh(body.getUser()); //更新currentUser
                         userCallback.onSuccess(body.getUser());
                     } else {
-                        userCallback.onFiled("status == errorStatus");
+                        userCallback.onFiled(body.getInfo());
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.android.traveling.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -7,6 +8,9 @@ import android.graphics.Typeface;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -84,5 +88,6 @@ public class UtilTools {
         return new Retrofit.Builder().baseUrl(StaticClass.URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
     }
+
 
 }

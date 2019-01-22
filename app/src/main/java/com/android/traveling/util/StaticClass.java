@@ -83,5 +83,6 @@ public class StaticClass {
 
     public static final String URL = "http://47.106.131.58:8081/traveling-0.0.1-SNAPSHOT/";
     public static final String IMG_URL = URL + "imgs/";
+//    public static final String IMG_URL = "http://47.106.131.58:8080/traveling/";
     public static final String VERIFY_EMAIL_URL = URL + "verifyEmail?code=";
 }

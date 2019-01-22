@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.yu.hu.gson.News;
+import com.android.traveling.entity.note.Note;
 import com.android.traveling.ui.BackableActivity;
 
 /**
@@ -30,10 +30,10 @@ public class NewsActivity extends BackableActivity {
         initView();
 
         Intent intent = getIntent();
-        News news = (News) intent.getSerializableExtra("news");
-        setTitle(news.getTitle());  //设置标题
+        Note note = (Note) intent.getSerializableExtra("note");
+        setTitle(note.getTitle());  //设置标题
 
-        textView.setText(news.getTitle());
+        textView.setText(note.getTitle());
 
     }
 

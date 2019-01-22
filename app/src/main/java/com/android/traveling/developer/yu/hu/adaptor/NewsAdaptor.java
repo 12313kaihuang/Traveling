@@ -2,7 +2,6 @@ package com.android.traveling.developer.yu.hu.adaptor;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.yu.hu.gson.News;
+import com.android.traveling.entity.note.Note;
+import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.StaticClass;
 import com.squareup.picasso.Picasso;
 
@@ -32,9 +32,9 @@ public class NewsAdaptor extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater;
-    private List<News> newsList;
+    private List<Note> newsList;
 
-    public NewsAdaptor(Context context, List<News> newsList) {
+    public NewsAdaptor(Context context, List<Note> newsList) {
         this.context = context;
         this.newsList = newsList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -72,33 +72,33 @@ public class NewsAdaptor extends BaseAdapter {
         }
 
         //加载View
-        News news = newsList.get(position);
-        LoadViewData(viewHolder, news);
+        Note note = newsList.get(position);
+        LoadViewData(viewHolder, note);
 
         //添加点击事件
-        addEvent(viewHolder, news);
+        addEvent(viewHolder, note);
 
         return convertView;
     }
 
     //加载界面数据
-    private void LoadViewData(ViewHolder viewHolder, News news) {
+    private void LoadViewData(ViewHolder viewHolder, Note note) {
         //viewHolder.xx.setText(news.getImgUrl())
-        viewHolder.tv_username.setText(news.getReleasePeople().getNickName());
-        viewHolder.tv_time.setText(news.getTime());
+        viewHolder.tv_username.setText(note.getReleasePeople().getNickName());
+        viewHolder.tv_time.setText(DateUtil.fromNow(note.getCreateTime()));
         viewHolder.tv_level.setText(String.format(context.getString(R.string.level), "LV."
-                , news.getReleasePeople().getLevel()));
-        viewHolder.news_item_like_num.setText(String.valueOf(news.getLike()));
-        viewHolder.news_item_commit_num.setText(String.valueOf(news.getComments()));
+                , note.getReleasePeople().getLevel()));
+        viewHolder.news_item_like_num.setText(String.valueOf(note.getLikeNum()));
+        viewHolder.news_item_commit_num.setText(String.valueOf(note.getCommentNum()));
         viewHolder.list_item_content.setText(String.format(context.getString(R.string.content),
-                news.getTitle(), news.getContent()));
-        Picasso.get().load(news.getReleasePeople().getImgUrl()).into(viewHolder.user_bg);
-        Picasso.get().load(news.getImgList().get(0).getUrl()).into(viewHolder.list_item_icon);
+                note.getTitle(), note.getContent()));
+        Picasso.get().load(note.getReleasePeople().getImgUrl()).into(viewHolder.user_bg);
+        Picasso.get().load(note.getImgList().get(0)).into(viewHolder.list_item_icon);
 
         //是否已关注
-        setFocus(viewHolder, news.getReleasePeople().isFocus());
+//        setFocus(viewHolder, note.getReleasePeople().isFocus());
         //设置news类别
-        setFlag(viewHolder, news.getFlag());
+        setFlag(viewHolder, note.getTag());
         notifyDataSetChanged();
     }
 
@@ -124,19 +124,19 @@ public class NewsAdaptor extends BaseAdapter {
     }
 
     //设置是否关注 isFocus为true则设置成已关注
-    private void setFocus(ViewHolder viewHolder, boolean isFocus) {
-        viewHolder.tv_focus.setTextSize(12);
-        if (isFocus) {
-            viewHolder.tv_focus.setText(context.getString(R.string.news_item_focus_on));
-            viewHolder.tv_focus.setTextColor(StaticClass.FOCUS_ON_TEXT_COLOR);
-            viewHolder.tv_focus.setBackgroundResource(R.drawable.news_item_focus_bg2);
-        } else {
-            viewHolder.tv_focus.setText(context.getString(R.string.news_item_focus));
-            viewHolder.tv_focus.setTextColor(Color.BLACK);
-            viewHolder.tv_focus.setBackgroundResource(R.drawable.news_item_focus_bg);
-        }
-
-    }
+//    private void setFocus(ViewHolder viewHolder, boolean isFocus) {
+//        viewHolder.tv_focus.setTextSize(12);
+//        if (isFocus) {
+//            viewHolder.tv_focus.setText(context.getString(R.string.news_item_focus_on));
+//            viewHolder.tv_focus.setTextColor(StaticClass.FOCUS_ON_TEXT_COLOR);
+//            viewHolder.tv_focus.setBackgroundResource(R.drawable.news_item_focus_bg2);
+//        } else {
+//            viewHolder.tv_focus.setText(context.getString(R.string.news_item_focus));
+//            viewHolder.tv_focus.setTextColor(Color.BLACK);
+//            viewHolder.tv_focus.setBackgroundResource(R.drawable.news_item_focus_bg);
+//        }
+//
+//    }
 
     //初始化View
     private void initView(View convertView, ViewHolder viewHolder) {
@@ -144,7 +144,6 @@ public class NewsAdaptor extends BaseAdapter {
         viewHolder.tv_username = convertView.findViewById(R.id.tv_username);
         viewHolder.tv_time = convertView.findViewById(R.id.tv_time);
         viewHolder.tv_level = convertView.findViewById(R.id.tv_level);
-        viewHolder.tv_focus = convertView.findViewById(R.id.tv_focus);
         viewHolder.news_item_like = convertView.findViewById(R.id.news_item_like);
         viewHolder.news_item_like_num = convertView.findViewById(R.id.news_item_like_num);
         viewHolder.news_item_commit_num = convertView.findViewById(R.id.news_item_commit_num);
@@ -156,7 +155,7 @@ public class NewsAdaptor extends BaseAdapter {
     }
 
     //设置点击事件
-    private void addEvent(ViewHolder viewHolder, News news) {
+    private void addEvent(ViewHolder viewHolder, Note note) {
         //喜欢的点击事件
         viewHolder.news_item_like.setOnClickListener(v -> {
             if (viewHolder.isLiked) {
@@ -175,17 +174,6 @@ public class NewsAdaptor extends BaseAdapter {
         viewHolder.news_item_like_num.setOnClickListener(v ->
                 viewHolder.news_item_like.callOnClick());
 
-
-        //关注 未关注的点击事件
-        viewHolder.tv_focus.setOnClickListener(v -> {
-            setFocus(viewHolder, !news.getReleasePeople().isFocus());
-            if (news.getReleasePeople().isFocus()) {
-                news.getReleasePeople().setFocus(false);
-            } else {
-                news.getReleasePeople().setFocus(true);
-            }
-        });
-
     }
 
 
@@ -195,7 +183,6 @@ public class NewsAdaptor extends BaseAdapter {
         TextView tv_username;
         TextView tv_time;
         TextView tv_level;
-        TextView tv_focus;
         TextView tv_flag;
         TextView list_item_content;
 
