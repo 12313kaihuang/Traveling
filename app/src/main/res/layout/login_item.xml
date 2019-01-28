@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <EditText
+    <com.android.traveling.widget.ClearEditText
         android:id="@+id/login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,10 +11,11 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/et_bg"
+        android:drawableEnd="@drawable/ic_clear"
         android:hint="@string/login_hint_pass"
-        android:maxLength="20"
         android:inputType="textPassword"
         android:labelFor="@+id/login_password"
+        android:maxLength="20"
         android:paddingBottom="10dp"
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
@@ -31,7 +32,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
+        <com.android.traveling.widget.ClearEditText
             android:id="@+id/login_verified_code"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -40,10 +41,11 @@
             android:layout_marginTop="10dp"
             android:layout_weight="3"
             android:background="@drawable/et_bg"
+            android:drawableEnd="@drawable/ic_clear"
             android:hint="@string/input_verified_code"
-            android:maxLength="6"
             android:inputType="textPassword"
             android:labelFor="@+id/login_verified_code"
+            android:maxLength="6"
             android:paddingBottom="10dp"
             android:paddingEnd="5dp"
             android:paddingStart="5dp"
