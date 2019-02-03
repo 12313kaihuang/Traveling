@@ -1,16 +1,20 @@
 package com.android.traveling.developer.yu.hu;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import com.searchview.SearchView;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.design.widget.TabLayout;
-import android.widget.ImageView;
 
 import com.android.traveling.developer.yu.hu.fragment.FocusOnFragment;
 import com.android.traveling.developer.yu.hu.fragment.NewFragment;
@@ -19,6 +23,10 @@ import com.android.traveling.R;
 import com.android.traveling.fragment.BaseFragment;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
+import com.android.traveling.util.XunfeiUtil;
+import com.iflytek.cloud.SpeechError;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,9 +78,38 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
 
-        //搜索图标
-        ImageView home_search = view.findViewById(R.id.home_search);
-        home_search.setOnClickListener(this);
+        //语音输入
+        SearchView searchView = view.findViewById(R.id.search_view);
+        searchView.setImageButtonVoiceClickListener((input, voice, view1) -> {
+
+            //申请录音权限
+            //noinspection ConstantConditions
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getActivity().requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
+                            1);
+                }
+            }
+
+            XunfeiUtil.showSpeechDialog(getContext(), new XunfeiUtil.onRecognizerResult() {
+                @Override
+                public void onSuccess(String result) {
+                    input.setText(result);// 设置输入框的文本
+                    input.requestFocus(); //请求获取焦点
+                    input.setSelection(input.length());//把光标定位末尾
+                }
+
+                @Override
+                public void onFaild(JSONException e) {
+                    UtilTools.toast(getContext(), "onFaild e=" + e);
+                }
+
+                @Override
+                public void onError(SpeechError speechError) {
+
+                }
+            });
+        });
 
         //预加载  todo
         viewPager.setOffscreenPageLimit(2);
@@ -108,11 +145,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.home_search:
-                UtilTools.toast(getContext(),"点击了搜索图标");
-                break;
+            //            case R.id.home_search:
+            //                UtilTools.toast(getContext(),"点击了搜索图标");
+            //                break;
             default:
-                 break;
+                break;
         }
     }
 }

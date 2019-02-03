@@ -3,6 +3,8 @@ package com.android.traveling.application;
 import android.app.Application;
 
 import com.android.traveling.util.StaticClass;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import org.litepal.LitePal;
@@ -31,5 +33,8 @@ public class BaseApplication extends Application {
 
         //litepal
         LitePal.initialize(this);
+
+        //讯飞SDK
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5c518c16");
     }
 }

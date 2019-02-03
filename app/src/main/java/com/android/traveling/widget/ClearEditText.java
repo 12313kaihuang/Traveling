@@ -17,7 +17,7 @@ import android.view.View;
  * 创建者：HY
  * 创建时间：2019/1/28 14:52
  * 描述：  带有清除按钮的EditText
- * <p>
+ * 清除图标通过 drawableEnd 或 drawableRight 设置
  * 继承AppCompatEditText并实现TextWatcher和OnFocusChangeListener
  */
 
@@ -110,8 +110,15 @@ public class ClearEditText extends AppCompatEditText
             if (touchable) {
                 this.setText("");
             }
+        } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            performClick();
         }
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
     }
 
     @Override

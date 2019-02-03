@@ -157,4 +157,5 @@
 
     <!--activity_news_setting-->
     <string name="push_voice">推送声音</string>
+    <string name="search">search</string>
 </resources>
