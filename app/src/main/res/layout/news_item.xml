@@ -6,53 +6,9 @@
     android:layout_marginBottom="10dp"
     android:background="@color/white">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/user_bg"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/user_bg"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/news_item_username"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toEndOf="@+id/user_bg"
-        app:layout_constraintTop_toTopOf="@+id/user_bg" />
-
-    <TextView
-        android:id="@+id/tv_level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:background="@drawable/level_bg"
-        android:padding="1dp"
-        android:paddingEnd="5dp"
-        android:paddingStart="5dp"
-        android:text="@string/news_item_level"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_username"
-        app:layout_constraintStart_toEndOf="@+id/tv_username"
-        app:layout_constraintTop_toTopOf="@+id/tv_username"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/news_item_time"
-        app:layout_constraintBottom_toBottomOf="@+id/user_bg"
-        app:layout_constraintStart_toStartOf="@+id/tv_username"
-        app:layout_constraintTop_toBottomOf="@+id/tv_username" />
+    <include
+        android:id="@+id/layout_user"
+        layout="@layout/layout_user" />
 
     <ImageView
         android:id="@+id/list_item_icon"
@@ -65,7 +21,7 @@
         android:src="@drawable/test_news"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_bg" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_user" />
 
     <TextView
         android:id="@+id/list_item_content"
@@ -102,7 +58,7 @@
             android:gravity="center"
             android:text="@string/news_flag1"
             android:textColor="@color/news_flag1_color"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
 
     </LinearLayout>
 

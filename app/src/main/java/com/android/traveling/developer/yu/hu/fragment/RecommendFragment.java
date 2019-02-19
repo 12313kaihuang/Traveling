@@ -83,7 +83,7 @@ public class RecommendFragment extends Fragment {
         recommend_listView.setOnItemClickListener((parent, view1, position, id) -> {
             Note note = noteList.get(position);
             Intent intent = new Intent(getContext(), NewsActivity.class);
-            intent.putExtra("note", note);
+            intent.putExtra(NewsActivity.s_NOTE, note);
             startActivity(intent);
         });
 
@@ -157,49 +157,6 @@ public class RecommendFragment extends Fragment {
                 }
             }
         });
-        //        String url = StaticClass.LOAD_MORE_NEWS + "?lastId=" + noteList.get(noteList.size() - 1).getId();
-        //        System.out.println("lastId:" + noteList.get(noteList.size() - 1).getId());
-        //        MyOkhttp.get(url, new Callback() {
-        //            @Override
-        //            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-        //                if (getActivity() != null) {
-        //                    refreshLayout.finishLoadMore(false);    //加载失败
-        //                } else {
-        //                    LogUtil.e("RecommendFragment LoadMore() onFailure getActivity = null");
-        //                }
-        //
-        //            }
-        //
-        //            @Override
-        //            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-        //                //noinspection ConstantConditions
-        //                String result = response.body().string();
-        //                try {
-        //                    //在调用了response.body().string()方法之后，response中的流会被关闭
-        //                    JSONObject jsonObject = new JSONObject(result);
-        //                    ResultNews resultNews = new Gson().fromJson(jsonObject.toString(),
-        //                            ResultNews.class);
-        //                    if (getActivity() != null) {
-        //                        if (resultNews.getStatus() == 1) {
-        //                            getActivity().runOnUiThread(() -> {
-        //                                noteList.addAll(resultNews.getNewsList());
-        //                                newsAdaptor.notifyDataSetChanged();
-        //                                refreshLayout.finishLoadMore();
-        //                            });
-        //                        } else {
-        //                            getActivity().runOnUiThread(() -> {
-        //                                refreshLayout.finishLoadMore(false);    //加载失败
-        //                            });
-        //                        }
-        //                    } else {
-        //                        LogUtil.e("RecommendFragment getActivity = null");
-        //                    }
-        //
-        //                } catch (JSONException | NullPointerException e) {
-        //                    e.printStackTrace();
-        //                }
-        //            }
-        //        });
     }
 
     //网络请求数据
