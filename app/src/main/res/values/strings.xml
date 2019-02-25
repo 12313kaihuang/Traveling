@@ -158,4 +158,7 @@
     <!--activity_news_setting-->
     <string name="push_voice">推送声音</string>
     <string name="search">search</string>
+
+    <string name="all_comment">共%1d条回复>></string>
+    <string name="str_reply">回复</string>
 </resources>

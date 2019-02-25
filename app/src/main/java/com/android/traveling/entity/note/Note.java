@@ -87,6 +87,10 @@ public class Note implements Serializable{
         this.id = id;
     }
 
+    /**
+     * 图片集
+     * @return 图片集
+     */
     public List<String> getImgList() {
         return parseImages(imgs);
     }
