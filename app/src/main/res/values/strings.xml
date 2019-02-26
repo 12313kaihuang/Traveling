@@ -161,4 +161,10 @@
 
     <string name="all_comment">共%1d条回复>></string>
     <string name="str_reply">回复</string>
+    <string name="news_comment">最新评论(%1d)</string>
+    <string name="comment">%1s：%1s</string>
+    <string name="comment_reply">%1s 回复 %1s：%1s</string>
+    <string name="str_write_comment">写评论..</string>
+    <string name="str">%1s</string>
+    <string name="num">%1d</string>
 </resources>

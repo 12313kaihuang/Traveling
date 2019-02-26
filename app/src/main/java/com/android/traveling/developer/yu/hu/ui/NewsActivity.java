@@ -1,25 +1,43 @@
 package com.android.traveling.developer.yu.hu.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.adaptor.CommentAdaptor;
+import com.android.traveling.developer.zhiming.li.ui.PersonalActivity;
+import com.android.traveling.entity.msg.CommentMsg;
+import com.android.traveling.entity.note.Comment;
+import com.android.traveling.entity.note.CommentService;
 import com.android.traveling.entity.note.Note;
+import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.ui.BackableActivity;
 import com.android.traveling.util.DateUtil;
+import com.android.traveling.util.LogUtil;
+import com.android.traveling.util.UtilTools;
+import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.squareup.picasso.Picasso;
+import com.wx.goodview.GoodView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * 项目名：Traveling
@@ -34,6 +52,8 @@ public class NewsActivity extends BackableActivity {
 
     //intent传递参数key值
     public static final String s_NOTE = "note";
+    boolean isLiked = false;
+    Note note;
 
     ScrollView scrollView_news;
     CircleImageView user_bg;
@@ -41,9 +61,16 @@ public class NewsActivity extends BackableActivity {
     TextView tv_time;
     TextView tv_level;
     TextView note_content;
+    TextView all_comment_num;
     ImageView note_img;
     RecyclerView recyclerView;
+    SmartRefreshLayout refreshLayout;
 
+    TextView tv_like;
+
+    ConstraintLayout constraintLayout;
+
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +79,9 @@ public class NewsActivity extends BackableActivity {
         initView();
 
         Intent intent = getIntent();
-        Note note = (Note) intent.getSerializableExtra(s_NOTE);
+        note = (Note) intent.getSerializableExtra(s_NOTE);
         setTitle(note.getTitle());  //设置标题
+        addEvents(note);
 
         //头像
         Picasso.get().load(note.getReleasePeople().getImgUrl()).into(user_bg);
@@ -63,21 +91,63 @@ public class NewsActivity extends BackableActivity {
         tv_level.setText(String.format(getString(R.string.level), "LV."
                 , note.getReleasePeople().getLevel()));
         note_content.setText(note.getContent());
-
-        List<String> commentList = new ArrayList<>();
-        //设置布局方式
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //setHasFixedSize(true)方法使得RecyclerView能够固定自身size不受adapter变化的影响；
-        recyclerView.setHasFixedSize(true);
-        //关闭RecyclerView的嵌套滑动特性
-        recyclerView.setNestedScrollingEnabled(false);
-        for (int i = 0; i < 8; i++) {
-            commentList.add("评论" + i);
+        tv_like.setText(String.format("%d", note.getLikeNum()));
+        if (note.isLiked()) {
+            isLiked = true;
+            tv_like.setCompoundDrawablesWithIntrinsicBounds(null,
+                    ContextCompat.getDrawable(this, R.drawable.ic_like2), null, null);
+        } else {
+            tv_like.setCompoundDrawablesWithIntrinsicBounds(null,
+                    ContextCompat.getDrawable(this, R.drawable.ic_like), null, null);
         }
-        recyclerView.setAdapter(new CommentAdaptor(commentList));
+        //加载数据
+        loadComments(note.getId());
 
-        //滚动到顶部
-        scrollView_news.scrollTo(0,0);
+    }
+
+    //添加事件
+    private void addEvents(Note note) {
+        //用户点击事件
+        constraintLayout.setOnClickListener(v -> {
+            Intent toPersonal = new Intent(this, PersonalActivity.class);
+            toPersonal.putExtra(PersonalActivity.USER_ID, note.getUserId());
+            startActivity(toPersonal);
+        });
+
+
+        //点赞事件
+        tv_like.setOnClickListener(v -> {
+
+            int num = Integer.parseInt((String) tv_like.getText());
+            if (isLiked) {
+                tv_like.setText(getResources().getString(R.string.num, num - 1));
+                tv_like.setCompoundDrawablesWithIntrinsicBounds(null,
+                        ContextCompat.getDrawable(this, R.drawable.ic_like), null, null);
+                isLiked = false;
+            } else {
+                if (TravelingUser.hasLogin()) {
+                    tv_like.setText(getResources().getString(R.string.num, num + 1));
+                    tv_like.setCompoundDrawablesWithIntrinsicBounds(null,
+                            ContextCompat.getDrawable(this, R.drawable.ic_like2), null, null);
+                    UtilTools.showGoodView(v, this);
+                    note.doLike(new Note.Ilike() {
+
+                        @Override
+                        public void onFailure(String reason) {
+                            UtilTools.toast(NewsActivity.this, reason);
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                            UtilTools.toast(NewsActivity.this, "点赞成功");
+                            isLiked = true;
+                        }
+                    });
+                } else {
+                    UtilTools.toast(NewsActivity.this, "登录之后才可点赞");
+                }
+            }
+        });
     }
 
     private void initView() {
@@ -89,5 +159,75 @@ public class NewsActivity extends BackableActivity {
         note_content = findViewById(R.id.note_content);
         recyclerView = findViewById(R.id.recycle_view);
         scrollView_news = findViewById(R.id.scrollView_news);
+        refreshLayout = findViewById(R.id.refreshLayout);
+        all_comment_num = findViewById(R.id.all_comment_num);
+        tv_like = findViewById(R.id.tv_like);
+        constraintLayout = findViewById(R.id.layout_user);
+    }
+
+    /**
+     * 加载评论
+     *
+     * @param noteId 文章id
+     */
+    private void loadComments(int noteId) {
+        //创建Retrofit对象  注意url后面有一个'/'。
+        Retrofit retrofit = UtilTools.getRetrofit();
+        // 获取NoteService对象
+        CommentService commentService = retrofit.create(CommentService.class);
+        Call<CommentMsg> msgCall = commentService.getComments(noteId);
+        msgCall.enqueue(new Callback<CommentMsg>() {
+            @Override
+            public void onResponse(@NonNull Call<CommentMsg> call, @NonNull Response<CommentMsg> response) {
+                CommentMsg msg = response.body();
+                LogUtil.d(new Gson().toJson(msg));
+                try {
+                    if (msg != null) {
+                        if (msg.getComments() == null || msg.getComments().size() == 0) {
+                            loadFailure(msg.getInfo());
+                        } else {
+                            //加载成功
+                            LogUtil.d("size="+msg.getComments().size());
+                            loadSuccess(msg.getComments());
+                        }
+                    }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CommentMsg> call, @NonNull Throwable t) {
+                LogUtil.e("LoadMore onFailure t=" + t);
+                loadFailure(t.getMessage());
+            }
+        });
+    }
+
+    /**
+     * 评论加载失败
+     * @param reason reason
+     */
+    private void loadFailure(String reason) {
+        UtilTools.toast(NewsActivity.this, reason);
+        recyclerView.setVisibility(View.INVISIBLE);
+    }
+
+    /**
+     * 评论加载成功
+     *
+     * @param comments comments
+     */
+    private void loadSuccess(List<Comment> comments) {
+        all_comment_num.setText(getResources().getString(R.string.news_comment, comments.size()));
+        //设置布局方式
+        recyclerView.setLayoutManager(new LinearLayoutManager(NewsActivity.this));
+        //setHasFixedSize(true)方法使得RecyclerView能够固定自身size不受adapter变化的影响；
+        recyclerView.setHasFixedSize(true);
+        //关闭RecyclerView的嵌套滑动特性
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setAdapter(new CommentAdaptor(NewsActivity.this, comments));
+        //滚动到顶部
+        scrollView_news.scrollTo(0, 0);
     }
 }

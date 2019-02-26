@@ -45,6 +45,14 @@ public class TravelingUser {
     }
 
     /**
+     * 是否已登录
+     * @return 是否已登录
+     */
+    public static boolean hasLogin(){
+        return getCurrentUser() != null;
+    }
+
+    /**
      * 从远程数据库更新本地User
      *
      * @param userCallback 回调接口

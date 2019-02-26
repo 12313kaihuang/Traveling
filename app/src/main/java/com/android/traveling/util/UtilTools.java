@@ -5,9 +5,14 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.android.traveling.R;
+import com.wx.goodview.GoodView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -90,4 +95,14 @@ public class UtilTools {
     }
 
 
+    /**
+     * 显示点赞效果
+     * @param v v
+     * @param context context
+     */
+    public static void showGoodView(View v, Context context) {
+        final GoodView goodView = new GoodView(context);
+        goodView.setTextInfo("+1", ContextCompat.getColor(context, R.color.red),16);
+        goodView.show(v);
+    }
 }

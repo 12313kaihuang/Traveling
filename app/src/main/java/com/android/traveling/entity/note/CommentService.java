@@ -1,0 +1,22 @@
+package com.android.traveling.entity.note;
+
+import com.android.traveling.entity.msg.CommentMsg;
+
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
+
+/**
+ * 项目名：Traveling
+ * 包名：  com.android.traveling.entity.note
+ * 文件名：CommentService
+ * 创建者：HY
+ * 创建时间：2019/2/25 20:43
+ * 描述：  评论 retrofit接口
+ */
+
+public interface CommentService {
+
+    @GET("getComments")
+    Call<CommentMsg> getComments(@Query("noteId")int noteId);
+}

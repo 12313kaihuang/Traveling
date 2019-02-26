@@ -112,6 +112,14 @@
         <activity android:name=".developer.zhiming.li.ui.NewsSettingActivity"
             android:label="消息设置"/>
 
+        <!--回复详情-->
+        <activity android:name=".developer.yu.hu.ui.ReplyDetailActivity" />
+
+        <!--个人首页-->
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".developer.zhiming.li.ui.PersonalActivity" />
+
 
     </application>
 

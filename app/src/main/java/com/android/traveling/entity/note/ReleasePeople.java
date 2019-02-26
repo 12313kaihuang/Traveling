@@ -20,11 +20,13 @@ public class ReleasePeople implements Serializable {
     private Integer userId;
 
     //头像资源
-    @SerializedName("headportrait")
+//    @SerializedName("headportrait")
+    @SerializedName("imgUrl")
     private String imgUrl;
 
     //昵称
-    @SerializedName("nickname")
+//    @SerializedName("nickname")
+    @SerializedName("nickName")
     private String nickName;
 
     //级别
@@ -74,4 +76,13 @@ public class ReleasePeople implements Serializable {
         this.level = level;
     }
 
+    @Override
+    public String toString() {
+        return "ReleasePeople{" +
+                "userId=" + userId +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", level='" + level + '\'' +
+                '}';
+    }
 }

@@ -102,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:background="@drawable/border_bg"
+        android:background="@drawable/reply_border_bg"
         android:text="@string/str_reply"
         android:padding="1dp"
         android:paddingStart="5dp"

@@ -21,6 +21,7 @@ import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.msg.NoteMsg;
 import com.android.traveling.entity.note.Note;
 import com.android.traveling.entity.note.NoteService;
+import com.android.traveling.util.BinarySearch;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;

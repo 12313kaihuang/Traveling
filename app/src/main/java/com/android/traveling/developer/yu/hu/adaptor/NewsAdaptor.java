@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.android.traveling.R;
 import com.android.traveling.entity.note.Note;
+import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.StaticClass;
+import com.android.traveling.util.UtilTools;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -62,6 +64,7 @@ public class NewsAdaptor extends BaseAdapter {
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
+            viewHolder.isLiked = newsList.get(position).isLiked();
             convertView = inflater.inflate(R.layout.news_item, null);
             //初始化viewHolder
             initView(convertView, viewHolder);
@@ -94,9 +97,17 @@ public class NewsAdaptor extends BaseAdapter {
                 note.getTitle(), note.getContent()));
         Picasso.get().load(note.getReleasePeople().getImgUrl()).into(viewHolder.user_bg);
         Picasso.get().load(note.getImgList().get(0)).into(viewHolder.list_item_icon);
+        //        LogUtil.d(note.getTitle()+"--"+note.getStrLikeList()+"=="+note.isLiked());
+        if (note.isLiked()) {
+            viewHolder.isLiked = true;
+            viewHolder.news_item_like.setImageResource(R.drawable.ic_like2);
+        } else {
+            viewHolder.isLiked = false;
+            viewHolder.news_item_like.setImageResource(R.drawable.ic_like);
+        }
 
         //是否已关注
-//        setFocus(viewHolder, note.getReleasePeople().isFocus());
+        //        setFocus(viewHolder, note.getReleasePeople().isFocus());
         //设置news类别
         setFlag(viewHolder, note.getTag());
         notifyDataSetChanged();
@@ -124,19 +135,19 @@ public class NewsAdaptor extends BaseAdapter {
     }
 
     //设置是否关注 isFocus为true则设置成已关注
-//    private void setFocus(ViewHolder viewHolder, boolean isFocus) {
-//        viewHolder.tv_focus.setTextSize(12);
-//        if (isFocus) {
-//            viewHolder.tv_focus.setText(context.getString(R.string.news_item_focus_on));
-//            viewHolder.tv_focus.setTextColor(StaticClass.FOCUS_ON_TEXT_COLOR);
-//            viewHolder.tv_focus.setBackgroundResource(R.drawable.news_item_focus_bg2);
-//        } else {
-//            viewHolder.tv_focus.setText(context.getString(R.string.news_item_focus));
-//            viewHolder.tv_focus.setTextColor(Color.BLACK);
-//            viewHolder.tv_focus.setBackgroundResource(R.drawable.news_item_focus_bg);
-//        }
-//
-//    }
+    //    private void setFocus(ViewHolder viewHolder, boolean isFocus) {
+    //        viewHolder.tv_focus.setTextSize(12);
+    //        if (isFocus) {
+    //            viewHolder.tv_focus.setText(context.getString(R.string.news_item_focus_on));
+    //            viewHolder.tv_focus.setTextColor(StaticClass.FOCUS_ON_TEXT_COLOR);
+    //            viewHolder.tv_focus.setBackgroundResource(R.drawable.news_item_focus_bg2);
+    //        } else {
+    //            viewHolder.tv_focus.setText(context.getString(R.string.news_item_focus));
+    //            viewHolder.tv_focus.setTextColor(Color.BLACK);
+    //            viewHolder.tv_focus.setBackgroundResource(R.drawable.news_item_focus_bg);
+    //        }
+    //
+    //    }
 
     //初始化View
     private void initView(View convertView, ViewHolder viewHolder) {
@@ -159,15 +170,32 @@ public class NewsAdaptor extends BaseAdapter {
         //喜欢的点击事件
         viewHolder.news_item_like.setOnClickListener(v -> {
             if (viewHolder.isLiked) {
-                viewHolder.news_item_like.setBackgroundResource(R.drawable.ic_like);
+                viewHolder.news_item_like.setImageResource(R.drawable.ic_like);
                 int like_num = Integer.parseInt(viewHolder.news_item_like_num.getText().toString());
                 viewHolder.news_item_like_num.setText(String.valueOf(like_num - 1));
                 viewHolder.isLiked = false;
             } else {
-                viewHolder.news_item_like.setBackgroundResource(R.drawable.ic_like2);
-                int like_num = Integer.parseInt(viewHolder.news_item_like_num.getText().toString());
-                viewHolder.news_item_like_num.setText(String.valueOf(like_num + 1));
-                viewHolder.isLiked = true;
+                if (TravelingUser.hasLogin()) {
+                    viewHolder.news_item_like.setImageResource(R.drawable.ic_like2);
+                    int like_num = Integer.parseInt(viewHolder.news_item_like_num.getText().toString());
+                    viewHolder.news_item_like_num.setText(String.valueOf(like_num + 1));
+                    viewHolder.isLiked = true;
+                    UtilTools.showGoodView(v, context);
+                    note.doLike(new Note.Ilike() {
+
+                        @Override
+                        public void onFailure(String reason) {
+                            UtilTools.toast(context, "点赞失败，原因：" + reason);
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                            UtilTools.toast(context, "点赞成功");
+                        }
+                    });
+                }else {
+                    UtilTools.toast(context,"登录之后才可点赞");
+                }
             }
 
         });

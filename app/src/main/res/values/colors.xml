@@ -18,10 +18,11 @@
     <color name="gold">#E7CD9E</color>
     <color name="et_blue">#BB14A5E2</color>
     <color name="blue">#FF14A5E2</color>
-    <color name="blue_comment">#4F7DEF</color>
+    <color name="blue_comment">#5C87B5</color>
     <color name="focus_on_bg">#F6F7F9</color>
     <color name="news_flag1_color">#F4DB75</color>
     <color name="news_flag2_color">#F98080</color>
+    <color name="red">#d81e06</color>
     <color name="news_flag3_color">#6EDFD2</color>
     <color name="bind_yellow">#FFE247</color>
     <color name="bind_gray">#D8D8D8</color>

@@ -1,9 +1,11 @@
 package com.android.traveling.entity.note;
 
+import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.msg.NoteMsg;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -19,12 +21,15 @@ public interface NoteService {
 
     /**
      * 获取最新的游记文章
+     *
      * @return 最新的篇文章
      */
     @GET("news")
     Call<NoteMsg> getNewest();
 
     @GET("loadMore")
-    Call<NoteMsg> loadMore(@Query("lastId")int lastId);
+    Call<NoteMsg> loadMore(@Query("lastId") int lastId);
 
+    @POST("updateLikeNum")
+    Call<Msg> updateLikeNum(@Query("noteId") int noteId, @Query("likeList") String likeList);
 }

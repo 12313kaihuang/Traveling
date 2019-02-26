@@ -8,9 +8,11 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:background="@color/white"
         app:srlAccentColor="@android:color/white"
         app:srlEnableRefresh="false"
         app:srlPrimaryColor="#444444">
@@ -54,6 +56,18 @@
                     app:layout_constraintStart_toStartOf="@+id/note_img"
                     app:layout_constraintTop_toBottomOf="@+id/note_img" />
 
+                <TextView
+                    android:id="@+id/all_comment_num"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:text="@string/app_name"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/note_content"/>
+
                 <!--解决RecyclerView item显示不全的问题-->
                 <!--beforeDescendants：viewGroup会优先子类控件而获取焦点-->
                 <!--afterDescendants：viewGroup只有当子类控件不需要获取焦点的时候才去获取焦点-->
@@ -64,7 +78,7 @@
                     android:layout_marginTop="8dp"
                     android:descendantFocusability="blocksDescendants"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/note_content">
+                    app:layout_constraintTop_toBottomOf="@+id/all_comment_num">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycle_view"
@@ -82,4 +96,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include layout="@layout/item_write_comment"/>
 </LinearLayout>
