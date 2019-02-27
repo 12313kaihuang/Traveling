@@ -169,30 +169,18 @@ public class NewsAdaptor extends BaseAdapter {
     private void addEvent(ViewHolder viewHolder, Note note) {
         //喜欢的点击事件
         viewHolder.news_item_like.setOnClickListener(v -> {
-            if (viewHolder.isLiked) {
+            if (note.isLiked()) {
                 viewHolder.news_item_like.setImageResource(R.drawable.ic_like);
                 int like_num = Integer.parseInt(viewHolder.news_item_like_num.getText().toString());
                 viewHolder.news_item_like_num.setText(String.valueOf(like_num - 1));
-                viewHolder.isLiked = false;
+                note.doLike(Note.DISLIKE);
             } else {
                 if (TravelingUser.hasLogin()) {
                     viewHolder.news_item_like.setImageResource(R.drawable.ic_like2);
                     int like_num = Integer.parseInt(viewHolder.news_item_like_num.getText().toString());
                     viewHolder.news_item_like_num.setText(String.valueOf(like_num + 1));
-                    viewHolder.isLiked = true;
                     UtilTools.showGoodView(v, context);
-                    note.doLike(new Note.Ilike() {
-
-                        @Override
-                        public void onFailure(String reason) {
-                            UtilTools.toast(context, "点赞失败，原因：" + reason);
-                        }
-
-                        @Override
-                        public void onSuccess() {
-                            UtilTools.toast(context, "点赞成功");
-                        }
-                    });
+                    note.doLike(Note.LIKE);
                 }else {
                     UtilTools.toast(context,"登录之后才可点赞");
                 }

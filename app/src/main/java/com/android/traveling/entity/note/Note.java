@@ -7,6 +7,7 @@ import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.util.BinarySearch;
 import com.android.traveling.util.DateUtil;
+import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
 import com.google.gson.Gson;
@@ -34,6 +35,9 @@ import retrofit2.Retrofit;
  */
 @SuppressWarnings("unused")
 public class Note implements Serializable {
+
+    public static final int LIKE = 0;
+    public static final int DISLIKE = 1;
 
     private Integer id;
 
@@ -110,6 +114,7 @@ public class Note implements Serializable {
 
     public void setLikeList(String list) {
         this.likeList = list;
+        this.likeNum = parseLikeList(likeList).size();
     }
 
     private ArrayList<Integer> getLikeList() {
@@ -117,6 +122,7 @@ public class Note implements Serializable {
     }
 
     private void setLikeList(ArrayList<Integer> likeList) {
+        this.likeNum = likeList.size();
         this.likeList = new Gson().toJson(likeList);
     }
 
@@ -232,7 +238,6 @@ public class Note implements Serializable {
         return new Gson().fromJson(likeList, type);
     }
 
-    private ArrayList<Integer> mlikeList;
 
     /**
      * 判断某个用户是否已经喜欢了这篇文章
@@ -241,10 +246,8 @@ public class Note implements Serializable {
      * @return 结果
      */
     private boolean isLiked(Integer userId) {
-        if (mlikeList == null) {
-            mlikeList = getLikeList();
-        }
-        return mlikeList.size() != 0 && BinarySearch.binarySearch(mlikeList, userId) >= 0;
+        ArrayList<Integer> likeList = getLikeList();
+        return likeList.size() != 0 && BinarySearch.binarySearch(likeList, userId) >= 0;
     }
 
     /**
@@ -261,61 +264,54 @@ public class Note implements Serializable {
     /**
      * 点赞/取消点赞
      *
-     * @param ilike 回调接口
+     * @param type 点赞/取消点赞
      */
-    public void doLike(Ilike ilike) {
+    public void doLike(int type) {
+        String TAG = "Note.doLike";
         User currentUser = TravelingUser.getCurrentUser();
         if (currentUser == null) {
-            ilike.onFailure("未登录");
+            LogUtil.d(TAG, "currentUser == null");
             return;
         }
-        if (isLiked(currentUser.getUserId())) {  //点过赞了
-            //            ilike.onFailure("点过赞了");
-            ilike.onSuccess();
-            return;
-        }
-        try {
-            ArrayList<Integer> likeList = getLikeList();
+        ArrayList<Integer> likeList = getLikeList();
+        if (type == LIKE) {
+            if (isLiked()) {
+                LogUtil.d(TAG, "点过赞了");
+                return;
+            }
             likeList.add(currentUser.getUserId());
             Collections.sort(likeList);  //默认为升序排序
-
-            //创建Retrofit对象  注意url后面有一个'/'。
-            Retrofit retrofit = UtilTools.getRetrofit();
-            // 获取NoteService对象
-            NoteService noteService = retrofit.create(NoteService.class);
-            Call<Msg> msgCall = noteService.updateLikeNum(id, new Gson().toJson(likeList));
-            msgCall.enqueue(new Callback<Msg>() {
-                @Override
-                public void onResponse(@NonNull Call<Msg> call, @NonNull Response<Msg> response) {
-                    Msg msg = response.body();
-                    if (msg == null) {
-                        ilike.onFailure("msg == null");
-                    } else {
-                        if (msg.getStatus() == Msg.correctStatus) {
-                            setLikeList(likeList);
-                            ilike.onSuccess();
-                        } else {
-                            ilike.onFailure(msg.getInfo());
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<Msg> call, @NonNull Throwable t) {
-                    likeList.remove(currentUser.getUserId());
-                    ilike.onFailure("onFailure :" + t.getMessage());
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.d(TAG, "点赞：list=" + new Gson().toJson(likeList));
+        } else if (type == DISLIKE) {
+            likeList.remove(
+                    BinarySearch.binarySearch(likeList, currentUser.getUserId()));
+            LogUtil.d(TAG, "取消点赞：list=" + new Gson().toJson(likeList));
+        } else {
+            LogUtil.d(TAG, "type不正确");
+            return;
         }
+        this.likeNum = likeList.size();
+        this.likeList = new Gson().toJson(likeList);
+        LogUtil.d(TAG, "");
+        //创建Retrofit对象  注意url后面有一个'/'。
+        Retrofit retrofit = UtilTools.getRetrofit();
+        // 获取NoteService对象
+        NoteService noteService = retrofit.create(NoteService.class);
+        Call<Msg> msgCall = noteService.updateLikeNum(id, new Gson().toJson(likeList));
+        msgCall.enqueue(new Callback<Msg>() {
+            @Override
+            public void onResponse(@NonNull Call<Msg> call, @NonNull Response<Msg> response) {
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Msg> call, @NonNull Throwable t) {
+
+            }
+        });
+
+
     }
 
-    public interface Ilike {
 
-        void onFailure(String reason);
-
-        void onSuccess();
-    }
 }

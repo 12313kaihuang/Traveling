@@ -21,7 +21,6 @@ import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.msg.NoteMsg;
 import com.android.traveling.entity.note.Note;
 import com.android.traveling.entity.note.NoteService;
-import com.android.traveling.util.BinarySearch;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -47,6 +46,9 @@ import retrofit2.Retrofit;
  */
 
 public class RecommendFragment extends Fragment {
+
+    private static final int REQUEST_CODE = 0;  //请求码 去NewsActivity
+    private static final String TAG = "RecommendFragment";
 
     private List<Note> noteList;
     private NewsAdaptor newsAdaptor;
@@ -83,9 +85,10 @@ public class RecommendFragment extends Fragment {
         //点击事件
         recommend_listView.setOnItemClickListener((parent, view1, position, id) -> {
             Note note = noteList.get(position);
-            Intent intent = new Intent(getContext(), NewsActivity.class);
+            Intent intent = new Intent(getActivity(), NewsActivity.class);
+            intent.putExtra(NewsActivity.POSITION, position);
             intent.putExtra(NewsActivity.s_NOTE, note);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CODE);  //注意 跳转过去后setResult后需Finish()才会正确传回结果来！
         });
 
 
@@ -220,5 +223,21 @@ public class RecommendFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         LogUtil.d("RecommendFragment onDestroy");
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == NewsActivity.RESULT_CODE) {
+            //统一点赞情况
+            Note note = (Note) data.getSerializableExtra(NewsActivity.s_NOTE);
+            int position = data.getIntExtra(NewsActivity.POSITION, -1);
+            if (position >= 0 && position < noteList.size()) {
+                noteList.get(position).setLikeList(note.getStrLikeList());
+            }
+            newsAdaptor.notifyDataSetChanged();
+            LogUtil.d(TAG, "onActivityResult: list=" + note.getStrLikeList());
+        }
     }
 }

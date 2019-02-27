@@ -29,7 +29,6 @@ import com.android.traveling.util.UtilTools;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.squareup.picasso.Picasso;
-import com.wx.goodview.GoodView;
 
 import java.util.List;
 
@@ -51,7 +50,13 @@ import retrofit2.Retrofit;
 public class NewsActivity extends BackableActivity {
 
     //intent传递参数key值
+
     public static final String s_NOTE = "note";
+    public static final String POSITION = "position";
+    public static final int RESULT_CODE = 1;   //返回到RecommendFragment
+    private static final String TAG = "NewsActivity";
+    private int position;
+
     boolean isLiked = false;
     Note note;
 
@@ -67,6 +72,7 @@ public class NewsActivity extends BackableActivity {
     SmartRefreshLayout refreshLayout;
 
     TextView tv_like;
+    TextView tv_comment;
 
     ConstraintLayout constraintLayout;
 
@@ -77,8 +83,16 @@ public class NewsActivity extends BackableActivity {
         setContentView(R.layout.activity_news_detail);
 
         initView();
+        initDate();
+        //加载评论
+        loadComments(note.getId());
 
+    }
+
+    //初始化数据
+    private void initDate() {
         Intent intent = getIntent();
+        position = intent.getIntExtra(POSITION, -1);
         note = (Note) intent.getSerializableExtra(s_NOTE);
         setTitle(note.getTitle());  //设置标题
         addEvents(note);
@@ -91,7 +105,9 @@ public class NewsActivity extends BackableActivity {
         tv_level.setText(String.format(getString(R.string.level), "LV."
                 , note.getReleasePeople().getLevel()));
         note_content.setText(note.getContent());
-        tv_like.setText(String.format("%d", note.getLikeNum()));
+        tv_like.setText(getResources().getString(R.string.num,note.getLikeNum()));
+        tv_comment.setText(getResources().getString(R.string.num,note.getCommentNum()));
+        LogUtil.d(TAG, "list=" + note.getStrLikeList());
         if (note.isLiked()) {
             isLiked = true;
             tv_like.setCompoundDrawablesWithIntrinsicBounds(null,
@@ -100,9 +116,6 @@ public class NewsActivity extends BackableActivity {
             tv_like.setCompoundDrawablesWithIntrinsicBounds(null,
                     ContextCompat.getDrawable(this, R.drawable.ic_like), null, null);
         }
-        //加载数据
-        loadComments(note.getId());
-
     }
 
     //添加事件
@@ -119,34 +132,23 @@ public class NewsActivity extends BackableActivity {
         tv_like.setOnClickListener(v -> {
 
             int num = Integer.parseInt((String) tv_like.getText());
-            if (isLiked) {
+            if (note.isLiked()) {
                 tv_like.setText(getResources().getString(R.string.num, num - 1));
                 tv_like.setCompoundDrawablesWithIntrinsicBounds(null,
                         ContextCompat.getDrawable(this, R.drawable.ic_like), null, null);
-                isLiked = false;
+                note.doLike(Note.DISLIKE);
             } else {
                 if (TravelingUser.hasLogin()) {
                     tv_like.setText(getResources().getString(R.string.num, num + 1));
                     tv_like.setCompoundDrawablesWithIntrinsicBounds(null,
                             ContextCompat.getDrawable(this, R.drawable.ic_like2), null, null);
                     UtilTools.showGoodView(v, this);
-                    note.doLike(new Note.Ilike() {
-
-                        @Override
-                        public void onFailure(String reason) {
-                            UtilTools.toast(NewsActivity.this, reason);
-                        }
-
-                        @Override
-                        public void onSuccess() {
-                            UtilTools.toast(NewsActivity.this, "点赞成功");
-                            isLiked = true;
-                        }
-                    });
+                    note.doLike(Note.LIKE);
                 } else {
                     UtilTools.toast(NewsActivity.this, "登录之后才可点赞");
                 }
             }
+
         });
     }
 
@@ -162,6 +164,7 @@ public class NewsActivity extends BackableActivity {
         refreshLayout = findViewById(R.id.refreshLayout);
         all_comment_num = findViewById(R.id.all_comment_num);
         tv_like = findViewById(R.id.tv_like);
+        tv_comment = findViewById(R.id.tv_comment);
         constraintLayout = findViewById(R.id.layout_user);
     }
 
@@ -187,7 +190,7 @@ public class NewsActivity extends BackableActivity {
                             loadFailure(msg.getInfo());
                         } else {
                             //加载成功
-                            LogUtil.d("size="+msg.getComments().size());
+                            LogUtil.d("size=" + msg.getComments().size());
                             loadSuccess(msg.getComments());
                         }
                     }
@@ -206,6 +209,7 @@ public class NewsActivity extends BackableActivity {
 
     /**
      * 评论加载失败
+     *
      * @param reason reason
      */
     private void loadFailure(String reason) {
@@ -229,5 +233,36 @@ public class NewsActivity extends BackableActivity {
         recyclerView.setAdapter(new CommentAdaptor(NewsActivity.this, comments));
         //滚动到顶部
         scrollView_news.scrollTo(0, 0);
+    }
+
+    /**
+     * 重写方法以将结果返回回去
+     */
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra(POSITION, position);
+        intent.putExtra(s_NOTE, note);
+        setResult(RESULT_CODE, intent);
+        finish();
+    }
+
+    @Override
+    protected void onPause() {
+        LogUtil.d(TAG, "onPause");
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        LogUtil.d(TAG, "onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        LogUtil.d(TAG, "onDestroy");
+        super.onDestroy();
     }
 }

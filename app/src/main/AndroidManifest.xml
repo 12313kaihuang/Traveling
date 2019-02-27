@@ -51,6 +51,7 @@
 
         <!-- 主页 -->
         <activity
+            android:launchMode="standard"
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
@@ -61,8 +62,8 @@
 
         <!-- 游记/攻略引导页 -->
         <activity
-            android:name=".developer.yu.hu.ui.NewsActivity"
-            android:label="眉山一日游" />
+            android:launchMode="standard"
+            android:name=".developer.yu.hu.ui.NewsActivity"/>
 
         <!-- 聊天消息页 -->
         <activity android:name=".developer.jiaming.liu.activity.ChatActivity" />
