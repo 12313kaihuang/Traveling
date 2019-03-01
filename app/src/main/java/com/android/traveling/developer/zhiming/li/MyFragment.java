@@ -38,6 +38,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyFragment extends BaseFragment implements View.OnClickListener {
 
+    private static final String TAG = "MyFragment";
+
     private DrawerLayout my_rawerLayout;
     private TextView my_user_status;
 
@@ -53,6 +55,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         filter.addAction(StaticClass.BROADCAST_LOGOUT);
         //noinspection ConstantConditions
         getActivity().registerReceiver(logoutReceiver, filter);
+
+//        User currentUser = TravelingUser.getCurrentUser();
+//        if (currentUser != null) {
+//            LogUtil.d(TAG, currentUser.toString());
+//            UtilTools.toast(getContext(), currentUser.getImg());
+//        }
 
         initView(view);
         initData();

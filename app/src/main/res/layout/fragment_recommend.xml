@@ -26,7 +26,9 @@
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@color/gray1"
+            app:srlPrimaryColor="@color/gray2" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

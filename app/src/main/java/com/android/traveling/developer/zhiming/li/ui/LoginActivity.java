@@ -271,7 +271,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    //设置登录按钮是否可点击
+    /**
+     * 设置登录按钮是否可点击
+     * @param isEnabled isEnabled
+     */
     private void setLoginEnabled(boolean isEnabled) {
         loginEnable = isEnabled;
         btn_login.setEnabled(isEnabled);

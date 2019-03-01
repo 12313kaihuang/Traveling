@@ -28,7 +28,7 @@ public class MyCustomDialog extends Dialog {
     }
 
     //定义属性
-    private MyCustomDialog(Context context, int width, int height, int layout, int style, int gravity, int anim) {
+    public MyCustomDialog(Context context, int width, int height, int layout, int style, int gravity, int anim) {
         super(context, style);
         //设置属性
         setContentView(layout);

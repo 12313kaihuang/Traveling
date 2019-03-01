@@ -22,14 +22,25 @@ public interface NoteService {
     /**
      * 获取最新的游记文章
      *
-     * @return 最新的篇文章
+     * @return 最新的篇文章 NoteMsg
      */
     @GET("news")
     Call<NoteMsg> getNewest();
 
+    /**
+     * 加载更多游记文章
+     * @param lastId 当前所显示的最旧的一篇文章的id
+     * @return 5篇更多文章 NoteMsg
+     */
     @GET("loadMore")
     Call<NoteMsg> loadMore(@Query("lastId") int lastId);
 
+    /**
+     * 更新点赞数
+     * @param noteId 文章id
+     * @param likeList 点赞list
+     * @return Msg
+     */
     @POST("updateLikeNum")
     Call<Msg> updateLikeNum(@Query("noteId") int noteId, @Query("likeList") String likeList);
 }

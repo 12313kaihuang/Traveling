@@ -51,9 +51,21 @@ public class BackableActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             //返回键的id
             case android.R.id.home:
+                onBack();
                 finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        onBack();
+        finish();
+    }
+
+    //按下返回键触发(上部返回键或底部返回键)
+    public void onBack(){
+
     }
 }

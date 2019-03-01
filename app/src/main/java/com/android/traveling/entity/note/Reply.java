@@ -1,9 +1,11 @@
 package com.android.traveling.entity.note;
 
 
+import com.android.traveling.entity.user.User;
+import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.StaticClass;
 
-import java.util.Date;
+import java.io.Serializable;
 
 /**
  * Created by HY
@@ -11,7 +13,7 @@ import java.util.Date;
  * 回复
  */
 @SuppressWarnings("unused")
-public class Reply {
+public class Reply implements Serializable{
 
     public static final int FLAG_COMMENT = 1;   //评论的评论
     public static final int FLAG_REPLY = 2;     //评论的回复
@@ -33,6 +35,19 @@ public class Reply {
     private String toName;
 
     private String commentTime;
+
+    public Reply(User user, String toName, BaseComment baseComment) {
+        this.flag = baseComment.getFlag();
+        if (flag == FLAG_REPLY) {
+            this.toId = baseComment.getToUserId();
+            this.toName = toName;
+        }
+        this.userId = baseComment.getUserId();
+        this.nickName = user.getNickName();
+        this.userImg = user.getDirectImg();
+        this.content = baseComment.getContent();
+        this.commentTime = DateUtil.transform(baseComment.getCommentTime());
+    }
 
     public static int getFlagComment() {
         return FLAG_COMMENT;

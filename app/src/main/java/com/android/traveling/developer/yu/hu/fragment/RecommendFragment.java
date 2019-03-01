@@ -234,10 +234,9 @@ public class RecommendFragment extends Fragment {
             Note note = (Note) data.getSerializableExtra(NewsActivity.s_NOTE);
             int position = data.getIntExtra(NewsActivity.POSITION, -1);
             if (position >= 0 && position < noteList.size()) {
-                noteList.get(position).setLikeList(note.getStrLikeList());
+                noteList.set(position, note);
             }
             newsAdaptor.notifyDataSetChanged();
-            LogUtil.d(TAG, "onActivityResult: list=" + note.getStrLikeList());
         }
     }
 }

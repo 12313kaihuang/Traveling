@@ -1,10 +1,13 @@
 package com.android.traveling.entity.note;
 
 
+import com.android.traveling.entity.user.User;
+import com.android.traveling.util.DateUtil;
+import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,7 +16,7 @@ import java.util.List;
  * 评论
  */
 @SuppressWarnings("unused")
-public class Comment {
+public class Comment implements Serializable {
 
     public static final int FLAG_COMMENT = 0;   //评论
 
@@ -32,6 +35,17 @@ public class Comment {
     private List<Reply> replies;
 
     public Comment() {
+    }
+
+    public Comment(User user, BaseComment baseComment) {
+        this.id = baseComment.getId();
+        this.userId = baseComment.getUserId();
+        this.nickName = user.getNickName();
+        this.userImg = user.getDirectImg();
+        this.content = baseComment.getContent();
+        this.commentTime = DateUtil.transform(baseComment.getCommentTime());
+        this.replies = new ArrayList<>();
+        LogUtil.d("Comment", "userImg" + userImg);
     }
 
     public Integer getId() {
@@ -88,5 +102,14 @@ public class Comment {
 
     public void setReplies(List<Reply> replies) {
         this.replies = replies;
+    }
+
+    //添加回复
+    public void addReply(User currentUser,BaseComment baseComment) {
+        if (replies == null) {
+            replies = new ArrayList<>();
+        }
+        Reply reply = new Reply(currentUser,nickName,baseComment);
+        replies.add(reply);
     }
 }

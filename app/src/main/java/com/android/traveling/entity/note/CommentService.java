@@ -1,9 +1,17 @@
 package com.android.traveling.entity.note;
 
+import com.android.traveling.entity.msg.BaseCommentMsg;
 import com.android.traveling.entity.msg.CommentMsg;
+import com.android.traveling.entity.msg.Msg;
+
+import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -17,6 +25,20 @@ import retrofit2.http.Query;
 
 public interface CommentService {
 
+    /**
+     * 获取文章所有评论
+     * @param noteId 文章id
+     * @return 所有评论
+     */
     @GET("getComments")
     Call<CommentMsg> getComments(@Query("noteId")int noteId);
+
+    /**
+     * 添加评论
+     * @param paramsMap 将BaseComment封装成键值对传递
+     * @return BaseCommentMsg
+     */
+    @FormUrlEncoded
+    @POST("addComment")
+    Call<BaseCommentMsg> addComment(@FieldMap Map<String,String> paramsMap);
 }

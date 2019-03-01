@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.util.LogUtil;
+import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
 
 import org.litepal.crud.LitePalSupport;
@@ -154,6 +155,11 @@ public class User extends LitePalSupport {
 
     public String getImg() {
         return img;
+    }
+
+    //获取图片名 不带前面的url
+    public String getDirectImg() {
+        return img.replace(StaticClass.IMG_URL,"");
     }
 
     public void setImg(String img) {

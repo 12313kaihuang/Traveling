@@ -1,6 +1,7 @@
 package com.android.traveling.entity.user;
 
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.android.traveling.entity.msg.LoginMsg;
@@ -50,6 +51,19 @@ public class TravelingUser {
      */
     public static boolean hasLogin(){
         return getCurrentUser() != null;
+    }
+
+    /**
+     * 判断是否已登录，如果没有则先登录
+     * @param context context
+     * @return 否已登录
+     */
+    public static User checkLogin(Context context) {
+        if (getCurrentUser() == null) {
+            UtilTools.toast(context,"请先登录");
+            return null;
+        }
+        return getCurrentUser();
     }
 
     /**

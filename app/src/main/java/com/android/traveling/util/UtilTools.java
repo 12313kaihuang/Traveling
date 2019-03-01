@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 
 import com.android.traveling.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.wx.goodview.GoodView;
 
 import java.text.SimpleDateFormat;
@@ -90,8 +92,11 @@ public class UtilTools {
      * @return retrofit对象
      */
     public static Retrofit getRetrofit() {
+        //日期转换
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create();
         return new Retrofit.Builder().baseUrl(StaticClass.URL)
-                .addConverterFactory(GsonConverterFactory.create()).build();
+                .addConverterFactory(GsonConverterFactory.create(gson)).build();
     }
 
 

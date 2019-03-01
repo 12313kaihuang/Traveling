@@ -18,6 +18,7 @@ import java.util.Date;
  * 判断是否是本年等方法考虑的情况没有考虑全，有待完善
  */
 
+@SuppressWarnings("unused")
 public class DateUtil {
 
     private static final long SECOND_IN_MILLIS = 1000;
