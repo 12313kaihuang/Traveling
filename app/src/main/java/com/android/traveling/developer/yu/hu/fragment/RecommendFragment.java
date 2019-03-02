@@ -17,10 +17,7 @@ import android.widget.TextView;
 import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.adaptor.NewsAdaptor;
 import com.android.traveling.developer.yu.hu.ui.NewsActivity;
-import com.android.traveling.entity.msg.Msg;
-import com.android.traveling.entity.msg.NoteMsg;
 import com.android.traveling.entity.note.Note;
-import com.android.traveling.entity.note.NoteService;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -31,10 +28,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * 项目名：Traveling
@@ -48,7 +41,7 @@ import retrofit2.Retrofit;
 public class RecommendFragment extends Fragment {
 
     private static final int REQUEST_CODE = 0;  //请求码 去NewsActivity
-//    private static final String TAG = "RecommendFragment";
+    //    private static final String TAG = "RecommendFragment";
 
     private List<Note> noteList;
     private NewsAdaptor newsAdaptor;
@@ -122,92 +115,47 @@ public class RecommendFragment extends Fragment {
 
     //加载更多
     private void LoadMore(RefreshLayout refreshLayout) {
-        //创建Retrofit对象  注意url后面有一个'/'。
-        Retrofit retrofit = UtilTools.getRetrofit();
-        // 获取NoteService对象
-        NoteService noteService = retrofit.create(NoteService.class);
-        Call<NoteMsg> call = noteService.loadMore(noteList.get(noteList.size() - 1).getId());
-        call.enqueue(new Callback<NoteMsg>() {
-            @Override
-            public void onResponse(@NonNull Call<NoteMsg> call, @NonNull Response<NoteMsg> response) {
-                NoteMsg noteMsg = response.body();
-                if (noteMsg == null) {
-                    LogUtil.e("noteMsg = null");
-                } else {
-                    if (getActivity() != null) {
-                        if (noteMsg.getStatus() == Msg.correctStatus) {
-                            getActivity().runOnUiThread(() -> {
-                                noteList.addAll(noteMsg.getNotes());
-                                newsAdaptor.notifyDataSetChanged();
-                                refreshLayout.finishLoadMore();
-                            });
-                        } else {
-                            getActivity().runOnUiThread(() -> {
-                                refreshLayout.finishLoadMore(false);    //加载失败
-                            });
-                        }
-                    } else {
-                        LogUtil.e("LoadMore = null");
-                    }
-                }
 
+        Note.loadMore(noteList.get(noteList.size() - 1).getId(), new Note.Callback() {
+            @Override
+            public void onSuccess(List<Note> noteList) {
+                if (noteList.size() == 0) {
+                    UtilTools.toast(getContext(),"没有更多文章了");
+                    refreshLayout.finishLoadMore();
+                    return;
+                }
+                RecommendFragment.this.noteList.addAll(noteList);
+                newsAdaptor.notifyDataSetChanged();
+                refreshLayout.finishLoadMore();
             }
 
             @Override
-            public void onFailure(@NonNull Call<NoteMsg> call, @NonNull Throwable t) {
-                LogUtil.e("LoadMore onFailure t=" + t);
-                if (getActivity() != null) {
-                    refreshLayout.finishLoadMore(false);    //加载失败
-                }
+            public void onFailure(String reason) {
+                UtilTools.toast(getContext(), "加载失败：" + reason);
+                refreshLayout.finishLoadMore(false);
             }
         });
+
     }
 
     //网络请求数据
     private void sendHttpRequest() {
-        //创建Retrofit对象  注意url后面有一个'/'。
-        Retrofit retrofit = UtilTools.getRetrofit();
-        // 获取NoteService对象
-        NoteService noteService = retrofit.create(NoteService.class);
-        Call<NoteMsg> call = noteService.getNewest();
-        call.enqueue(new retrofit2.Callback<NoteMsg>() {
+
+        Note.getNewest(new Note.Callback() {
             @Override
-            public void onResponse(@NonNull Call<NoteMsg> call, @NonNull retrofit2.Response<NoteMsg> response) {
-                NoteMsg noteMsg = response.body();
-                LogUtil.d("notemsg=" + noteMsg);
-                if (noteMsg == null) {
-                    LogUtil.e("noteMsg == null");
-                } else {
-                    if (noteMsg.getStatus() == Msg.errorStatus) {
-                        UtilTools.toast(getContext(), "返回数据状态有误");
-                    } else {
-                        noteList = noteMsg.getNotes();
-                        if (getActivity() != null) {
-                            getActivity().runOnUiThread(() -> {
-                                newsAdaptor = new NewsAdaptor(getActivity(), noteList);
-                                recommend_listView.setAdapter(newsAdaptor);
-                                load_progressbar.setVisibility(View.INVISIBLE);
-                            });
-                        } else {
-                            LogUtil.e("getActivity() == null");
-                        }
-                    }
-                }
+            public void onSuccess(List<Note> noteList) {
+                RecommendFragment.this.noteList = noteList;
+                newsAdaptor = new NewsAdaptor(getActivity(), noteList);
+                recommend_listView.setAdapter(newsAdaptor);
+                load_progressbar.setVisibility(View.INVISIBLE);
+
             }
 
             @Override
-            public void onFailure(@NonNull Call<NoteMsg> call, @NonNull Throwable t) {
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(() -> {
-                        loading.setVisibility(View.INVISIBLE);
-                        tv_load_faild.setVisibility(View.VISIBLE);
-                        UtilTools.toast(getContext(), "加载失败，t=" + t);
-                        LogUtil.e("加载失败，t=" + t);
-                        t.printStackTrace();
-                    });
-                } else {
-                    LogUtil.e("加载失败，t=" + t);
-                }
+            public void onFailure(String reason) {
+                loading.setVisibility(View.INVISIBLE);
+                tv_load_faild.setVisibility(View.VISIBLE);
+                UtilTools.toast(getContext(), "加载失败:" + reason);
             }
         });
     }
@@ -225,6 +173,11 @@ public class RecommendFragment extends Fragment {
         LogUtil.d("RecommendFragment onDestroy");
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //        newsAdaptor.notifyDataSetChanged();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -237,6 +190,19 @@ public class RecommendFragment extends Fragment {
                 noteList.set(position, note);
             }
             newsAdaptor.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        List<Fragment> fragments = getChildFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                if (fragment != null) {
+                    fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                }
+            }
         }
     }
 }

@@ -3,7 +3,6 @@ package com.android.traveling.developer.yu.hu.ui;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
@@ -18,10 +17,8 @@ import android.widget.TextView;
 import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.adaptor.CommentAdaptor;
 import com.android.traveling.developer.zhiming.li.ui.PersonalActivity;
-import com.android.traveling.entity.msg.CommentMsg;
 import com.android.traveling.entity.note.BaseComment;
 import com.android.traveling.entity.note.Comment;
-import com.android.traveling.entity.note.CommentService;
 import com.android.traveling.entity.note.Note;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
@@ -37,10 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * 项目名：Traveling
@@ -96,7 +89,7 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
         initView();
         initDate();
         //加载评论
-        loadComments(note.getId());
+        loadComments();
 
     }
 
@@ -128,8 +121,34 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
         }
     }
 
-    //添加事件
+    /**
+     * 添加事件
+     *
+     * @param note note
+     */
     private void addEvents(Note note) {
+        refreshLayout.setOnLoadMoreListener(refreshLayout -> note.loadComments(new Note.Callback2() {
+            @Override
+            public void onSuccess(List<Comment> commentList) {
+                comments = commentList;
+                if (commentAdaptor == null) {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    refreshLayout.setEnableLoadMore(true);
+                }
+                tv_comment.setText(String.valueOf(comments.size()));
+                all_comment_num.setText(getResources().getString(R.string.news_comment, comments.size()));
+                commentAdaptor = new CommentAdaptor(NewsActivity.this, note.getId(), comments);
+                recyclerView.setAdapter(commentAdaptor);
+                commentAdaptor.notifyItemInserted(0);
+                refreshLayout.finishLoadMore();
+            }
+
+            @Override
+            public void onFailure(String reason) {
+                refreshLayout.finishLoadMore(false);
+            }
+        }));
+
         //用户点击事件
         constraintLayout.setOnClickListener(v -> {
             Intent toPersonal = new Intent(this, PersonalActivity.class);
@@ -241,40 +260,23 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
 
     /**
      * 加载评论
-     *
-     * @param noteId 文章id
      */
-    private void loadComments(int noteId) {
-        //创建Retrofit对象  注意url后面有一个'/'。
-        Retrofit retrofit = UtilTools.getRetrofit();
-        // 获取NoteService对象
-        CommentService commentService = retrofit.create(CommentService.class);
-        Call<CommentMsg> msgCall = commentService.getComments(noteId);
-        msgCall.enqueue(new Callback<CommentMsg>() {
+    private void loadComments() {
+
+        note.loadComments(new Note.Callback2() {
             @Override
-            public void onResponse(@NonNull Call<CommentMsg> call, @NonNull Response<CommentMsg> response) {
-                CommentMsg msg = response.body();
-                try {
-                    if (msg != null) {
-                        if (msg.getComments() == null || msg.getComments().size() == 0) {
-                            loadFailure(msg.getInfo());
-                        } else {
-                            //加载成功
-                            comments = msg.getComments();
-                            loadSuccess();
-                        }
-                    }
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
+            public void onSuccess(List<Comment> commentList) {
+                comments = commentList;
+                note.setCommentNum(comments.size());
+                loadSuccess();
             }
 
             @Override
-            public void onFailure(@NonNull Call<CommentMsg> call, @NonNull Throwable t) {
-                LogUtil.e("LoadMore onFailure t=" + t);
-                loadFailure(t.getMessage());
+            public void onFailure(String reason) {
+                loadFailure(reason);
             }
         });
+
     }
 
     /**
@@ -283,8 +285,12 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
      * @param reason reason
      */
     private void loadFailure(String reason) {
-        UtilTools.toast(this, "评论加载失败：" + reason);
-        LogUtil.d(TAG, "loadFailure: " + reason);
+        if ("暂无评论".equals(reason)) {
+            all_comment_num.setText(reason);
+        }else {
+            UtilTools.toast(this, "评论加载失败：" + reason);
+            LogUtil.d(TAG, "loadFailure: " + reason);
+        }
         recyclerView.setVisibility(View.INVISIBLE);
         refreshLayout.setEnableLoadMore(false);
     }

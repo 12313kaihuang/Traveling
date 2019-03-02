@@ -1,9 +1,10 @@
 package com.android.traveling.entity.note;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 
+import com.android.traveling.entity.msg.CommentMsg;
 import com.android.traveling.entity.msg.Msg;
+import com.android.traveling.entity.msg.NoteMsg;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.util.BinarySearch;
@@ -24,7 +25,6 @@ import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
@@ -295,11 +295,9 @@ public class Note implements Serializable {
         this.likeList = new Gson().toJson(likeList);
         LogUtil.d(TAG, "");
         //创建Retrofit对象  注意url后面有一个'/'。
-        Retrofit retrofit = UtilTools.getRetrofit();
-        // 获取NoteService对象
-        NoteService noteService = retrofit.create(NoteService.class);
+        NoteService noteService = getNoteService();
         Call<Msg> msgCall = noteService.updateLikeNum(id, new Gson().toJson(likeList));
-        msgCall.enqueue(new Callback<Msg>() {
+        msgCall.enqueue(new retrofit2.Callback<Msg>() {
             @Override
             public void onResponse(@NonNull Call<Msg> call, @NonNull Response<Msg> response) {
 
@@ -310,9 +308,135 @@ public class Note implements Serializable {
 
             }
         });
+    }
 
+    /**
+     * 获取最新的游记文章
+     *
+     * @param callback 回调接口
+     */
+    public static void getNewest(Callback callback) {
+        Call<NoteMsg> call = getNoteService().getNewest();
+        sendRequest(callback, call);
+    }
 
+    /**
+     * 加载更多游记文章
+     *
+     * @param lastId   当前所显示的最旧的一篇文章的id
+     * @param callback 回调接口
+     */
+    public static void loadMore(int lastId, Callback callback) {
+        Call<NoteMsg> call = getNoteService().loadMore(lastId);
+        sendRequest(callback, call);
     }
 
 
+    /**
+     * 模糊查询最新的标题含有 content 的10篇文章
+     *
+     * @param content  content
+     * @param callback 回调接口
+     */
+    public static void searchHazily(String content, Callback callback) {
+        Call<NoteMsg> call = getNoteService().searchHazily(content);
+        sendRequest(callback, call);
+    }
+
+
+    /**
+     * 模糊查询最新的标题含有 content 的  更多的10篇文章
+     *
+     * @param content  content
+     * @param noteId   当前所显示的最旧的一篇文章的id
+     * @param callback 回调接口
+     */
+    public static void searchMoreHazily(String content, int noteId, Callback callback) {
+        Call<NoteMsg> call = getNoteService().searchMoreHazily(content, noteId);
+        sendRequest(callback, call);
+    }
+
+    /**
+     * 加载评论
+     *
+     * @param callback callback
+     */
+    public void loadComments(Callback2 callback) {
+        Call<CommentMsg> msgCall = UtilTools.getRetrofit().create(CommentService.class).getComments(id);
+        msgCall.enqueue(new retrofit2.Callback<CommentMsg>() {
+            @Override
+            public void onResponse(@NonNull Call<CommentMsg> call, @NonNull Response<CommentMsg> response) {
+                CommentMsg msg = response.body();
+                if (msg != null) {
+                    if (msg.getComments() == null || msg.getComments().size() == 0) {
+                        callback.onFailure(msg.getInfo());
+                    } else {
+                        commentNum = msg.getComments().size();
+                        callback.onSuccess(msg.getComments());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CommentMsg> call, @NonNull Throwable t) {
+                t.printStackTrace();
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+
+    /**
+     * 发送retrofit请求
+     *
+     * @param callback 回调接口
+     * @param call     call
+     */
+    private static void sendRequest(Callback callback, Call<NoteMsg> call) {
+        call.enqueue(new retrofit2.Callback<NoteMsg>() {
+            @Override
+            public void onResponse(@NonNull Call<NoteMsg> call, @NonNull Response<NoteMsg> response) {
+                NoteMsg msg = response.body();
+                if (msg == null) {
+                    callback.onFailure("msg == null");
+                } else {
+                    if (msg.getStatus() == Msg.correctStatus) {
+                        callback.onSuccess(msg.getNotes());
+                    } else {
+                        callback.onFailure(msg.getInfo());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NoteMsg> call, @NonNull Throwable t) {
+                t.printStackTrace();
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+
+    @NonNull
+    private static NoteService getNoteService() {
+        Retrofit retrofit = UtilTools.getRetrofit();
+        return retrofit.create(NoteService.class);
+    }
+
+
+    /**
+     * 网络请求回调接口
+     */
+    public interface Callback {
+        void onSuccess(List<Note> noteList);
+
+        void onFailure(String reason);
+    }
+
+    /**
+     * 网络请求回调接口
+     */
+    public interface Callback2 {
+        void onSuccess(List<Comment> commentList);
+
+        void onFailure(String reason);
+    }
 }

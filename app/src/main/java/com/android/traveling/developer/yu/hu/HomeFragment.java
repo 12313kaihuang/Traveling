@@ -1,11 +1,12 @@
 package com.android.traveling.developer.yu.hu;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import com.searchview.SearchView;
+
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.design.widget.TabLayout;
+import android.widget.EditText;
 
 import com.android.traveling.developer.yu.hu.fragment.FocusOnFragment;
 import com.android.traveling.developer.yu.hu.fragment.NewFragment;
@@ -43,7 +45,11 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
+    private static final int REQUEST_CODE_RECORD_AUDIO = 1;
+    private static final String TAG = "HomeFragment";
+
     ViewPager viewPager;
+    SearchView searchView;
     //Title
     private List<String> titles;
     //Fragment
@@ -55,9 +61,36 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         LogUtil.d("HomeFragment onCreateView");
-        initData();
         initView(view);
+        initData();
+        addEvents();
         return view;
+
+    }
+
+    private void addEvents() {
+        searchView.setImageButtonVoiceClickListener((input, voice, view1) -> {
+
+            //申请录音权限
+            //noinspection ConstantConditions
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                showSpeechDialog(input);
+            } else {
+                //权限申请
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (getParentFragment() != null) {
+                        getParentFragment().requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
+                                REQUEST_CODE_RECORD_AUDIO);
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
+                                REQUEST_CODE_RECORD_AUDIO);
+                    }
+
+                }
+            }
+
+        });
+
 
     }
 
@@ -80,37 +113,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         viewPager = view.findViewById(R.id.viewPager);
 
         //语音输入
-        SearchView searchView = view.findViewById(R.id.search_view);
-        searchView.setImageButtonVoiceClickListener((input, voice, view1) -> {
+        searchView = view.findViewById(R.id.search_view);
 
-            //申请录音权限
-            //noinspection ConstantConditions
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    getActivity().requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
-                            1);
-                }
-            }
-
-            XunfeiUtil.showSpeechDialog(getContext(), new XunfeiUtil.onRecognizerResult() {
-                @Override
-                public void onSuccess(String result) {
-                    input.setText(result);// 设置输入框的文本
-                    input.requestFocus(); //请求获取焦点
-                    input.setSelection(input.length());//把光标定位末尾
-                }
-
-                @Override
-                public void onFaild(JSONException e) {
-                    UtilTools.toast(getContext(), "onFaild e=" + e);
-                }
-
-                @Override
-                public void onError(SpeechError speechError) {
-
-                }
-            });
-        });
 
         //预加载  todo
         viewPager.setOffscreenPageLimit(2);
@@ -143,6 +147,32 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    /**
+     * 显示并进行语音输入
+     *
+     * @param input editText
+     */
+    private void showSpeechDialog(EditText input) {
+        XunfeiUtil.showSpeechDialog(getActivity(), new XunfeiUtil.onRecognizerResult() {
+            @Override
+            public void onSuccess(String result) {
+                input.setText(result);// 设置输入框的文本
+                input.requestFocus(); //请求获取焦点
+                input.setSelection(input.length());//把光标定位末尾
+            }
+
+            @Override
+            public void onFaild(JSONException e) {
+                UtilTools.toast(getContext(), "onFaild e=" + e);
+            }
+
+            @Override
+            public void onError(SpeechError speechError) {
+
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -154,4 +184,20 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        LogUtil.d(TAG, " onRequestPermissionsResult");
+        if (requestCode == REQUEST_CODE_RECORD_AUDIO) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //同意开启权限
+                showSpeechDialog(searchView.getEt_input());
+            } else {
+                //不同意开启权限
+                UtilTools.toast(getActivity(), "开启录制音频权限后才可进行语音输入！");
+            }
+        }
+    }
 }

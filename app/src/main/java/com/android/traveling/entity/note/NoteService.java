@@ -29,6 +29,7 @@ public interface NoteService {
 
     /**
      * 加载更多游记文章
+     *
      * @param lastId 当前所显示的最旧的一篇文章的id
      * @return 5篇更多文章 NoteMsg
      */
@@ -36,11 +37,33 @@ public interface NoteService {
     Call<NoteMsg> loadMore(@Query("lastId") int lastId);
 
     /**
+     * 模糊查询最新的标题含有 content 的10篇文章
+     *
+     * @param content content
+     * @return NoteMsg
+     */
+    @GET("SearchNoteHazily")
+    Call<NoteMsg> searchHazily(@Query("content") String content);
+
+    /**
+     * 模糊查询更多游记文章
+     *
+     * @param lastId 当前所显示的最旧的一篇文章的id
+     * @return 10篇更多文章 NoteMsg
+     */
+    @GET("SearchMoreNoteHazily")
+    Call<NoteMsg> searchMoreHazily(@Query("content") String content, @Query("lastId") int lastId);
+
+    /**
      * 更新点赞数
-     * @param noteId 文章id
+     *
+     * @param noteId   文章id
      * @param likeList 点赞list
      * @return Msg
      */
     @POST("updateLikeNum")
     Call<Msg> updateLikeNum(@Query("noteId") int noteId, @Query("likeList") String likeList);
+
+
+
 }

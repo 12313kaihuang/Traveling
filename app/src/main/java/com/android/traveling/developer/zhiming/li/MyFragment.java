@@ -24,6 +24,7 @@ import com.android.traveling.fragment.BaseFragment;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,9 +39,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyFragment extends BaseFragment implements View.OnClickListener {
 
-    private static final String TAG = "MyFragment";
+//    private static final String TAG = "MyFragment";
 
     private DrawerLayout my_rawerLayout;
+    CircleImageView my_user_bg;
     private TextView my_user_status;
 
     @Nullable
@@ -56,11 +58,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         //noinspection ConstantConditions
         getActivity().registerReceiver(logoutReceiver, filter);
 
-//        User currentUser = TravelingUser.getCurrentUser();
-//        if (currentUser != null) {
-//            LogUtil.d(TAG, currentUser.toString());
-//            UtilTools.toast(getContext(), currentUser.getImg());
-//        }
+        //        User currentUser = TravelingUser.getCurrentUser();
+        //        if (currentUser != null) {
+        //            LogUtil.d(TAG, currentUser.toString());
+        //            UtilTools.toast(getContext(), currentUser.getImg());
+        //        }
 
         initView(view);
         initData();
@@ -71,6 +73,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private void initView(View view) {
         setDefaultFont(view);
 
+        my_user_bg = view.findViewById(R.id.my_user_bg);
         my_user_status = view.findViewById(R.id.my_user_status);
 
         TextView tv_toGuide = view.findViewById(R.id.tv_toGuide);
@@ -99,9 +102,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             LogUtil.d("MyFragment currentUser!=null");
             LogUtil.d("currentUser.getNickName()" + currentUser.getNickName());
             my_user_status.setText(currentUser.getNickName());
+            Picasso.get().load(currentUser.getImg()).into(my_user_bg);
         } else {
             LogUtil.d("MyFragment currentUser=null");
             my_user_status.setText(getString(R.string.not_login));
+            my_user_bg.setImageResource(R.drawable.user);
         }
 
     }
@@ -174,13 +179,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         LogUtil.d("MyFragment onResume");
-        User currentUser = TravelingUser.getCurrentUser();
-
-        if (currentUser != null) {
-            my_user_status.setText(currentUser.getNickName());
-        } else {
-            my_user_status.setText(getString(R.string.not_login));
-        }
+       initData();
     }
 
     @Override
