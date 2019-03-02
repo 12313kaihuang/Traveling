@@ -25,7 +25,6 @@
     <style name="Theme_loading_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
-        <!--显示软键盘-->
     </style>
 
     <style name="Theme_comment_dialog" parent="@android:style/Theme.Dialog">

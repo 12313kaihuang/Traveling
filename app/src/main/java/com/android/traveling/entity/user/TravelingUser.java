@@ -47,20 +47,22 @@ public class TravelingUser {
 
     /**
      * 是否已登录
+     *
      * @return 是否已登录
      */
-    public static boolean hasLogin(){
+    public static boolean hasLogin() {
         return getCurrentUser() != null;
     }
 
     /**
      * 判断是否已登录，如果没有则先登录
+     *
      * @param context context
      * @return 否已登录
      */
     public static User checkLogin(Context context) {
         if (getCurrentUser() == null) {
-            UtilTools.toast(context,"请先登录");
+            UtilTools.toast(context, "请先登录");
             return null;
         }
         return getCurrentUser();
@@ -116,9 +118,10 @@ public class TravelingUser {
 
     /**
      * 手机验证码登录
-     * @param phoneNumber 手机号码
+     *
+     * @param phoneNumber      手机号码
      * @param verificationCode 验证码
-     * @param userCallback 回调接口
+     * @param userCallback     回调接口
      */
     public static void loginByCode(String phoneNumber, String verificationCode, UserCallback userCallback) {
         //创建Retrofit对象  注意url后面有一个'/'。
@@ -192,8 +195,9 @@ public class TravelingUser {
 
     /**
      * 邮箱登录
-     * @param email 邮箱
-     * @param password 密码
+     *
+     * @param email        邮箱
+     * @param password     密码
      * @param userCallback 回调接口
      */
     public static void loginByEmail(String email, String password, UserCallback userCallback) {
@@ -227,5 +231,16 @@ public class TravelingUser {
                 userCallback.onFiled("onFailure t=" + t.getMessage());
             }
         });
+    }
+
+    /**
+     * 判断userId是否与当前登录的用户一致
+     *
+     * @param userId userId
+     * @return 判断结果
+     */
+    public static boolean isCurrentUser(Integer userId) {
+        User currentUser = getCurrentUser();
+        return currentUser != null && userId.equals(currentUser.getUserId());
     }
 }

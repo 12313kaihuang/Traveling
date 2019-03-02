@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.yu.hu.ui.NewsActivity;
 import com.android.traveling.developer.yu.hu.ui.ReplyDetailActivity;
 import com.android.traveling.developer.zhiming.li.ui.PersonalActivity;
 import com.android.traveling.entity.note.BaseComment;
@@ -28,10 +27,10 @@ import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.SpannableStringUtil;
 import com.android.traveling.util.UtilTools;
+import com.android.traveling.widget.DeleteCommentDialog;
 import com.android.traveling.widget.ReplyDialog;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -49,20 +48,24 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
 
     private int noteId;
     private Context context;
-    private ReplyDialog replyDialog;
-    private List<Comment> commentList = new ArrayList<>();  //数据集合
+    private DataChangeListener dataChangeListener;
+    private List<Comment> commentList; //数据集合
     //    private static final int HEADER_TYPE=0;  //头
 
+
+    //context必须继承DataChangeListener接口！
     public CommentAdaptor(Context context, int noteId, List<Comment> commentList) {
         this.noteId = noteId;
         this.context = context;
+        this.dataChangeListener = (DataChangeListener) context;
         this.commentList = commentList;
     }
 
     @NonNull
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return createCommentViewHolder(parent);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment, parent, false);
+        return new CommentViewHolder(view);
     }
 
 
@@ -73,6 +76,11 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
         holder.user_name.setText(comment.getNickName());
         holder.content.setText(comment.getContent());
         holder.tv_comment_time.setText(DateUtil.fromNow(comment.getCommentTime()));
+        if (TravelingUser.isCurrentUser(comment.getUserId())) {
+            holder.tv_delete.setVisibility(View.VISIBLE);
+        } else {
+            holder.tv_delete.setVisibility(View.INVISIBLE);
+        }
         showReplies(holder, comment);
         addEvents(holder, comment, position);
     }
@@ -95,42 +103,56 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
 
         holder.ll_c.setOnClickListener(v -> startToReplyDetailActivity(comment));
 
+        if (holder.tv_delete.getVisibility() == View.VISIBLE) {
+            holder.tv_delete.setOnClickListener(v -> new DeleteCommentDialog(context, v12 -> {
+                UtilTools.toast(context, "删除评论");
+                Comment.deleteComment(comment.getId(), new Comment.DeleteCommentListener() {
+                    @Override
+                    public void onSuccess() {
+                        commentList.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, commentList.size() - 1);
+                        dataChangeListener.onDataChanged(commentList);
+                    }
+
+                    @Override
+                    public void onFailure(String reason) {
+                        UtilTools.toast(context, "删除失败" + reason);
+                    }
+                });
+            }).show());
+        }
+
         //回复
         holder.tv_reply.setOnClickListener(v -> {
             User currentUser = TravelingUser.checkLogin(context);
             if (currentUser == null) {
                 return;
             }
-            if (replyDialog == null) {
-                String hint = context.getResources().getString(R.string.str_reply_to, comment.getNickName());
-                replyDialog = new ReplyDialog(context, hint, (v1, content) -> {
+            String hint = context.getResources().getString(R.string.str_reply_to, comment.getNickName());
+            new ReplyDialog(context, hint, (v1, content) -> {
 
-                    //回复
-                    BaseComment baseComment = new BaseComment(Reply.FLAG_COMMENT, noteId,
-                            comment.getId(), currentUser.getUserId(), content
-                    );
-                    BaseComment.addComment(context, baseComment, new BaseComment.AddCommentListener() {
-                        @Override
-                        public void onSuccess(BaseComment baseComment) {
-                            LogUtil.d("adapter " + commentList.get(position).getReplies().size());
-                            LogUtil.d("position= " + position);
-                            comment.addReply(currentUser, baseComment);
-                            commentList.set(position, comment);
-//                            dataChangedListener.onDataChanged(commentList);
-                            LogUtil.d("adapter " + commentList.get(position).getReplies().size());
-//                            notifyItemRangeChanged(position,commentList.size());
-                            replyDialog = null;
-                        }
+                //回复
+                BaseComment baseComment = new BaseComment(Reply.FLAG_COMMENT, noteId,
+                        comment.getId(), currentUser.getUserId(), content
+                );
+                BaseComment.addComment(context, baseComment, new BaseComment.AddCommentListener() {
+                    @Override
+                    public void onSuccess(BaseComment baseComment) {
+                        LogUtil.d("adapter " + commentList.get(position).getReplies().size());
+                        LogUtil.d("position= " + position);
+                        comment.addReply(currentUser, baseComment);
+                        commentList.set(position, comment);
+                        LogUtil.d("adapter " + commentList.get(position).getReplies().size());
+                        notifyItemChanged(position);
+                    }
 
-                        @Override
-                        public void onFailure(String reason) {
-                            UtilTools.toast(context, "发表失败：" + reason);
-                            replyDialog = null;
-                        }
-                    });
+                    @Override
+                    public void onFailure(String reason) {
+                        UtilTools.toast(context, "发表失败：" + reason);
+                    }
                 });
-            }
-            replyDialog.show();
+            }).show();
         });
     }
 
@@ -158,7 +180,7 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
      */
     private void showReplies(CommentViewHolder holder, Comment comment) {
         List<Reply> replies = comment.getReplies();
-        LogUtil.d("replies.size()="+replies.size());
+        LogUtil.d("replies.size()=" + replies.size());
         int tv_comment_num = replies.size() >= 3 ? 3 : replies.size();
         switch (tv_comment_num) {
             case 3:
@@ -225,10 +247,11 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
         return spannableString;
     }
 
-    private CommentViewHolder createCommentViewHolder(ViewGroup viewGroup) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_comment, viewGroup, false);
-        return new CommentViewHolder(view);
+    //数据发生变化时的回调接口
+    public interface DataChangeListener {
+        void onDataChanged(List<Comment> comments);
     }
+
 
     static class CommentViewHolder extends RecyclerView.ViewHolder {
 
@@ -240,6 +263,7 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
         TextView tv_comment_3;
         TextView tv_comment_time;
         TextView tv_reply;
+        TextView tv_delete;
         LinearLayout ll_c;
 
         CommentViewHolder(View itemView) {
@@ -252,6 +276,7 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
             this.tv_comment_3 = itemView.findViewById(R.id.tv_comment_3);
             this.tv_comment_time = itemView.findViewById(R.id.tv_comment_time);
             this.tv_reply = itemView.findViewById(R.id.tv_reply);
+            this.tv_delete = itemView.findViewById(R.id.tv_delete);
             this.ll_c = itemView.findViewById(R.id.ll_c);
         }
     }

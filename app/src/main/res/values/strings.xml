@@ -172,4 +172,8 @@
     <string name="num">%1d</string>
     <string name="str_do_comment">发表评论</string>
     <string name="str_publish">发表</string>
+    <string name="str_delete">删除</string>
+    <string name="confirm_delete">确认删除</string>
+    <string name="str_cancel">取消</string>
+    <string name="confirm_delete_">确认删除该评论？</string>
 </resources>

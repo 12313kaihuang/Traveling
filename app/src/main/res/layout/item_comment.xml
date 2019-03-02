@@ -42,10 +42,10 @@
         app:layout_constraintTop_toBottomOf="@id/user_img" />
 
     <LinearLayout
-        android:layout_marginTop="5dp"
         android:id="@+id/ll_c"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:background="@color/gray1"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="@id/tv_content"
@@ -90,7 +90,7 @@
         android:id="@+id/tv_comment_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:text="@string/app_name"
         android:textColor="#B9B8B8"
         app:layout_constraintStart_toStartOf="@id/tv_user_name"
@@ -98,23 +98,38 @@
 
     <TextView
         android:id="@+id/tv_reply"
-        android:textSize="12sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:background="@drawable/reply_border_bg"
-        android:text="@string/str_reply"
         android:padding="1dp"
-        android:paddingStart="5dp"
         android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        android:text="@string/str_reply"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/tv_comment_time"
+        app:layout_constraintTop_toTopOf="@+id/tv_comment_time" />
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/reply_border_bg"
+        android:padding="1dp"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        android:text="@string/str_delete"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/tv_reply"
         app:layout_constraintTop_toTopOf="@+id/tv_comment_time" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="@color/gray2"
         android:layout_marginTop="5dp"
+        android:background="@color/gray2"
         app:layout_constraintEnd_toEndOf="@id/tv_content"
         app:layout_constraintStart_toStartOf="@id/tv_content"
         app:layout_constraintTop_toBottomOf="@id/tv_comment_time" />

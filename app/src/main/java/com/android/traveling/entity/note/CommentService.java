@@ -41,4 +41,12 @@ public interface CommentService {
     @FormUrlEncoded
     @POST("addComment")
     Call<BaseCommentMsg> addComment(@FieldMap Map<String,String> paramsMap);
+
+    /**
+     * 删除评论
+     * @param id 评论id
+     * @return Msg
+     */
+    @GET("deleteComment")
+    Call<Msg> deleteComment(@Query("id") int id);
 }

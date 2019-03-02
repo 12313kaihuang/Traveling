@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -50,7 +51,7 @@ import retrofit2.Retrofit;
  * 描述：  游记/攻略详情页面
  */
 
-public class NewsActivity extends BackableActivity {
+public class NewsActivity extends BackableActivity implements CommentAdaptor.DataChangeListener{
 
     //intent传递参数key值
 
@@ -58,6 +59,7 @@ public class NewsActivity extends BackableActivity {
     public static final String POSITION = "position";
     public static final int RESULT_CODE = 1;   //返回到RecommendFragment
     private static final String TAG = "NewsActivity";
+    //note在列表中的位置
     private int position;
 
     boolean isLiked = false;
@@ -214,6 +216,8 @@ public class NewsActivity extends BackableActivity {
         //        recyclerView.setHasFixedSize(true);
         //关闭RecyclerView的嵌套滑动特性
         recyclerView.setNestedScrollingEnabled(false);
+        //添加动画效果
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
 
@@ -231,8 +235,8 @@ public class NewsActivity extends BackableActivity {
             recyclerView.setVisibility(View.VISIBLE);
             refreshLayout.setEnableLoadMore(true);
         }
-        comments.add(new Comment(currentUser, baseComment));
-        commentAdaptor.notifyDataSetChanged();
+        comments.add(0,new Comment(currentUser, baseComment));
+        commentAdaptor.notifyItemInserted(0);
         note.setCommentNum(comments.size());
         tv_comment.setText(String.valueOf(comments.size()));
         all_comment_num.setText(getResources().getString(R.string.news_comment, comments.size()));
@@ -329,5 +333,17 @@ public class NewsActivity extends BackableActivity {
     protected void onDestroy() {
         LogUtil.d(TAG, "onDestroy");
         super.onDestroy();
+    }
+
+    /**
+     * CommentAdapter数据发生变化时的回调接口
+     * @param comments comments
+     */
+    @Override
+    public void onDataChanged(List<Comment> comments) {
+        this.comments = comments;
+        note.setCommentNum(comments.size());
+        tv_comment.setText(String.valueOf(comments.size()));
+        all_comment_num.setText(getResources().getString(R.string.news_comment, comments.size()));
     }
 }

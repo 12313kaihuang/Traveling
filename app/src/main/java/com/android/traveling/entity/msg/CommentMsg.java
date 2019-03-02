@@ -24,4 +24,6 @@ public class CommentMsg extends Msg {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
+
+
 }

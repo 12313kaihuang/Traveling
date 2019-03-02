@@ -1,14 +1,23 @@
 package com.android.traveling.entity.note;
 
 
+import android.support.annotation.NonNull;
+
+import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
+import com.android.traveling.util.UtilTools;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by HY
@@ -105,11 +114,49 @@ public class Comment implements Serializable {
     }
 
     //添加回复
-    public void addReply(User currentUser,BaseComment baseComment) {
+    public void addReply(User currentUser, BaseComment baseComment) {
         if (replies == null) {
             replies = new ArrayList<>();
         }
-        Reply reply = new Reply(currentUser,nickName,baseComment);
-        replies.add(reply);
+        Reply reply = new Reply(currentUser, nickName, baseComment);
+        replies.add(0, reply);
+    }
+
+    /**
+     * retrofit请求 删除评论
+     *
+     * @param id 评论id
+     */
+    public static void deleteComment(int id, DeleteCommentListener listener) {
+        Retrofit retrofit = UtilTools.getRetrofit();
+        CommentService commentService = retrofit.create(CommentService.class);
+        Call<Msg> msgCall = commentService.deleteComment(id);
+        msgCall.enqueue(new Callback<Msg>() {
+            @Override
+            public void onResponse(@NonNull Call<Msg> call, @NonNull Response<Msg> response) {
+                Msg msg = response.body();
+                if (msg != null) {
+                    if (msg.getStatus() == Msg.correctStatus) {
+                        listener.onSuccess();
+                        return;
+                    }
+                    listener.onFailure(msg.getInfo());
+                } else {
+                    listener.onFailure("msg == null");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Msg> call, @NonNull Throwable t) {
+                t.printStackTrace();
+                listener.onFailure(t.getMessage());
+            }
+        });
+    }
+
+    public interface DeleteCommentListener {
+        void onSuccess();
+
+        void onFailure(String reason);
     }
 }
