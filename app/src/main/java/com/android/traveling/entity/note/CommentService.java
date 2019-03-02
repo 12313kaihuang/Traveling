@@ -49,4 +49,12 @@ public interface CommentService {
      */
     @GET("deleteComment")
     Call<Msg> deleteComment(@Query("id") int id);
+
+    /**
+     * 删除回复
+     * @param id 评论id
+     * @return Msg
+     */
+    @GET("deleteReply")
+    Call<Msg> deleteReply(@Query("id")int id);
 }

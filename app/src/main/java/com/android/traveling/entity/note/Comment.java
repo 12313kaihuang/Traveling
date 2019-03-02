@@ -119,7 +119,7 @@ public class Comment implements Serializable {
             replies = new ArrayList<>();
         }
         Reply reply = new Reply(currentUser, nickName, baseComment);
-        replies.add(0, reply);
+        replies.add(reply);
     }
 
     /**

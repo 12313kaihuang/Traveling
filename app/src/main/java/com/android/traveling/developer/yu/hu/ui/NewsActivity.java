@@ -51,12 +51,12 @@ import retrofit2.Retrofit;
  * 描述：  游记/攻略详情页面
  */
 
-public class NewsActivity extends BackableActivity implements CommentAdaptor.DataChangeListener{
+public class NewsActivity extends BackableActivity implements CommentAdaptor.DataChangeListener {
 
     //intent传递参数key值
-
     public static final String s_NOTE = "note";
     public static final String POSITION = "position";
+    public static final int REQUEST_CODE = 0;  //请求码 去ReplyDetailActivity
     public static final int RESULT_CODE = 1;   //返回到RecommendFragment
     private static final String TAG = "NewsActivity";
     //note在列表中的位置
@@ -86,7 +86,6 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
 
     List<Comment> comments = null;
     CommentAdaptor commentAdaptor = null;
-    ReplyDialog replyDialog;
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -168,28 +167,25 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
             if (currentUser == null) {
                 return;
             }
-            if (replyDialog == null) {
-                replyDialog = new ReplyDialog(this, (v1, content) -> {
+            new ReplyDialog(this, (v1, content) -> {
 
-                    BaseComment baseComment = new BaseComment(note.getId(), currentUser.getUserId(), content);
-                    baseComment.setFlag(Comment.FLAG_COMMENT);
-                    LogUtil.d("baseComment=" + baseComment);
-                    BaseComment.addComment(this, baseComment, new BaseComment.AddCommentListener() {
-                        @Override
-                        public void onSuccess(BaseComment baseComment1) {
-                            addCommentSuccess(currentUser, baseComment, note);
-                        }
+                BaseComment baseComment = new BaseComment(note.getId(), currentUser.getUserId(), content);
+                baseComment.setFlag(Comment.FLAG_COMMENT);
+                LogUtil.d("baseComment=" + baseComment);
+                BaseComment.addComment(this, baseComment, new BaseComment.AddCommentListener() {
+                    @Override
+                    public void onSuccess(BaseComment baseComment1) {
+                        addCommentSuccess(currentUser, baseComment1, note);
+                    }
 
-                        @Override
-                        public void onFailure(String reason) {
-                            LogUtil.d("2发布失败：" + reason);
-                            UtilTools.toast(NewsActivity.this, "2发布失败：" + reason);
-                        }
-                    });
-
+                    @Override
+                    public void onFailure(String reason) {
+                        LogUtil.d("2发布失败：" + reason);
+                        UtilTools.toast(NewsActivity.this, "2发布失败：" + reason);
+                    }
                 });
-            }
-            replyDialog.show();
+
+            }).show();
         });
     }
 
@@ -235,8 +231,9 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
             recyclerView.setVisibility(View.VISIBLE);
             refreshLayout.setEnableLoadMore(true);
         }
-        comments.add(0,new Comment(currentUser, baseComment));
+        comments.add(0, new Comment(currentUser, baseComment));
         commentAdaptor.notifyItemInserted(0);
+        recyclerView.getAdapter().notifyItemRangeChanged(0, comments.size());
         note.setCommentNum(comments.size());
         tv_comment.setText(String.valueOf(comments.size()));
         all_comment_num.setText(getResources().getString(R.string.news_comment, comments.size()));
@@ -337,6 +334,7 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
 
     /**
      * CommentAdapter数据发生变化时的回调接口
+     *
      * @param comments comments
      */
     @Override
@@ -345,5 +343,17 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
         note.setCommentNum(comments.size());
         tv_comment.setText(String.valueOf(comments.size()));
         all_comment_num.setText(getResources().getString(R.string.news_comment, comments.size()));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //ReplyDetailActivity
+        if (requestCode == REQUEST_CODE && resultCode == ReplyDetailActivity.RESULT_CODE) {
+            int position = data.getIntExtra(POSITION, 0);
+            Comment comment = (Comment) data.getSerializableExtra(ReplyDetailActivity.COMMENT);
+            comments.set(position, comment);
+            commentAdaptor.notifyDataSetChanged();
+        }
     }
 }

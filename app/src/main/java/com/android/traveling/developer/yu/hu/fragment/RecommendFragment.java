@@ -48,7 +48,7 @@ import retrofit2.Retrofit;
 public class RecommendFragment extends Fragment {
 
     private static final int REQUEST_CODE = 0;  //请求码 去NewsActivity
-    private static final String TAG = "RecommendFragment";
+//    private static final String TAG = "RecommendFragment";
 
     private List<Note> noteList;
     private NewsAdaptor newsAdaptor;

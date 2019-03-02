@@ -8,7 +8,6 @@ import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.UtilTools;
 
-import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +46,8 @@ public class BaseComment {
     public BaseComment() {
     }
 
+    //评论或评论的评论
+
     public BaseComment(Integer flag, Integer noteId, Integer commentId, Integer userId, String content) {
         this.flag = flag;
         this.noteId = noteId;
@@ -56,8 +57,20 @@ public class BaseComment {
         this.commentTime = new Date();
     }
 
+
     public BaseComment(Integer noteId, Integer userId, String content) {
         this.noteId = noteId;
+        this.userId = userId;
+        this.content = content;
+        this.commentTime = new Date();
+    }
+
+    //评论的回复
+    public BaseComment(int flagComment, int noteId, int commentId, Reply reply, int userId, String content) {
+        this.flag = flagComment;
+        this.noteId = noteId;
+        this.commentId = commentId;
+        this.toUserId = reply.getUserId();
         this.userId = userId;
         this.content = content;
         this.commentTime = new Date();
@@ -69,7 +82,7 @@ public class BaseComment {
      * @param baseComment baseComment
      * @param listener    回调接口
      */
-    public static void addComment(Context context,BaseComment baseComment, AddCommentListener listener) {
+    public static void addComment(Context context, BaseComment baseComment, AddCommentListener listener) {
         if (baseComment == null) {
             listener.onFailure("baseComment参数为null！");
             return;

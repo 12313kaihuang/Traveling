@@ -16,11 +16,15 @@ import android.widget.Toast;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.zhiming.li.ui.PersonalActivity;
+import com.android.traveling.entity.note.BaseComment;
 import com.android.traveling.entity.note.Reply;
+import com.android.traveling.entity.user.TravelingUser;
+import com.android.traveling.entity.user.User;
 import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.SpannableStringUtil;
 import com.android.traveling.util.UtilTools;
+import com.android.traveling.widget.DeleteCommentDialog;
 import com.android.traveling.widget.ReplyDialog;
 import com.squareup.picasso.Picasso;
 
@@ -41,10 +45,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHolder> {
 
     private Context context;
+    private int noteId;  //文章id
+    private int commentId; //所属评论的评论id
+    private DataChangeListener dataChangeListener;
     private List<Reply> replyList;
 
-    public ReplyAdapter(Context context, List<Reply> replyList) {
+    public ReplyAdapter(Context context, int noteId, int commentId, List<Reply> replyList) {
         this.context = context;
+        this.noteId = noteId;
+        this.commentId = commentId;
+        this.dataChangeListener = (DataChangeListener) context;
         this.replyList = replyList;
     }
 
@@ -63,7 +73,12 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHol
         holder.tv_comment_time.setText(DateUtil.fromNow(reply.getCommentTime()));
         holder.content.setText(disPoseContent(reply));
         holder.content.setMovementMethod(LinkMovementMethod.getInstance());
-        addEvents(holder, reply);
+        if (TravelingUser.isCurrentUser(reply.getUserId())) {
+            holder.tv_delete.setVisibility(View.VISIBLE);
+        } else {
+            holder.tv_delete.setVisibility(View.INVISIBLE);
+        }
+        addEvents(holder, reply, position);
     }
 
     /**
@@ -72,7 +87,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHol
      * @param holder holder
      * @param reply  reply
      */
-    private void addEvents(@NonNull ReplyViewHolder holder, Reply reply) {
+    private void addEvents(@NonNull ReplyViewHolder holder, Reply reply, int position) {
         //头像/用户名点击
         holder.user_img.setOnClickListener(v -> {
             UtilTools.toast(context, "点击了" + holder.user_name.getText() + "的信息");
@@ -82,12 +97,59 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHol
         });
         holder.user_name.setOnClickListener(v -> holder.user_img.callOnClick());
 
+        //删除
+        if (holder.tv_delete.getVisibility() == View.VISIBLE) {
+            holder.tv_delete.setOnClickListener(v -> new DeleteCommentDialog(context, v12 -> {
+                if (reply.getId() == null) {
+                    UtilTools.toast(context, "reply.getId() == null");
+                    return;
+                }
+                LogUtil.d("reply.getId()=" + reply.getId());
+                Reply.deleteReply(reply.getId(), new Reply.DeleteCommentListener() {
+                    @Override
+                    public void onSuccess() {
+                        replyList.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, replyList.size() - position);
+                        dataChangeListener.onDataChanged(replyList);
+                        UtilTools.toast(context, "删除成功");
+                    }
+
+                    @Override
+                    public void onFailure(String reason) {
+                        UtilTools.toast(context, "删除失败" + reason);
+                    }
+                });
+            }).show());
+        }
+
         //点击回复
         holder.tv_reply.setOnClickListener(v -> {
+            User currentUser = TravelingUser.checkLogin(context);
+            if (currentUser == null) {
+                return;
+            }
             String hint = context.getResources().getString(R.string.str_reply_to, reply.getNickName());
-            new ReplyDialog(context, hint, (v1,content) -> {
-                UtilTools.toast(context, hint);
+            new ReplyDialog(context, hint, (v1, content) -> {
                 //回复
+                BaseComment baseComment = new BaseComment(Reply.FLAG_REPLY, noteId, commentId,
+                        reply, currentUser.getUserId(), content
+                );
+                BaseComment.addComment(context, baseComment, new BaseComment.AddCommentListener() {
+                    @Override
+                    public void onSuccess(BaseComment baseComment1) {
+                        LogUtil.d("position= " + position);
+                        replyList.add(new Reply(currentUser, reply.getNickName(), baseComment1));
+                        notifyItemInserted(replyList.size() - 1);
+                        notifyItemChanged(replyList.size() - 1);
+                        dataChangeListener.onDataChanged(replyList);
+                    }
+
+                    @Override
+                    public void onFailure(String reason) {
+                        UtilTools.toast(context, "发表失败：" + reason);
+                    }
+                });
             }).show();
         });
     }
@@ -127,6 +189,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHol
         TextView content;
         TextView tv_comment_time;
         TextView tv_reply;
+        TextView tv_delete;
 
         ReplyViewHolder(View itemView) {
             super(itemView);
@@ -135,7 +198,12 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHol
             this.user_img = itemView.findViewById(R.id.user_img);
             this.tv_comment_time = itemView.findViewById(R.id.tv_comment_time);
             this.tv_reply = itemView.findViewById(R.id.tv_reply);
+            this.tv_delete = itemView.findViewById(R.id.tv_delete);
         }
     }
 
+    //数据发生变化时的回调接口
+    public interface DataChangeListener {
+        void onDataChanged(List<Reply> replies);
+    }
 }

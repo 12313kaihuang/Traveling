@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.traveling.R;
+import com.android.traveling.developer.yu.hu.ui.NewsActivity;
 import com.android.traveling.developer.yu.hu.ui.ReplyDetailActivity;
 import com.android.traveling.developer.zhiming.li.ui.PersonalActivity;
 import com.android.traveling.entity.note.BaseComment;
@@ -81,7 +82,7 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
         } else {
             holder.tv_delete.setVisibility(View.INVISIBLE);
         }
-        showReplies(holder, comment);
+        showReplies(holder, comment, position);
         addEvents(holder, comment, position);
     }
 
@@ -101,11 +102,14 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
         });
         holder.user_name.setOnClickListener(v -> holder.user_img.callOnClick());
 
-        holder.ll_c.setOnClickListener(v -> startToReplyDetailActivity(comment));
+        holder.ll_c.setOnClickListener(v -> startToReplyDetailActivity(comment, position));
 
         if (holder.tv_delete.getVisibility() == View.VISIBLE) {
             holder.tv_delete.setOnClickListener(v -> new DeleteCommentDialog(context, v12 -> {
-                UtilTools.toast(context, "删除评论");
+                if (comment.getId() == null) {
+                    UtilTools.toast(context, "comment.getId() == null");
+                    return;
+                }
                 Comment.deleteComment(comment.getId(), new Comment.DeleteCommentListener() {
                     @Override
                     public void onSuccess() {
@@ -113,6 +117,8 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
                         notifyItemRemoved(position);
                         notifyItemRangeChanged(position, commentList.size() - 1);
                         dataChangeListener.onDataChanged(commentList);
+                        UtilTools.toast(context, "删除成功");
+
                     }
 
                     @Override
@@ -161,10 +167,12 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
      *
      * @param comment comment
      */
-    private void startToReplyDetailActivity(Comment comment) {
+    private void startToReplyDetailActivity(Comment comment, int position) {
         Intent intent = new Intent(context, ReplyDetailActivity.class);
+        intent.putExtra(ReplyDetailActivity.NOTE_ID, noteId);
+        intent.putExtra(NewsActivity.POSITION, position);
         intent.putExtra(ReplyDetailActivity.COMMENT, comment);
-        context.startActivity(intent);
+        ((NewsActivity) context).startActivityForResult(intent, NewsActivity.REQUEST_CODE);
     }
 
     @Override
@@ -178,7 +186,7 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
      * @param holder  holder
      * @param comment comment
      */
-    private void showReplies(CommentViewHolder holder, Comment comment) {
+    private void showReplies(CommentViewHolder holder, Comment comment, int position) {
         List<Reply> replies = comment.getReplies();
         LogUtil.d("replies.size()=" + replies.size());
         int tv_comment_num = replies.size() >= 3 ? 3 : replies.size();
@@ -186,21 +194,21 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
             case 3:
                 holder.tv_comment_3.setText(
                         context.getResources().getString(R.string.all_comment, replies.size()));
-                holder.tv_comment_3.setOnClickListener(v -> startToReplyDetailActivity(comment));
+                holder.tv_comment_3.setOnClickListener(v -> startToReplyDetailActivity(comment, position));
             case 2:
                 holder.tv_comment_2.setText(getSpannableString(replies.get(1)));
                 //设置高亮背景颜色为透明色
                 holder.tv_comment_2.setHighlightColor(context.getResources().getColor(android.R.color.transparent));   //设置高亮背景颜色为透明色
                 //要加上这句点击事件才会触发
                 holder.tv_comment_2.setMovementMethod(LinkMovementMethod.getInstance());
-                holder.tv_comment_2.setOnClickListener(v -> startToReplyDetailActivity(comment));
+                holder.tv_comment_2.setOnClickListener(v -> startToReplyDetailActivity(comment, position));
             case 1:
                 holder.tv_comment_1.setText(getSpannableString(replies.get(0)));
                 //设置高亮背景颜色为透明色
                 holder.tv_comment_1.setHighlightColor(context.getResources().getColor(android.R.color.transparent));   //设置高亮背景颜色为透明色
                 //要加上这句点击事件才会触发
                 holder.tv_comment_1.setMovementMethod(LinkMovementMethod.getInstance());
-                holder.tv_comment_1.setOnClickListener(v -> startToReplyDetailActivity(comment));
+                holder.tv_comment_1.setOnClickListener(v -> startToReplyDetailActivity(comment, position));
         }
         if (replies.size() < 3) {
             holder.tv_comment_3.setVisibility(View.GONE);
