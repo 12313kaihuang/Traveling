@@ -1,35 +1,31 @@
 package com.android.traveling.developer.yu.hu;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
+
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.searchview.SearchView;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.design.widget.TabLayout;
-import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.android.traveling.developer.yu.hu.fragment.FocusOnFragment;
 import com.android.traveling.developer.yu.hu.fragment.NewFragment;
 import com.android.traveling.developer.yu.hu.fragment.RecommendFragment;
 import com.android.traveling.R;
+import com.android.traveling.developer.yu.hu.ui.SearchResultActivity;
 import com.android.traveling.fragment.BaseFragment;
 import com.android.traveling.util.LogUtil;
-import com.android.traveling.util.UtilTools;
-import com.android.traveling.util.XunfeiUtil;
-import com.iflytek.cloud.SpeechError;
+import com.android.traveling.widget.SearchView;
 
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +41,11 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
-    private static final int REQUEST_CODE_RECORD_AUDIO = 1;
     private static final String TAG = "HomeFragment";
 
     ViewPager viewPager;
-    SearchView searchView;
+    ConstraintLayout searchView;
+    ImageButton ib_voice;
     //Title
     private List<String> titles;
     //Fragment
@@ -60,37 +56,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        LogUtil.d("HomeFragment onCreateView");
+        LogUtil.d(TAG, "HomeFragment onCreateView");
         initView(view);
-        initData();
         addEvents();
         return view;
-
     }
 
     private void addEvents() {
-        searchView.setImageButtonVoiceClickListener((input, voice, view1) -> {
-
-            //申请录音权限
-            //noinspection ConstantConditions
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
-                showSpeechDialog(input);
-            } else {
-                //权限申请
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (getParentFragment() != null) {
-                        getParentFragment().requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
-                                REQUEST_CODE_RECORD_AUDIO);
-                    } else {
-                        requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
-                                REQUEST_CODE_RECORD_AUDIO);
-                    }
-
-                }
-            }
-
+        searchView.setOnClickListener(v -> startActivity(new Intent(getActivity(), SearchResultActivity.class)));
+        ib_voice.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), SearchResultActivity.class);
+            intent.putExtra(SearchResultActivity.IS_NEED_VOICE, "need");
+            startActivity(intent);
         });
-
 
     }
 
@@ -105,15 +83,18 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         fragments.add(new NewFragment());
         fragments.add(new RecommendFragment());
         fragments.add(new FocusOnFragment());
+        LogUtil.d("initData  size=" + fragments.size());
     }
 
     //初始化view
     private void initView(View view) {
+        initData();
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
 
-        //语音输入
+        //搜索框
         searchView = view.findViewById(R.id.search_view);
+        ib_voice = view.findViewById(R.id.ib_voice);
 
 
         //预加载  todo
@@ -147,31 +128,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    /**
-     * 显示并进行语音输入
-     *
-     * @param input editText
-     */
-    private void showSpeechDialog(EditText input) {
-        XunfeiUtil.showSpeechDialog(getActivity(), new XunfeiUtil.onRecognizerResult() {
-            @Override
-            public void onSuccess(String result) {
-                input.setText(result);// 设置输入框的文本
-                input.requestFocus(); //请求获取焦点
-                input.setSelection(input.length());//把光标定位末尾
-            }
-
-            @Override
-            public void onFaild(JSONException e) {
-                UtilTools.toast(getContext(), "onFaild e=" + e);
-            }
-
-            @Override
-            public void onError(SpeechError speechError) {
-
-            }
-        });
-    }
 
     @Override
     public void onClick(View v) {
@@ -185,19 +141,4 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        LogUtil.d(TAG, " onRequestPermissionsResult");
-        if (requestCode == REQUEST_CODE_RECORD_AUDIO) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //同意开启权限
-                showSpeechDialog(searchView.getEt_input());
-            } else {
-                //不同意开启权限
-                UtilTools.toast(getActivity(), "开启录制音频权限后才可进行语音输入！");
-            }
-        }
-    }
 }

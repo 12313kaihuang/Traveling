@@ -339,7 +339,7 @@ public class Note implements Serializable {
      * @param callback 回调接口
      */
     public static void searchHazily(String content, Callback callback) {
-        Call<NoteMsg> call = getNoteService().searchHazily(content);
+        Call<NoteMsg> call = getNoteService().searchNoteHazily(content);
         sendRequest(callback, call);
     }
 
@@ -352,7 +352,7 @@ public class Note implements Serializable {
      * @param callback 回调接口
      */
     public static void searchMoreHazily(String content, int noteId, Callback callback) {
-        Call<NoteMsg> call = getNoteService().searchMoreHazily(content, noteId);
+        Call<NoteMsg> call = getNoteService().searchMoreNoteHazily(content, noteId);
         sendRequest(callback, call);
     }
 

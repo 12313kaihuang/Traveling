@@ -42,8 +42,8 @@ public interface NoteService {
      * @param content content
      * @return NoteMsg
      */
-    @GET("SearchNoteHazily")
-    Call<NoteMsg> searchHazily(@Query("content") String content);
+    @GET("searchNoteHazily")
+    Call<NoteMsg> searchNoteHazily(@Query("content") String content);
 
     /**
      * 模糊查询更多游记文章
@@ -51,8 +51,8 @@ public interface NoteService {
      * @param lastId 当前所显示的最旧的一篇文章的id
      * @return 10篇更多文章 NoteMsg
      */
-    @GET("SearchMoreNoteHazily")
-    Call<NoteMsg> searchMoreHazily(@Query("content") String content, @Query("lastId") int lastId);
+    @GET("searchMoreNoteHazily")
+    Call<NoteMsg> searchMoreNoteHazily(@Query("content") String content, @Query("lastId") int lastId);
 
     /**
      * 更新点赞数
@@ -63,7 +63,5 @@ public interface NoteService {
      */
     @POST("updateLikeNum")
     Call<Msg> updateLikeNum(@Query("noteId") int noteId, @Query("likeList") String likeList);
-
-
 
 }

@@ -39,13 +39,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * 项目名：Traveling
  * 包名：  com.android.traveling.developer.yu.hu.adaptor
- * 文件名：CommentAdaptor
+ * 文件名：CommentAdapter
  * 创建者：HY
  * 创建时间：2019/2/25 9:22
  * 描述：  评论 适配器
  */
 
-public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentViewHolder> {
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
 
     private int noteId;
     private Context context;
@@ -55,7 +55,7 @@ public class CommentAdaptor extends RecyclerView.Adapter<CommentAdaptor.CommentV
 
 
     //context必须继承DataChangeListener接口！
-    public CommentAdaptor(Context context, int noteId, List<Comment> commentList) {
+    public CommentAdapter(Context context, int noteId, List<Comment> commentList) {
         this.noteId = noteId;
         this.context = context;
         this.dataChangeListener = (DataChangeListener) context;

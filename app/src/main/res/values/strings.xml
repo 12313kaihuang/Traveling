@@ -4,7 +4,7 @@
     <string name="app_name">Traveling</string>
 
     <string name="level">%1s%2s</string>
-    <string name="content">%1s:%2s</string>
+    <string name="searchContent">%1s:%2s</string>
     <string name="verifiedMilliSecond">重新发送(%1ds)</string>
 
     <!--MainActivity   主页-->
@@ -176,4 +176,10 @@
     <string name="confirm_delete">确认删除</string>
     <string name="str_cancel">取消</string>
     <string name="confirm_delete_">确认删除该评论？</string>
+    <string name="like_and_comment_num">%1d 喜欢·%1d 评论</string>
+    <string name="str_voice">语音</string>
+    <string name="str_search">搜索</string>
+    <string name="str_line">分隔线</string>
+    <string name="clear_btn">清除按钮</string>
+    <string name="hint">请输入关键字</string>
 </resources>

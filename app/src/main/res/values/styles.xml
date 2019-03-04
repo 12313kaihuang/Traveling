@@ -6,7 +6,9 @@
     </style>
 
     <!--BackableActivity-->
-    <style name="BackableActivity" parent="Theme.AppCompat.Light"></style>
+    <style name="BackableActivity" parent="Theme.AppCompat.Light">
+
+    </style>
 
     <!--全屏主题-->
     <style name="NoActionBarFullscreen" parent="Theme.AppCompat.Light.NoActionBar">
@@ -30,6 +32,11 @@
     <style name="Theme_comment_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
+        <!--显示软键盘-->
+        <item name="android:windowSoftInputMode">stateAlwaysVisible</item>
+    </style>
+
+    <style name="Theme_search_note_result_activity" parent="Theme.AppCompat.Light.NoActionBar">
         <!--显示软键盘-->
         <item name="android:windowSoftInputMode">stateAlwaysVisible</item>
     </style>

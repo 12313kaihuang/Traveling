@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.yu.hu.adaptor.NewsAdaptor;
+import com.android.traveling.developer.yu.hu.adaptor.NewsAdapter;
 import com.android.traveling.developer.yu.hu.ui.NewsActivity;
 import com.android.traveling.entity.note.Note;
 import com.android.traveling.util.LogUtil;
@@ -44,7 +44,7 @@ public class RecommendFragment extends Fragment {
     //    private static final String TAG = "RecommendFragment";
 
     private List<Note> noteList;
-    private NewsAdaptor newsAdaptor;
+    private NewsAdapter newsAdapter;
     private ListView recommend_listView;
     private FrameLayout load_progressbar;
 
@@ -96,7 +96,7 @@ public class RecommendFragment extends Fragment {
                     //                                        news.setTitle("刷新的item" + i);
                     //                                        noteList.add(0, news);
                     //                                    }
-                    //                                    newsAdaptor.notifyDataSetChanged();
+                    //                                    newsAdapter.notifyDataSetChanged();
                     refreshLayout.finishRefresh(false);
                 }, 500);
             }
@@ -125,7 +125,7 @@ public class RecommendFragment extends Fragment {
                     return;
                 }
                 RecommendFragment.this.noteList.addAll(noteList);
-                newsAdaptor.notifyDataSetChanged();
+                newsAdapter.notifyDataSetChanged();
                 refreshLayout.finishLoadMore();
             }
 
@@ -145,8 +145,8 @@ public class RecommendFragment extends Fragment {
             @Override
             public void onSuccess(List<Note> noteList) {
                 RecommendFragment.this.noteList = noteList;
-                newsAdaptor = new NewsAdaptor(getActivity(), noteList);
-                recommend_listView.setAdapter(newsAdaptor);
+                newsAdapter = new NewsAdapter(getActivity(), noteList);
+                recommend_listView.setAdapter(newsAdapter);
                 load_progressbar.setVisibility(View.INVISIBLE);
 
             }
@@ -176,7 +176,7 @@ public class RecommendFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //        newsAdaptor.notifyDataSetChanged();
+        //        newsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -189,7 +189,7 @@ public class RecommendFragment extends Fragment {
             if (position >= 0 && position < noteList.size()) {
                 noteList.set(position, note);
             }
-            newsAdaptor.notifyDataSetChanged();
+            newsAdapter.notifyDataSetChanged();
         }
     }
 

@@ -24,19 +24,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * 项目名：Traveling
  * 包名：  com.android.traveling.developer.yu.hu.adaptor
- * 文件名：NewsAdaptor
+ * 文件名：NewsAdapter
  * 创建者：HY
  * 创建时间：2018/9/27 15:08
  * 描述：  获取信息列表
  */
 
-public class NewsAdaptor extends BaseAdapter {
+public class NewsAdapter extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater;
     private List<Note> newsList;
 
-    public NewsAdaptor(Context context, List<Note> newsList) {
+    public NewsAdapter(Context context, List<Note> newsList) {
         this.context = context;
         this.newsList = newsList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -93,7 +93,7 @@ public class NewsAdaptor extends BaseAdapter {
                 , note.getReleasePeople().getLevel()));
         viewHolder.news_item_like_num.setText(String.valueOf(note.getLikeNum()));
         viewHolder.news_item_commit_num.setText(String.valueOf(note.getCommentNum()));
-        viewHolder.list_item_content.setText(String.format(context.getString(R.string.content),
+        viewHolder.list_item_content.setText(String.format(context.getString(R.string.comment),
                 note.getTitle(), note.getContent()));
         Picasso.get().load(note.getReleasePeople().getImgUrl()).into(viewHolder.user_bg);
         Picasso.get().load(note.getImgList().get(0)).into(viewHolder.list_item_icon);

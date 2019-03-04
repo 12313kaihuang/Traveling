@@ -6,7 +6,8 @@
     android:orientation="vertical">
 
     <!--搜索框-->
-    <com.searchview.SearchView
+    <include
+        layout="@layout/layout_searchview2"
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

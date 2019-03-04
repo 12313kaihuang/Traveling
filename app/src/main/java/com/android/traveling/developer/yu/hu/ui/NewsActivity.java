@@ -15,7 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.yu.hu.adaptor.CommentAdaptor;
+import com.android.traveling.developer.yu.hu.adaptor.CommentAdapter;
 import com.android.traveling.developer.zhiming.li.ui.PersonalActivity;
 import com.android.traveling.entity.note.BaseComment;
 import com.android.traveling.entity.note.Comment;
@@ -44,7 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 描述：  游记/攻略详情页面
  */
 
-public class NewsActivity extends BackableActivity implements CommentAdaptor.DataChangeListener {
+public class NewsActivity extends BackableActivity implements CommentAdapter.DataChangeListener {
 
     //intent传递参数key值
     public static final String s_NOTE = "note";
@@ -78,7 +78,7 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
     ConstraintLayout constraintLayout;
 
     List<Comment> comments = null;
-    CommentAdaptor commentAdaptor = null;
+    CommentAdapter commentAdapter = null;
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -131,15 +131,15 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
             @Override
             public void onSuccess(List<Comment> commentList) {
                 comments = commentList;
-                if (commentAdaptor == null) {
+                if (commentAdapter == null) {
                     recyclerView.setVisibility(View.VISIBLE);
                     refreshLayout.setEnableLoadMore(true);
                 }
                 tv_comment.setText(String.valueOf(comments.size()));
                 all_comment_num.setText(getResources().getString(R.string.news_comment, comments.size()));
-                commentAdaptor = new CommentAdaptor(NewsActivity.this, note.getId(), comments);
-                recyclerView.setAdapter(commentAdaptor);
-                commentAdaptor.notifyItemInserted(0);
+                commentAdapter = new CommentAdapter(NewsActivity.this, note.getId(), comments);
+                recyclerView.setAdapter(commentAdapter);
+                commentAdapter.notifyItemInserted(0);
                 refreshLayout.finishLoadMore();
             }
 
@@ -244,14 +244,14 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
      * @param note        note
      */
     private void addCommentSuccess(User currentUser, BaseComment baseComment, Note note) {
-        if (comments == null || commentAdaptor == null) {
+        if (comments == null || commentAdapter == null) {
             comments = new ArrayList<>();
-            commentAdaptor = new CommentAdaptor(NewsActivity.this, note.getId(), comments);
+            commentAdapter = new CommentAdapter(NewsActivity.this, note.getId(), comments);
             recyclerView.setVisibility(View.VISIBLE);
             refreshLayout.setEnableLoadMore(true);
         }
         comments.add(0, new Comment(currentUser, baseComment));
-        commentAdaptor.notifyItemInserted(0);
+        commentAdapter.notifyItemInserted(0);
         recyclerView.getAdapter().notifyItemRangeChanged(0, comments.size());
         note.setCommentNum(comments.size());
         tv_comment.setText(String.valueOf(comments.size()));
@@ -276,7 +276,6 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
                 loadFailure(reason);
             }
         });
-
     }
 
     /**
@@ -300,8 +299,8 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
      */
     private void loadSuccess() {
         all_comment_num.setText(getResources().getString(R.string.news_comment, comments.size()));
-        commentAdaptor = new CommentAdaptor(this, note.getId(), comments);
-        recyclerView.setAdapter(commentAdaptor);
+        commentAdapter = new CommentAdapter(this, note.getId(), comments);
+        recyclerView.setAdapter(commentAdapter);
         //滚动到顶部
         scrollView_news.scrollTo(0, 0);
     }
@@ -359,7 +358,7 @@ public class NewsActivity extends BackableActivity implements CommentAdaptor.Dat
             int position = data.getIntExtra(POSITION, 0);
             Comment comment = (Comment) data.getSerializableExtra(ReplyDetailActivity.COMMENT);
             comments.set(position, comment);
-            commentAdaptor.notifyDataSetChanged();
+            commentAdapter.notifyDataSetChanged();
         }
     }
 }

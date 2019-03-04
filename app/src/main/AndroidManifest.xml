@@ -121,6 +121,12 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".developer.zhiming.li.ui.PersonalActivity" />
 
+        <!--搜索文章结果界面-->
+        <activity
+            android:name=".developer.yu.hu.ui.SearchResultActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            android:theme="@style/Theme_search_note_result_activity" />
+
 
     </application>
 
