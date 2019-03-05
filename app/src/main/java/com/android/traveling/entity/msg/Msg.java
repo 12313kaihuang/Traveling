@@ -1,5 +1,10 @@
 package com.android.traveling.entity.msg;
 
+import android.support.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * Created by HY
  * 2019/1/2 22:08
@@ -10,8 +15,14 @@ package com.android.traveling.entity.msg;
 @SuppressWarnings("unused")
 public class Msg {
 
-    public final static int correctStatus = 0;
-    public final static int errorStatus = 1;
+    public final static int CORRECT_STATUS = 0;
+    public final static int ERROR_STATUS = 1;
+    public final static int NO_DATA = 2;
+
+    //自定义注解
+    @IntDef({ERROR_STATUS, NO_DATA})  //注解仅存在于源码中，在class字节码文件中不包含
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ErrorCode {}
 
     private int status;
 
@@ -26,18 +37,18 @@ public class Msg {
     }
 
     public static Msg correctMsg(String info) {
-        return new Msg(correctStatus, info);
+        return new Msg(CORRECT_STATUS, info);
     }
 
     public static Msg errorMsg(String info) {
-        return new Msg(errorStatus, info);
+        return new Msg(ERROR_STATUS, info);
     }
 
     public int getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    void setStatus(int status) {
         this.status = status;
     }
 

@@ -85,7 +85,7 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
                             Msg msg = response.body();
                             if (msg != null) {
                                 UtilTools.toast(UserEditActivity.this,msg.getInfo());
-                                if (msg.getStatus() == Msg.correctStatus) {
+                                if (msg.getStatus() == Msg.CORRECT_STATUS) {
                                     onBackPressed();
                                 }
                             }else {

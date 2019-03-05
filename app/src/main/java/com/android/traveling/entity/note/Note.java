@@ -2,6 +2,8 @@ package com.android.traveling.entity.note;
 
 import android.support.annotation.NonNull;
 
+import com.android.traveling.entity.comment.Comment;
+import com.android.traveling.entity.comment.CommentService;
 import com.android.traveling.entity.msg.CommentMsg;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.msg.NoteMsg;
@@ -399,7 +401,7 @@ public class Note implements Serializable {
                 if (msg == null) {
                     callback.onFailure("msg == null");
                 } else {
-                    if (msg.getStatus() == Msg.correctStatus) {
+                    if (msg.getStatus() == Msg.CORRECT_STATUS) {
                         callback.onSuccess(msg.getNotes());
                     } else {
                         callback.onFailure(msg.getInfo());

@@ -1,4 +1,4 @@
-package com.android.traveling.entity.note;
+package com.android.traveling.entity.comment;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -98,7 +98,7 @@ public class BaseComment {
                     listener.onFailure("msg == null");
                     return;
                 }
-                if (msg.getStatus() == Msg.correctStatus) {
+                if (msg.getStatus() == Msg.CORRECT_STATUS) {
                     UtilTools.toast(context, "发表成功");
                     listener.onSuccess(msg.getBaseComment());
                 } else {
@@ -164,7 +164,7 @@ public class BaseComment {
         this.id = id;
     }
 
-    public Integer getFlag() {
+    Integer getFlag() {
         return flag;
     }
 
@@ -184,7 +184,7 @@ public class BaseComment {
         this.commentId = this.id;
     }
 
-    public Integer getToUserId() {
+    Integer getToUserId() {
         return toUserId;
     }
 
@@ -200,7 +200,7 @@ public class BaseComment {
         this.content = content;
     }
 
-    public Date getCommentTime() {
+    Date getCommentTime() {
         return commentTime;
     }
 

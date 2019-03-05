@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.zhiming.li.ui.PersonalActivity;
-import com.android.traveling.entity.note.BaseComment;
-import com.android.traveling.entity.note.Reply;
+import com.android.traveling.entity.comment.BaseComment;
+import com.android.traveling.entity.comment.Reply;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.util.DateUtil;

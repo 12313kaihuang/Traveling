@@ -1,7 +1,7 @@
 package com.android.traveling.entity.msg;
 
 
-import com.android.traveling.entity.note.Comment;
+import com.android.traveling.entity.comment.Comment;
 
 import java.util.List;
 

@@ -17,7 +17,7 @@ public class LoginMsg extends Msg {
     }
 
     public LoginMsg(User user) {
-        super(Msg.correctStatus, "登录成功！");
+        super(Msg.CORRECT_STATUS, "登录成功！");
         this.user = user;
         user.setImg(StaticClass.IMG_URL + user.getImg());
     }

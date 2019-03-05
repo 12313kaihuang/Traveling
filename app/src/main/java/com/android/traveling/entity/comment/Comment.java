@@ -1,4 +1,4 @@
-package com.android.traveling.entity.note;
+package com.android.traveling.entity.comment;
 
 
 import android.support.annotation.NonNull;
@@ -136,7 +136,7 @@ public class Comment implements Serializable {
             public void onResponse(@NonNull Call<Msg> call, @NonNull Response<Msg> response) {
                 Msg msg = response.body();
                 if (msg != null) {
-                    if (msg.getStatus() == Msg.correctStatus) {
+                    if (msg.getStatus() == Msg.CORRECT_STATUS) {
                         listener.onSuccess();
                         return;
                     }

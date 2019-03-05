@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.android.traveling.R;
 import com.android.traveling.util.SoftKeyboardUtils;
-import com.android.traveling.util.UtilTools;
 
 /**
  * 项目名：SearchView
@@ -76,6 +75,7 @@ public class SearchView extends RelativeLayout implements ISearcher {
             String hint = typedArray.getString(R.styleable.SearchView_hint);
             if (hint != null) {
                 et_input.setHint(hint);
+                et_input.setVisibility(GONE);
             }
 
             Drawable clear_ico = typedArray.getDrawable(R.styleable.SearchView_clear_ico);

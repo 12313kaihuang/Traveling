@@ -1,7 +1,7 @@
 package com.android.traveling.entity.msg;
 
 
-import com.android.traveling.entity.note.BaseComment;
+import com.android.traveling.entity.comment.BaseComment;
 
 /**
  * Created by HY
@@ -20,16 +20,16 @@ public class BaseCommentMsg extends Msg {
     }
 
     public BaseCommentMsg(BaseComment baseComment) {
-        super(correctStatus,"");
+        super(CORRECT_STATUS,"");
         if (baseComment == null) {
-           setStatus(errorStatus);
+           setStatus(ERROR_STATUS);
            setInfo("baseComment == null");
         }
         this.baseComment = baseComment;
     }
 
     public static BaseCommentMsg errorMsg(String info) {
-        return new BaseCommentMsg(Msg.errorStatus, info, null);
+        return new BaseCommentMsg(Msg.ERROR_STATUS, info, null);
     }
 
     public BaseComment getBaseComment() {

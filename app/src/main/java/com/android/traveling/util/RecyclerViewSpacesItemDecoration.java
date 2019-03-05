@@ -29,14 +29,14 @@ public class RecyclerViewSpacesItemDecoration extends RecyclerView.ItemDecoratio
     @SuppressWarnings("WeakerAccess")
     public static final String RIGHT_DECORATION = "right_decoration";
 
+    @StringDef({TOP_DECORATION, BOTTOM_DECORATION, LEFT_DECORATION,RIGHT_DECORATION})
+    @Retention(RetentionPolicy.SOURCE)
+    private  @interface Decoration {}
+
     private int rightSpace = 0;  //右边间距
     private int topSpace = 0;  //上边边间距
     private int leftSpace = 0; //左边间距
     private int bottomSpace = 0; //下边间距
-
-    @StringDef({TOP_DECORATION, BOTTOM_DECORATION, LEFT_DECORATION,RIGHT_DECORATION})
-    @Retention(RetentionPolicy.SOURCE)
-    private  @interface Decoration {}
 
     /**
      *

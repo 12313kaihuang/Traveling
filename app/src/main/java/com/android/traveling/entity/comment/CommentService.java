@@ -1,4 +1,4 @@
-package com.android.traveling.entity.note;
+package com.android.traveling.entity.comment;
 
 import com.android.traveling.entity.msg.BaseCommentMsg;
 import com.android.traveling.entity.msg.CommentMsg;

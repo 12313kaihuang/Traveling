@@ -2,7 +2,6 @@ package com.android.traveling.developer.yu.hu.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.adaptor.NewsAdapter;
 import com.android.traveling.developer.yu.hu.ui.NewsActivity;
+import com.android.traveling.entity.companion.Companion;
 import com.android.traveling.entity.note.Note;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
@@ -64,6 +64,8 @@ public class RecommendFragment extends Fragment {
     //初始化View
     private void initView(View view) {
 
+
+
         load_progressbar = view.findViewById(R.id.load_progressbar);
         tv_load_faild = view.findViewById(R.id.tv_load_faild);
         loading = view.findViewById(R.id.loading);
@@ -90,15 +92,21 @@ public class RecommendFragment extends Fragment {
         refreshLayout1.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                new Handler().postDelayed(() -> {
-                    //                                    for (int i = 0; i < 5; i++) {
-                    //                                        News news = new News();
-                    //                                        news.setTitle("刷新的item" + i);
-                    //                                        noteList.add(0, news);
-                    //                                    }
-                    //                                    newsAdapter.notifyDataSetChanged();
-                    refreshLayout.finishRefresh(false);
-                }, 500);
+                Note.getNewest(new Note.Callback() {
+                    @Override
+                    public void onSuccess(List<Note> noteList) {
+                        RecommendFragment.this.noteList = noteList;
+                        newsAdapter = new NewsAdapter(getActivity(), noteList);
+                        recommend_listView.setAdapter(newsAdapter);
+                        refreshLayout.finishRefresh();
+                    }
+
+                    @Override
+                    public void onFailure(String reason) {
+                        refreshLayout.finishRefresh(false);
+                        UtilTools.toast(getContext(), "加载失败:" + reason);
+                    }
+                });
             }
         });
 

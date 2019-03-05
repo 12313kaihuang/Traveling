@@ -92,7 +92,7 @@ public class TravelingUser {
                 if (msg == null) {
                     userCallback.onFiled("LoginMsg == null");
                 } else {
-                    if (msg.getStatus() == LoginMsg.errorStatus) {
+                    if (msg.getStatus() == LoginMsg.ERROR_STATUS) {
                         userCallback.onFiled(msg.getInfo());
                     } else {
                         //更新成功
@@ -136,7 +136,7 @@ public class TravelingUser {
                 if (loginMsg == null) {
                     userCallback.onFiled("loginMsg == null");
                 } else {
-                    if (loginMsg.getStatus() == Msg.errorStatus) {
+                    if (loginMsg.getStatus() == Msg.ERROR_STATUS) {
                         userCallback.onFiled(loginMsg.getInfo());
                     } else {
                         LitePal.deleteAll(User.class);   //清除数据
@@ -214,7 +214,7 @@ public class TravelingUser {
                 if (loginMsg == null) {
                     userCallback.onFiled("loginMsg == null");
                 } else {
-                    if (loginMsg.getStatus() == Msg.errorStatus) {
+                    if (loginMsg.getStatus() == Msg.ERROR_STATUS) {
                         userCallback.onFiled(loginMsg.getInfo());
                     } else {
                         LitePal.deleteAll(User.class);   //清除数据

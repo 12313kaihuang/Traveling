@@ -257,7 +257,7 @@ public class User extends LitePalSupport {
                 @Override
                 public void onResponse(@NonNull Call<Msg> call, @NonNull Response<Msg> response) {
                     Msg msg = response.body();
-                    if (msg != null && msg.getStatus() == Msg.correctStatus) {
+                    if (msg != null && msg.getStatus() == Msg.CORRECT_STATUS) {
                         save();
                     }
                     callback.onResponse(call, response);
@@ -295,7 +295,7 @@ public class User extends LitePalSupport {
                 if (body == null) {
                     userCallback.onFiled("body == null");
                 } else {
-                    if (body.getStatus() == Msg.correctStatus) {
+                    if (body.getStatus() == Msg.CORRECT_STATUS) {
                         refresh(body.getUser()); //更新currentUser
                         userCallback.onSuccess(body.getUser());
                     } else {

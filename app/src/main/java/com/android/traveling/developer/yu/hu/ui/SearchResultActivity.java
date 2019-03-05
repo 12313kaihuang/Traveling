@@ -85,7 +85,6 @@ public class SearchResultActivity extends AppCompatActivity {
 
     private void addEvents() {
 
-
         //语音输入
         searchView.setImageButtonVoiceClickListener((input, voice, view1) -> showSpeechDialog(input));
         searchView.setSearchIcon(getDrawable(R.drawable.ic_back2));

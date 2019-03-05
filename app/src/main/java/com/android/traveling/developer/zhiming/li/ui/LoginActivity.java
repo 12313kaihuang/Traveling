@@ -339,7 +339,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (msg == null) {
                         UtilTools.toast(LoginActivity.this, "msg == null");
                     } else {
-                        if (msg.getStatus() == Msg.errorStatus) {
+                        if (msg.getStatus() == Msg.ERROR_STATUS) {
                             UtilTools.toast(LoginActivity.this, "errInfo=" + msg.getInfo());
                         } else {
                             verifiedTimer.start();
@@ -411,7 +411,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         loginDialog.dismiss();
                         LoginMsg loginMsg = response.body();
                         if (loginMsg != null) {
-                            if (loginMsg.getStatus() == Msg.correctStatus) {
+                            if (loginMsg.getStatus() == Msg.CORRECT_STATUS) {
                                 sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
                                 LoginActivity.this.finish();
                             } else {

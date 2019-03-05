@@ -20,7 +20,7 @@ public class NoteMsg extends Msg implements Serializable {
     }
 
     public NoteMsg(List<NoteList> noteLists) {
-        super(correctStatus,"");
+        super(CORRECT_STATUS,"");
         this.notes = Note.transform(noteLists);
     }
 
