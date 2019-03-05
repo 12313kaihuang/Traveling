@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.jiaming.liu.Item.ChatMessageItem;
+import com.android.traveling.developer.jiaming.liu.item.ChatMessageItem;
 
 import java.util.List;
 

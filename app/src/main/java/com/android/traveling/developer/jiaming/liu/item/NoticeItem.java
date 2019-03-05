@@ -1,4 +1,4 @@
-package com.android.traveling.developer.jiaming.liu.Item;
+package com.android.traveling.developer.jiaming.liu.item;
 /**
  * 项目名：Traveling
  * 包名：  com.android.traveling.developer.jiaming.liu.Item

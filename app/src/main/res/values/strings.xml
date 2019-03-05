@@ -182,4 +182,6 @@
     <string name="str_line">分隔线</string>
     <string name="clear_btn">清除按钮</string>
     <string name="hint">请输入关键字</string>
+    <string name="str_not_login">您还没有登录呢。</string>
+    <string name="str_to_login">去登陆</string>
 </resources>

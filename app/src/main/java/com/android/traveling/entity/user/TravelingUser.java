@@ -9,6 +9,7 @@ import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
+import com.android.traveling.widget.ToLoginDialog;
 
 import org.litepal.LitePal;
 
@@ -62,7 +63,7 @@ public class TravelingUser {
      */
     public static User checkLogin(Context context) {
         if (getCurrentUser() == null) {
-            UtilTools.toast(context, "请先登录");
+            new ToLoginDialog(context,null).show();
             return null;
         }
         return getCurrentUser();

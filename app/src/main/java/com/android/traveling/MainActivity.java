@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -22,7 +21,6 @@ import com.android.traveling.developer.ting.li.ui.FriendsFragment;
 import com.android.traveling.developer.yu.hu.HomeFragment;
 import com.android.traveling.developer.jiaming.liu.MessageFragment;
 import com.android.traveling.developer.zhiming.li.MyFragment;
-import com.android.traveling.util.LogUtil;
 import com.android.traveling.viewpager.NoScrollViewPager;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;

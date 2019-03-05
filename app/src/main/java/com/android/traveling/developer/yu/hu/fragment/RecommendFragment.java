@@ -1,6 +1,9 @@
 package com.android.traveling.developer.yu.hu.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,9 +19,9 @@ import android.widget.TextView;
 import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.adaptor.NewsAdapter;
 import com.android.traveling.developer.yu.hu.ui.NewsActivity;
-import com.android.traveling.entity.companion.Companion;
 import com.android.traveling.entity.note.Note;
 import com.android.traveling.util.LogUtil;
+import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -65,7 +68,6 @@ public class RecommendFragment extends Fragment {
     private void initView(View view) {
 
 
-
         load_progressbar = view.findViewById(R.id.load_progressbar);
         tv_load_faild = view.findViewById(R.id.tv_load_faild);
         loading = view.findViewById(R.id.loading);
@@ -76,6 +78,20 @@ public class RecommendFragment extends Fragment {
         //解析数据
         noteList = new ArrayList<>();
         sendHttpRequest();
+
+        //注册receiver
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(StaticClass.BROADCAST_LOGIN);
+        filter.addAction(StaticClass.BROADCAST_LOGOUT);
+        if (getActivity() != null) {
+            BroadcastReceiver loginOrLogoutReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    newsAdapter.notifyDataSetInvalidated(); //重绘整个控件
+                }
+            };
+            getActivity().registerReceiver(loginOrLogoutReceiver, filter);
+        }
 
         //点击事件
         recommend_listView.setOnItemClickListener((parent, view1, position, id) -> {
@@ -96,8 +112,8 @@ public class RecommendFragment extends Fragment {
                     @Override
                     public void onSuccess(List<Note> noteList) {
                         RecommendFragment.this.noteList = noteList;
-                        newsAdapter = new NewsAdapter(getActivity(), noteList);
-                        recommend_listView.setAdapter(newsAdapter);
+                        newsAdapter.setNewsList(noteList);
+                        newsAdapter.notifyDataSetChanged();
                         refreshLayout.finishRefresh();
                     }
 
@@ -128,7 +144,7 @@ public class RecommendFragment extends Fragment {
             @Override
             public void onSuccess(List<Note> noteList) {
                 if (noteList.size() == 0) {
-                    UtilTools.toast(getContext(),"没有更多文章了");
+                    UtilTools.toast(getContext(), "没有更多文章了");
                     refreshLayout.finishLoadMore();
                     return;
                 }

@@ -15,6 +15,7 @@ import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
+import com.android.traveling.widget.ToLoginDialog;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -35,6 +36,8 @@ public class NewsAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private List<Note> newsList;
+
+    private ToLoginDialog toLoginDialog;
 
     public NewsAdapter(Context context, List<Note> newsList) {
         this.context = context;
@@ -83,6 +86,11 @@ public class NewsAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+    public void setNewsList(List<Note> newsList) {
+        this.newsList = newsList;
+    }
+
 
     //加载界面数据
     private void LoadViewData(ViewHolder viewHolder, Note note) {
@@ -181,8 +189,11 @@ public class NewsAdapter extends BaseAdapter {
                     viewHolder.news_item_like_num.setText(String.valueOf(like_num + 1));
                     UtilTools.showGoodView(v, context);
                     note.doLike(Note.LIKE);
-                }else {
-                    UtilTools.toast(context,"登录之后才可点赞");
+                } else {
+                    if (toLoginDialog == null) {
+                        toLoginDialog = new ToLoginDialog(context, "登录之后才可点赞哦");
+                    }
+                    toLoginDialog.show();
                 }
             }
 
@@ -191,6 +202,7 @@ public class NewsAdapter extends BaseAdapter {
                 viewHolder.news_item_like.callOnClick());
 
     }
+
 
 
     class ViewHolder {

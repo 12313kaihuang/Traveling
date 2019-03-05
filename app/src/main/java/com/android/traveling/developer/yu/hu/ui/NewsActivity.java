@@ -27,6 +27,7 @@ import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
 import com.android.traveling.widget.ReplyDialog;
+import com.android.traveling.widget.ToLoginDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.squareup.picasso.Picasso;
 
@@ -79,6 +80,8 @@ public class NewsActivity extends BackableActivity implements CommentAdapter.Dat
 
     List<Comment> comments = null;
     CommentAdapter commentAdapter = null;
+
+    ToLoginDialog toLoginDialog;
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -174,7 +177,10 @@ public class NewsActivity extends BackableActivity implements CommentAdapter.Dat
                     UtilTools.showGoodView(v, this);
                     note.doLike(Note.LIKE);
                 } else {
-                    UtilTools.toast(NewsActivity.this, "登录之后才可点赞");
+                    if (toLoginDialog == null) {
+                        toLoginDialog = new ToLoginDialog(this, "登录之后才可点赞哦");
+                    }
+                    toLoginDialog.show();
                 }
             }
 
@@ -286,7 +292,7 @@ public class NewsActivity extends BackableActivity implements CommentAdapter.Dat
     private void loadFailure(String reason) {
         if ("暂无评论".equals(reason)) {
             all_comment_num.setText(reason);
-        }else {
+        } else {
             UtilTools.toast(this, "评论加载失败：" + reason);
             LogUtil.d(TAG, "loadFailure: " + reason);
         }

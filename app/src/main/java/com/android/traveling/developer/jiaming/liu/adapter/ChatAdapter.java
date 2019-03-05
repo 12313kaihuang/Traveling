@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.jiaming.liu.Item.ChatItem;
+import com.android.traveling.developer.jiaming.liu.item.ChatItem;
 
 import java.util.List;
 

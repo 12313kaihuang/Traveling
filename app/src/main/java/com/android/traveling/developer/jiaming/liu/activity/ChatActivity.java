@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.jiaming.liu.adapter.ChatMessageAdapter;
-import com.android.traveling.developer.jiaming.liu.Item.ChatMessageItem;
+import com.android.traveling.developer.jiaming.liu.item.ChatMessageItem;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.jiaming.liu.Item.NoticeItem;
+import com.android.traveling.developer.jiaming.liu.item.NoticeItem;
 
 import java.util.List;
 
