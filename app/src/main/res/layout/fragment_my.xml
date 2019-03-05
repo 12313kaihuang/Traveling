@@ -1,56 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_rawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/my_head_item" />
-
-    <!--编辑个人资料-->
-    <TextView
-        android:id="@+id/my_edit_userData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/border_bg"
-        android:padding="5dp"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp"
-        android:text="@string/edit_user"
-        android:textSize="19sp" />
-
-    <!--分割线-->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/gray_bg" />
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_toGuide"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="@string/to_guide_pager"
-        android:textSize="20sp" />
+        <include layout="@layout/my_head_item" />
 
-    <TextView
-        android:id="@+id/tv_to_login"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/red_bg"
-        android:gravity="center"
-        android:text="@string/to_login_pager"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
+        <!--编辑个人资料-->
+        <TextView
+            android:id="@+id/my_edit_userData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border_bg"
+            android:padding="5dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="@string/edit_user"
+            android:textSize="19sp" />
 
-</LinearLayout>
+        <!--分割线-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/gray_bg" />
+
+        <TextView
+            android:id="@+id/tv_toGuide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/to_guide_pager"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/about_more_fragment"
+        android:name="com.android.traveling.developer.zhiming.li.fragment.AboutMoreFragment"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start" />
+</android.support.v4.widget.DrawerLayout>

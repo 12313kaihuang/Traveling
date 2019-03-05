@@ -2,12 +2,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.traveling">
 
-    <!-- 基础模块（必须加入以下声明）START -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--允许联网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--获取GSM（2g）、WCDMA（联通3g）等网络状态的信息  -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--获取wifi网络状态的信息 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!--获取sd卡写的权限，用于文件上传和下载-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <!--获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!--允许程序改变网络连接状态 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <!--读取手机信息权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!--读取联系人权限，上传联系人需要用到此权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <!--外存储读权限，构建语法需要用到此权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!--配置权限，用来记录应用配置信息 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <!--手机定位信息，用来为语义等功能提供定位，提供更精准的服务-->
+    <!--定位信息是敏感信息，可通过Setting.setLocationEnable(false)关闭定位请求 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!--如需使用人脸识别，还要添加：摄相头权限，拍照需要用到 -->
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".application.BaseApplication"
@@ -22,13 +45,13 @@
             android:theme="@style/NoActionBarFullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <!-- 主页 -->
         <activity
+            android:launchMode="standard"
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
@@ -39,20 +62,20 @@
 
         <!-- 游记/攻略引导页 -->
         <activity
-            android:name=".developer.yu.hu.ui.NewsActivity"
-            android:label="眉山一日游" />
+            android:launchMode="standard"
+            android:name=".developer.yu.hu.ui.NewsActivity"/>
 
         <!-- 聊天消息页 -->
-        <activity android:name=".developer.jiaming.liu.Activity.ChatActivity" />
+        <activity android:name=".developer.jiaming.liu.activity.ChatActivity" />
         <!-- 编辑文本页 -->
         <activity
-            android:name=".developer.jiaming.liu.Activity.AddNoteActivity"
+            android:name=".developer.jiaming.liu.activity.AddNoteActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity android:name=".developer.jiaming.liu.Activity.NoticeActivity" />
-        <activity android:name=".developer.jiaming.liu.Activity.ChatMoreActivity"></activity>
+        <activity android:name=".developer.jiaming.liu.activity.NoticeActivity" />
+        <activity android:name=".developer.jiaming.liu.activity.ChatMoreActivity"/>
 
         <activity android:name=".developer.ting.li.ui.FriendsNewsActivity"
-            ></activity>
+            />
 
         <!--登录-->
         <activity
@@ -65,8 +88,44 @@
             android:label="服务条款" />
 
         <!--注册-->
-        <activity android:name=".developer.zhiming.li.ui.RegisterActivity"
-            android:label="注册"/>
+
+        <!--忘记密码-->
+
+        <!--编辑个人资料-->
+        <activity android:name=".developer.zhiming.li.ui.UserEditActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:label="设置个人信息"/>
+
+        <!--账号绑定与设置-->
+        <activity android:name=".developer.zhiming.li.ui.AccountBindActivity"
+            android:label="账号绑定与设置"/>
+
+        <!--关于-->
+        <activity android:name=".developer.zhiming.li.ui.ConfigActivity"
+            android:label="关于"/>
+
+        <!--绑定邮箱-->
+        <activity android:name=".developer.zhiming.li.ui.BindEmailActivity"
+            android:label="绑定邮箱"/>
+
+        <!--消息设置-->
+        <activity android:name=".developer.zhiming.li.ui.NewsSettingActivity"
+            android:label="消息设置"/>
+
+        <!--回复详情-->
+        <activity android:name=".developer.yu.hu.ui.ReplyDetailActivity" />
+
+        <!--个人首页-->
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".developer.zhiming.li.ui.PersonalActivity" />
+
+        <!--搜索文章结果界面-->
+        <activity
+            android:name=".developer.yu.hu.ui.SearchResultActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            android:theme="@style/Theme_search_note_result_activity" />
 
 
     </application>

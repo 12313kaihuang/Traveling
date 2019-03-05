@@ -1,18 +1,14 @@
 package com.android.traveling.application;
 
 import android.app.Application;
-import android.content.Context;
 
-import com.android.traveling.R;
-import com.avos.avoscloud.AVOSCloud;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.android.traveling.util.StaticClass;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
+import com.tencent.bugly.crashreport.CrashReport;
+
+import org.litepal.LitePal;
+
 
 /**
  * 项目名：Traveling
@@ -32,9 +28,13 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //LeanCloud 初始化参数依次为 this, AppId, AppKey
-        AVOSCloud.initialize(this,"WSYL5OvdOhS1y2m1AMefmgcB-gzGzoHsz","zgFTp1Vn0gEhGC2lMphmayW1");
-        // 放在 SDK 初始化语句 AVOSCloud.initialize() 后面，只需要调用一次即可
-        AVOSCloud.setDebugLogEnabled(true);
+        //bugly
+        CrashReport.initCrashReport(getApplicationContext(), StaticClass.BUGLY_APP_ID, true);
+
+        //litepal
+        LitePal.initialize(this);
+
+        //讯飞SDK
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5c518c16");
     }
 }

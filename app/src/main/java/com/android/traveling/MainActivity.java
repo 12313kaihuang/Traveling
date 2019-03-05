@@ -1,6 +1,7 @@
 package com.android.traveling;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
@@ -14,13 +15,14 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.android.traveling.developer.jiaming.liu.Activity.AddNoteActivity;
+import com.android.traveling.developer.jiaming.liu.activity.AddNoteActivity;
 import com.android.traveling.developer.ting.li.ui.FriendsFragment;
 
 
 import com.android.traveling.developer.yu.hu.HomeFragment;
 import com.android.traveling.developer.jiaming.liu.MessageFragment;
 import com.android.traveling.developer.zhiming.li.MyFragment;
+import com.android.traveling.util.LogUtil;
 import com.android.traveling.viewpager.NoScrollViewPager;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;
@@ -40,9 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //搜索框输入时底部tabLayout不会再被弹起
-        getWindow().setSoftInputMode
-                (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN |
-                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+//        getWindow().setSoftInputMode
+//                (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN |
+//                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_main);
         initFragments();
         initView();
@@ -144,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     private void showBottomDialog() {
         final BottomSheetDialog dialog=new BottomSheetDialog(this);
-        View dialogView= LayoutInflater.from(this).inflate(R.layout.dialog_centeradd,null);
+        @SuppressLint("InflateParams") View dialogView= LayoutInflater.from(this).inflate(R.layout.dialog_centeradd,null);
         LinearLayout travels = dialogView.findViewById(R.id.id_dialog_centeradd_travels);
         LinearLayout strategy = dialogView.findViewById(R.id.id_dialog_centeradd_strategy);
         LinearLayout friends = dialogView.findViewById(R.id.id_dialog_centeradd_friends);
@@ -158,4 +160,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.setContentView(dialogView);
         dialog.show();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+
 }

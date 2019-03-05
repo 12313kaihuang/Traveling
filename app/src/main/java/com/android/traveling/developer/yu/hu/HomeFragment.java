@@ -1,8 +1,13 @@
 package com.android.traveling.developer.yu.hu;
 
+
+import android.content.Intent;
 import android.os.Bundle;
+
+
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -10,15 +15,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.design.widget.TabLayout;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 
 import com.android.traveling.developer.yu.hu.fragment.FocusOnFragment;
 import com.android.traveling.developer.yu.hu.fragment.NewFragment;
 import com.android.traveling.developer.yu.hu.fragment.RecommendFragment;
 import com.android.traveling.R;
+import com.android.traveling.developer.yu.hu.ui.SearchResultActivity;
 import com.android.traveling.fragment.BaseFragment;
 import com.android.traveling.util.LogUtil;
-import com.android.traveling.util.UtilTools;
+import com.android.traveling.widget.SearchView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +41,11 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
+    private static final String TAG = "HomeFragment";
+
     ViewPager viewPager;
+    ConstraintLayout searchView;
+    ImageButton ib_voice;
     //Title
     private List<String> titles;
     //Fragment
@@ -45,10 +56,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        LogUtil.d("HomeFragment onCreateView");
-        initData();
+        LogUtil.d(TAG, "HomeFragment onCreateView");
         initView(view);
+        addEvents();
         return view;
+    }
+
+    private void addEvents() {
+        searchView.setOnClickListener(v -> startActivity(new Intent(getActivity(), SearchResultActivity.class)));
+        ib_voice.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), SearchResultActivity.class);
+            intent.putExtra(SearchResultActivity.IS_NEED_VOICE, "need");
+            startActivity(intent);
+        });
 
     }
 
@@ -63,16 +83,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         fragments.add(new NewFragment());
         fragments.add(new RecommendFragment());
         fragments.add(new FocusOnFragment());
+        LogUtil.d("initData  size=" + fragments.size());
     }
 
     //初始化view
     private void initView(View view) {
+        initData();
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
 
-        //搜索图标
-        ImageView home_search = view.findViewById(R.id.home_search);
-        home_search.setOnClickListener(this);
+        //搜索框
+        searchView = view.findViewById(R.id.search_view);
+        ib_voice = view.findViewById(R.id.ib_voice);
+
 
         //预加载  todo
         viewPager.setOffscreenPageLimit(2);
@@ -105,14 +128,17 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         tabLayout.setupWithViewPager(viewPager);
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.home_search:
-                UtilTools.toast(getContext(),"点击了搜索图标");
-                break;
+            //            case R.id.home_search:
+            //                UtilTools.toast(getContext(),"点击了搜索图标");
+            //                break;
             default:
-                 break;
+                break;
         }
     }
+
+
 }

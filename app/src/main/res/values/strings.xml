@@ -3,8 +3,11 @@
     <!--app_name-->
     <string name="app_name">Traveling</string>
 
+    <string name="level">%1s%2s</string>
+    <string name="searchContent">%1s:%2s</string>
+    <string name="verifiedMilliSecond">重新发送(%1ds)</string>
+
     <!--MainActivity   主页-->
-    <string name="activity_main">主页</string>
 
     <!--fragment_home-->
     <string name="fragment_home">首页</string>
@@ -22,13 +25,13 @@
     <string name="ic_sort">更多</string>
     <string name="ic_share">分享</string>
     <string name="user_status">未登录</string>
+    <string name="init_username">Traveling用户</string>
     <string name="to_vip"><![CDATA[成为黑卡会员 >]]></string>
     <string name="num_zero">0</string>
     <string name="focus">关注</string>
     <string name="collections">获赞与收藏</string>
     <string name="edit_user">编辑个人资料</string>
     <string name="fans">粉丝</string>
-    <string name="to_login_pager">退出登录</string>
 
     <!--fragment_new-->
     <string name="fragment_new">最新</string>
@@ -40,7 +43,6 @@
     <string name="fragment_focus_on">关注</string>
 
     <!--activity_guide-->
-    <string name="activity_guide">引导页</string>
     <string name="guide_point">小圆点</string>
     <string name="guide_start">进入主页</string>
     <string name="guide_back">跳过</string>
@@ -49,11 +51,15 @@
     <string name="strong">強大</string>
 
     <!--news_item-->
-    <string name="list_item_title">眉山一日游</string>
-    <string name="list_item_content">眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游
+    <string name="list_item_content">眉山一日游：眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游
         眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游</string>
-    <string name="list_item_info">65330浏览·392顶</string>
     <string name="str_image">图片</string>
+    <string name="like">喜欢</string>
+    <string name="like_num">515</string>
+    <string name="commit_num">72</string>
+    <string name="news_flag1">游记</string>
+    <string name="news_flag2">攻略</string>
+    <string name="news_flag3">问答</string>
 
     <!--activity_news_detail-->
     <string name="activity_news_detail">游记/攻略详情</string>
@@ -61,25 +67,119 @@
     <!--friends_news_item-->
     <string name="list_friends_item_username">沙啦沙啦</string>
     <string name="list_friends_item_content">一起去稻城吗</string>
-    <string name="list_friends_item_time">2018.10.01-2018.10.07</string>
+    <string name="list_friends_item_time">2018.10.01–2018.10.07</string>
     <string name="list_friends_item_site">稻城</string>
     <string name="list_friends_item_browse">5浏览</string>
     <string name="list_friends_item_publishtime">3分钟前</string>
-    
+    <string name="news_item_username">依云</string>
+    <string name="news_item_time">1天前</string>
+    <string name="news_item_level">LV.2</string>
+    <string name="news_item_focus">＋关注</string>
+    <string name="news_item_focus_on">已关注</string>
+
     <!--activity_friendsnews_detail-->
     <string name="detail_friends_news_discuss">评论</string>
     <string name="detail_friends_news_chat">私聊</string>
+
     <!--activity_login-->
     <string name="login">登陆</string>
-    <string name="forget">忘记密码？</string>
-    <string name="register">新用户注册</string>
+    <string name="not_login">未登陆</string>
+    <string name="login_by_email">邮箱账号</string>
+    <string name="login_by_phone">手机账号</string>
+    <string name="input_phone">请输入手机号</string>
+    <string name="input_email">请输入邮箱账号</string>
+    <string name="input_verified_code">请输入验证码</string>
+    <string name="login_by_verified">验证码登录</string>
+    <string name="login_by_password">账号密码登录</string>
+    <string name="get_verified_code">获取验证码</string>
+    <string name="forget">忘记密码</string>
     <string name="service_text">登录即代表阅读并同意</string>
     <string name="service_terms">服务条款</string>
-    <string name="default_username">admin</string>
+    <string name="other_login">其他方式登录</string>
+    <string name="login_by_wechat">微信登录</string>
+    <string name="login_by_qq">qq登录</string>
+    <string name="login_by_weibo">微博登录</string>
 
     <!--activity_register-->
-    <string name="activity_register">注册</string>
-    <string name="tv_username">用户名：</string>
     <string name="tv_password">密码：</string>
-    <string name="tv_email">邮箱：</string>
+
+    <!--activity_forget_pass-->
+    <string name="email">邮箱：</string>
+    <string name="login_hint_pass">请输入密码</string>
+
+    <!--fragment_about_more-->
+    <string name="about_more">更多</string>
+    <string name="about_traveling">关于Traveling</string>
+    <string name="about_logout">退出当前账号</string>
+    <string name="about_login">登录/注册</string>
+    <string name="about_edit">编辑个人资料</string>
+    <string name="about_area">常住地</string>
+    <string name="about_live_area">常住地：%1s</string>
+    <string name="about_bind">账号绑定与设置</string>
+    <string name="about_message">消息设置</string>
+    <string name="about_privacy">隐私设置</string>
+    <string name="about_clear_cache">清除缓存</string>
+
+    <!--activity_user_edit-->
+    <string name="user_edit">编辑个人信息</string>
+    <string name="user_edit_back">返回</string>
+    <string name="user_edit_save">保存</string>
+    <string name="user_edit_bg">设置背景</string>
+    <string name="user_edit_username">昵称</string>
+    <string name="gender">性别</string>
+    <string name="live_area">所在地</string>
+    <string name="signature">签名</string>
+
+    <!--load_progressbar-->
+    <string name="loading">加载中..</string>
+    <string name="load_faild">加载失败，点击重试</string>
+
+    <!--activity_config-->
+    <string name="version">当前版本:%1s</string>
+
+    <!--item_account_bind1-->
+    <string name="bind_uid">安全绑定当前账号(UID:%1s)</string>
+    <string name="bind_phone">手机号</string>
+    <string name="bind_phone_num">%1s</string>
+    <string name="bind_change">修改</string>
+    <string name="bind_email">邮箱</string>
+    <string name="bind_bind">绑定</string>
+    <string name="bind_other_account">第三方账号登录</string>
+    <string name="other_bind">绑定账号均可登录</string>
+    <string name="bind_qq">QQ</string>
+    <string name="bind_wechat">微信</string>
+    <string name="bind_weibo">微博</string>
+    <string name="bind_cancel">解绑</string>
+    <string name="confirm">确定</string>
+    <string name="pass_hint">5–20位数字或字母密码</string>
+    <string name="on_loading">加载中，请稍后..</string>
+    <string name="on_login">正在登陆..</string>
+
+    <!--activity_news_setting-->
+    <string name="push_voice">推送声音</string>
+    <string name="search">search</string>
+
+    <string name="all_comment">共%1d条回复>></string>
+    <string name="comments">%1d条回复</string>
+    <string name="str_reply">回复</string>
+    <string name="str_reply_to">回复 %1s</string>
+    <string name="str_reply_to2">回复 %1s：%1s</string>
+    <string name="news_comment">最新评论(%1d)</string>
+    <string name="comment">%1s：%1s</string>
+    <string name="comment_reply">%1s 回复 %1s：%1s</string>
+    <string name="str_write_comment">写评论..</string>
+    <string name="str">%1s</string>
+    <string name="num">%1d</string>
+    <string name="str_do_comment">发表评论</string>
+    <string name="str_publish">发表</string>
+    <string name="str_delete">删除</string>
+    <string name="confirm_delete">确认删除</string>
+    <string name="str_cancel">取消</string>
+    <string name="confirm_delete_">确认删除该评论？</string>
+    <string name="like_and_comment_num">%1d 喜欢·%1d 评论</string>
+    <string name="str_voice">语音</string>
+    <string name="str_search">搜索</string>
+    <string name="str_line">分隔线</string>
+    <string name="clear_btn">清除按钮</string>
+    <string name="hint">请输入关键字</string>
 </resources>

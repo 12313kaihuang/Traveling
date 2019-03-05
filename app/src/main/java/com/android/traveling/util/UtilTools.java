@@ -1,11 +1,26 @@
 package com.android.traveling.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
+import com.android.traveling.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.wx.goodview.GoodView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -21,7 +36,7 @@ import android.widget.Toast;
 public class UtilTools {
 
     //设置字体
-    public static void setFont(Context context, TextView textView,String fontId) {
+    public static void setFont(Context context, TextView textView, String fontId) {
         Typeface fontType = Typeface.createFromAsset(context.getAssets(), fontId);
         textView.setTypeface(fontType);
     }
@@ -32,14 +47,30 @@ public class UtilTools {
         textView.setTypeface(fontType);
     }
 
-    //Toast
+    /**
+     * toast
+     *
+     * @param context 上下文
+     * @param text    需要显示的文字
+     */
     @SuppressWarnings("SameParameterValue")
     public static void toast(Context context, String text) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 
     /**
+     * toast
+     * @param context 上下文
+     * @param text 需要显示的文字
+     * @param duration 显示时长
+     */
+    public static void toast(Context context, String text, int duration) {
+        Toast.makeText(context, text, duration).show();
+    }
+
+    /**
      * 获取版本信息
+     *
      * @param context 上下文
      * @return 返回versionName，出错则返回null
      */
@@ -54,4 +85,29 @@ public class UtilTools {
         }
     }
 
+
+    /**
+     * 获取retrofit对象
+     *
+     * @return retrofit对象
+     */
+    public static Retrofit getRetrofit() {
+        //日期转换
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create();
+        return new Retrofit.Builder().baseUrl(StaticClass.URL)
+                .addConverterFactory(GsonConverterFactory.create(gson)).build();
+    }
+
+
+    /**
+     * 显示点赞效果
+     * @param v v
+     * @param context context
+     */
+    public static void showGoodView(View v, Context context) {
+        final GoodView goodView = new GoodView(context);
+        goodView.setTextInfo("+1", ContextCompat.getColor(context, R.color.red),16);
+        goodView.show(v);
+    }
 }
