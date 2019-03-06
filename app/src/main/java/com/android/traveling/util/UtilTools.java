@@ -16,6 +16,9 @@ import com.google.gson.GsonBuilder;
 import com.wx.goodview.GoodView;
 
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -57,8 +60,9 @@ public class UtilTools {
 
     /**
      * toast
-     * @param context 上下文
-     * @param text 需要显示的文字
+     *
+     * @param context  上下文
+     * @param text     需要显示的文字
      * @param duration 显示时长
      */
     public static void toast(Context context, String text, int duration) {
@@ -82,32 +86,40 @@ public class UtilTools {
         }
     }
 
-//    private static Retrofit retrofit;
+    private static Retrofit retrofit;
+
     /**
      * 获取retrofit对象
      *
      * @return retrofit对象
      */
     public static Retrofit getRetrofit() {
-//        if (retrofit == null) {
-//
-//        }
-        //日期转换
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .create();
-        return new Retrofit.Builder().baseUrl(StaticClass.URL)
-                .addConverterFactory(GsonConverterFactory.create(gson)).build();
+        if (retrofit == null) {
+            //配置OkHttpClient
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            //连接超时时间
+            builder.connectTimeout(StaticClass.CONNECT_TIMEOUT, TimeUnit.SECONDS);
+            //日期转换
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
+                    .create();
+            retrofit = new Retrofit.Builder().baseUrl(StaticClass.URL)
+                    .client(builder.build())
+                    .addConverterFactory(GsonConverterFactory.create(gson)).build();
+        }
+
+        return retrofit;
     }
 
 
     /**
      * 显示点赞效果
-     * @param v v
+     *
+     * @param v       v
      * @param context context
      */
     public static void showGoodView(View v, Context context) {
         final GoodView goodView = new GoodView(context);
-        goodView.setTextInfo("+1", ContextCompat.getColor(context, R.color.red),16);
+        goodView.setTextInfo("+1", ContextCompat.getColor(context, R.color.red), 16);
         goodView.show(v);
     }
 }

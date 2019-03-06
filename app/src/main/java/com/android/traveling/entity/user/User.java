@@ -3,6 +3,8 @@ package com.android.traveling.entity.user;
 
 import android.support.annotation.NonNull;
 
+import com.android.traveling.developer.zhiming.li.UploadService;
+import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
 import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.util.LogUtil;
@@ -11,8 +13,12 @@ import com.android.traveling.util.UtilTools;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.io.File;
 import java.util.Date;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,6 +51,8 @@ public class User extends LitePalSupport {
     private boolean phoneNumberVerified = false;
 
     private String img = "default.png"; //头像地址
+
+    private String backgroundImg = "defaultBg.png"; //背景地址
 
     private String signature;
 
@@ -95,6 +103,14 @@ public class User extends LitePalSupport {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public String getBackgroundImg() {
+        return backgroundImg;
+    }
+
+    public void setBackgroundImg(String backgroundImg) {
+        this.backgroundImg = backgroundImg;
     }
 
     public Integer getId() {
@@ -210,6 +226,7 @@ public class User extends LitePalSupport {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", phoneNumberVerified=" + phoneNumberVerified +
                 ", img='" + img + '\'' +
+                ", backgroundImg='" + backgroundImg + '\'' +
                 ", signature='" + signature + '\'' +
                 ", gender='" + gender + '\'' +
                 ", birthday=" + birthday +
@@ -231,6 +248,7 @@ public class User extends LitePalSupport {
         this.email = user.email;
         this.emailVerified = user.emailVerified;
         this.img = user.img;
+        this.backgroundImg = user.getBackgroundImg();
         this.signature = user.signature;
         this.gender = user.gender;
         this.birthday = user.birthday;
@@ -310,4 +328,41 @@ public class User extends LitePalSupport {
             }
         });
     }
+
+    /**
+     * 上传并保存头像或背景
+     *
+     * @param imgPath  图片路径
+     * @param callback 回调接口
+     */
+    public void uploadImg(String imgPath, @UserEditActivity.UploadType int uploadType, UserCallback callback) {
+
+        File file = new File(imgPath);
+        RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part imageBodyPart = MultipartBody.Part.createFormData("imgfile", file.getName(), imageBody);
+        UtilTools.getRetrofit().create(UploadService.class).
+                uploadUserImg(userId, uploadType, imageBodyPart).enqueue(new Callback<LoginMsg>() {
+            @Override
+            public void onResponse(@NonNull Call<LoginMsg> call, @NonNull Response<LoginMsg> response) {
+                LoginMsg msg = response.body();
+                if (msg == null) {
+                    callback.onFiled("msg == null");
+                } else {
+                    if (msg.getStatus() == Msg.CORRECT_STATUS) {
+                        refresh(msg.getUser());
+                        callback.onSuccess(msg.getUser());
+                    } else {
+                        callback.onFiled(msg.getInfo());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<LoginMsg> call, @NonNull Throwable t) {
+                callback.onFiled(t.getMessage());
+            }
+        });
+
+    }
+
 }

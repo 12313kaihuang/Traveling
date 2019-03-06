@@ -87,14 +87,19 @@ public class StaticClass {
      * 服务器URL
      */
     public static final String URL = "http://47.106.131.58:8081/traveling-0.0.1-SNAPSHOT/";
-//    public static final String URL = "http://10.5.62.53:8080/traveling/";
+//    public static final String URL = "http://10.5.75.31:8080/traveling/";
     public static final String IMG_URL = URL + "imgs/";
 //    public static final String IMG_URL = "http://47.106.131.58:8081/traveling-0.0.1-SNAPSHOT/imgs/";
     public static final String VERIFY_EMAIL_URL = URL + "verifyEmail?code=";
 
+    /**
+     * 上传头像用的token key
+     */
+    public static final String TOKEN_USER_IMG = "userImg";
+
 
     /**
-     * 超时时长 10秒
+     * 连接超时时长 10秒
      */
-    private static final int DEFAULT_TIMEOUT = 10;
+    public static final int CONNECT_TIMEOUT = 10;
 }

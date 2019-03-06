@@ -4,11 +4,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -23,13 +22,16 @@ import com.android.traveling.R;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
+import com.android.traveling.entity.user.UserCallback;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
 import com.android.traveling.widget.dialog.ChoosePhotoDialog;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -53,6 +55,14 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
     private static final int REQUEST__CODE_READ_EXTERNAL_STORAGE = 3;  //申请读取存储卡权限请求码
     private static final int REQUEST_CODE_CAMERA = 4;  //申请相机权限请求码
 
+    public static final int TYPE_USER_BG = 0;  //当前为上传用户背景
+    public static final int TYPE_USER_IMG = 1;  //当前为上传用户头像
+
+    @IntDef({TYPE_USER_BG, TYPE_USER_IMG})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface UploadType {
+    }
+
     private User user;
     private EditText username;
     private EditText gender;
@@ -71,6 +81,11 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
      * 拍照后保存图片路径
      */
     private Uri ImageUri;
+    /**
+     * 当前是上传头像还是上传背景
+     */
+    @UploadType
+    private int uploadType;
 
 
     private ChoosePhotoDialog choosePhotoDialog;
@@ -114,8 +129,15 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
         });
 
         //设置背景
-        set_user_bg.setOnClickListener(v -> choosePhotoDialog.show());
-        user_bg.setOnClickListener(v -> choosePhotoDialog.show());
+        set_user_bg.setOnClickListener(v -> {
+            uploadType = TYPE_USER_BG;
+            choosePhotoDialog.show();
+        });
+        //设置头像
+        user_bg.setOnClickListener(v -> {
+            uploadType = TYPE_USER_IMG;
+            choosePhotoDialog.show();
+        });
     }
 
     /**
@@ -144,7 +166,7 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
             ActivityCompat.requestPermissions(UserEditActivity.this, new String[]{
                     Manifest.permission.CAMERA
             }, REQUEST_CODE_CAMERA);
-        }else {
+        } else {
             //创建File对象，用于存储拍照后的图片
             File outputImage = new File(getExternalCacheDir(), "outputImage.jpg");
             try {
@@ -172,6 +194,8 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
         signature.setText(user.getSignature());
         live_area.setText(user.getArea());
         gender.setText(user.getGender());
+        Picasso.get().load(user.getImg()).error(R.drawable.err_img_bg).fit().into(user_img);
+        Picasso.get().load(user.getBackgroundImg()).error(R.drawable.err_img_bg).into(user_bg);
     }
 
     @Override
@@ -220,39 +244,75 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_PHOTO:
                 if (resultCode == RESULT_OK && data != null) {
-                    Uri selectedImage = data.getData();
-                    LogUtil.d("相册uri：" + selectedImage);
-                    String[] filePathColumns = {MediaStore.Images.Media.DATA};
-                    if (selectedImage != null) {
-                        Cursor c = getContentResolver().query(selectedImage, filePathColumns, null, null, null);
-                        if (c != null) {
-                            c.moveToFirst();
-                            int columnIndex = c.getColumnIndex(filePathColumns[0]);
-                            String imgPath = c.getString(columnIndex);
-                            LogUtil.d("相册path：" + imgPath);
-                            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-                            user_bg.setImageBitmap(bitmap);
-                            c.close();
-                        }
-                    }
+                    afterChoosePhoto(data);
                 }
                 break;
             case REQUEST_CODE_TAKE_PHOTO:
                 if (resultCode == RESULT_OK) {
-                    try {
-                        //将拍摄的照片显示出来
-                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(ImageUri));
-                        //                        imgPath = ImageUri.toString().substring(8);
-                        String imgPath = ImageUri.getPath();
-                        LogUtil.d("相机uri：" + ImageUri.getPath());
-                        LogUtil.d("相机path：" + imgPath);
-                        user_img.setImageBitmap(bitmap);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                        LogUtil.d("photo:result" + e.getMessage());
-                    }
+                    String imgPath = ImageUri.getPath();
+                    LogUtil.d("相机path：" + imgPath);
+                    uploadImg(imgPath);
+                    //                    try {
+                    //                        //将拍摄的照片显示出来
+                    ////                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(ImageUri));
+                    //                        String imgPath = ImageUri.getPath();
+                    //                        LogUtil.d("相机path：" + imgPath);
+                    //                        uploadImg(imgPath);
+                    //                    } catch (FileNotFoundException e) {
+                    //                        e.printStackTrace();
+                    //                        LogUtil.d("photo:result" + e.getMessage());
+                    //                    }
                 }
                 break;
+        }
+    }
+
+    /**
+     * 选择照片后的操作
+     *
+     * @param data data
+     */
+    private void afterChoosePhoto(Intent data) {
+        Uri selectedImage = data.getData();
+        LogUtil.d("相册uri：" + selectedImage);
+        String[] filePathColumns = {MediaStore.Images.Media.DATA};
+        if (selectedImage != null) {
+            Cursor c = getContentResolver().query(selectedImage, filePathColumns, null, null, null);
+            if (c != null) {
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(filePathColumns[0]);
+                String imgPath = c.getString(columnIndex);
+                LogUtil.d("相册path：" + imgPath);
+                uploadImg(imgPath);
+                c.close();
+            }
+        }
+    }
+
+    /**
+     * 上传头像或背景
+     *
+     * @param imgPath imgPath
+     */
+    private void uploadImg(String imgPath) {
+        User currentUser = TravelingUser.getCurrentUser();
+        if (currentUser != null) {
+            currentUser.uploadImg(imgPath, uploadType, new UserCallback() {
+                @Override
+                public void onSuccess(User user) {
+                    UtilTools.toast(UserEditActivity.this, "上传成功");
+                    if (uploadType == TYPE_USER_IMG) {
+                        Picasso.get().load(user.getImg()).error(R.drawable.err_img_bg).fit().into(user_img);
+                    } else if (uploadType == TYPE_USER_BG) {
+                        Picasso.get().load(user.getBackgroundImg()).error(R.drawable.err_img_bg).into(user_bg);
+                    }
+                }
+
+                @Override
+                public void onFiled(String info) {
+                    UtilTools.toast(UserEditActivity.this, "上传失败：" + info);
+                }
+            });
         }
     }
 

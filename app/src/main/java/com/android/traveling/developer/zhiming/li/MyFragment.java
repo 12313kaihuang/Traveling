@@ -39,10 +39,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyFragment extends BaseFragment implements View.OnClickListener {
 
-//    private static final String TAG = "MyFragment";
+    //    private static final String TAG = "MyFragment";
 
     private DrawerLayout my_rawerLayout;
     CircleImageView my_user_bg;
+    ImageView iv_user_bg;
     private TextView my_user_status;
 
     @Nullable
@@ -75,6 +76,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
         my_user_bg = view.findViewById(R.id.my_user_bg);
         my_user_status = view.findViewById(R.id.my_user_status);
+        iv_user_bg = view.findViewById(R.id.iv_user_bg);
 
         TextView tv_toGuide = view.findViewById(R.id.tv_toGuide);
         tv_toGuide.setOnClickListener(v -> startActivity(new Intent(getActivity(), GuideActivity.class)));
@@ -102,7 +104,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             LogUtil.d("MyFragment currentUser!=null");
             LogUtil.d("currentUser.getNickName()" + currentUser.getNickName());
             my_user_status.setText(currentUser.getNickName());
-            Picasso.get().load(currentUser.getImg()).into(my_user_bg);
+            Picasso.get().load(currentUser.getImg()).error(R.drawable.err_img_bg).fit().into(my_user_bg);
+            Picasso.get().load(currentUser.getBackgroundImg()).error(R.drawable.err_img_bg).fit().into(iv_user_bg);
         } else {
             LogUtil.d("MyFragment currentUser=null");
             my_user_status.setText(getString(R.string.not_login));
@@ -179,7 +182,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         LogUtil.d("MyFragment onResume");
-       initData();
+        initData();
     }
 
     @Override

@@ -4,6 +4,8 @@ package com.android.traveling.entity.user;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.android.traveling.developer.zhiming.li.UploadService;
+import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
 import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.util.LogUtil;
@@ -13,8 +15,12 @@ import com.android.traveling.widget.dialog.ToLoginDialog;
 
 import org.litepal.LitePal;
 
+import java.io.File;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,7 +69,7 @@ public class TravelingUser {
      */
     public static User checkLogin(Context context) {
         if (getCurrentUser() == null) {
-            new ToLoginDialog(context,null).show();
+            new ToLoginDialog(context, null).show();
             return null;
         }
         return getCurrentUser();
@@ -180,6 +186,7 @@ public class TravelingUser {
                     User user = loginMsg.getUser();
                     user.setUserId(user.getId());
                     user.save();                    //存入user
+                    LogUtil.d("user=" + user.toString());
                     System.out.println("登录成功");
                 }
                 System.out.println("currentUser=" + getCurrentUser());
@@ -233,6 +240,7 @@ public class TravelingUser {
             }
         });
     }
+
 
     /**
      * 判断userId是否与当前登录的用户一致
