@@ -9,7 +9,7 @@ import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
-import com.android.traveling.widget.ToLoginDialog;
+import com.android.traveling.widget.dialog.ToLoginDialog;
 
 import org.litepal.LitePal;
 

@@ -1,4 +1,4 @@
-package com.android.traveling.widget;
+package com.android.traveling.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

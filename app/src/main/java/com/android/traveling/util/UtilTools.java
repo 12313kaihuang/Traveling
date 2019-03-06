@@ -1,6 +1,5 @@
 package com.android.traveling.util;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -16,8 +15,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.wx.goodview.GoodView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -85,13 +82,16 @@ public class UtilTools {
         }
     }
 
-
+//    private static Retrofit retrofit;
     /**
      * 获取retrofit对象
      *
      * @return retrofit对象
      */
     public static Retrofit getRetrofit() {
+//        if (retrofit == null) {
+//
+//        }
         //日期转换
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();

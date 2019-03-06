@@ -19,12 +19,18 @@
             android:orientation="vertical">
 
             <FrameLayout
-                android:id="@+id/user_bg"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:background="@drawable/user_bg">
+                android:layout_height="240dp">
+
+                <ImageView
+                    android:id="@+id/user_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/user_bg"
+                    android:contentDescription="@string/user_bg" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/user_img"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
                     android:layout_gravity="center_horizontal"
@@ -34,6 +40,7 @@
                     app:civ_border_width="2dp" />
 
                 <TextView
+                    android:id="@+id/set_user_bg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"

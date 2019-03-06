@@ -1,16 +1,18 @@
-package com.android.traveling.widget;
+package com.android.traveling.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.traveling.R;
+import com.android.traveling.developer.zhiming.li.ui.LoginActivity;
 
 /**
  * 项目名：Traveling
@@ -18,30 +20,31 @@ import com.android.traveling.R;
  * 文件名：ReplyDialog
  * 创建者：HY
  * 创建时间：2019/2/27 21:39
- * 描述：  评论/回复 Dialog
+ * 描述：  选择是否去登陆的Dialog
  */
 
 @SuppressWarnings("unused")
-public class DeleteCommentDialog extends Dialog {
+public class ToLoginDialog extends Dialog {
 
-    private DeleteBtnClickListener deleteBtnClickListener;
-    private Button btn_confirm_delete;
-    private Button btn_cancel;
+    private TextView tv_cancel;
+    TextView tv_to_login;
 
-    public DeleteCommentDialog(@NonNull Context context, DeleteBtnClickListener deleteBtnClickListener) {
+    private String hint;
+
+    public ToLoginDialog(@NonNull Context context, String hint) {
         this(context);
-        this.deleteBtnClickListener = deleteBtnClickListener;
+        this.hint = hint;
     }
 
     //定义模板
-    private DeleteCommentDialog(@NonNull Context context) {
-        this(context, WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT, R.layout.dialog_delete_comment,
-                R.style.Theme_loading_dialog, Gravity.BOTTOM, R.style.pop_anim_style);
+    private ToLoginDialog(@NonNull Context context) {
+        this(context, WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT, R.layout.dialog_to_login,
+                R.style.Theme_loading_dialog, Gravity.CENTER, R.style.pop_anim_style);
     }
 
     //定义属性
-    private DeleteCommentDialog(Context context, int width, int height, int layout, int style, int gravity, int anim) {
+    private ToLoginDialog(Context context, int width, int height, int layout, int style, int gravity, int anim) {
         super(context, style);
         //设置属性
         setContentView(layout);
@@ -64,17 +67,22 @@ public class DeleteCommentDialog extends Dialog {
 
     //初始化
     private void initView() {
-        btn_cancel = findViewById(R.id.btn_cancel);
-        btn_confirm_delete = findViewById(R.id.btn_confirm_delete);
+        TextView tv_hint = findViewById(R.id.tv_hint);
+        tv_cancel = findViewById(R.id.tv_cancel);
+        tv_to_login = findViewById(R.id.tv_to_login);
+
+        if (hint != null && hint.length() != 0) {
+            tv_hint.setText(hint);
+        }
     }
 
     //添加事件
     private void addEvents() {
 
-        btn_cancel.setOnClickListener(v -> dismiss());
+        tv_cancel.setOnClickListener(v -> dismiss());
 
-        btn_confirm_delete.setOnClickListener(v -> {
-            deleteBtnClickListener.onClick(v);
+        tv_to_login.setOnClickListener(v -> {
+            getContext().startActivity(new Intent(getContext(), LoginActivity.class));
             dismiss();
         });
 

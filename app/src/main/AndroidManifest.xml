@@ -24,6 +24,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <!--外存储读权限，构建语法需要用到此权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!--配置权限，用来记录应用配置信息 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <!--手机定位信息，用来为语义等功能提供定位，提供更精准的服务-->
@@ -93,7 +94,6 @@
 
         <!--编辑个人资料-->
         <activity android:name=".developer.zhiming.li.ui.UserEditActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="设置个人信息"/>
 

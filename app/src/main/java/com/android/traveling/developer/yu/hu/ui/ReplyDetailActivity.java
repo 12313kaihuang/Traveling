@@ -21,7 +21,7 @@ import com.android.traveling.ui.BackableActivity;
 import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
-import com.android.traveling.widget.ReplyDialog;
+import com.android.traveling.widget.dialog.ReplyDialog;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

@@ -78,12 +78,23 @@ public class StaticClass {
     public static final String BROADCAST_LOGIN = "com.traveling.broadcast.LOGIN";
     public static final String BROADCAST_LOGOUT = "com.traveling.broadcast.LOGOUT";
 
-    //手机格式转换
+    /**
+     * 手机格式转换
+     */
     public static final String FORMAT_PHONE_REGEX = "(\\d{3})\\d{4}(\\d{4})";
 
+    /**
+     * 服务器URL
+     */
     public static final String URL = "http://47.106.131.58:8081/traveling-0.0.1-SNAPSHOT/";
 //    public static final String URL = "http://10.5.62.53:8080/traveling/";
     public static final String IMG_URL = URL + "imgs/";
 //    public static final String IMG_URL = "http://47.106.131.58:8081/traveling-0.0.1-SNAPSHOT/imgs/";
     public static final String VERIFY_EMAIL_URL = URL + "verifyEmail?code=";
+
+
+    /**
+     * 超时时长 10秒
+     */
+    private static final int DEFAULT_TIMEOUT = 10;
 }

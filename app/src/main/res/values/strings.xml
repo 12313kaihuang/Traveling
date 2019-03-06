@@ -184,4 +184,7 @@
     <string name="hint">请输入关键字</string>
     <string name="str_not_login">您还没有登录呢。</string>
     <string name="str_to_login">去登陆</string>
+    <string name="str_take_photo">拍照</string>
+    <string name="str_from_album">从相册选择</string>
+    <string name="user_bg">背景图标</string>
 </resources>

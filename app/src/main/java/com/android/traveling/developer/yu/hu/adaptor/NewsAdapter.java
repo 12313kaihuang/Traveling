@@ -15,7 +15,7 @@ import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
-import com.android.traveling.widget.ToLoginDialog;
+import com.android.traveling.widget.dialog.ToLoginDialog;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
