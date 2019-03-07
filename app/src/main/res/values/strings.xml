@@ -187,4 +187,9 @@
     <string name="str_take_photo">拍照</string>
     <string name="str_from_album">从相册选择</string>
     <string name="user_bg">背景图标</string>
+    <string name="no_notes">您还没有发布过文章噢</string>
+    <string name="no_notes2">Ta还没有发布过文章噢</string>
+    <string name="str_focus">+关注</string>
+    <string name="str_to_chat">私聊</string>
+    <string name="str_back">返回</string>
 </resources>

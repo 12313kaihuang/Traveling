@@ -6,7 +6,7 @@
 
     <ImageView
         android:id="@+id/iv_user_bg"
-        android:background="@drawable/user_bg"
+        android:background="@drawable/err_img_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/user_bg" />
@@ -45,7 +45,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:src="@drawable/user"
+            android:src="@drawable/err_img_bg"
             app:civ_border_color="@color/black"
             app:civ_border_width="2dp"
             app:layout_constraintEnd_toEndOf="parent"

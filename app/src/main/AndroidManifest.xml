@@ -118,7 +118,7 @@
 
         <!--个人首页-->
         <activity
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/TranslucentTheme"
             android:name=".developer.zhiming.li.ui.PersonalActivity" />
 
         <!--搜索文章结果界面-->

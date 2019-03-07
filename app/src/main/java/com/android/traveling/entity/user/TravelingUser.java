@@ -4,8 +4,7 @@ package com.android.traveling.entity.user;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.android.traveling.developer.zhiming.li.UploadService;
-import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
+import com.android.traveling.entity.msg.DetailUserInfoMsg;
 import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.util.LogUtil;
@@ -15,12 +14,8 @@ import com.android.traveling.widget.dialog.ToLoginDialog;
 
 import org.litepal.LitePal;
 
-import java.io.File;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -252,4 +247,34 @@ public class TravelingUser {
         User currentUser = getCurrentUser();
         return currentUser != null && userId.equals(currentUser.getUserId());
     }
+
+    /**
+     * 获取用户的详细信息
+     *
+     * @param userId userId
+     */
+    public static void getDetailUserInfo(int userId, DetailUserInfoCallback callback) {
+        UtilTools.getRetrofit().create(UserService.class)
+                .getDetailUserInfo(userId).enqueue(new Callback<DetailUserInfoMsg>() {
+            @Override
+            public void onResponse(@NonNull Call<DetailUserInfoMsg> call, @NonNull Response<DetailUserInfoMsg> response) {
+                DetailUserInfoMsg msg = response.body();
+                if (msg == null) {
+                    callback.onFailure("msg == null");
+                    return;
+                }
+                if (msg.getStatus() == Msg.ERROR_STATUS) {
+                    callback.onFailure(msg.getInfo());
+                }
+                callback.onSuccess(msg.getDetailUserInfo());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DetailUserInfoMsg> call, @NonNull Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+
+    }
+
 }

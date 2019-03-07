@@ -77,6 +77,8 @@ dependencies {
 
     //goodview 实现点赞效果
     implementation 'com.wx.goodview:goodview:1.0.0'
+    //immersionbar 实现沉浸式导航栏
+    implementation 'com.gyf.immersionbar:immersionbar:2.3.3'
 }
 
 //解决冲突Program type already present 方法2

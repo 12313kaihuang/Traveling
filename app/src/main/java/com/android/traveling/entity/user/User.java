@@ -175,7 +175,7 @@ public class User extends LitePalSupport {
 
     //获取图片名 不带前面的url
     public String getDirectImg() {
-        return img.replace(StaticClass.IMG_URL,"");
+        return img.replace(StaticClass.IMG_URL, "");
     }
 
     public void setImg(String img) {
@@ -363,6 +363,15 @@ public class User extends LitePalSupport {
             }
         });
 
+    }
+
+    /**
+     * 获取所有文章等详细信息
+     *
+     * @param callback 回调接口
+     */
+    public void getDetailInfo(DetailUserInfoCallback callback) {
+        TravelingUser.getDetailUserInfo(userId, callback);
     }
 
 }

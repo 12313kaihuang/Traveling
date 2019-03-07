@@ -13,11 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.zhiming.li.ui.GuideActivity;
+import com.android.traveling.developer.yu.hu.adaptor.NewsAdapter;
 import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
+import com.android.traveling.entity.user.DetailUserInfo;
+import com.android.traveling.entity.user.DetailUserInfoCallback;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.fragment.BaseFragment;
@@ -45,6 +48,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     CircleImageView my_user_bg;
     ImageView iv_user_bg;
     private TextView my_user_status;
+    private ListView recyclerView;
 
     @Nullable
     @Override
@@ -77,21 +81,48 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         my_user_bg = view.findViewById(R.id.my_user_bg);
         my_user_status = view.findViewById(R.id.my_user_status);
         iv_user_bg = view.findViewById(R.id.iv_user_bg);
+        recyclerView = view.findViewById(R.id.recycler_view);
 
-        TextView tv_toGuide = view.findViewById(R.id.tv_toGuide);
-        tv_toGuide.setOnClickListener(v -> startActivity(new Intent(getActivity(), GuideActivity.class)));
+        //用户详细信息
+        TextView focusNum = view.findViewById(R.id.my_focus_num); //关注数
+        TextView fansNum = view.findViewById(R.id.my_fans_num); //粉丝数
+        TextView collectionsNum = view.findViewById(R.id.my_collections_num);  //获赞与收藏
+        TextView tv_no_notes = view.findViewById(R.id.tv_no_notes);  //没有发布过文章
+        User currentUser = TravelingUser.getCurrentUser();
+        if (currentUser != null) {
+            currentUser.getDetailInfo(new DetailUserInfoCallback() {
+                @Override
+                public void onSuccess(DetailUserInfo detailUserInfo) {
+                    focusNum.setText(String.valueOf(detailUserInfo.getFocusNum()));
+                    fansNum.setText(String.valueOf(detailUserInfo.getFansNum()));
+                    collectionsNum.setText(String.valueOf(detailUserInfo.getBeLikeNum()));
+                    if (detailUserInfo.getNotes().size() == 0) {
+                        tv_no_notes.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                    } else {
+                        tv_no_notes.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        recyclerView.setAdapter(new NewsAdapter(getActivity(), detailUserInfo.getNotes()));
+                    }
+                }
+
+                @Override
+                public void onFailure(String reason) {
+                    UtilTools.toast(getContext(), "加载失败：" + reason);
+                }
+            });
+        }
+
 
         //点击事件
         ImageView my_sort = view.findViewById(R.id.my_sort);
         ImageView my_share = view.findViewById(R.id.my_share);
         CircleImageView my_user_bg = view.findViewById(R.id.my_user_bg);
         TextView my_to_vip = view.findViewById(R.id.my_to_vip);
-        TextView my_edit_userData = view.findViewById(R.id.my_edit_userData);
         my_sort.setOnClickListener(this);
         my_share.setOnClickListener(this);
         my_user_bg.setOnClickListener(this);
         my_to_vip.setOnClickListener(this);
-        my_edit_userData.setOnClickListener(this);
     }
 
 
@@ -123,7 +154,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         TextView my_fans_num = view.findViewById(R.id.my_fans_num);
         TextView my_collections = view.findViewById(R.id.my_collections);
         TextView my_collections_num = view.findViewById(R.id.my_collections_num);
-        TextView my_edit_userData = view.findViewById(R.id.my_edit_userData);
         my_rawerLayout = view.findViewById(R.id.my_rawerLayout);
 
         UtilTools.setDefaultFontType(getContext(), my_focus);
@@ -132,7 +162,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         UtilTools.setDefaultFontType(getContext(), my_fans_num);
         UtilTools.setDefaultFontType(getContext(), my_collections);
         UtilTools.setDefaultFontType(getContext(), my_collections_num);
-        UtilTools.setDefaultFontType(getContext(), my_edit_userData);
     }
 
     @Override
@@ -151,7 +180,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 UtilTools.toast(getContext(), "点击了分享");
                 break;
             case R.id.my_user_bg: //点击了头像
-            case R.id.my_edit_userData: //点击了编辑个人资料
                 if (TravelingUser.getCurrentUser() != null) {
                     startActivity(new Intent(getActivity(), UserEditActivity.class));
                 } else {

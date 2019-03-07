@@ -1,5 +1,6 @@
 package com.android.traveling.entity.user;
 
+import com.android.traveling.entity.msg.DetailUserInfoMsg;
 import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.entity.msg.Msg;
 
@@ -21,6 +22,7 @@ public interface UserService {
 
     /**
      * 发送验证码
+     *
      * @param phoneNumber 手机号
      * @return Msg
      */
@@ -29,7 +31,8 @@ public interface UserService {
 
     /**
      * 手机验证码登录
-     * @param phoneNumber 手机号
+     *
+     * @param phoneNumber      手机号
      * @param verificationCode 验证码
      * @return LoginMsg
      */
@@ -48,7 +51,8 @@ public interface UserService {
 
     /**
      * 邮箱密码登录
-     * @param email 邮箱
+     *
+     * @param email    邮箱
      * @param password 密码
      * @return LoginMsg
      */
@@ -82,8 +86,9 @@ public interface UserService {
 
     /**
      * 绑定邮箱
+     *
      * @param userId userId
-     * @param email 邮箱
+     * @param email  邮箱
      * @return Msg
      */
     @GET("bindEmail")
@@ -91,12 +96,22 @@ public interface UserService {
 
     /**
      * * 绑定邮箱和密码
-     * @param userId userId
-     * @param email 邮箱
+     *
+     * @param userId   userId
+     * @param email    邮箱
      * @param password 密码
      * @return Msg
      */
     @GET("bindEmailAndPass")
-    Call<LoginMsg> bindEmailAndPass(@Query("userId") int userId, @Query("email") String email,@Query("password")String password);
+    Call<LoginMsg> bindEmailAndPass(@Query("userId") int userId, @Query("email") String email, @Query("password") String password);
 
+
+    /**
+     * 获取用户详细信息
+     *
+     * @param userId userId
+     * @return DetailUserInfoMsg
+     */
+    @GET("getDetailUserInfo")
+    Call<DetailUserInfoMsg> getDetailUserInfo(@Query("userId") int userId);
 }
