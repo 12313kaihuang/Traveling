@@ -95,7 +95,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     private void addEvents(CommentViewHolder holder, Comment comment, int position) {
 
         holder.user_img.setOnClickListener(v -> {
-            UtilTools.toast(context, "点击了" + holder.user_name.getText() + "的信息");
             Intent intent = new Intent(context, PersonalActivity.class);
             intent.putExtra(PersonalActivity.USER_ID, comment.getUserId());
             context.startActivity(intent);

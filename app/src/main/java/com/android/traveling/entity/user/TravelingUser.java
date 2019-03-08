@@ -106,6 +106,7 @@ public class TravelingUser {
 
             @Override
             public void onFailure(@NonNull Call<LoginMsg> call, @NonNull Throwable t) {
+                t.printStackTrace();
                 userCallback.onFiled("onFailure t=" + t.getMessage());
             }
         });
@@ -164,12 +165,12 @@ public class TravelingUser {
      * @param password    密码
      * @param callback    回调接口
      */
-    public static void loginByPass(String phoneNumber, String password, Callback<LoginMsg> callback) {
+    public static void loginByPass(String phoneNumber, String password, UserCallback callback) {
         //创建Retrofit对象  注意url后面有一个'/'。
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(StaticClass.URL)
-                .addConverterFactory(GsonConverterFactory.create()).build();
+//        Retrofit retrofit = new Retrofit.Builder().baseUrl(StaticClass.URL)
+//                .addConverterFactory(GsonConverterFactory.create()).build();
         // 获取UserService对象
-        UserService userService = retrofit.create(UserService.class);
+        UserService userService = UtilTools.getRetrofit().create(UserService.class);
         Call<LoginMsg> userCall = userService.loginByPass(phoneNumber, password);
         //异步请求
         userCall.enqueue(new Callback<LoginMsg>() {
@@ -180,17 +181,18 @@ public class TravelingUser {
                     LitePal.deleteAll(User.class);   //清除数据
                     User user = loginMsg.getUser();
                     user.setUserId(user.getId());
-                    user.save();                    //存入user
+                    user.save();//存入user
                     LogUtil.d("user=" + user.toString());
                     System.out.println("登录成功");
+                    callback.onSuccess(user);
                 }
                 System.out.println("currentUser=" + getCurrentUser());
-                callback.onResponse(call, response);
+                callback.onFiled("loginMsg == null || loginMsg.getUser() == null");
             }
 
             @Override
             public void onFailure(@NonNull Call<LoginMsg> call, @NonNull Throwable t) {
-                callback.onFailure(call, t);
+               callback.onFiled(t.getMessage());
             }
         });
     }

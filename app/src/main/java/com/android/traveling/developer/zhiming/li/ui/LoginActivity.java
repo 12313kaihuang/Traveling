@@ -24,6 +24,7 @@ import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.entity.user.UserCallback;
 import com.android.traveling.entity.user.UserService;
+import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.MyCustomDialog;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
@@ -273,6 +274,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     /**
      * 设置登录按钮是否可点击
+     *
      * @param isEnabled isEnabled
      */
     private void setLoginEnabled(boolean isEnabled) {
@@ -403,32 +405,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * 手机号密码登录
      */
     private void loginByPhone() {
-        TravelingUser.loginByPass(username.getText().toString()
-                , password.getText().toString(),
-                new Callback<LoginMsg>() {
-                    @Override
-                    public void onResponse(@NonNull Call<LoginMsg> call, @NonNull Response<LoginMsg> response) {
-                        loginDialog.dismiss();
-                        LoginMsg loginMsg = response.body();
-                        if (loginMsg != null) {
-                            if (loginMsg.getStatus() == Msg.CORRECT_STATUS) {
-                                sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
-                                LoginActivity.this.finish();
-                            } else {
-                                UtilTools.toast(LoginActivity.this, loginMsg.getInfo());
-                            }
-                        }
 
-                        System.out.println("body=" + response.body());
+        TravelingUser.loginByPass(username.getText().toString()
+                , password.getText().toString(), new UserCallback() {
+                    @Override
+                    public void onSuccess(User user) {
+                        sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
+                        LoginActivity.this.finish();
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<LoginMsg> call, @NonNull Throwable t) {
+                    public void onFiled(String info) {
                         loginDialog.dismiss();
-                        UtilTools.toast(LoginActivity.this, "登录失败");
+                        LogUtil.d("登录失败:" + info);
+                        UtilTools.toast(LoginActivity.this, "登录失败:" + info);
                     }
                 });
-
 
     }
 

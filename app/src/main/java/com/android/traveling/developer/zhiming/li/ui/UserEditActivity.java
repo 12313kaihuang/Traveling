@@ -195,7 +195,7 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
         live_area.setText(user.getArea());
         gender.setText(user.getGender());
         Picasso.get().load(user.getImg()).error(R.drawable.err_img_bg).fit().into(user_img);
-        Picasso.get().load(user.getBackgroundImg()).error(R.drawable.err_img_bg).into(user_bg);
+        Picasso.get().load(user.getBackgroundImg()).error(R.drawable.err_img_bg).fit().into(user_bg);
     }
 
     @Override
@@ -304,7 +304,7 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
                     if (uploadType == TYPE_USER_IMG) {
                         Picasso.get().load(user.getImg()).error(R.drawable.err_img_bg).fit().into(user_img);
                     } else if (uploadType == TYPE_USER_BG) {
-                        Picasso.get().load(user.getBackgroundImg()).error(R.drawable.err_img_bg).into(user_bg);
+                        Picasso.get().load(user.getBackgroundImg()).error(R.drawable.err_img_bg).fit().into(user_bg);
                     }
                 }
 
