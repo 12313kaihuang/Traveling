@@ -7,6 +7,8 @@ import com.android.traveling.developer.zhiming.li.UploadService;
 import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
 import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.entity.msg.Msg;
+import com.android.traveling.entity.service.FocusService;
+import com.android.traveling.entity.service.UserService;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
@@ -372,6 +374,42 @@ public class User extends LitePalSupport {
      */
     public void getDetailInfo(DetailUserInfoCallback callback) {
         TravelingUser.getDetailUserInfo(userId, callback);
+    }
+
+    /**
+     * 添加或取消关注
+     *
+     * @param isFocus 是否已关注  true则取消关注，false则添加关注
+     * @param toId    toId
+     */
+    public void addOrCancelFocus(boolean isFocus, int toId) {
+        FocusService focusService = UtilTools.getRetrofit().create(FocusService.class);
+        Call<Msg> call;
+        if (isFocus) {
+            call = focusService.cancelFocus(userId, toId);
+        } else {
+            call = focusService.addFocus(userId, toId);
+        }
+        call.enqueue(new Callback<Msg>() {
+            @Override
+            public void onResponse(@NonNull Call<Msg> call, @NonNull Response<Msg> response) {
+                Msg msg = response.body();
+                if (msg == null) {
+                    LogUtil.d("================addOrCancelFocus  msg == null");
+                } else {
+                    if (msg.isStatusCorrect()) {
+                        LogUtil.d("================addOrCancelFocus 添加/取消关注成功");
+                    } else {
+                        LogUtil.d("================addOrCancelFocus  添加/取消关注失败：" + msg.getInfo());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Msg> call, @NonNull Throwable t) {
+                LogUtil.d("================addOrCancelFocus  failure:" + t.getMessage());
+            }
+        });
     }
 
 }

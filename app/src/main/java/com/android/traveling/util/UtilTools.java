@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.support.annotation.ColorInt;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
@@ -120,6 +121,18 @@ public class UtilTools {
     public static void showGoodView(View v, Context context) {
         final GoodView goodView = new GoodView(context);
         goodView.setTextInfo("+1", ContextCompat.getColor(context, R.color.red), 16);
+        goodView.show(v);
+    }
+
+    /**
+     * 显示已关注效果
+     *
+     * @param v       v
+     * @param context context
+     */
+    public static void showGoodView(Context context, View v, String info, @ColorInt int color) {
+        final GoodView goodView = new GoodView(context);
+        goodView.setTextInfo(info, color, 16);
         goodView.show(v);
     }
 }

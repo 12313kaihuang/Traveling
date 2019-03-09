@@ -17,13 +17,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.traveling.MainActivity;
 import com.android.traveling.R;
-import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.entity.user.UserCallback;
-import com.android.traveling.entity.user.UserService;
+import com.android.traveling.entity.service.UserService;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.MyCustomDialog;
 import com.android.traveling.util.StaticClass;
@@ -388,7 +388,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onSuccess(User user) {
                         loginDialog.dismiss();
-                        sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         LoginActivity.this.finish();
                     }
 

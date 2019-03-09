@@ -3,10 +3,11 @@ package com.android.traveling.entity.note;
 import android.support.annotation.NonNull;
 
 import com.android.traveling.entity.comment.Comment;
-import com.android.traveling.entity.comment.CommentService;
+import com.android.traveling.entity.service.CommentService;
 import com.android.traveling.entity.msg.CommentMsg;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.msg.NoteMsg;
+import com.android.traveling.entity.service.NoteService;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.util.BinarySearch;

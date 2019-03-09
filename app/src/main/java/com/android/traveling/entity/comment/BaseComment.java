@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.android.traveling.entity.msg.BaseCommentMsg;
 import com.android.traveling.entity.msg.Msg;
+import com.android.traveling.entity.service.CommentService;
 import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.UtilTools;
 

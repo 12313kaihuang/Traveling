@@ -21,7 +21,6 @@ import com.android.traveling.entity.user.DetailUserInfo;
 import com.android.traveling.entity.user.DetailUserInfoCallback;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
-import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
 import com.android.traveling.widget.MyActionBar;
 import com.gyf.barlibrary.ImmersionBar;
@@ -56,6 +55,8 @@ public class PersonalActivity extends AppCompatActivity {
     MyActionBar myActionBar;
     private List<Note> noteList;
     private NewsAdapter newsAdapter;
+    private boolean isFocus = false;
+    private int userId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,17 +65,17 @@ public class PersonalActivity extends AppCompatActivity {
         ImmersionBar.with(this).init();
 
         Intent intent = getIntent();
-        int userID = intent.getIntExtra(USER_ID, 0);
-        if (userID == 0) {
+        userId = intent.getIntExtra(USER_ID, 0);
+        if (userId == 0) {
             UtilTools.toast(this, "userID传参有误");
             finish();
         }
-        initView(userID);
+        initView();
         addEvents();
-        getDetailUserInfo(userID);
+        getDetailUserInfo();
     }
 
-    private void initView(int userID) {
+    private void initView() {
         focusNum = findViewById(R.id.my_focus_num);
         fansNum = findViewById(R.id.my_fans_num);
         collectionsNum = findViewById(R.id.my_collections_num);
@@ -85,13 +86,26 @@ public class PersonalActivity extends AppCompatActivity {
         listView = findViewById(R.id.list_view);
         scrollView = findViewById(R.id.scrollView);
         User currentUser = TravelingUser.getCurrentUser();
-        if (currentUser != null && currentUser.getUserId() == userID) {
+        if (currentUser != null && currentUser.getUserId() == userId) {
             findViewById(R.id.ll_focus_or_chat).setVisibility(View.GONE);
-        }else {
+        } else {
             //关注点击事件
-            tv_focus.setOnClickListener(v->{});
+            tv_focus.setOnClickListener(v -> {
+                if (currentUser != null) {
+                    currentUser.addOrCancelFocus(isFocus, userId);
+                }
+                if (!isFocus) {
+                    UtilTools.showGoodView(this, tv_focus, "已关注",
+                            getResources().getColor(R.color.dialog_orange));
+                    isFocus = true;
+                } else {
+                    isFocus = false;
+                }
+                setFocus(isFocus);
+            });
             //私聊点击按钮
-            findViewById(R.id.tv_chat).setOnClickListener(v->{});
+            findViewById(R.id.tv_chat).setOnClickListener(v -> {
+            });
         }
 
         //设置actionBar位置
@@ -117,14 +131,14 @@ public class PersonalActivity extends AppCompatActivity {
                 //                ImmersionBar.with(this).statusBarColor(R.color.red);
                 int[] location = new int[2];
                 iv_user_bg.getLocationInWindow(location);
-//                LogUtil.d("bgHeight=" + iv_user_bg.getHeight());
-//                LogUtil.d("statusBatHeight" + ImmersionBar.getStatusBarHeight(this));
-//                LogUtil.d("myActionBarHeight" + myActionBar.getHeight());
+                //                LogUtil.d("bgHeight=" + iv_user_bg.getHeight());
+                //                LogUtil.d("statusBatHeight" + ImmersionBar.getStatusBarHeight(this));
+                //                LogUtil.d("myActionBarHeight" + myActionBar.getHeight());
                 int hideY = iv_user_bg.getHeight() - ImmersionBar.getStatusBarHeight(this) - myActionBar.getHeight();
-//                LogUtil.d("hideY="+hideY);
+                //                LogUtil.d("hideY="+hideY);
                 float alpha = (float) scrollY / hideY;
                 alpha = alpha > 1 ? 1.0f : alpha;
-                LogUtil.d("alpha=" + alpha);
+                //                LogUtil.d("alpha=" + alpha);
                 if (alpha < 0.5f) {
                     myActionBar.setBackImg(R.drawable.ic_back2_white);
                     myActionBar.setActionBarTitle("");
@@ -143,19 +157,20 @@ public class PersonalActivity extends AppCompatActivity {
 
     /**
      * 获取用户详细信息并显示
-     * @param userID userID
      */
-    private void getDetailUserInfo(int userID) {
+    private void getDetailUserInfo() {
         TextView tv_no_notes = findViewById(R.id.tv_no_notes);
 
-        TravelingUser.getDetailUserInfo(userID, new DetailUserInfoCallback() {
+        TravelingUser.getDetailUserInfo(userId, new DetailUserInfoCallback() {
             @Override
-            public void onSuccess(DetailUserInfo detailUserInfo) {
+            public void onSuccess(DetailUserInfo detailUserInfo, boolean isFocus) {
                 noteList = detailUserInfo.getNotes();
                 focusNum.setText(String.valueOf(detailUserInfo.getFocusNum()));
                 fansNum.setText(String.valueOf(detailUserInfo.getFansNum()));
                 collectionsNum.setText(String.valueOf(detailUserInfo.getBeLikeNum()));
                 tv_username.setText(detailUserInfo.getNickName());
+                PersonalActivity.this.isFocus = isFocus;
+                setFocus(isFocus);
                 Picasso.get().load(detailUserInfo.getImg()).error(R.drawable.err_img_bg).fit().into(user_img);
                 Picasso.get().load(detailUserInfo.getBackgroundImg()).error(R.drawable.err_img_bg).fit().into(iv_user_bg);
                 listView.setOnItemClickListener((parent, view, position, id) -> {
@@ -182,6 +197,17 @@ public class PersonalActivity extends AppCompatActivity {
                 UtilTools.toast(PersonalActivity.this, "请求失败：" + reason);
             }
         });
+    }
+
+    //设置 关注按钮 样式 isFocus为点击的关注状态
+    private void setFocus(boolean isFocus) {
+        if (isFocus) {
+            tv_focus.setText("已关注");
+            tv_focus.setTextColor(getResources().getColor(R.color.dialog_orange));
+        } else {
+            tv_focus.setText("+关注");
+            tv_focus.setTextColor(0x8A000000);
+        }
     }
 
     @Override

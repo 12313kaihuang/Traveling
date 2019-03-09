@@ -4,6 +4,7 @@ package com.android.traveling.entity.comment;
 import android.support.annotation.NonNull;
 
 import com.android.traveling.entity.msg.Msg;
+import com.android.traveling.entity.service.CommentService;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.StaticClass;

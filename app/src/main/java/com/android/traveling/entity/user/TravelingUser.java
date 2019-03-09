@@ -7,10 +7,11 @@ import android.support.annotation.NonNull;
 import com.android.traveling.entity.msg.DetailUserInfoMsg;
 import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.entity.msg.Msg;
+import com.android.traveling.entity.service.UserService;
 import com.android.traveling.util.LogUtil;
-import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
 import com.android.traveling.widget.dialog.ToLoginDialog;
+import com.google.gson.Gson;
 
 import org.litepal.LitePal;
 
@@ -20,7 +21,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * 项目名：Traveling
@@ -86,7 +86,18 @@ public class TravelingUser {
         // 获取UserService对象
         UserService userService = retrofit.create(UserService.class);
         Call<LoginMsg> call = userService.findUser(currentUser.getUserId());//谨记是userId
-        call.enqueue(new Callback<LoginMsg>() {
+        call.enqueue(createCallback(userCallback));
+    }
+
+    /**
+     * 生成登录回调接口
+     *
+     * @param userCallback userCallback
+     * @return Callback<LoginMsg>
+     */
+    @NonNull
+    private static Callback<LoginMsg> createCallback(UserCallback userCallback) {
+        return new Callback<LoginMsg>() {
             @Override
             public void onResponse(@NonNull Call<LoginMsg> call, @NonNull Response<LoginMsg> response) {
                 LogUtil.d("response=" + response.toString());
@@ -98,6 +109,7 @@ public class TravelingUser {
                         userCallback.onFiled(msg.getInfo());
                     } else {
                         //更新成功
+                        //noinspection ConstantConditions
                         getCurrentUser().refresh(msg.getUser());  //更新currentUser
                         userCallback.onSuccess(msg.getUser());
                     }
@@ -109,7 +121,7 @@ public class TravelingUser {
                 t.printStackTrace();
                 userCallback.onFiled("onFailure t=" + t.getMessage());
             }
-        });
+        };
     }
 
     /**
@@ -132,30 +144,7 @@ public class TravelingUser {
         // 获取UserService对象
         UserService userService = retrofit.create(UserService.class);
         Call<LoginMsg> call = userService.loginByCode(phoneNumber, verificationCode);
-        call.enqueue(new Callback<LoginMsg>() {
-            @Override
-            public void onResponse(@NonNull Call<LoginMsg> call, @NonNull Response<LoginMsg> response) {
-                LoginMsg loginMsg = response.body();
-                if (loginMsg == null) {
-                    userCallback.onFiled("loginMsg == null");
-                } else {
-                    if (loginMsg.getStatus() == Msg.ERROR_STATUS) {
-                        userCallback.onFiled(loginMsg.getInfo());
-                    } else {
-                        LitePal.deleteAll(User.class);   //清除数据
-                        User user = loginMsg.getUser();
-                        user.setUserId(user.getId());
-                        user.save();                    //存入user
-                        userCallback.onSuccess(user);  //登录成功
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<LoginMsg> call, @NonNull Throwable t) {
-                userCallback.onFiled("onFailure t=" + t.getMessage());
-            }
-        });
+        call.enqueue(createCallback(userCallback));
     }
 
     /**
@@ -167,34 +156,13 @@ public class TravelingUser {
      */
     public static void loginByPass(String phoneNumber, String password, UserCallback callback) {
         //创建Retrofit对象  注意url后面有一个'/'。
-//        Retrofit retrofit = new Retrofit.Builder().baseUrl(StaticClass.URL)
-//                .addConverterFactory(GsonConverterFactory.create()).build();
+        //        Retrofit retrofit = new Retrofit.Builder().baseUrl(StaticClass.URL)
+        //                .addConverterFactory(GsonConverterFactory.create()).build();
         // 获取UserService对象
         UserService userService = UtilTools.getRetrofit().create(UserService.class);
         Call<LoginMsg> userCall = userService.loginByPass(phoneNumber, password);
         //异步请求
-        userCall.enqueue(new Callback<LoginMsg>() {
-            @Override
-            public void onResponse(@NonNull Call<LoginMsg> call, @NonNull Response<LoginMsg> response) {
-                LoginMsg loginMsg = response.body();
-                if (loginMsg != null && loginMsg.getUser() != null) {
-                    LitePal.deleteAll(User.class);   //清除数据
-                    User user = loginMsg.getUser();
-                    user.setUserId(user.getId());
-                    user.save();//存入user
-                    LogUtil.d("user=" + user.toString());
-                    System.out.println("登录成功");
-                    callback.onSuccess(user);
-                }
-                System.out.println("currentUser=" + getCurrentUser());
-                callback.onFiled("loginMsg == null || loginMsg.getUser() == null");
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<LoginMsg> call, @NonNull Throwable t) {
-               callback.onFiled(t.getMessage());
-            }
-        });
+        userCall.enqueue(createCallback(callback));
     }
 
 
@@ -212,30 +180,7 @@ public class TravelingUser {
         UserService userService = retrofit.create(UserService.class);
         Call<LoginMsg> call = userService.loginByEmail(email, password);
         //异步请求
-        call.enqueue(new Callback<LoginMsg>() {
-            @Override
-            public void onResponse(@NonNull Call<LoginMsg> call, @NonNull Response<LoginMsg> response) {
-                LoginMsg loginMsg = response.body();
-                if (loginMsg == null) {
-                    userCallback.onFiled("loginMsg == null");
-                } else {
-                    if (loginMsg.getStatus() == Msg.ERROR_STATUS) {
-                        userCallback.onFiled(loginMsg.getInfo());
-                    } else {
-                        LitePal.deleteAll(User.class);   //清除数据
-                        User user = loginMsg.getUser();
-                        user.setUserId(user.getId());
-                        user.save();                    //存入user
-                        userCallback.onSuccess(user);  //登录成功
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<LoginMsg> call, @NonNull Throwable t) {
-                userCallback.onFiled("onFailure t=" + t.getMessage());
-            }
-        });
+        call.enqueue(createCallback(userCallback));
     }
 
 
@@ -256,11 +201,21 @@ public class TravelingUser {
      * @param userId userId
      */
     public static void getDetailUserInfo(int userId, DetailUserInfoCallback callback) {
-        UtilTools.getRetrofit().create(UserService.class)
-                .getDetailUserInfo(userId).enqueue(new Callback<DetailUserInfoMsg>() {
+        UserService service = UtilTools.getRetrofit().create(UserService.class);
+        Call<DetailUserInfoMsg> call;
+        User currentUser = TravelingUser.getCurrentUser();
+        if (currentUser != null) {
+            call = service.getDetailUserInfo(userId, currentUser.getUserId());
+            LogUtil.d("getDetailUserInfo toId=" + userId + " fromId=" + currentUser.getUserId());
+        } else {
+            call = service.getDetailUserInfo(userId);
+            LogUtil.d("getDetailUserInfo toId = " + userId + " fromId=null");
+        }
+        call.enqueue(new Callback<DetailUserInfoMsg>() {
             @Override
             public void onResponse(@NonNull Call<DetailUserInfoMsg> call, @NonNull Response<DetailUserInfoMsg> response) {
                 DetailUserInfoMsg msg = response.body();
+                LogUtil.d("============DetailUserInfoMsg=" + (new Gson().toJson(msg)));
                 if (msg == null) {
                     callback.onFailure("msg == null");
                     return;
@@ -268,7 +223,7 @@ public class TravelingUser {
                 if (msg.getStatus() == Msg.ERROR_STATUS) {
                     callback.onFailure(msg.getInfo());
                 }
-                callback.onSuccess(msg.getDetailUserInfo());
+                callback.onSuccess(msg.getDetailUserInfo(), msg.isFocus());
             }
 
             @Override

@@ -92,7 +92,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         if (currentUser != null) {
             currentUser.getDetailInfo(new DetailUserInfoCallback() {
                 @Override
-                public void onSuccess(DetailUserInfo detailUserInfo) {
+                public void onSuccess(DetailUserInfo detailUserInfo,boolean isFocus) {
                     focusNum.setText(String.valueOf(detailUserInfo.getFocusNum()));
                     fansNum.setText(String.valueOf(detailUserInfo.getFansNum()));
                     collectionsNum.setText(String.valueOf(detailUserInfo.getBeLikeNum()));

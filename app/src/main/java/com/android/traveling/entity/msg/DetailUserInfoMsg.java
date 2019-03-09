@@ -12,9 +12,12 @@ public class DetailUserInfoMsg extends Msg {
 
     private DetailUserInfo detailUserInfo;
 
-    public DetailUserInfoMsg(DetailUserInfo detailUserInfo) {
+    private boolean focus;
+
+    public DetailUserInfoMsg(DetailUserInfo detailUserInfo,boolean isFocus) {
         super(CORRECT_STATUS,"");
         this.detailUserInfo = detailUserInfo;
+        this.focus = isFocus;
     }
 
     public DetailUserInfo getDetailUserInfo() {
@@ -23,5 +26,13 @@ public class DetailUserInfoMsg extends Msg {
 
     public void setDetailUserInfo(DetailUserInfo detailUserInfo) {
         this.detailUserInfo = detailUserInfo;
+    }
+
+    public boolean isFocus() {
+        return focus;
+    }
+
+    public void setFocus(boolean focus) {
+        this.focus = focus;
     }
 }

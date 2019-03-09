@@ -8,9 +8,8 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Created by HY
  * 2019/1/2 22:08
- *
+ * <p>
  * 信息实体类
- *
  */
 @SuppressWarnings("unused")
 public class Msg {
@@ -22,7 +21,8 @@ public class Msg {
     //自定义注解
     @IntDef({ERROR_STATUS, NO_DATA})  //注解仅存在于源码中，在class字节码文件中不包含
     @Retention(RetentionPolicy.SOURCE)
-    public @interface ErrorCode {}
+    public @interface ErrorCode {
+    }
 
     private int status;
 
@@ -42,6 +42,15 @@ public class Msg {
 
     public static Msg errorMsg(String info) {
         return new Msg(ERROR_STATUS, info);
+    }
+
+    /**
+     * 状态是否正确
+     *
+     * @return boolean
+     */
+    public boolean isStatusCorrect() {
+        return status == CORRECT_STATUS;
     }
 
     public int getStatus() {

@@ -1,4 +1,4 @@
-package com.android.traveling.entity.note;
+package com.android.traveling.entity.service;
 
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.msg.NoteMsg;

@@ -11,7 +11,7 @@ package com.android.traveling.entity.user;
 
 public interface DetailUserInfoCallback {
 
-    void onSuccess(DetailUserInfo detailUserInfo);
+    void onSuccess(DetailUserInfo detailUserInfo,boolean isFocus);
 
     void onFailure(String reason);
 }

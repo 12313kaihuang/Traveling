@@ -1,4 +1,4 @@
-package com.android.traveling.entity.companion;
+package com.android.traveling.entity.service;
 
 import com.android.traveling.entity.msg.CompanionMsg;
 import com.android.traveling.entity.msg.CompanionReplyMsg;

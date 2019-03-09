@@ -1,4 +1,4 @@
-package com.android.traveling.entity.user;
+package com.android.traveling.entity.service;
 
 import com.android.traveling.entity.msg.DetailUserInfoMsg;
 import com.android.traveling.entity.msg.LoginMsg;
@@ -114,4 +114,16 @@ public interface UserService {
      */
     @GET("getDetailUserInfo")
     Call<DetailUserInfoMsg> getDetailUserInfo(@Query("userId") int userId);
+
+
+    /**
+     * 获取用户详细信息
+     *
+     * @param userId userId
+     * @return DetailUserInfoMsg
+     */
+    @GET("getDetailUserInfo")
+    Call<DetailUserInfoMsg> getDetailUserInfo(@Query("userId") int userId, @Query("fromId") int fromId);
+
+
 }
