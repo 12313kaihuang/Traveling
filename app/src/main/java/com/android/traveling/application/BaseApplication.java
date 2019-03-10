@@ -1,15 +1,17 @@
 package com.android.traveling.application;
 
 import android.app.Application;
-import android.os.Build;
 import android.os.StrictMode;
 
+import com.android.traveling.entity.leancloud.CustomUserProvider;
 import com.android.traveling.util.StaticClass;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import org.litepal.LitePal;
+
+import cn.leancloud.chatkit.LCChatKit;
 
 
 /**
@@ -24,6 +26,9 @@ import org.litepal.LitePal;
  */
 
 public class BaseApplication extends Application {
+
+    private final String APP_ID = "WSYL5OvdOhS1y2m1AMefmgcB-gzGzoHsz";
+    private final String APP_KEY = "zgFTp1Vn0gEhGC2lMphmayW1";
 
     @Override
     public void onCreate() {
@@ -42,5 +47,11 @@ public class BaseApplication extends Application {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
+
+
+        //leanClound
+//        AVOSCloud.setDebugLogEnabled(true);
+        LCChatKit.getInstance().setProfileProvider(CustomUserProvider.getInstance());
+        LCChatKit.getInstance().init(getApplicationContext(), APP_ID, APP_KEY);
     }
 }

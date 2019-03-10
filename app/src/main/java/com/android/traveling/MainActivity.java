@@ -21,14 +21,22 @@ import com.android.traveling.developer.ting.li.ui.FriendsFragment;
 import com.android.traveling.developer.yu.hu.HomeFragment;
 import com.android.traveling.developer.jiaming.liu.MessageFragment;
 import com.android.traveling.developer.zhiming.li.MyFragment;
+import com.android.traveling.developer.zhiming.li.ui.LoginActivity;
+import com.android.traveling.entity.user.TravelingUser;
+import com.android.traveling.entity.user.User;
 import com.android.traveling.util.LogUtil;
+import com.android.traveling.util.UtilTools;
 import com.android.traveling.viewpager.NoScrollViewPager;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.leancloud.chatkit.LCChatKit;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -47,6 +55,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initFragments();
         initView();
+
+
+        User user = TravelingUser.getCurrentUser();
+        if (user != null) {
+            try {
+                LCChatKit.getInstance().open(String.valueOf(user.getUserId()), new AVIMClientCallback() {
+                    @Override
+                    public void done(AVIMClient avimClient, AVIMException e) {
+                        if (null == e) {
+                            LogUtil.d("===============done: " + user.getUserId() + " 登录LeanCloud成功");
+                        } else {
+                            UtilTools.toast(MainActivity.this, "LeanClound登录失败");
+                            LogUtil.d("===============done: " + user.getUserId() + " 登录LeanCloud失败");
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                LogUtil.d("MainActivity  LeanCloud open异常");
+            }
+        }
     }
 
     @Override

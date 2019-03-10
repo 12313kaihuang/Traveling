@@ -79,12 +79,20 @@ dependencies {
     implementation 'com.wx.goodview:goodview:1.0.0'
     //immersionbar 实现沉浸式导航栏
     implementation 'com.gyf.immersionbar:immersionbar:2.3.3'
+
+    api project(':leancloudchatkit')
+    //avoscloud-sdk 为 LeanCloud基础包
+    implementation('cn.leancloud.android:avoscloud-sdk:v4.7.9')
+//    //avoscloud-push 为推送与实时聊天需要的包
+    implementation('cn.leancloud.android:avoscloud-push:v4.7.9@aar') { transitive = true }
+
 }
 
 //解决冲突Program type already present 方法2
 configurations.all {
     resolutionStrategy.force 'com.squareup.okio:okio:1.14.0'
     resolutionStrategy.force 'com.google.code.gson:gson:2.8.5'
+    resolutionStrategy.force 'com.squareup.picasso:picasso:2.71828'
 }
 
 

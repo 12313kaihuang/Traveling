@@ -25,6 +25,11 @@ import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
 import com.android.traveling.widget.dialog.ToLogoutDialog;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
+
+import cn.leancloud.chatkit.LCChatKit;
 
 
 /**
@@ -150,6 +155,22 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
     //退出登录操作
     private void Logout() {
         initData();
+        try {
+            LCChatKit.getInstance().close(new AVIMClientCallback() {
+                @Override
+                public void done(AVIMClient avimClient, AVIMException e) {
+                    if (null != e) {
+                        e.printStackTrace();
+                        LogUtil.d("===================LeanCloud退出登录失败===================");
+                    }
+                    LogUtil.d("===================LeanCloud退出登录===================");
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            LogUtil.d("LeanCloud退出登录异常");
+        }
+
         Intent intent = new Intent();
         intent.setAction(StaticClass.BROADCAST_LOGOUT);
         //noinspection ConstantConditions

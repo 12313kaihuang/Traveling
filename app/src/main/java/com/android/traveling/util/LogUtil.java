@@ -19,44 +19,49 @@ public class LogUtil {
     //TAG
     private static String TAG = "Traveling";
 
+    private static String disposeText(String text) {
+        String s = "====================";
+        return s + text + s;
+    }
+
     //四个等级 DIWE
     public static void d(String text) {
-        d(TAG, text);
+        d(TAG, disposeText(text));
     }
 
     public static void i(String text) {
-        i(TAG, text);
+        i(TAG, disposeText(text));
     }
 
     public static void w(String text) {
-        w(TAG, text);
+        w(TAG, disposeText(text));
     }
 
     public static void e(String text) {
-        e(TAG, text);
+        e(TAG, disposeText(text));
     }
 
     public static void d(String TAG, String text) {
         if (DEBUG) {
-            Log.d(TAG, text);
+            Log.d(TAG, disposeText(text));
         }
     }
 
     public static void i(String TAG, String text) {
         if (DEBUG) {
-            Log.i(TAG, text);
+            Log.i(TAG, disposeText(text));
         }
     }
 
     public static void w(String TAG, String text) {
         if (DEBUG) {
-            Log.w(TAG, text);
+            Log.w(TAG, disposeText(text));
         }
     }
 
     public static void e(String TAG, String text) {
         if (DEBUG) {
-            Log.d(TAG, text);
+            Log.d(TAG, disposeText(text));
         }
     }
 

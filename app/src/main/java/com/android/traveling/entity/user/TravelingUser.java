@@ -108,10 +108,11 @@ public class TravelingUser {
                     if (msg.getStatus() == LoginMsg.ERROR_STATUS) {
                         userCallback.onFiled(msg.getInfo());
                     } else {
-                        //更新成功
-                        //noinspection ConstantConditions
-                        getCurrentUser().refresh(msg.getUser());  //更新currentUser
-                        userCallback.onSuccess(msg.getUser());
+                        LitePal.deleteAll(User.class);   //清除数据
+                        User user = msg.getUser();
+                        user.setUserId(user.getId());
+                        user.save();                    //存入user
+                        userCallback.onSuccess(user);
                     }
                 }
             }

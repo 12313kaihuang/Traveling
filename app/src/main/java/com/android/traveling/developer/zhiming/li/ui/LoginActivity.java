@@ -17,20 +17,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.traveling.MainActivity;
 import com.android.traveling.R;
 import com.android.traveling.entity.msg.Msg;
+import com.android.traveling.entity.service.UserService;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.entity.user.UserCallback;
-import com.android.traveling.entity.service.UserService;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.MyCustomDialog;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 
 import java.util.regex.Pattern;
 
+import cn.leancloud.chatkit.LCChatKit;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -378,26 +381,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    /**
+     * 登录后的回调接口
+     */
+    private UserCallback loginCallback = new UserCallback() {
+        @Override
+        public void onSuccess(User user) {
+            loginDialog.dismiss();
+            LCChatKit.getInstance().open(String.valueOf(user.getUserId()), new AVIMClientCallback() {
+                @Override
+                public void done(AVIMClient avimClient, AVIMException e) {
+                    if (null == e) {
+                        LogUtil.d("===============done: " + user.getUserId() + " 登录LeanCloud成功");
+                    } else {
+                        UtilTools.toast(LoginActivity.this, "LeanClound登录失败");
+                        LogUtil.d("===============done: " + user.getUserId() + " 登录LeanCloud失败");
+                    }
+                }
+            });
+            sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
+            LoginActivity.this.finish();
+        }
+
+        @Override
+        public void onFiled(String info) {
+            loginDialog.dismiss();
+            LogUtil.d("登录失败:" + info);
+            UtilTools.toast(LoginActivity.this, "登录失败:" + info);
+        }
+    };
+
 
     /**
      * 验证码登录
      */
     private void loginByVerifiedCode() {
         TravelingUser.loginByCode(username.getText().toString(), verified_code.getText().toString(),
-                new UserCallback() {
-                    @Override
-                    public void onSuccess(User user) {
-                        loginDialog.dismiss();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        LoginActivity.this.finish();
-                    }
-
-                    @Override
-                    public void onFiled(String info) {
-                        loginDialog.dismiss();
-                        UtilTools.toast(LoginActivity.this, "登录失败:" + info);
-                    }
-                });
+                loginCallback);
 
     }
 
@@ -407,20 +427,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void loginByPhone() {
 
         TravelingUser.loginByPass(username.getText().toString()
-                , password.getText().toString(), new UserCallback() {
-                    @Override
-                    public void onSuccess(User user) {
-                        sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
-                        LoginActivity.this.finish();
-                    }
-
-                    @Override
-                    public void onFiled(String info) {
-                        loginDialog.dismiss();
-                        LogUtil.d("登录失败:" + info);
-                        UtilTools.toast(LoginActivity.this, "登录失败:" + info);
-                    }
-                });
+                , password.getText().toString(), loginCallback);
 
     }
 
@@ -429,20 +436,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      */
     private void loginByEmail() {
         TravelingUser.loginByEmail(username.getText().toString(),
-                password.getText().toString(), new UserCallback() {
-                    @Override
-                    public void onSuccess(User user) {
-                        loginDialog.dismiss();
-                        sendBroadcast(new Intent(StaticClass.BROADCAST_LOGIN));
-                        LoginActivity.this.finish();
-                    }
-
-                    @Override
-                    public void onFiled(String info) {
-                        loginDialog.dismiss();
-                        UtilTools.toast(LoginActivity.this, "登录失败:" + info);
-                    }
-                });
+                password.getText().toString(), loginCallback);
     }
 
     //切换登录方式

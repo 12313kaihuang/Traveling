@@ -21,12 +21,17 @@ import com.android.traveling.entity.user.DetailUserInfo;
 import com.android.traveling.entity.user.DetailUserInfoCallback;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
+import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
 import com.android.traveling.widget.MyActionBar;
+import com.android.traveling.widget.dialog.ToLoginDialog;
 import com.gyf.barlibrary.ImmersionBar;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import cn.leancloud.chatkit.activity.LCIMConversationActivity;
+import cn.leancloud.chatkit.utils.LCIMConstants;
 
 /**
  * 项目名：Traveling
@@ -91,8 +96,12 @@ public class PersonalActivity extends AppCompatActivity {
         } else {
             //关注点击事件
             tv_focus.setOnClickListener(v -> {
-                if (currentUser != null) {
-                    currentUser.addOrCancelFocus(isFocus, userId);
+                User user = TravelingUser.getCurrentUser();
+                if (user != null) {
+                    user.addOrCancelFocus(isFocus, userId);
+                } else {
+                    new ToLoginDialog(PersonalActivity.this, "登录之后才可以+关注哦").show();
+                    return;
                 }
                 if (!isFocus) {
                     UtilTools.showGoodView(this, tv_focus, "已关注",
@@ -105,6 +114,22 @@ public class PersonalActivity extends AppCompatActivity {
             });
             //私聊点击按钮
             findViewById(R.id.tv_chat).setOnClickListener(v -> {
+                if (TravelingUser.getCurrentUser() == null) {
+                    new ToLoginDialog(PersonalActivity.this, "登录之后才可以开始私聊哦").show();
+                    return;
+                }
+                LogUtil.d("与" + userId + "开始聊天");
+                try {
+                    // 点击联系人，直接跳转进入聊天界面
+                    Intent intent = new Intent(PersonalActivity.this, LCIMConversationActivity.class);
+                    // 传入对方的 Id 即可
+                    intent.putExtra(LCIMConstants.PEER_ID, String.valueOf(userId));
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    LogUtil.d("LeanCloud开启聊天异常");
+                }
+
             });
         }
 
