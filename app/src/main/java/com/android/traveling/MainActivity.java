@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.android.traveling.developer.jiaming.liu.MessageFragment2;
 import com.android.traveling.developer.jiaming.liu.activity.AddNoteActivity;
 import com.android.traveling.developer.ting.li.ui.FriendsFragment;
 
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.leancloud.chatkit.LCChatKit;
+import cn.leancloud.chatkit.cache.LCIMProfileCache;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -55,8 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initFragments();
         initView();
-
-
         User user = TravelingUser.getCurrentUser();
         if (user != null) {
             try {
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initFragments() {
         fragments.add(new HomeFragment());
         fragments.add(new FriendsFragment());
-        fragments.add(new MessageFragment());
+        fragments.add(new MessageFragment2());
         fragments.add(new MyFragment());
     }
 

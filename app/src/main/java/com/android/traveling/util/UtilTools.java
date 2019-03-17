@@ -87,7 +87,25 @@ public class UtilTools {
         }
     }
 
-    private static Retrofit retrofit;
+    private static Retrofit retrofit = createRetrofit();
+
+    /**
+     * 创建Retrofit对象
+     *
+     * @return Retrofit
+     */
+    private static Retrofit createRetrofit() {
+        //配置OkHttpClient
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        //连接超时时间
+        builder.connectTimeout(StaticClass.CONNECT_TIMEOUT, TimeUnit.SECONDS);
+        //日期转换
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create();
+        return new Retrofit.Builder().baseUrl(StaticClass.URL)
+                .client(builder.build())
+                .addConverterFactory(GsonConverterFactory.create(gson)).build();
+    }
 
     /**
      * 获取retrofit对象
@@ -95,19 +113,6 @@ public class UtilTools {
      * @return retrofit对象
      */
     public static Retrofit getRetrofit() {
-        if (retrofit == null) {
-            //配置OkHttpClient
-            OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            //连接超时时间
-            builder.connectTimeout(StaticClass.CONNECT_TIMEOUT, TimeUnit.SECONDS);
-            //日期转换
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
-                    .create();
-            retrofit = new Retrofit.Builder().baseUrl(StaticClass.URL)
-                    .client(builder.build())
-                    .addConverterFactory(GsonConverterFactory.create(gson)).build();
-        }
-
         return retrofit;
     }
 

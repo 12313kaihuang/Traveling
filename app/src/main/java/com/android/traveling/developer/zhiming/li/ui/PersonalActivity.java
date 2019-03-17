@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.adaptor.NewsAdapter;
 import com.android.traveling.developer.yu.hu.ui.NewsActivity;
+import com.android.traveling.entity.leancloud.CustomUserProvider;
 import com.android.traveling.entity.note.Note;
 import com.android.traveling.entity.user.DetailUserInfo;
 import com.android.traveling.entity.user.DetailUserInfoCallback;
@@ -114,7 +115,8 @@ public class PersonalActivity extends AppCompatActivity {
             });
             //私聊点击按钮
             findViewById(R.id.tv_chat).setOnClickListener(v -> {
-                if (TravelingUser.getCurrentUser() == null) {
+                User currentUser1 = TravelingUser.getCurrentUser();
+                if (currentUser1 == null) {
                     new ToLoginDialog(PersonalActivity.this, "登录之后才可以开始私聊哦").show();
                     return;
                 }
@@ -124,6 +126,7 @@ public class PersonalActivity extends AppCompatActivity {
                     Intent intent = new Intent(PersonalActivity.this, LCIMConversationActivity.class);
                     // 传入对方的 Id 即可
                     intent.putExtra(LCIMConstants.PEER_ID, String.valueOf(userId));
+                    CustomUserProvider.addUser(currentUser1);
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -145,7 +148,7 @@ public class PersonalActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
-        //ScrollView滑动监听
+        //ScrollView滑动监听 实现沉浸式
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             scrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                 //                第二个参数:scrollX是目前的（滑动后）的X轴坐标
@@ -189,6 +192,7 @@ public class PersonalActivity extends AppCompatActivity {
         TravelingUser.getDetailUserInfo(userId, new DetailUserInfoCallback() {
             @Override
             public void onSuccess(DetailUserInfo detailUserInfo, boolean isFocus) {
+                CustomUserProvider.refreshCacheUser(detailUserInfo);
                 noteList = detailUserInfo.getNotes();
                 focusNum.setText(String.valueOf(detailUserInfo.getFocusNum()));
                 fansNum.setText(String.valueOf(detailUserInfo.getFansNum()));

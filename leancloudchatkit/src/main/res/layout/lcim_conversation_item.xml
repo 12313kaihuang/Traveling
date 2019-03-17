@@ -14,6 +14,7 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:visibility="invisible"
             android:id="@+id/conversation_item_tv_type"
             android:layout_width="10dp"
             android:layout_height="13dp"

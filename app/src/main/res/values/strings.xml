@@ -193,4 +193,6 @@
     <string name="str_to_chat">私聊</string>
     <string name="str_back">返回</string>
     <string name="my_action_bar">action_bar</string>
+    <string name="tv_chat_need_login">登录之后才可显示对话列表哦</string>
+    <string name="private_chat">私聊</string>
 </resources>

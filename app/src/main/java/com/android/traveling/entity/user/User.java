@@ -72,7 +72,7 @@ public class User extends LitePalSupport {
     public User(User user) {
         this.id = user.getId();
         this.nickName = user.getNickName();
-        this.password = user.getPassword();
+        this.password = user.password;
         this.email = user.getEmail();
         this.emailVerified = user.isEmailVerified();
         this.phoneNumber = user.getPhoneNumber();
@@ -131,8 +131,13 @@ public class User extends LitePalSupport {
         this.nickName = nickName;
     }
 
-    public String getPassword() {
-        return password;
+    /**
+     * 是否有密码
+     *
+     * @return 是否有密码
+     */
+    public boolean hasPassword() {
+        return password != null;
     }
 
     public void setPassword(String password) {

@@ -66,7 +66,7 @@ public class BindEmailActivity extends BackableActivity implements View.OnClickL
         if (user == null) {
             return;
         }
-        if (user.getPassword() != null) {
+        if (user.hasPassword()) {
             ll_pass.setVisibility(View.GONE);
             needPass = false;
         } else {

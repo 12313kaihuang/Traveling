@@ -48,6 +48,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     CircleImageView my_user_bg;
     ImageView iv_user_bg;
     private TextView my_user_status;
+    private TextView focusNum;
+    private TextView fansNum;
+    private TextView collectionsNum;
+    private TextView tv_no_notes;
     private ListView recyclerView;
 
     @Nullable
@@ -84,15 +88,15 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         recyclerView = view.findViewById(R.id.recycler_view);
 
         //用户详细信息
-        TextView focusNum = view.findViewById(R.id.my_focus_num); //关注数
-        TextView fansNum = view.findViewById(R.id.my_fans_num); //粉丝数
-        TextView collectionsNum = view.findViewById(R.id.my_collections_num);  //获赞与收藏
-        TextView tv_no_notes = view.findViewById(R.id.tv_no_notes);  //没有发布过文章
+        focusNum = view.findViewById(R.id.my_focus_num); //关注数
+        fansNum = view.findViewById(R.id.my_fans_num); //粉丝数
+        collectionsNum = view.findViewById(R.id.my_collections_num);  //获赞与收藏
+        tv_no_notes = view.findViewById(R.id.tv_no_notes);  //没有发布过文章
         User currentUser = TravelingUser.getCurrentUser();
         if (currentUser != null) {
             currentUser.getDetailInfo(new DetailUserInfoCallback() {
                 @Override
-                public void onSuccess(DetailUserInfo detailUserInfo,boolean isFocus) {
+                public void onSuccess(DetailUserInfo detailUserInfo, boolean isFocus) {
                     focusNum.setText(String.valueOf(detailUserInfo.getFocusNum()));
                     fansNum.setText(String.valueOf(detailUserInfo.getFansNum()));
                     collectionsNum.setText(String.valueOf(detailUserInfo.getBeLikeNum()));
@@ -141,6 +145,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             LogUtil.d("MyFragment currentUser=null");
             my_user_status.setText(getString(R.string.not_login));
             my_user_bg.setImageResource(R.drawable.user);
+            focusNum.setText("0");
+            fansNum.setText("0");
+            collectionsNum.setText("0");
+            tv_no_notes.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
         }
 
     }

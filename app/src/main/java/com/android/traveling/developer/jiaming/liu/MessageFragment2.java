@@ -1,27 +1,38 @@
 package com.android.traveling.developer.jiaming.liu;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.jiaming.liu.activity.ChatActivity;
-import com.android.traveling.developer.jiaming.liu.adapter.ChatAdapter;
-import com.android.traveling.developer.jiaming.liu.item.ChatItem;
+import com.android.traveling.entity.leancloud.CustomUserProvider;
+import com.android.traveling.entity.user.TravelingUser;
+import com.android.traveling.entity.user.User;
 import com.android.traveling.fragment.BaseFragment;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.android.traveling.util.LogUtil;
+import com.android.traveling.util.StaticClass;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMConversationsQuery;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
 
-import java.util.ArrayList;
+
 import java.util.List;
+
+import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
 
 /**
  * 项目名：Traveling
@@ -35,56 +46,128 @@ import java.util.List;
  */
 
 public class MessageFragment2 extends BaseFragment {
-    private View view = null;
+
+    private TextView tv_need_login;
+    private FrameLayout frameLayout;
+    private LCIMConversationListFragment conversationListFragment;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_message,container,false);
+        View view = inflater.inflate(R.layout.fragment_message2, container, false);
         initView(view);
         return view;
     }
 
-    private void initView(View view){
-        List<ChatItem> itemList = new ArrayList<>();
-        initChatItem(itemList);
-        ChatAdapter adapter = new ChatAdapter(getActivity(),R.layout.item_chat,itemList);
-        ListView listView = view.findViewById(R.id.id_message_listview);
-        SmartRefreshLayout refreshLayout = view.findViewById(R.id.id_message_reflash);
+    private void initView(View view) {
+        tv_need_login = view.findViewById(R.id.tv_need_login);
+        frameLayout = view.findViewById(R.id.chat_framelayout);
+        registerReceiver();  //注册广播接收器
 
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                new Handler().postDelayed(() -> {
-                    refreshLayout.finishRefresh();
-                }, 1000);
+
+        //显示/隐藏聊天界面
+        User currentUser = TravelingUser.getCurrentUser();
+        if (currentUser != null) {
+            CustomUserProvider.refreshCacheUser(currentUser);
+        }
+        if (currentUser == null) {
+            conversationListFragment = null;
+            tv_need_login.setVisibility(View.VISIBLE);
+            frameLayout.setVisibility(View.INVISIBLE);
+            LogUtil.d("MessageFragment2 currentUser == null");
+        } else {
+            if (conversationListFragment == null) {
+                conversationListFragment = new LCIMConversationListFragment();
             }
-        });
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getContext(),ChatActivity.class);
-                startActivity(intent);
-            }
-        });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-               itemList.remove(i);  //长按删除
-               adapter.notifyDataSetChanged();
-                return true;
-            }
-        });
-        listView.setAdapter(adapter);
+            FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.chat_framelayout, conversationListFragment);
+            fragmentTransaction.commit();
+            tv_need_login.setVisibility(View.GONE);
+            frameLayout.setVisibility(View.VISIBLE);
+            setConversationList(currentUser, conversationListFragment);
+            LogUtil.d("MessageFragment2 currentUser != null");
+        }
     }
-    private void initChatItem(List<ChatItem> itemList){
-        ChatItem[] chat = new ChatItem[10];
-        for(int i=0; i<10; i++){
-            chat[i] = new ChatItem();
-            chat[i].setHeadPicture(R.drawable.user_bg);
-            chat[i].setTxtNewReply("最新一条消息");
-            chat[i].setTxtOthersName("别人的昵称");
-            chat[i].setTxtChatTime("18:20");
-            itemList.add(chat[i]);
+
+    /**
+     * 广播接收器
+     */
+    private BroadcastReceiver myBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            User currentUser = TravelingUser.getCurrentUser();
+            if (currentUser == null) {
+                //退出登录
+                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                fragmentTransaction.remove(conversationListFragment);
+                fragmentTransaction.commitAllowingStateLoss();
+                conversationListFragment = null;
+                tv_need_login.setVisibility(View.VISIBLE);
+                frameLayout.setVisibility(View.INVISIBLE);
+                LogUtil.d("MessageFragment2 mReceiver currentUser == null");
+            } else {
+                //登录
+                if (conversationListFragment == null) {
+                    conversationListFragment = new LCIMConversationListFragment();
+                }
+                //未登录 --> 登录
+                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                fragmentTransaction.add(R.id.chat_framelayout, conversationListFragment);
+                fragmentTransaction.commitAllowingStateLoss();  //这里直接commit会报错
+                tv_need_login.setVisibility(View.GONE);
+                frameLayout.setVisibility(View.VISIBLE);
+                setConversationList(currentUser, conversationListFragment);
+                LogUtil.d("MessageFragment2 mReceiver currentUser != null");
+            }
+        }
+    };
+
+    private static void setConversationList(User currentUser, LCIMConversationListFragment fragment) {
+        AVIMClient client = AVIMClient.getInstance(String.valueOf(currentUser.getUserId()));
+        AVIMConversationsQuery query = client.getConversationsQuery();
+        query.findInBackground(new AVIMConversationQueryCallback() {
+            @Override
+            public void done(List<AVIMConversation> convs, AVIMException e) {
+                if (e == null) {
+                    LogUtil.d("setConversationList size=" + convs.size());
+                    //convs就是获取到的conversation列表
+                    //注意：按每个对话的最后更新日期（收到最后一条消息的时间）倒序排列
+                    fragment.setDataList(convs);
+                }
+            }
+        });
+    }
+
+    /**
+     * 注册广播接收器
+     */
+    private void registerReceiver() {
+        //注册receiver
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(StaticClass.BROADCAST_LOGIN);
+        filter.addAction(StaticClass.BROADCAST_LOGOUT);
+        //noinspection ConstantConditions
+        getActivity().registerReceiver(myBroadcastReceiver, filter);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LogUtil.d("MessageFragment2 onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            activity.unregisterReceiver(myBroadcastReceiver);
         }
     }
 }

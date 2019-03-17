@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
+import com.android.traveling.entity.leancloud.CustomUserProvider;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
@@ -302,6 +303,7 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
                 public void onSuccess(User user) {
                     UtilTools.toast(UserEditActivity.this, "上传成功");
                     if (uploadType == TYPE_USER_IMG) {
+                        CustomUserProvider.refreshCacheUser(user);  //更新缓存中的user信息
                         Picasso.get().load(user.getImg()).error(R.drawable.err_img_bg).fit().into(user_img);
                     } else if (uploadType == TYPE_USER_BG) {
                         Picasso.get().load(user.getBackgroundImg()).error(R.drawable.err_img_bg).fit().into(user_bg);

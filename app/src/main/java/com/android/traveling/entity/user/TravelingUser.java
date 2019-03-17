@@ -4,6 +4,8 @@ package com.android.traveling.entity.user;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.android.traveling.MainActivity;
+import com.android.traveling.entity.leancloud.CustomUserProvider;
 import com.android.traveling.entity.msg.DetailUserInfoMsg;
 import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.entity.msg.Msg;
@@ -11,12 +13,17 @@ import com.android.traveling.entity.service.UserService;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
 import com.android.traveling.widget.dialog.ToLoginDialog;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.google.gson.Gson;
 
 import org.litepal.LitePal;
 
 import java.util.List;
 
+import cn.leancloud.chatkit.LCChatKit;
+import cn.leancloud.chatkit.cache.LCIMProfileCache;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -112,7 +119,23 @@ public class TravelingUser {
                         User user = msg.getUser();
                         user.setUserId(user.getId());
                         user.save();                    //存入user
-                        userCallback.onSuccess(user);
+                        try {
+                            LCChatKit.getInstance().open(String.valueOf(user.getUserId()), new AVIMClientCallback() {
+                                @Override
+                                public void done(AVIMClient avimClient, AVIMException e) {
+                                    if (null == e) {
+                                        CustomUserProvider.refreshCacheUser(user);
+                                        userCallback.onSuccess(user);
+                                        LogUtil.d("===============done: " + user.getUserId() + " 登录LeanCloud成功");
+                                    } else {
+                                        LogUtil.d("===============done: " + user.getUserId() + " 登录LeanCloud失败");
+                                    }
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            LogUtil.d("MainActivity  LeanCloud open异常");
+                        }
                     }
                 }
             }
@@ -234,5 +257,6 @@ public class TravelingUser {
         });
 
     }
+
 
 }
