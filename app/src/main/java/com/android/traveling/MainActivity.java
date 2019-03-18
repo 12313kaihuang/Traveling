@@ -20,9 +20,7 @@ import com.android.traveling.developer.ting.li.ui.FriendsFragment;
 
 
 import com.android.traveling.developer.yu.hu.HomeFragment;
-import com.android.traveling.developer.jiaming.liu.MessageFragment;
 import com.android.traveling.developer.zhiming.li.MyFragment;
-import com.android.traveling.developer.zhiming.li.ui.LoginActivity;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.util.LogUtil;
@@ -38,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.leancloud.chatkit.LCChatKit;
-import cn.leancloud.chatkit.cache.LCIMProfileCache;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -51,9 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //搜索框输入时底部tabLayout不会再被弹起
-//        getWindow().setSoftInputMode
-//                (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN |
-//                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        //        getWindow().setSoftInputMode
+        //                (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN |
+        //                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_main);
         initFragments();
         initView();
@@ -153,15 +150,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showBottomDialog();
                 break;
             }
-            case R.id.id_dialog_centeradd_travels:{
+            case R.id.id_dialog_centeradd_travels: {
                 Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
-                intent.putExtra("type","游记");
+                intent.putExtra(AddNoteActivity.INTENT_EXTRA_TYPE, "发表游记");
                 startActivity(intent);
                 break;
             }
-            case R.id.id_dialog_centeradd_strategy:{
+            case R.id.id_dialog_centeradd_strategy: {
                 Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
-                intent.putExtra("type","攻略");
+                intent.putExtra(AddNoteActivity.INTENT_EXTRA_TYPE, "发表攻略");
                 startActivity(intent);
                 break;
             }
@@ -178,16 +175,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //去除滚动效果
         viewPager.setCurrentItem(position);
     }
+
     private void showBottomDialog() {
-        final BottomSheetDialog dialog=new BottomSheetDialog(this);
-        @SuppressLint("InflateParams") View dialogView= LayoutInflater.from(this).inflate(R.layout.dialog_centeradd,null);
+        final BottomSheetDialog dialog = new BottomSheetDialog(this);
+        @SuppressLint("InflateParams") View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_centeradd, null);
         LinearLayout travels = dialogView.findViewById(R.id.id_dialog_centeradd_travels);
         LinearLayout strategy = dialogView.findViewById(R.id.id_dialog_centeradd_strategy);
         LinearLayout friends = dialogView.findViewById(R.id.id_dialog_centeradd_friends);
         ImageButton cancel = dialogView.findViewById(R.id.id_dialog_centeradd_cancel);
-        travels.setOnClickListener(this);
-        strategy.setOnClickListener(this);
-        friends.setOnClickListener(this);
+        travels.setOnClickListener(v -> {
+            dialog.dismiss();
+            MainActivity.this.onClick(v);
+        });
+        strategy.setOnClickListener(v -> {
+            dialog.dismiss();
+            MainActivity.this.onClick(v);
+        });
+        friends.setOnClickListener(v -> {
+            dialog.dismiss();
+            MainActivity.this.onClick(v);
+        });
 
         cancel.setOnClickListener(v -> dialog.dismiss());
         dialog.setCanceledOnTouchOutside(false);

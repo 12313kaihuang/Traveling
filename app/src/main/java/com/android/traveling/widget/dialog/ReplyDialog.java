@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
@@ -112,6 +113,9 @@ public class ReplyDialog extends Dialog {
         });
 
         btn_publish.setOnClickListener(v -> {
+            if (TextUtils.isEmpty(et_comment.getText())) {
+                return;
+            }
             publishBtnClickListener.onClick(v, et_comment.getText().toString());
             dismiss();
         });

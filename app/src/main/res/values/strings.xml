@@ -195,4 +195,7 @@
     <string name="my_action_bar">action_bar</string>
     <string name="tv_chat_need_login">登录之后才可显示对话列表哦</string>
     <string name="private_chat">私聊</string>
+    <string name="share">分享新鲜事…</string>
+    <string name="choose_photo">选择照片</string>
+    <string name="title">标题</string>
 </resources>

@@ -23,11 +23,31 @@ import com.android.traveling.R;
 
 public class ChoosePhotoDialog extends Dialog {
 
+    /**
+     * 拍照
+     */
     private Button btn_take_photo;
+
+    /**
+     * 从相册选取
+     */
     private Button btn_from_album;
+
+    /**
+     * 取消
+     */
     private Button btn_cancel;
+
+    /**
+     * 点击回调接口
+     */
     private OnBtnClickListener onBtnClickListener;
 
+    /**
+     * 构造函数
+     * @param context context
+     * @param listener listener
+     */
     public ChoosePhotoDialog(@NonNull Context context, OnBtnClickListener listener) {
         this(context);
         this.onBtnClickListener = listener;

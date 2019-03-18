@@ -15,6 +15,7 @@ import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
+import com.android.traveling.widget.dialog.PhotoViewDialog;
 import com.android.traveling.widget.dialog.ToLoginDialog;
 import com.squareup.picasso.Picasso;
 
@@ -201,8 +202,8 @@ public class NewsAdapter extends BaseAdapter {
         viewHolder.news_item_like_num.setOnClickListener(v ->
                 viewHolder.news_item_like.callOnClick());
 
+        viewHolder.list_item_icon.setOnClickListener(v -> new PhotoViewDialog(context, note.getImgList().get(0)).show());
     }
-
 
 
     class ViewHolder {

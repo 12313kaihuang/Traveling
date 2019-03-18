@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
     <ImageButton
         android:id="@+id/id_dialog_centeradd_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_margin="10dp"
-        android:src="@drawable/bt_dialog_cancel"
         android:background="@null"
         android:contentDescription="@null"
-        />
+        android:src="@drawable/bt_dialog_cancel" />
+
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_margin="10dp"
         app:columnCount="3"
-        app:rowCount="1"
-        >
+        app:rowCount="1">
+
         <LinearLayout
             android:id="@+id/id_dialog_centeradd_travels"
             android:layout_width="wrap_content"
@@ -35,6 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="3"
+                android:contentDescription="@string/app_name"
                 android:src="@mipmap/ic_launcher_round" />
 
             <TextView
@@ -43,7 +44,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="游记"
+                android:text="@string/news_flag1"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -58,10 +59,11 @@
             app:layout_rowWeight="1">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="2"
-                android:src="@mipmap/ic_launcher_round" />
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_gonglue" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -69,7 +71,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="攻略"
+                android:text="@string/news_flag2"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -84,10 +86,11 @@
             app:layout_rowWeight="1">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="2"
-                android:src="@mipmap/ic_launcher_round" />
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_friends" />
 
             <TextView
                 android:layout_width="wrap_content"

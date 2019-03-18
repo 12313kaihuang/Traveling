@@ -26,6 +26,7 @@ import com.android.traveling.ui.BackableActivity;
 import com.android.traveling.util.DateUtil;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
+import com.android.traveling.widget.dialog.PhotoViewDialog;
 import com.android.traveling.widget.dialog.ReplyDialog;
 import com.android.traveling.widget.dialog.ToLoginDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -151,6 +152,9 @@ public class NewsActivity extends BackableActivity implements CommentAdapter.Dat
                 refreshLayout.finishLoadMore(false);
             }
         }));
+
+        //图片点击事件
+        note_img.setOnClickListener(v -> new PhotoViewDialog(this, note.getImgList().get(0)).show());
 
         //用户点击事件
         constraintLayout.setOnClickListener(v -> {

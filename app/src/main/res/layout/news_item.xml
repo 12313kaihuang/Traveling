@@ -18,6 +18,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:contentDescription="@string/str_image"
+        android:scaleType="fitXY"
         android:src="@drawable/test_news"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

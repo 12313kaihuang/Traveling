@@ -7,97 +7,118 @@
     android:orientation="vertical"
     tools:context=".developer.jiaming.liu.activity.AddNoteActivity">
 
-    <include
-        android:id="@+id/id_addnote_title"
-        layout="@layout/titlebar_addnote"></include>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray2"></View>
-
-    <EditText
-        android:id="@+id/id_addnote_headline"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:background="@null"
-        android:layout_margin="5dp"
-        android:gravity="top"
-        android:textCursorDrawable="@drawable/editcursor"
-        android:hint="标题"
-        android:maxLength="50" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray2"></View>
-
-    <EditText
-        android:id="@+id/id_addnote_editor"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="5dp"
-        android:layout_weight="7"
-        android:background="@null"
-        android:textCursorDrawable="@drawable/editcursor"
-        android:gravity="top"
-        android:hint="正文"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray2"></View>
+    <!--头-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:background="@color/white1"
-        android:orientation="horizontal"
-        >
-        <ImageButton
-            android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@color/default_color_primary"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
             android:padding="5dp"
-            android:background="@null"
-            android:contentDescription="@null"
-            android:scaleType="fitCenter"
-            android:src="@drawable/icon_addnote_expression" />
+            android:text="@string/str_cancel"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
-        <ImageButton
+        <TextView
+            android:id="@+id/tv_title"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="8dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@null"
-            android:contentDescription="@null"
-            android:scaleType="fitCenter"
-            android:src="@drawable/icon_addnote_image" />
+            android:gravity="center"
+            android:text="@string/news_flag1"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="8dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:contentDescription="@null"
-            android:scaleType="fitCenter"
-            android:src="@drawable/icon_addnote_camera" />
-
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="8dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:contentDescription="@null"
-            android:scaleType="fitCenter"
-            android:src="@drawable/icon_addnote_text" />
+        <Button
+            android:id="@+id/btn_publish"
+            android:layout_width="62dp"
+            android:layout_height="33dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/bind_gray"
+            android:text="@string/str_publish"
+            android:textColor="@color/gray_comment" />
     </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:hint="@string/title"
+                android:inputType="textMultiLine"
+                android:labelFor="@id/et_content"
+                android:lines="1"
+                android:maxLength="30"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
+            <EditText
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/white"
+                android:gravity="top"
+                android:hint="@string/share"
+                android:inputType="textMultiLine"
+                android:labelFor="@id/et_content"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <!--textMultiLine 多行输入-->
+
+            <LinearLayout
+                android:id="@+id/picture_grid_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/note_photo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:contentDescription="@string/choose_photo"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+                <com.android.traveling.widget.gridview.AddPictureView
+                    android:id="@+id/add_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
 </LinearLayout>

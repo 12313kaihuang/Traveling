@@ -22,12 +22,12 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:paddingStart="0dp"
-            android:paddingEnd="8dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingEnd="8dp"
+            android:paddingStart="0dp">
 
             <TextView
                 android:id="@+id/tv_note_content"
@@ -54,6 +54,7 @@
             android:layout_width="120dp"
             android:layout_height="match_parent"
             android:contentDescription="@string/str_image"
+            android:scaleType="fitXY"
             android:src="@color/gray2" />
 
     </LinearLayout>

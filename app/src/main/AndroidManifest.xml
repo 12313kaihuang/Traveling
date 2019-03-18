@@ -11,7 +11,6 @@
     <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!--获取sd卡写的权限，用于文件上传和下载-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <!--获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
@@ -70,8 +69,11 @@
         <activity android:name=".developer.jiaming.liu.activity.ChatActivity" />
         <!-- 编辑文本页 -->
         <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".developer.jiaming.liu.activity.AddNoteActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
+
+
         <activity android:name=".developer.jiaming.liu.activity.NoticeActivity" />
         <activity android:name=".developer.jiaming.liu.activity.ChatMoreActivity"/>
 
@@ -126,6 +128,18 @@
             android:name=".developer.yu.hu.ui.SearchResultActivity"
             android:windowSoftInputMode="stateVisible|adjustPan"
             android:theme="@style/Theme_search_note_result_activity" />
+
+
+        <!--android 7.0 provider-->
+        <!--<provider-->
+            <!--android:name="android.support.v4.content.FileProvider"-->
+            <!--android:authorities="com.android.traveling.fileprovider"-->
+            <!--android:exported="false"-->
+            <!--android:grantUriPermissions="true">-->
+            <!--<meta-data-->
+                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+                <!--android:resource="@xml/provider_paths"/>-->
+        <!--</provider>-->
 
 
     </application>
