@@ -17,6 +17,7 @@
         android:indeterminateDrawable="@drawable/progress" />
 
     <TextView
+        android:id="@+id/tv_hint"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"

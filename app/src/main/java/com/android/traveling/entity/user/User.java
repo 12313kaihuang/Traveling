@@ -3,7 +3,7 @@ package com.android.traveling.entity.user;
 
 import android.support.annotation.NonNull;
 
-import com.android.traveling.developer.zhiming.li.UploadService;
+import com.android.traveling.entity.service.UploadService;
 import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
 import com.android.traveling.entity.msg.LoginMsg;
 import com.android.traveling.entity.msg.Msg;

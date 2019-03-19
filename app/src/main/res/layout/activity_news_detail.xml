@@ -20,21 +20,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.constraint.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <include
                     android:id="@+id/layout_user"
-                    layout="@layout/layout_user"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    layout="@layout/layout_user" />
 
                 <ImageView
                     android:id="@+id/note_img"
                     android:layout_width="320dp"
                     android:layout_height="160dp"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -47,24 +46,20 @@
 
                 <TextView
                     android:id="@+id/note_content"
-                    android:layout_width="0dp"
+                    android:layout_width="320dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintEnd_toEndOf="@+id/note_img"
-                    app:layout_constraintStart_toStartOf="@+id/note_img"
-                    app:layout_constraintTop_toBottomOf="@+id/note_img" />
+                    android:text="@string/str" />
 
                 <TextView
                     android:id="@+id/all_comment_num"
-                    android:layout_width="0dp"
+                    android:layout_width="320dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/note_content" />
+                    android:textSize="16sp" />
 
                 <!--解决RecyclerView item显示不全的问题-->
                 <!--beforeDescendants：viewGroup会优先子类控件而获取焦点-->
@@ -74,9 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:descendantFocusability="blocksDescendants"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/all_comment_num">
+                    android:descendantFocusability="blocksDescendants">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycle_view"
@@ -86,7 +79,7 @@
                         android:overScrollMode="never" />
                 </RelativeLayout>
 
-            </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
 
         </ScrollView>
 

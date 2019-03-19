@@ -1,4 +1,4 @@
-package com.android.traveling.developer.zhiming.li;
+package com.android.traveling.entity.service;
 
 import com.android.traveling.entity.msg.LoginMsg;
 

@@ -107,7 +107,12 @@ public class NewsActivity extends BackableActivity implements CommentAdapter.Dat
 
         //头像
         Picasso.get().load(note.getReleasePeople().getImgUrl()).into(user_bg);
-        Picasso.get().load(note.getImgList().get(0)).into(note_img);
+        if (note.getImgList().size() > 0) {
+            note_img.setVisibility(View.VISIBLE);
+            Picasso.get().load(note.getImgList().get(0)).into(note_img);
+        }else {
+            note_img.setVisibility(View.GONE);
+        }
         tv_username.setText(note.getReleasePeople().getNickName());
         tv_time.setText(DateUtil.fromNow(note.getCreateTime()));
         tv_level.setText(String.format(getString(R.string.level), "LV."

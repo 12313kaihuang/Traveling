@@ -87,7 +87,7 @@ public class StaticClass {
      * 服务器URL
      */
     public static final String URL = "http://47.106.131.58:8081/traveling-0.0.1-SNAPSHOT/";
-//    public static final String URL = "http://10.5.75.31:8080/traveling/";
+//    public static final String URL = "http://10.5.63.152:8080/traveling/";
     public static final String IMG_URL = URL + "imgs/";
 //    public static final String IMG_URL = "http://47.106.131.58:8081/traveling-0.0.1-SNAPSHOT/imgs/";
     public static final String VERIFY_EMAIL_URL = URL + "verifyEmail?code=";

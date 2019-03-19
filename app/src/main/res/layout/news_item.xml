@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
@@ -10,45 +11,49 @@
         android:id="@+id/layout_user"
         layout="@layout/layout_user" />
 
-    <ImageView
-        android:id="@+id/list_item_icon"
-        android:layout_width="320dp"
-        android:layout_height="160dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+    <LinearLayout
+        android:id="@+id/ll_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:contentDescription="@string/str_image"
-        android:scaleType="fitXY"
-        android:src="@drawable/test_news"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_user" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_user">
 
-    <TextView
-        android:id="@+id/list_item_content"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:maxLines="4"
-        android:text="@string/list_item_content"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/list_item_icon"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toStartOf="@+id/list_item_icon"
-        app:layout_constraintTop_toBottomOf="@+id/list_item_icon" />
+        <ImageView
+            android:id="@+id/list_item_icon"
+            android:layout_width="320dp"
+            android:layout_height="160dp"
+            android:contentDescription="@string/str_image"
+            android:scaleType="fitXY"
+            android:src="@drawable/test_news" />
+
+        <TextView
+            android:id="@+id/list_item_content"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:text="@string/list_item_content"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/badge_tag"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/list_item_content"
-        app:layout_constraintTop_toBottomOf="@+id/list_item_content">
+        app:layout_constraintStart_toStartOf="@+id/ll_note"
+        app:layout_constraintTop_toBottomOf="@id/ll_note">
+
 
         <TextView
             android:id="@+id/news_flag"
@@ -66,11 +71,13 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/badge_tag"
-        app:layout_constraintEnd_toEndOf="@+id/list_item_content"
-        app:layout_constraintTop_toTopOf="@+id/badge_tag">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ll_note"
+        app:layout_constraintTop_toBottomOf="@id/ll_note"
+        tools:layout_editor_absoluteX="240dp">
 
         <ImageView
             android:id="@+id/news_item_like"

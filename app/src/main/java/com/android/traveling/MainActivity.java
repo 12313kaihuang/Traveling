@@ -21,6 +21,7 @@ import com.android.traveling.developer.ting.li.ui.FriendsFragment;
 
 import com.android.traveling.developer.yu.hu.HomeFragment;
 import com.android.traveling.developer.zhiming.li.MyFragment;
+import com.android.traveling.entity.note.BaseNote;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
 import com.android.traveling.util.LogUtil;
@@ -39,6 +40,17 @@ import cn.leancloud.chatkit.LCChatKit;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+
+    /**
+     * 发表游记请求码
+     */
+    public static final int REQUEST_CODE_NOTE_TAG1 = 1;
+
+    /**
+     * 发表攻略请求码
+     */
+    public static final int REQUEST_CODE_NOTE_TAG2 = 2;
 
     private NoScrollViewPager viewPager;
     private List<Fragment> fragments = new ArrayList<>();
@@ -152,14 +164,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.id_dialog_centeradd_travels: {
                 Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
-                intent.putExtra(AddNoteActivity.INTENT_EXTRA_TYPE, "发表游记");
-                startActivity(intent);
+                intent.putExtra(AddNoteActivity.INTENT_EXTRA_TYPE, BaseNote.TAG_1);
+                startActivityForResult(intent, REQUEST_CODE_NOTE_TAG1);
                 break;
             }
             case R.id.id_dialog_centeradd_strategy: {
                 Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
-                intent.putExtra(AddNoteActivity.INTENT_EXTRA_TYPE, "发表攻略");
-                startActivity(intent);
+                intent.putExtra(AddNoteActivity.INTENT_EXTRA_TYPE, BaseNote.TAG_2);
+                startActivityForResult(intent, REQUEST_CODE_NOTE_TAG2);
                 break;
             }
             case R.id.id_dialog_centeradd_friends: {
@@ -196,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             MainActivity.this.onClick(v);
         });
 
+        dialog.setCancelable(true);
         cancel.setOnClickListener(v -> dialog.dismiss());
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(dialogView);
@@ -208,4 +221,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        for (Fragment fragment : fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data); //传递给子Fragment
+        }
+    }
 }

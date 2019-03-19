@@ -120,6 +120,7 @@ public interface UserService {
      * 获取用户详细信息
      *
      * @param userId userId
+     * @param fromId fromId
      * @return DetailUserInfoMsg
      */
     @GET("getDetailUserInfo")

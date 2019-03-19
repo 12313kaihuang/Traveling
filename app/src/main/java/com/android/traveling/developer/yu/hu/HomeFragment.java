@@ -24,7 +24,6 @@ import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.ui.SearchResultActivity;
 import com.android.traveling.fragment.BaseFragment;
 import com.android.traveling.util.LogUtil;
-import com.android.traveling.widget.SearchView;
 
 
 import java.util.ArrayList;
@@ -140,5 +139,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        List<Fragment> fragments = getChildFragmentManager().getFragments();
+        for (Fragment fragment : fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data); //传递给子Fragment
+        }
+    }
 }

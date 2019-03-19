@@ -3,9 +3,12 @@ package com.android.traveling.entity.service;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.msg.NoteMsg;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -63,5 +66,28 @@ public interface NoteService {
      */
     @POST("updateLikeNum")
     Call<Msg> updateLikeNum(@Query("noteId") int noteId, @Query("likeList") String likeList);
+
+
+    /**
+     * 发表游记/攻略
+     *
+     * @param part part
+     * @return Msg
+     */
+    @Multipart
+    @POST("createNote")
+    Call<NoteMsg> createNote(@Query("userId") int userId, @Query("tag") int tag
+            , @Query("title") String title, @Query("content") String content,
+                             @Query("createTime") String createTime, @Part MultipartBody.Part part);
+
+    /**
+     * 发表没有图片的游记/攻略
+     *
+     * @return Call<NoteMsg>
+     */
+    @POST("createNoteWithoutPicture")
+    Call<NoteMsg> createNoteWithoutPicture(@Query("userId") int userId, @Query("tag") int tag
+            , @Query("title") String title, @Query("content") String content,
+                                           @Query("createTime") String createTime);
 
 }

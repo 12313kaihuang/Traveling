@@ -10,7 +10,7 @@ package com.android.traveling.developer.yu.hu.fragment;
  * 描述：  关注
  */
 
-public class FocusOnFragment extends RecommendFragment {
+public class FocusOnFragment extends NewFragment {
 
 
 //    @Override

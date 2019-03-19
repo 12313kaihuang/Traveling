@@ -105,7 +105,13 @@ public class NewsAdapter extends BaseAdapter {
         viewHolder.list_item_content.setText(String.format(context.getString(R.string.comment),
                 note.getTitle(), note.getContent()));
         Picasso.get().load(note.getReleasePeople().getImgUrl()).into(viewHolder.user_bg);
-        Picasso.get().load(note.getImgList().get(0)).into(viewHolder.list_item_icon);
+        if (note.getImgList().size() != 0) {
+            viewHolder.list_item_icon.setVisibility(View.VISIBLE);
+            Picasso.get().load(note.getImgList().get(0)).into(viewHolder.list_item_icon);
+        } else {
+            viewHolder.list_item_icon.setVisibility(View.GONE);
+        }
+
         //        LogUtil.d(note.getTitle()+"--"+note.getStrLikeList()+"=="+note.isLiked());
         if (note.isLiked()) {
             viewHolder.isLiked = true;
