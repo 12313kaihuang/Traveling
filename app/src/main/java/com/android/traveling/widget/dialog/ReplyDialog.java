@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.android.traveling.R;
 
@@ -78,6 +79,10 @@ public class ReplyDialog extends Dialog {
 
     //初始化
     private void initView() {
+        LinearLayout ll_root_view = findViewById(R.id.ll_root_view);
+        ll_root_view.setBackgroundColor(0xFFF5F5F5);
+
+
         btn_publish = findViewById(R.id.btn_publish);
         et_comment = findViewById(R.id.et_comment);
 
@@ -100,7 +105,7 @@ public class ReplyDialog extends Dialog {
                 if (s.length() == 0) {
                     btn_publish.setBackgroundColor(context.getResources().getColor(R.color.publish_bg_color));
                     btn_publish.setTextColor(context.getResources().getColor(R.color.publish_text_color));
-                }else {
+                } else {
                     btn_publish.setBackgroundColor(context.getResources().getColor(R.color.blue));
                     btn_publish.setTextColor(context.getResources().getColor(R.color.white));
                 }
@@ -122,6 +127,6 @@ public class ReplyDialog extends Dialog {
     }
 
     public interface PublishBtnClickListener {
-        void onClick(View v,String content);
+        void onClick(View v, String content);
     }
 }

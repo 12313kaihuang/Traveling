@@ -67,12 +67,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_my, container, false);
         LogUtil.d("MyFragment  onCreateView");
 
-        //注册receiver
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(StaticClass.BROADCAST_LOGIN);
-        filter.addAction(StaticClass.BROADCAST_LOGOUT);
-        //noinspection ConstantConditions
-        getActivity().registerReceiver(logoutReceiver, filter);
+        registerReceiver();
 
         //        User currentUser = TravelingUser.getCurrentUser();
         //        if (currentUser != null) {
@@ -83,6 +78,20 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         initView(view);
         initData();
         return view;
+    }
+
+    protected void registerReceiver() {
+        //注册receiver
+        IntentFilter loginFilter = new IntentFilter();
+        loginFilter.addAction(StaticClass.BROADCAST_LOGIN);
+
+        IntentFilter logoutFilter = new IntentFilter();
+        logoutFilter.addAction(StaticClass.BROADCAST_LOGOUT);
+        if (getActivity() != null) {
+            getActivity().registerReceiver(logoutReceiver, logoutFilter);
+            getActivity().registerReceiver(loginReceiver, loginFilter);
+        }
+
     }
 
     //初始化view
@@ -102,41 +111,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         fansNum = view.findViewById(R.id.my_fans_num); //粉丝数
         collectionsNum = view.findViewById(R.id.my_collections_num);  //获赞与收藏
         tv_no_notes = view.findViewById(R.id.tv_no_notes);  //没有发布过文章
-        User currentUser = TravelingUser.getCurrentUser();
-        if (currentUser != null) {
-            myActionBar.setTitle(currentUser.getNickName());
-            currentUser.getDetailInfo(new DetailUserInfoCallback() {
-                @Override
-                public void onSuccess(DetailUserInfo detailUserInfo, boolean isFocus) {
-                    focusNum.setText(String.valueOf(detailUserInfo.getFocusNum()));
-                    fansNum.setText(String.valueOf(detailUserInfo.getFansNum()));
-                    collectionsNum.setText(String.valueOf(detailUserInfo.getBeLikeNum()));
-                    if (detailUserInfo.getNotes().size() == 0) {
-                        tv_no_notes.setVisibility(View.VISIBLE);
-                        listView.setVisibility(View.GONE);
-                    } else {
-                        tv_no_notes.setVisibility(View.GONE);
-                        listView.setVisibility(View.VISIBLE);
-                        //adapter
-                        listView.setAdapter(new NewsAdapter(getActivity(), detailUserInfo.getNotes()));
-                        //点击事件
-                        listView.setOnItemClickListener((parent, view, position, id) -> {
-                            Note note = detailUserInfo.getNotes().get(position);
-                            Intent intent = new Intent(getActivity(), NewsActivity.class);
-                            intent.putExtra(NewsActivity.POSITION, position);
-                            intent.putExtra(NewsActivity.s_NOTE, note);
-                            startActivityForResult(intent, 1);  //注意 跳转过去后setResult后需Finish()才会正确传回结果来！
-                        });
-                    }
-                    scrollToTop();
-                }
-
-                @Override
-                public void onFailure(String reason) {
-                    UtilTools.toast(getContext(), "加载失败：" + reason);
-                }
-            });
-        }
+        refreshUserDetail();
 
 
         //点击事件
@@ -170,6 +145,44 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 alpha = alpha > 1 ? 1.0f : alpha;
                 //改变透明度
                 myActionBar.changeAlpha(alpha);
+            });
+        }
+    }
+
+    private void refreshUserDetail() {
+        User currentUser = TravelingUser.getCurrentUser();
+        if (currentUser != null) {
+            myActionBar.setTitle(currentUser.getNickName());
+            currentUser.getDetailInfo(new DetailUserInfoCallback() {
+                @Override
+                public void onSuccess(DetailUserInfo detailUserInfo, boolean isFocus) {
+                    focusNum.setText(String.valueOf(detailUserInfo.getFocusNum()));
+                    fansNum.setText(String.valueOf(detailUserInfo.getFansNum()));
+                    collectionsNum.setText(String.valueOf(detailUserInfo.getBeLikeNum()));
+                    if (detailUserInfo.getNotes().size() == 0) {
+                        tv_no_notes.setVisibility(View.VISIBLE);
+                        listView.setVisibility(View.GONE);
+                    } else {
+                        tv_no_notes.setVisibility(View.GONE);
+                        listView.setVisibility(View.VISIBLE);
+                        //adapter
+                        listView.setAdapter(new NewsAdapter(getActivity(), detailUserInfo.getNotes()));
+                        //点击事件
+                        listView.setOnItemClickListener((parent, view, position, id) -> {
+                            Note note = detailUserInfo.getNotes().get(position);
+                            Intent intent = new Intent(getActivity(), NewsActivity.class);
+                            intent.putExtra(NewsActivity.POSITION, position);
+                            intent.putExtra(NewsActivity.s_NOTE, note);
+                            startActivityForResult(intent, 1);  //注意 跳转过去后setResult后需Finish()才会正确传回结果来！
+                        });
+                    }
+                    scrollToTop();
+                }
+
+                @Override
+                public void onFailure(String reason) {
+                    UtilTools.toast(getContext(), "加载失败：" + reason);
+                }
             });
         }
     }
@@ -257,6 +270,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
         }
     }
+
+    private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            refreshUserDetail();
+        }
+    };
 
     private BroadcastReceiver logoutReceiver = new BroadcastReceiver() {
         @Override

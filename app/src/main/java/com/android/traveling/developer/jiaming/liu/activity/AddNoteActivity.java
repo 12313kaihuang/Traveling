@@ -174,8 +174,8 @@ public class AddNoteActivity extends AppCompatActivity {
                 } else {
                     bTitle = true;
                     if (bContent) {
-                        btn_publish.setTextColor(getResources().getColor(R.color.black));
-                        btn_publish.setBackgroundColor(getResources().getColor(R.color.bind_yellow));
+                        btn_publish.setTextColor(getResources().getColor(R.color.white));
+                        btn_publish.setBackgroundColor(getResources().getColor(R.color.blue));
                     }
                 }
             }
@@ -202,8 +202,8 @@ public class AddNoteActivity extends AppCompatActivity {
                 } else {
                     bContent = true;
                     if (bTitle) {
-                        btn_publish.setTextColor(getResources().getColor(R.color.black));
-                        btn_publish.setBackgroundColor(getResources().getColor(R.color.bind_yellow));
+                        btn_publish.setTextColor(getResources().getColor(R.color.white));
+                        btn_publish.setBackgroundColor(getResources().getColor(R.color.blue));
                     }
                 }
             }

@@ -47,6 +47,7 @@ public class MyActionBar2 extends LinearLayout {
         left_img = view.findViewById(R.id.iv_left);
         title = view.findViewById(R.id.tv_username);
         ll_bg.getBackground().setAlpha(0);
+        title.setAlpha(0);
     }
 
     /**

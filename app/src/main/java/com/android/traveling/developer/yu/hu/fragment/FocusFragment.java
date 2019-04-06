@@ -45,7 +45,7 @@ public class FocusFragment extends NewFragment {
         }
 
         LogUtil.d("FocusFragment  userId = " + currentUser.getUserId());
-
+        load_progressbar.setVisibility(View.VISIBLE);
         //获取关注人文章
         Note.getFocusedNewest(currentUser.getUserId(), new Note.Callback() {
             @Override
@@ -56,10 +56,11 @@ public class FocusFragment extends NewFragment {
                     tv_load_faild.setText("暂无文章");
                     tv_load_faild.setVisibility(View.VISIBLE);
                     UtilTools.toast(getContext(), "暂无关注文章");
-                }else {
+                } else {
                     FocusFragment.this.noteList = noteList;
                     newsAdapter = new NewsAdapter(getActivity(), noteList);
                     recommend_listView.setAdapter(newsAdapter);
+//                    recommend_listView.notify();
                     load_progressbar.setVisibility(View.INVISIBLE);
                 }
             }
@@ -76,6 +77,7 @@ public class FocusFragment extends NewFragment {
 
     //未登录状态
     private void notLogin() {
+        load_progressbar.setVisibility(View.VISIBLE);
         loading.setVisibility(View.INVISIBLE);
         tv_load_faild.setText("未登录");
         tv_load_faild.setVisibility(View.VISIBLE);
@@ -94,6 +96,7 @@ public class FocusFragment extends NewFragment {
         User currentUser = TravelingUser.getCurrentUser();
         if (currentUser == null) {
             notLogin();
+            refreshLayout.finishLoadMore();
             return;
         }
 
@@ -120,6 +123,7 @@ public class FocusFragment extends NewFragment {
 
     /**
      * 刷新
+     *
      * @param refreshLayout refreshLayout
      */
     @Override
@@ -127,6 +131,7 @@ public class FocusFragment extends NewFragment {
         User currentUser = TravelingUser.getCurrentUser();
         if (currentUser == null) {
             notLogin();
+            refreshLayout.finishRefresh();
             return;
         }
 
@@ -157,8 +162,21 @@ public class FocusFragment extends NewFragment {
             BroadcastReceiver loginOrLogoutReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                   sendHttpRequest();
+                    String action = intent.getAction();
+                    LogUtil.d("action=" + action);
+                    if (action != null) {
+                        switch (action) {
+                            case StaticClass.BROADCAST_LOGIN:
+                                //登录
+                                sendHttpRequest();
+                                break;
+                            case StaticClass.BROADCAST_LOGOUT:
+                                notLogin();
+                                break;
+                        }
+                    }
                 }
+
             };
             getActivity().registerReceiver(loginOrLogoutReceiver, filter);
         }
