@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.support.design.widget.TabLayout;
 import android.widget.ImageButton;
 
-import com.android.traveling.developer.yu.hu.fragment.FocusOnFragment;
+import com.android.traveling.developer.yu.hu.fragment.FocusFragment;
 import com.android.traveling.developer.yu.hu.fragment.NewFragment;
 import com.android.traveling.developer.yu.hu.fragment.RecommendFragment;
 import com.android.traveling.R;
@@ -81,7 +81,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         fragments = new ArrayList<>();
         fragments.add(new NewFragment());
         fragments.add(new RecommendFragment());
-        fragments.add(new FocusOnFragment());
+        fragments.add(new FocusFragment());
         LogUtil.d("initData  size=" + fragments.size());
     }
 

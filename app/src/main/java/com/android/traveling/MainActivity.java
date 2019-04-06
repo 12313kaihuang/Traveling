@@ -145,6 +145,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTabbar.setTabListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int index) {
+                if (index == 3) {
+                    MyFragment fragment = (MyFragment) fragments.get(index);
+                    if (fragment == null) {
+                        LogUtil.d("fragment == null");
+                    }else {
+                        fragment.scrollToTop();  //滑动到顶部
+                    }
+                }
                 setCurrentFragment(index);
             }
 

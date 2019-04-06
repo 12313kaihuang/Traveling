@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,11 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.yu.hu.adaptor.NewsAdapter;
+import com.android.traveling.developer.yu.hu.ui.NewsActivity;
 import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
+import com.android.traveling.entity.note.Note;
 import com.android.traveling.entity.user.DetailUserInfo;
 import com.android.traveling.entity.user.DetailUserInfoCallback;
 import com.android.traveling.entity.user.TravelingUser;
@@ -27,6 +31,7 @@ import com.android.traveling.fragment.BaseFragment;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.StaticClass;
 import com.android.traveling.util.UtilTools;
+import com.android.traveling.widget.MyActionBar2;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -52,7 +57,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private TextView fansNum;
     private TextView collectionsNum;
     private TextView tv_no_notes;
-    private ListView recyclerView;
+    private ListView listView;
+    private ScrollView scrollView;
+    private MyActionBar2 myActionBar;
 
     @Nullable
     @Override
@@ -82,10 +89,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private void initView(View view) {
         setDefaultFont(view);
 
+        myActionBar = view.findViewById(R.id.my_action_bar);
+        scrollView = view.findViewById(R.id.my_scroll_view);
+
         my_user_bg = view.findViewById(R.id.my_user_bg);
         my_user_status = view.findViewById(R.id.my_user_status);
         iv_user_bg = view.findViewById(R.id.iv_user_bg);
-        recyclerView = view.findViewById(R.id.recycler_view);
+        listView = view.findViewById(R.id.recycler_view);
 
         //用户详细信息
         focusNum = view.findViewById(R.id.my_focus_num); //关注数
@@ -94,6 +104,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         tv_no_notes = view.findViewById(R.id.tv_no_notes);  //没有发布过文章
         User currentUser = TravelingUser.getCurrentUser();
         if (currentUser != null) {
+            myActionBar.setTitle(currentUser.getNickName());
             currentUser.getDetailInfo(new DetailUserInfoCallback() {
                 @Override
                 public void onSuccess(DetailUserInfo detailUserInfo, boolean isFocus) {
@@ -102,12 +113,22 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     collectionsNum.setText(String.valueOf(detailUserInfo.getBeLikeNum()));
                     if (detailUserInfo.getNotes().size() == 0) {
                         tv_no_notes.setVisibility(View.VISIBLE);
-                        recyclerView.setVisibility(View.GONE);
+                        listView.setVisibility(View.GONE);
                     } else {
                         tv_no_notes.setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.VISIBLE);
-                        recyclerView.setAdapter(new NewsAdapter(getActivity(), detailUserInfo.getNotes()));
+                        listView.setVisibility(View.VISIBLE);
+                        //adapter
+                        listView.setAdapter(new NewsAdapter(getActivity(), detailUserInfo.getNotes()));
+                        //点击事件
+                        listView.setOnItemClickListener((parent, view, position, id) -> {
+                            Note note = detailUserInfo.getNotes().get(position);
+                            Intent intent = new Intent(getActivity(), NewsActivity.class);
+                            intent.putExtra(NewsActivity.POSITION, position);
+                            intent.putExtra(NewsActivity.s_NOTE, note);
+                            startActivityForResult(intent, 1);  //注意 跳转过去后setResult后需Finish()才会正确传回结果来！
+                        });
                     }
+                    scrollToTop();
                 }
 
                 @Override
@@ -127,6 +148,30 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         my_share.setOnClickListener(this);
         my_user_bg.setOnClickListener(this);
         my_to_vip.setOnClickListener(this);
+
+        //点击事件
+        myActionBar.setOnClickListener(new MyActionBar2.onClickListener() {
+            @Override
+            public void onRightClick(View v) {
+                my_rawerLayout.openDrawer(Gravity.START);
+            }
+
+            @Override
+            public void onLeftClick(View v) {
+                UtilTools.toast(getContext(), "点击了分享");
+            }
+        });
+
+        //scrollView滑动监听
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            scrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                int hideY = iv_user_bg.getHeight() - myActionBar.getHeight();
+                float alpha = (float) scrollY / hideY;
+                alpha = alpha > 1 ? 1.0f : alpha;
+                //改变透明度
+                myActionBar.changeAlpha(alpha);
+            });
+        }
     }
 
 
@@ -149,9 +194,21 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             fansNum.setText("0");
             collectionsNum.setText("0");
             tv_no_notes.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
+            listView.setVisibility(View.GONE);
         }
 
+    }
+
+    /**
+     * scrollView 滚动到顶部
+     */
+    public void scrollToTop() {
+        if (scrollView == null) {
+            LogUtil.d("scrollView == null");
+            return;
+        }
+        scrollView.scrollTo(0, 0);
+        scrollView.smoothScrollTo(0, 0);
     }
 
 

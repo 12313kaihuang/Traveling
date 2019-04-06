@@ -4,31 +4,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/my_head_item" />
-
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/tv_no_notes"
-            android:layout_marginTop="8dp"
-            android:textSize="15sp"
-            android:gravity="center"
-            android:text="@string/no_notes"
+        <ScrollView
+            android:id="@+id/my_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
-        <ListView
-            android:id="@+id/recycler_view"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <include layout="@layout/my_head_item" />
+
+                <TextView
+                    android:id="@+id/tv_no_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/no_notes"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+
+                <com.android.traveling.widget.NoScrollListView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <com.android.traveling.widget.MyActionBar2
+            android:id="@+id/my_action_bar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+    </FrameLayout>
 
 
     <fragment

@@ -48,13 +48,13 @@ public class NewFragment extends Fragment {
     private static final int REQUEST_CODE = 0;  //请求码 去NewsActivity
     //    private static final String TAG = "RecommendFragment";
 
-    private List<Note> noteList;
-    private NewsAdapter newsAdapter;
-    private ListView recommend_listView;
-    private FrameLayout load_progressbar;
+    protected List<Note> noteList;
+    protected NewsAdapter newsAdapter;
+    protected ListView recommend_listView;
+    protected FrameLayout load_progressbar;
 
-    private TextView tv_load_faild;
-    private LinearLayout loading;
+    protected TextView tv_load_faild;
+    protected LinearLayout loading;
 
     @Nullable
     @Override
@@ -67,7 +67,7 @@ public class NewFragment extends Fragment {
     }
 
     //初始化View
-    private void initView(View view) {
+    protected void initView(View view) {
 
         load_progressbar = view.findViewById(R.id.load_progressbar);
         tv_load_faild = view.findViewById(R.id.tv_load_faild);
@@ -139,7 +139,7 @@ public class NewFragment extends Fragment {
     }
 
     //加载更多
-    private void LoadMore(RefreshLayout refreshLayout) {
+    protected void LoadMore(RefreshLayout refreshLayout) {
 
         Note.loadMore(noteList.get(noteList.size() - 1).getId(), new Note.Callback() {
             @Override
@@ -164,7 +164,7 @@ public class NewFragment extends Fragment {
     }
 
     //网络请求数据
-    private void sendHttpRequest() {
+    protected void sendHttpRequest() {
 
         Note.getNewest(new Note.Callback() {
             @Override
