@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.android.traveling.developer.jiaming.liu.MessageFragment2;
 import com.android.traveling.developer.jiaming.liu.activity.AddNoteActivity;
+import com.android.traveling.developer.ting.li.ui.AddFriendsNoteActivity;
 import com.android.traveling.developer.ting.li.ui.FriendsFragment;
 
 
@@ -102,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //初始化View
     private void initView() {
-
         JPTabBar mTabbar = findViewById(R.id.tabbar);
         viewPager = findViewById(R.id.fragment_content);
         //初始化底部tabBar
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case R.id.id_dialog_centeradd_friends: {
-                Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddFriendsNoteActivity.class);
                 intent.putExtra("type", "结伴");
                 startActivity(intent);
                 break;

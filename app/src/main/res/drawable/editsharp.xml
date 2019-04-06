@@ -18,7 +18,7 @@
 
     <stroke
         android:width="5px"
-        android:color="@color/gray2" />
+        android:color="@color/news_flag3_color" />
     />
 </shape>
     <!--<solid android:color="#CCCCCC" /></shape>  -->

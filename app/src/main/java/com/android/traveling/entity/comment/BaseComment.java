@@ -76,6 +76,15 @@ public class BaseComment {
         this.content = content;
         this.commentTime = new Date();
     }
+    //评论的回复
+    public BaseComment(int flagComment, int noteId, Reply reply, int userId, String content) {
+        this.flag = flagComment;
+        this.noteId = noteId;
+        this.toUserId = reply.getUserId();
+        this.userId = userId;
+        this.content = content;
+        this.commentTime = new Date();
+    }
 
     /**
      * 添加评论/回复

@@ -28,6 +28,9 @@ public class Reply implements Serializable{
     public static final int FLAG_COMMENT = 1;   //评论的评论
     public static final int FLAG_REPLY = 2;     //评论的回复
 
+    public static final int FLAG_COMPANION_COMMENT = 3;     //结伴信息的评论
+    public static final int FLAG_COMPANION_REPLY = 4;     //评论的回复
+
     private Integer id;   //评论id
 
     private Integer flag;
@@ -48,7 +51,18 @@ public class Reply implements Serializable{
 
     public Reply() {
     }
-
+    public Reply(User user, BaseComment baseComment) {
+        this.id = baseComment.getId();
+        this.flag = baseComment.getFlag();
+        if (flag == FLAG_REPLY) {
+            this.toId = baseComment.getToUserId();
+        }
+        this.userId = baseComment.getUserId();
+        this.nickName = user.getNickName();
+        this.userImg = user.getDirectImg();
+        this.content = baseComment.getContent();
+        this.commentTime = DateUtil.transform(baseComment.getCommentTime());
+    }
     public Reply(User user, String toName, BaseComment baseComment) {
         this.id = baseComment.getId();
         this.flag = baseComment.getFlag();

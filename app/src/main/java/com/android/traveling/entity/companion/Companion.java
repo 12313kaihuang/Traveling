@@ -10,6 +10,7 @@ import com.android.traveling.entity.service.CompanionService;
 import com.android.traveling.util.UtilTools;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -21,16 +22,14 @@ import retrofit2.Response;
  * 2019/2/25 18:46
  */
 @SuppressWarnings("unused")
-public class Companion {
+public class Companion implements Serializable {
 
     private Integer id;
 
     private Integer userId;
 
-    @SerializedName("headportrait")
     private String imgUrl;
 
-    @SerializedName("nickname")
     private String nickName;
 
     private String title;

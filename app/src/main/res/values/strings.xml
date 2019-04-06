@@ -59,7 +59,7 @@
     <string name="commit_num">72</string>
     <string name="news_flag1">游记</string>
     <string name="news_flag2">攻略</string>
-    <string name="news_flag3">问答</string>
+    <string name="news_flag3">结伴</string>
 
     <!--activity_news_detail-->
     <string name="activity_news_detail">游记/攻略详情</string>
@@ -67,7 +67,9 @@
     <!--friends_news_item-->
     <string name="list_friends_item_username">沙啦沙啦</string>
     <string name="list_friends_item_content">一起去稻城吗</string>
-    <string name="list_friends_item_time">2018.10.01–2018.10.07</string>
+    <string name="list_friends_item_time_start">暂无</string>
+    <string name="list_friends_item_time_middle"> - </string>
+    <string name="list_friends_item_time_end">暂无</string>
     <string name="list_friends_item_site">稻城</string>
     <string name="list_friends_item_browse">5浏览</string>
     <string name="list_friends_item_publishtime">3分钟前</string>
