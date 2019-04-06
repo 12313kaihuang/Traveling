@@ -31,7 +31,7 @@ public class SetPasswordActivity extends BackableActivity {
     private EditText y_password;  //原密码
     private EditText x_password;  //新密码
     private Button setBtn;
-    private PublishDialog dialog = new PublishDialog(this, "请稍后..");
+    private PublishDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +45,8 @@ public class SetPasswordActivity extends BackableActivity {
         x_password = findViewById(R.id.x_password);
         y_password = findViewById(R.id.y_password);
         setBtn = findViewById(R.id.btn_set);
+
+        dialog = new PublishDialog(this, "请稍后..");
 
         //添加事件
         addEvents();

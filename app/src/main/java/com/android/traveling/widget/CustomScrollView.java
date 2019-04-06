@@ -28,25 +28,21 @@ public class CustomScrollView extends ScrollView {
     private boolean isScrollToEnd = false;
     private static final int CODE_TO_START = 0x001;
     private static final int CODE_TO_END = 0x002;
-    private Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case CODE_TO_START:
-                    //重置标志“滑动到顶部”时的标志位
-                    isScrollToStart = false;
-                    break;
-                case CODE_TO_END:
-                    //重置标志“滑动到底部”时的标志位
-                    isScrollToEnd = false;
-                    break;
-                default:
-                    break;
-            }
+    private Handler mHandler = new Handler(msg -> {
+        switch (msg.what) {
+            case CODE_TO_START:
+                //重置标志“滑动到顶部”时的标志位
+                isScrollToStart = false;
+                break;
+            case CODE_TO_END:
+                //重置标志“滑动到底部”时的标志位
+                isScrollToEnd = false;
+                break;
+            default:
+                break;
         }
-    };
+        return true;
+    }) ;
 
     public CustomScrollView(Context context) {
         super(context);

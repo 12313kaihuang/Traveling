@@ -59,7 +59,7 @@
     <string name="commit_num">72</string>
     <string name="news_flag1">游记</string>
     <string name="news_flag2">攻略</string>
-    <string name="news_flag3">问答</string>
+    <string name="news_flag3">结伴</string>
 
     <!--activity_news_detail-->
     <string name="activity_news_detail">游记/攻略详情</string>
@@ -200,4 +200,9 @@
     <string name="share">分享新鲜事…</string>
     <string name="choose_photo">选择照片</string>
     <string name="title">标题</string>
+
+    <string name="list_friends_item_time_start">暂无</string>
+    <string name="list_friends_item_time_middle"> - </string>
+    <string name="list_friends_item_time_end">暂无</string>
+
 </resources>

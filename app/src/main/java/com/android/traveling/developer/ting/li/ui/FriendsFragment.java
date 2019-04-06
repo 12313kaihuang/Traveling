@@ -12,8 +12,15 @@ import android.widget.ListView;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.ting.li.adaptor.FriendsAdaptor;
+import com.android.traveling.developer.ting.li.adaptor.FriendsReplyAdaptor;
 import com.android.traveling.developer.ting.li.entity.FriendsNews;
+import com.android.traveling.entity.comment.Comment;
+import com.android.traveling.entity.comment.Reply;
+import com.android.traveling.entity.companion.Companion;
+import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.fragment.BaseFragment;
+import com.android.traveling.util.LogUtil;
+import com.android.traveling.util.UtilTools;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -31,6 +38,9 @@ import java.util.List;
  */
 
 public class FriendsFragment extends BaseFragment {
+    List<Companion> friendsNewsList;
+    FriendsAdaptor friendsAdaptor;
+    ListView friends_listView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -40,64 +50,84 @@ public class FriendsFragment extends BaseFragment {
     }
     //初始化View
     private void initView(View view) {
-        ListView friends_listView = view.findViewById(R.id.friends_news_listView);
+        friends_listView = view.findViewById(R.id.friends_news_listView);
         SmartRefreshLayout refreshLayout1 = view.findViewById(R.id.friends_refreshLayout);
-
         //解析数据
-        List<FriendsNews> friendsNewsList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            FriendsNews friendsNews = new FriendsNews();
-            friendsNewsList.add(friendsNews);
-        }
-
-        FriendsAdaptor friendsAdaptor = new FriendsAdaptor(getActivity(), friendsNewsList);
+        friendsNewsList = new ArrayList<>();
+        Companion.getNewest(new Companion.Callback() {
+            @Override
+            public void onSuccess(List<Companion> companions) {
+                friendsNewsList.addAll(companions);
+                LogUtil.d("222"+companions.get(0).getNickName()+companions.get(0).getImgUrl()+companions.get(0).getContent());
+            }
+            @Override
+            public void onFailure(int errCode, String reason) {
+                if (errCode== Msg.NO_DATA){
+                }
+            }
+        });
+        friendsAdaptor = new FriendsAdaptor(getActivity(), friendsNewsList);
         friends_listView.setAdapter(friendsAdaptor);
         //点击事件
         friends_listView.setOnItemClickListener((parent, view2, position, id) -> {
-            FriendsNews friendsNews = friendsNewsList.get(position);
-            Intent intent = new Intent(getContext(), FriendsNewsActivity.class);
-            //intent.putExtra("friendsnews",friendsNews);
+            Companion companion = friendsNewsList.get(position);
+            companion.setViews(companion.getViews()+1);
+            friendsAdaptor.notifyDataSetChanged();
+            Intent intent = new Intent(getActivity(), FriendsNewsActivity.class);
+            //intent.putExtra(FriendsNewsActivity.ID, id);
+            intent.putExtra(FriendsNewsActivity.POSITION, position);
+            intent.putExtra(FriendsNewsActivity.s_COMPANION, companion);
+            //intent.putExtra(FriendsNewsActivity.COMMENT, comment);
             startActivity(intent);
         });
 
-        //上拉刷新
-        //noinspection Convert2Lambda
+        //下拉刷新
         refreshLayout1.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                new Handler().postDelayed(() -> {
-                    for (int i = 0; i < 5; i++) {
-                        FriendsNews friendsNews = new FriendsNews();
-                        friendsNews.setUserName("刷新的item" + i);
-                        friendsNewsList.add(0,friendsNews);
+                Companion.getNewest(new Companion.Callback() {
+                    @Override
+                    public void onSuccess(List<Companion> companions) {
+                        //friendsNewsList.addAll(companions);
+                        FriendsFragment.this.friendsNewsList = companions;
+                        LogUtil.d("333"+companions.get(0).getNickName()+companions.get(0).getImgUrl()+companions.get(0).getContent());
+                        friendsAdaptor = new FriendsAdaptor(getActivity(), companions);
+                        friends_listView.setAdapter(friendsAdaptor);
+                        refreshLayout.finishRefresh();
                     }
-                    friendsAdaptor.notifyDataSetChanged();
-                    refreshLayout.finishRefresh();
-                }, 1000);
+                    @Override
+                    public void onFailure(int errCode, String reason) {
+                        if (errCode== Msg.NO_DATA){
+                            refreshLayout.finishRefresh(false);
+                            UtilTools.toast(getContext(), "加载失败:" + reason);
+                        }
+                    }
+                });
             }
         });
-
-        //下拉加载更多
+        //上拉加载更多
         refreshLayout1.setOnLoadMoreListener(refreshLayout -> new Handler().postDelayed(() -> {
-            for (int i = 0; i < 5; i++) {
-                FriendsNews friendsNews = new FriendsNews();
-                friendsNews.setUserName("加载的更多的item" + i);
-                friendsNewsList.add(friendsNews);
-            }
-            friendsAdaptor.notifyDataSetChanged();
-            refreshLayout.finishLoadMore();
+            Companion.loadMore(friendsNewsList.size(), new Companion.Callback() {
+                @Override
+                public void onSuccess(List<Companion> companions) {
+                    friendsNewsList.addAll(companions);
+                    friendsAdaptor.notifyDataSetChanged();
+                    refreshLayout.finishLoadMore();
+                }
+                @Override
+                public void onFailure(int errCode, String reason) {
+                    UtilTools.toast(getContext(), "加载失败：" + reason);
+                    refreshLayout.finishLoadMore(false);
+                }
+            });
         }, 1000));
     }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
-
 }

@@ -302,8 +302,8 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
                 @Override
                 public void onSuccess(User user) {
                     UtilTools.toast(UserEditActivity.this, "上传成功");
+                    CustomUserProvider.refreshCacheUser(user);  //更新缓存中的user信息
                     if (uploadType == TYPE_USER_IMG) {
-                        CustomUserProvider.refreshCacheUser(user);  //更新缓存中的user信息
                         Picasso.get().load(user.getImg()).error(R.drawable.err_img_bg).fit().into(user_img);
                     } else if (uploadType == TYPE_USER_BG) {
                         Picasso.get().load(user.getBackgroundImg()).error(R.drawable.err_img_bg).fit().into(user_bg);

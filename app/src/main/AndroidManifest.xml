@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.android.traveling">
 
     <!--允许联网 -->
@@ -25,7 +26,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!--配置权限，用来记录应用配置信息 -->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
     <!--手机定位信息，用来为语义等功能提供定位，提供更精准的服务-->
     <!--定位信息是敏感信息，可通过Setting.setLocationEnable(false)关闭定位请求 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -72,13 +74,12 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".developer.jiaming.liu.activity.AddNoteActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-
-
+        <!-- 结伴发布页 -->
+        <activity android:name=".developer.ting.li.ui.AddFriendsNoteActivity"/>
+        <!-- 结伴详情页 -->
+        <activity android:name=".developer.ting.li.ui.FriendsNewsActivity" />
         <activity android:name=".developer.jiaming.liu.activity.NoticeActivity" />
         <activity android:name=".developer.jiaming.liu.activity.ChatMoreActivity"/>
-
-        <activity android:name=".developer.ting.li.ui.FriendsNewsActivity"
-            />
 
         <!--登录-->
         <activity
@@ -128,8 +129,6 @@
             android:name=".developer.yu.hu.ui.SearchResultActivity"
             android:windowSoftInputMode="stateVisible|adjustPan"
             android:theme="@style/Theme_search_note_result_activity" />
-
-        <!--设置/修改密码-->
         <activity android:name=".developer.zhiming.li.ui.SetPasswordActivity" />
 
 
