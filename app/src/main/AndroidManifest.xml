@@ -129,6 +129,9 @@
             android:windowSoftInputMode="stateVisible|adjustPan"
             android:theme="@style/Theme_search_note_result_activity" />
 
+        <!--设置/修改密码-->
+        <activity android:name=".developer.zhiming.li.ui.SetPasswordActivity" />
+
 
         <!--android 7.0 provider-->
         <!--<provider-->

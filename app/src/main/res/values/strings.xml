@@ -102,6 +102,8 @@
 
     <!--activity_register-->
     <string name="tv_password">密码：</string>
+    <string name="tv_y_password">原密码：</string>
+    <string name="tv_x_password">新密码：</string>
 
     <!--activity_forget_pass-->
     <string name="email">邮箱：</string>
@@ -117,7 +119,7 @@
     <string name="about_live_area">常住地：%1s</string>
     <string name="about_bind">账号绑定与设置</string>
     <string name="about_message">消息设置</string>
-    <string name="about_privacy">隐私设置</string>
+    <string name="about_password">密码设置</string>
     <string name="about_clear_cache">清除缓存</string>
 
     <!--activity_user_edit-->

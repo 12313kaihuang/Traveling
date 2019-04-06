@@ -18,6 +18,7 @@ import com.android.traveling.developer.zhiming.li.ui.NewsSettingActivity;
 import com.android.traveling.developer.zhiming.li.ui.AccountBindActivity;
 import com.android.traveling.developer.zhiming.li.ui.ConfigActivity;
 import com.android.traveling.developer.zhiming.li.ui.LoginActivity;
+import com.android.traveling.developer.zhiming.li.ui.SetPasswordActivity;
 import com.android.traveling.developer.zhiming.li.ui.UserEditActivity;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
@@ -89,13 +90,13 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
 
         TextView about_edit = view.findViewById(R.id.about_edit);
         TextView about_bind = view.findViewById(R.id.about_bind);
-        TextView about_privacy = view.findViewById(R.id.about_privacy);
+        TextView about_password = view.findViewById(R.id.about_password);
         TextView clear_cache = view.findViewById(R.id.clear_cache);
         TextView message_setting = view.findViewById(R.id.message_setting);
         about_edit.setOnClickListener(this);
         about_logout.setOnClickListener(this);
         about_bind.setOnClickListener(this);
-        about_privacy.setOnClickListener(this);
+        about_password.setOnClickListener(this);
         about_more.setOnClickListener(this);
         clear_cache.setOnClickListener(this);
         message_setting.setOnClickListener(this);
@@ -120,9 +121,9 @@ public class AboutMoreFragment extends Fragment implements View.OnClickListener 
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
                 break;
-            case R.id.about_privacy:
+            case R.id.about_password:
                 if (TravelingUser.getCurrentUser() != null) {
-                    UtilTools.toast(getContext(), "隐私设置");
+                    startActivity(new Intent(getActivity(), SetPasswordActivity.class));
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }

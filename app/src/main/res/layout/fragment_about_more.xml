@@ -76,6 +76,21 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/about_password"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="0.5dp"
+            android:background="@color/white"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_password"
+            android:gravity="center_vertical"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="@string/about_password"
+            android:textSize="15sp" />
+
+
+        <TextView
             android:id="@+id/message_setting"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -89,19 +104,7 @@
             android:text="@string/about_message"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/about_privacy"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="0.5dp"
-            android:background="@color/white"
-            android:drawablePadding="5dp"
-            android:drawableStart="@drawable/ic_privacy"
-            android:gravity="center_vertical"
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
-            android:text="@string/about_privacy"
-            android:textSize="15sp" />
+
 
         <TextView
             android:id="@+id/clear_cache"
