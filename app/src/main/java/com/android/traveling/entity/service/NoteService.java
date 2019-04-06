@@ -31,6 +31,14 @@ public interface NoteService {
     Call<NoteMsg> getNewest();
 
     /**
+     * 获取关注的人的最新的游记文章
+     *
+     * @return 最新的篇文章 NoteMsg
+     */
+    @GET("getFocusedNotes")
+    Call<NoteMsg> getFocusedNewest(@Query("userId") int userId);
+
+    /**
      * 加载更多游记文章
      *
      * @param lastId 当前所显示的最旧的一篇文章的id
@@ -38,6 +46,15 @@ public interface NoteService {
      */
     @GET("loadMore")
     Call<NoteMsg> loadMore(@Query("lastId") int lastId);
+
+    /**
+     * 加载更多游记文章（关注的人的）
+     *
+     * @param lastId 当前所显示的最旧的一篇文章的id
+     * @return 5篇更多文章 NoteMsg
+     */
+    @GET("getMoreFocusedNotes")
+    Call<NoteMsg> loadMoreFocused(@Query("userId") int userId, @Query("lastId") int lastId);
 
     /**
      * 模糊查询最新的标题含有 content 的10篇文章

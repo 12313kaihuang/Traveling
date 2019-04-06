@@ -45,7 +45,7 @@ import java.util.List;
 
 public class NewFragment extends Fragment {
 
-    private static final int REQUEST_CODE = 0;  //请求码 去NewsActivity
+    protected static final int REQUEST_CODE = 0;  //请求码 去NewsActivity
     //    private static final String TAG = "RecommendFragment";
 
     protected List<Note> noteList;
@@ -80,19 +80,9 @@ public class NewFragment extends Fragment {
         noteList = new ArrayList<>();
         sendHttpRequest();
 
-        //注册receiver
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(StaticClass.BROADCAST_LOGIN);
-        filter.addAction(StaticClass.BROADCAST_LOGOUT);
-        if (getActivity() != null) {
-            BroadcastReceiver loginOrLogoutReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    newsAdapter.notifyDataSetInvalidated(); //重绘整个控件
-                }
-            };
-            getActivity().registerReceiver(loginOrLogoutReceiver, filter);
-        }
+        //注册广播接收器
+        registerReceiver();
+
 
         //点击事件
         recommend_listView.setOnItemClickListener((parent, view1, position, id) -> {
@@ -109,21 +99,7 @@ public class NewFragment extends Fragment {
         refreshLayout1.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                Note.getNewest(new Note.Callback() {
-                    @Override
-                    public void onSuccess(List<Note> noteList) {
-                        NewFragment.this.noteList = noteList;
-                        newsAdapter.setNewsList(noteList);
-                        newsAdapter.notifyDataSetChanged();
-                        refreshLayout.finishRefresh();
-                    }
-
-                    @Override
-                    public void onFailure(String reason) {
-                        refreshLayout.finishRefresh(false);
-                        UtilTools.toast(getContext(), "加载失败:" + reason);
-                    }
-                });
+                refresh(refreshLayout);
             }
         });
 
@@ -136,6 +112,49 @@ public class NewFragment extends Fragment {
             loading.setVisibility(View.VISIBLE);
             sendHttpRequest();
         });
+    }
+
+    /**
+     * 刷新
+     * @param refreshLayout refreshLayout
+     */
+    protected void refresh(@NonNull RefreshLayout refreshLayout) {
+        Note.getNewest(new Note.Callback() {
+            @Override
+            public void onSuccess(List<Note> noteList) {
+                NewFragment.this.noteList = noteList;
+                newsAdapter.setNewsList(noteList);
+                newsAdapter.notifyDataSetChanged();
+                refreshLayout.finishRefresh();
+            }
+
+            @Override
+            public void onFailure(String reason) {
+                refreshLayout.finishRefresh(false);
+                UtilTools.toast(getContext(), "加载失败:" + reason);
+            }
+        });
+    }
+
+    /**
+     * 注册广播接收器
+     */
+    protected void registerReceiver() {
+        //注册receiver
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(StaticClass.BROADCAST_LOGIN);
+        filter.addAction(StaticClass.BROADCAST_LOGOUT);
+        if (getActivity() != null) {
+            BroadcastReceiver loginOrLogoutReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if (newsAdapter != null) {
+                        newsAdapter.notifyDataSetInvalidated(); //重绘整个控件
+                    }
+                }
+            };
+            getActivity().registerReceiver(loginOrLogoutReceiver, filter);
+        }
     }
 
     //加载更多
@@ -223,12 +242,16 @@ public class NewFragment extends Fragment {
             case MainActivity.REQUEST_CODE_NOTE_TAG1:
             case MainActivity.REQUEST_CODE_NOTE_TAG2:
                 if (resultCode == Activity.RESULT_OK) {
-                    Note note = (Note)data.getSerializableExtra(AddNoteActivity.INTENT_EXTRA_NOTE);
-                    noteList.add(0,note);
+                    Note note = (Note) data.getSerializableExtra(AddNoteActivity.INTENT_EXTRA_NOTE);
+                    noteList.add(0, note);
                     newsAdapter.notifyDataSetChanged();
                 }
                 break;
         }
+    }
+
+    protected void superOnActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

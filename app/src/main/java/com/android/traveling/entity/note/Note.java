@@ -323,6 +323,18 @@ public class Note implements Serializable {
         sendRequest(callback, call);
     }
 
+
+    /**
+     * 获取关注的人的最新的文章
+     *
+     * @param userId   userId
+     * @param callback 回调接口
+     */
+    public static void getFocusedNewest(int userId, Callback callback) {
+        Call<NoteMsg> call = getNoteService().getFocusedNewest(userId);
+        sendRequest(callback, call);
+    }
+
     /**
      * 加载更多游记文章
      *
@@ -331,6 +343,18 @@ public class Note implements Serializable {
      */
     public static void loadMore(int lastId, Callback callback) {
         Call<NoteMsg> call = getNoteService().loadMore(lastId);
+        sendRequest(callback, call);
+    }
+
+    /**
+     * 加载更多游记文章（关注的人的）
+     *
+     * @param userId   userId
+     * @param lastId   当前所显示的最旧的一篇文章的id
+     * @param callback 回调接口
+     */
+    public static void loadMoreFocused(int userId, int lastId, Callback callback) {
+        Call<NoteMsg> call = getNoteService().loadMoreFocused(userId,lastId);
         sendRequest(callback, call);
     }
 
