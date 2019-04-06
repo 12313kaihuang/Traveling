@@ -203,6 +203,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             LogUtil.d("MyFragment currentUser=null");
             my_user_status.setText(getString(R.string.not_login));
             my_user_bg.setImageResource(R.drawable.user);
+            iv_user_bg.setImageResource(R.drawable.user_bg);
             focusNum.setText("0");
             fansNum.setText("0");
             collectionsNum.setText("0");

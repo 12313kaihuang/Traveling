@@ -41,9 +41,12 @@ public class CustomUserProvider implements LCChatProfileProvider {
 
     private static List<LCChatKitUser> partUsers = new ArrayList<>();
 
+    private LCChatKitUser createDefaultUser(String userId) {
+        return new LCChatKitUser(userId, "测试用户", "http://www.avatarsdb.com/avatars/tom_and_jerry2.jpg");
+    }
     // 此数据均为 fake，仅供参考
     //    static {
-    //        partUsers.add(new LCChatKitUser("5", "亦兮", "http://www.avatarsdb.com/avatars/tom_and_jerry2.jpg"));
+    //        partUsers.add();
     //        partUsers.add(new LCChatKitUser("2", "独秀同学", "http://www.avatarsdb.com/avatars/jerry.jpg"));
     //        partUsers.add(new LCChatKitUser("3", "Harry", "http://www.avatarsdb.com/avatars/young_harry.jpg"));
     //        partUsers.add(new LCChatKitUser("4", "William", "http://www.avatarsdb.com/avatars/william_shakespeare.jpg"));
@@ -67,13 +70,21 @@ public class CustomUserProvider implements LCChatProfileProvider {
             if (!isContains) {
                 int finalI = i;
                 LogUtil.d("fetchProfiles userId=" + userId);
-                if (userId.equals("Jerry")){
-                    userId = "4";
-                }
-                getLCChatKitUser(Integer.parseInt(userId), lcChatKitUser -> {
-                    partUsers.add(lcChatKitUser);
-                    if (finalI == list.size() - 1) {
-                        callBack.done(userList, null);
+                getLCChatKitUser(Integer.parseInt(userId), new mCallBack() {
+                    @Override
+                    public void onSuccess(LCChatKitUser lcChatKitUser) {
+                        partUsers.add(lcChatKitUser);
+                        if (finalI == list.size() - 1) {
+                            callBack.done(userList, null);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        partUsers.add(createDefaultUser(userId));
+                        if (finalI == list.size() - 1) {
+                            callBack.done(userList, null);
+                        }
                     }
                 });
             }
@@ -104,12 +115,14 @@ public class CustomUserProvider implements LCChatProfileProvider {
                     );
                 } else {
                     LogUtil.d("CustomUserProvider  getLCChatKitUser", msg != null ? msg.getInfo() : "msg == null");
+                    callBack.onFailure();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<LoginMsg> call, @NonNull Throwable t) {
                 LogUtil.d("CustomUserProvider  getLCChatKitUser", t.getMessage());
+                callBack.onFailure();
             }
         });
     }
@@ -128,6 +141,8 @@ public class CustomUserProvider implements LCChatProfileProvider {
      */
     interface mCallBack {
         void onSuccess(LCChatKitUser lcChatKitUser);
+
+        void onFailure();
     }
 
     /**

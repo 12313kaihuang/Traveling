@@ -313,6 +313,32 @@ public class User extends LitePalSupport {
         } else {
             call = userService.bindEmail(userId, email);
         }
+        enqueue(userCallback, call);
+    }
+
+    /**
+     * 设置新密码
+     *
+     * @param newPass newPass
+     */
+    public void changePassword(String newPass, UserCallback userCallback) {
+        Call<LoginMsg> call = UtilTools.getRetrofit().create(UserService.class).setPassword(userId, newPass);
+        enqueue(userCallback, call);
+    }
+
+    /**
+     * 改变密码
+     *
+     * @param oldPass oldPass
+     * @param newPass newPass
+     */
+    public void changePassword(String oldPass, String newPass, UserCallback userCallback) {
+        Call<LoginMsg> call = UtilTools.getRetrofit().create(UserService.class).changePassword(userId, oldPass, newPass);
+        enqueue(userCallback, call);
+    }
+
+
+    protected void enqueue(UserCallback userCallback, Call<LoginMsg> call) {
         call.enqueue(new Callback<LoginMsg>() {
             @Override
             public void onResponse(@NonNull Call<LoginMsg> call, @NonNull Response<LoginMsg> response) {
@@ -416,5 +442,6 @@ public class User extends LitePalSupport {
             }
         });
     }
+
 
 }

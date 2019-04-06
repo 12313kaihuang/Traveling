@@ -54,4 +54,8 @@ public interface CompanionService {
      */
     @GET("getCompanionComments")
     Call<CompanionReplyMsg> getCompanionComments(@Query("companionId") int companionId);
+
+
+    @POST("addCompanion")
+    Call<Msg> addCompanion();
 }

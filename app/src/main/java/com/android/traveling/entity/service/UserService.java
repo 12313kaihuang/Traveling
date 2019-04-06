@@ -126,5 +126,26 @@ public interface UserService {
     @GET("getDetailUserInfo")
     Call<DetailUserInfoMsg> getDetailUserInfo(@Query("userId") int userId, @Query("fromId") int fromId);
 
+    /**
+     * 设置新密码
+     *
+     * @param userId  userId
+     * @param newPass newPass
+     * @return LoginMsg
+     */
+    @POST("setPassword")
+    Call<LoginMsg> setPassword(@Query("userId") int userId, @Query("newPass") String newPass);
+
+    /**
+     * 更改密码
+     *
+     * @param userId  userId
+     * @param oldPass oldPass
+     * @param newPass newPass
+     * @return LoginMsg
+     */
+    @POST("changePassword")
+    Call<LoginMsg> changePassword(@Query("userId") int userId, @Query("oldPass") String oldPass, @Query("newPass") String newPass);
+
 
 }

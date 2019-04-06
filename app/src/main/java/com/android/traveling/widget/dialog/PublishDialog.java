@@ -23,12 +23,21 @@ import com.android.traveling.R;
 
 public class PublishDialog extends Dialog {
 
+    private String hint;
+
 
     //定义模板
     public PublishDialog(@NonNull Context context) {
         this(context, WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT, R.layout.dialog_loading,
                 R.style.Theme_loading_dialog, Gravity.CENTER, R.style.pop_anim_style);
+    }
+
+    public PublishDialog(@NonNull Context context, String hint) {
+        this(context, WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT, R.layout.dialog_loading,
+                R.style.Theme_loading_dialog, Gravity.CENTER, R.style.pop_anim_style);
+        this.hint = hint;
     }
 
     //定义属性
@@ -52,12 +61,18 @@ public class PublishDialog extends Dialog {
         initView();
     }
 
+    public void setHint(String hint) {
+        this.hint = hint;
+        TextView hint2 = findViewById(R.id.tv_hint);
+        hint2.setText(this.hint == null ? "发表中..." : this.hint);
+    }
+
     /**
      * 初始化控件
      */
     private void initView() {
         TextView hint = findViewById(R.id.tv_hint);
-        hint.setText("发表中...");
+        hint.setText(this.hint == null ? "发表中..." : this.hint);
         addEvents();
 
     }

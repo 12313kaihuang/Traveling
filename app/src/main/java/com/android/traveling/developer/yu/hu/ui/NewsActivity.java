@@ -262,6 +262,7 @@ public class NewsActivity extends BackableActivity implements CommentAdapter.Dat
         if (comments == null || commentAdapter == null) {
             comments = new ArrayList<>();
             commentAdapter = new CommentAdapter(NewsActivity.this, note.getId(), comments);
+            recyclerView.setAdapter(commentAdapter);
             recyclerView.setVisibility(View.VISIBLE);
             refreshLayout.setEnableLoadMore(true);
         }
