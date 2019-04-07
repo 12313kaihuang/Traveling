@@ -233,7 +233,6 @@ public class AddNoteActivity extends AppCompatActivity {
                             finish();
                             publishDialog.dismiss();
                         }
-
                         @Override
                         public void onFailure(String reason) {
                             UtilTools.toast(AddNoteActivity.this, "发表失败：" + reason);

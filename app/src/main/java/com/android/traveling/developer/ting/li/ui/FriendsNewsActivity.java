@@ -1,5 +1,6 @@
 package com.android.traveling.developer.ting.li.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -50,7 +51,6 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
     public static final String ID = "id";
     public static final String s_COMPANION = "s_companion";
     public static final String POSITION = "position";
-    private int position;
     private Companion companion;
     private int id;
 
@@ -89,12 +89,14 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
 
     }
     //初始化数据
+    @SuppressLint("SetTextI18n")
     private void initDate() {
         Intent intent = getIntent();
         //id = intent.getIntExtra(ID, 0);
-        position = intent.getIntExtra(POSITION, -1);
+        int position = intent.getIntExtra(POSITION, -1);
         companion = (Companion) intent.getSerializableExtra(s_COMPANION);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+        setTitle(companion.getTitle());  //设置标题
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
         if(companion.getImgUrl() != null){
             Picasso.get().load(companion.getImgUrl()).into(imageView);
         }
@@ -119,7 +121,7 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
             textViewPlace.setText(companion.getTarget());
         }
         if(companion.getViews() != null){
-            textViewViews.setText(companion.getViews().toString()+"浏览");
+            textViewViews.setText(companion.getViews().toString() + "浏览");
         }
         LogUtil.d("44" + companion.getId());
         //replyList = comment.getReplies();
@@ -127,7 +129,6 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
             @Override
             public void onSuccess(List<Reply> replies) {
                 replyList = replies;
-                UtilTools.toast(FriendsNewsActivity.this, "777加载成功:" + replyList.get(0).getContent());
                 //设置布局方式
                 recyclerView.setLayoutManager(new LinearLayoutManager(FriendsNewsActivity.this));
                 //关闭RecyclerView的嵌套滑动特性
@@ -189,11 +190,9 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
                     }
                     @Override
                     public void onFailure(String reason) {
-                        LogUtil.d("2发布失败：" + reason);
                         UtilTools.toast(FriendsNewsActivity.this, "2发布失败：" + reason);
                     }
                 });
-
             }).show();
         });
     }
@@ -205,7 +204,7 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
      * @param companion        companion
      */
     private void addCommentSuccess(User currentUser, BaseComment baseComment, Companion companion) {
-        if (replyList == null || replyList == null) {
+        if (replyList == null || replyList.size() == 0) {
             replyList = new ArrayList<>();
             friendsReplyAdaptor = new FriendsReplyAdaptor(FriendsNewsActivity.this, companion.getId(), replyList);
             recyclerView.setAdapter(friendsReplyAdaptor);
@@ -223,9 +222,7 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
         //tv_comment.setText(String.valueOf(replyList.size()));
         //all_comment_num.setText(getResources().getString(R.string.news_comment, replyList.size()));
     }
-
     @Override
     public void onDataChanged(List<Reply> replies) {
-
     }
 }

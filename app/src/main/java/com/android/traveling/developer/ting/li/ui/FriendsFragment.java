@@ -27,6 +27,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 项目名：Traveling
@@ -62,16 +63,14 @@ public class FriendsFragment extends BaseFragment {
             }
             @Override
             public void onFailure(int errCode, String reason) {
-                if (errCode== Msg.NO_DATA){
-                }
             }
         });
-        friendsAdaptor = new FriendsAdaptor(getActivity(), friendsNewsList);
+        friendsAdaptor = new FriendsAdaptor(Objects.requireNonNull(getActivity()), friendsNewsList);
         friends_listView.setAdapter(friendsAdaptor);
         //点击事件
         friends_listView.setOnItemClickListener((parent, view2, position, id) -> {
             Companion companion = friendsNewsList.get(position);
-            companion.setViews(companion.getViews()+1);
+            companion.setViews(companion.getViews() + 1);
             friendsAdaptor.notifyDataSetChanged();
             Intent intent = new Intent(getActivity(), FriendsNewsActivity.class);
             //intent.putExtra(FriendsNewsActivity.ID, id);
@@ -88,16 +87,17 @@ public class FriendsFragment extends BaseFragment {
                 Companion.getNewest(new Companion.Callback() {
                     @Override
                     public void onSuccess(List<Companion> companions) {
-                        //friendsNewsList.addAll(companions);
-                        FriendsFragment.this.friendsNewsList = companions;
+                        friendsNewsList.addAll(companions);
+                        //FriendsFragment.this.friendsNewsList = companions;
                         LogUtil.d("333"+companions.get(0).getNickName()+companions.get(0).getImgUrl()+companions.get(0).getContent());
                         friendsAdaptor = new FriendsAdaptor(getActivity(), companions);
                         friends_listView.setAdapter(friendsAdaptor);
+                        friendsAdaptor.notifyDataSetChanged();
                         refreshLayout.finishRefresh();
                     }
                     @Override
                     public void onFailure(int errCode, String reason) {
-                        if (errCode== Msg.NO_DATA){
+                        if (errCode == Msg.NO_DATA){
                             refreshLayout.finishRefresh(false);
                             UtilTools.toast(getContext(), "加载失败:" + reason);
                         }
@@ -107,7 +107,7 @@ public class FriendsFragment extends BaseFragment {
         });
         //上拉加载更多
         refreshLayout1.setOnLoadMoreListener(refreshLayout -> new Handler().postDelayed(() -> {
-            Companion.loadMore(friendsNewsList.size(), new Companion.Callback() {
+            Companion.loadMore(friendsNewsList.get(friendsNewsList.size() - 1).getId(), new Companion.Callback() {
                 @Override
                 public void onSuccess(List<Companion> companions) {
                     friendsNewsList.addAll(companions);
@@ -116,7 +116,11 @@ public class FriendsFragment extends BaseFragment {
                 }
                 @Override
                 public void onFailure(int errCode, String reason) {
-                    UtilTools.toast(getContext(), "加载失败：" + reason);
+                    if(reason.equals("no data")){
+                        UtilTools.toast(getContext(), "没有更多数据了。");
+                    }else {
+                        UtilTools.toast(getContext(), "加载失败：" + reason);
+                    }
                     refreshLayout.finishLoadMore(false);
                 }
             });

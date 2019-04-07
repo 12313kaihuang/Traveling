@@ -151,6 +151,7 @@ public class NewFragment extends Fragment {
                     if (newsAdapter != null) {
                         newsAdapter.notifyDataSetInvalidated(); //重绘整个控件
                     }
+                    context.unregisterReceiver(this);
                 }
             };
             getActivity().registerReceiver(loginOrLogoutReceiver, filter);

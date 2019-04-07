@@ -1,14 +1,17 @@
 package com.android.traveling.entity.companion;
 
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.android.traveling.entity.comment.Reply;
 import com.android.traveling.entity.msg.CompanionMsg;
 import com.android.traveling.entity.msg.CompanionReplyMsg;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.service.CompanionService;
+import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.ReflectionUtil;
 import com.android.traveling.util.UtilTools;
+import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -106,21 +109,19 @@ public class Companion implements Serializable {
                     }
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<CompanionMsg> call, @NonNull Throwable t) {
                 callback.onFailure(Msg.ERROR_STATUS, t.getMessage());
             }
         });
     }
-
     /**
      * 增加浏览量
      *
      * @param companionId 结伴消息id
      * @param callback    回调接口
      */
-    public static void addBrowsNum(int companionId, Callback2 callback) {
+    /*public static void addBrowsNum(int companionId, Callback2 callback) {
         CompanionService companionService = UtilTools.getRetrofit().create(CompanionService.class);
         Call<Msg> msgCall = companionService.addBrowseNum(companionId);
         msgCall.enqueue(new retrofit2.Callback<Msg>() {
@@ -139,7 +140,7 @@ public class Companion implements Serializable {
                 callback.onFailure(t.getMessage());
             }
         });
-    }
+    }*/
 
     /**
      * * 通过结伴信息id来查找与之相关的所有评论

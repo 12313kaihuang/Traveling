@@ -1,5 +1,6 @@
 package com.android.traveling.developer.ting.li.adaptor;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,6 @@ public class FriendsAdaptor extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private List<Companion> friendsNewsList;
-    private Companion companion;
 
     public FriendsAdaptor(Context context, List<Companion> friendsNewsList) {
         this.context = context;
@@ -40,6 +40,7 @@ public class FriendsAdaptor extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+    @SuppressLint({"SetTextI18n", "InflateParams"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -57,12 +58,13 @@ public class FriendsAdaptor extends BaseAdapter {
             viewHolder.endTime = convertView.findViewById(R.id.friends_news_time_end);
             viewHolder.target = convertView.findViewById(R.id.friends_news_time_place);
             viewHolder.views = convertView.findViewById(R.id.friends_news_time_views);
+            //viewHolder.discussNum = convertView.findViewById(R.id.friends_discussNum);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (FriendsAdaptor.ViewHolder) convertView.getTag();
         }
-        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
-        companion = friendsNewsList.get(position);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+        Companion companion = friendsNewsList.get(position);
         //viewHolder.xx.setText(news.getImgUrl())
         if (companion.getNickName() != null) {
             viewHolder.title.setText(companion.getNickName());
@@ -92,25 +94,30 @@ public class FriendsAdaptor extends BaseAdapter {
         if(companion.getViews() != null){
             viewHolder.views.setText(companion.getViews().toString()+"浏览");
         }
+        /*if(companion.getViews() != null){
+            viewHolder.discussNum.setText(companion.getViews().toString());
+        }*/
         return convertView;
     }
 
     class ViewHolder {
-        public TextView title;
+        private TextView title;
 
-        public TextView content;
+        private TextView content;
 
-        public ImageView img;
+        private ImageView img;
 
-        public TextView createTime;
+        private TextView createTime;
 
-        public TextView startTime;
+        private TextView startTime;
 
         private TextView endTime;
 
         private TextView target;
 
         private TextView views;
+
+        //private TextView discussNum;
 
     }
 }
