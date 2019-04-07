@@ -17,15 +17,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.traveling.R;
+import com.android.traveling.entity.companion.BaseCompanion;
+import com.android.traveling.entity.companion.Companion;
+import com.android.traveling.util.ReflectionUtil;
+import com.android.traveling.util.UtilTools;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
-public class AddFriendsNoteActivity extends AppCompatActivity implements View.OnClickListener{
+public class AddFriendsNoteActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView titleSure;
     private TextView titleName;
     private LinearLayout titleBack;
     private EditText headlineEdit;
-    private  EditText contentEdit;
+    private EditText contentEdit;
     private EditText destinationEdit;
     private Button timestart;
     private Button timeend;
@@ -33,6 +40,7 @@ public class AddFriendsNoteActivity extends AppCompatActivity implements View.On
     private int mYear;
     private int mMonth;
     private int mDay;
+
     //private Button timeset;
     //id_addfriendsnote_title
     @Override
@@ -44,19 +52,34 @@ public class AddFriendsNoteActivity extends AppCompatActivity implements View.On
         setAction();
         Intent intent = getIntent();
         String name = intent.getStringExtra("type").toString();
-//        titleName.setText(name);
+        //        titleName.setText(name);
 
         Calendar ca = Calendar.getInstance();
         mYear = ca.get(Calendar.YEAR);
         mMonth = ca.get(Calendar.MONTH);
         mDay = ca.get(Calendar.DAY_OF_MONTH);
     }
+
     private void initView() {
 
         headlineEdit = findViewById(R.id.id_addfriendsnote_headline);
         destinationEdit = findViewById(R.id.id_addfriendsnote_destinationeditor);
         timestart = findViewById(R.id.id_addfriendsnote_timestart);
         timeend = findViewById(R.id.id_addfriendsnote_timeend);
+
+//        BaseCompanion baseCompanion = new BaseCompanion(2, "测试", "test", new Date(), new Date(), "ss");
+//        Companion.add(baseCompanion, new Companion.Callback() {
+//            @Override
+//            public void onSuccess(List<Companion> companions) {
+//                UtilTools.toast(AddFriendsNoteActivity.this, "success");
+//            }
+//
+//            @Override
+//            public void onFailure(int errCode, String reason) {
+//                UtilTools.toast(AddFriendsNoteActivity.this, "failure");
+//
+//            }
+//        });
 
         //修改hint的文字大小
         /*String headline = "标题";
@@ -69,10 +92,12 @@ public class AddFriendsNoteActivity extends AppCompatActivity implements View.On
         headlineEdit.setHint(new SpannedString(sHeadline));
         contentEdit.setHint(new SpannedString(sContent));*/
     }
+
     private void setAction() {
         timestart.setOnClickListener(this);
         timeend.setOnClickListener(this);
     }
+
     private DatePickerDialog.OnDateSetListener onDateSetListenerstart = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {

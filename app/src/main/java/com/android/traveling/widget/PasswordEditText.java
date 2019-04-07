@@ -1,6 +1,7 @@
 package com.android.traveling.widget;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.IntDef;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
@@ -85,18 +86,26 @@ public class PasswordEditText extends AppCompatEditText {
      * 改变密码可见性
      */
     private void changeVisible() {
+        Drawable left;
         switch (visible) {
             case VISIBLE:
+                LogUtil.d("变为不可见");
                 visible = INVISIBLE;
-                setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                setCompoundDrawables(null, null,
-                        getContext().getResources().getDrawable(R.drawable.ic_eye_slash, null), null);
+                //设置密码不可见
+                setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                left = getContext().getResources().getDrawable(R.drawable.ic_eye_slash, null);
+                // 这一步必须要做，否则不会显示。
+                left.setBounds(0, 0, left.getMinimumWidth(), left.getMinimumHeight());// 设置图片宽高
+                setCompoundDrawables(null, null, left, null);
                 break;
             case INVISIBLE:
+                LogUtil.d("变为可见");
                 visible = VISIBLE;
                 setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                setCompoundDrawables(null, null,
-                        getContext().getResources().getDrawable(R.drawable.ic_eye, null), null);
+                left = getContext().getResources().getDrawable(R.drawable.ic_eye, null);
+                // 这一步必须要做，否则不会显示。
+                left.setBounds(0, 0, left.getMinimumWidth(), left.getMinimumHeight());// 设置图片宽高
+                setCompoundDrawables(null, null, left, null);
                 break;
         }
         setSelection(getText().toString().length());

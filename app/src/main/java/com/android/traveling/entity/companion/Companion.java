@@ -7,19 +7,22 @@ import com.android.traveling.entity.msg.CompanionMsg;
 import com.android.traveling.entity.msg.CompanionReplyMsg;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.service.CompanionService;
+import com.android.traveling.util.ReflectionUtil;
 import com.android.traveling.util.UtilTools;
-import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
  * Created by HY
  * 2019/2/25 18:46
+ * <p>
+ * 结伴信息详情
  */
 @SuppressWarnings("unused")
 public class Companion implements Serializable {
@@ -166,6 +169,38 @@ public class Companion implements Serializable {
 
             @Override
             public void onFailure(@NonNull Call<CompanionReplyMsg> call, @NonNull Throwable t) {
+                callback.onFailure(Msg.ERROR_STATUS, t.getMessage());
+            }
+        });
+    }
+
+    /**
+     * 添加结伴信息
+     *
+     * @param baseCompanion baseCompanion
+     * @param callback      callback
+     */
+    public static void add(BaseCompanion baseCompanion, Callback callback) {
+        CompanionService companionService = UtilTools.getRetrofit().create(CompanionService.class);
+        Call<CompanionMsg> call = companionService.addCompanion(ReflectionUtil.toMap(baseCompanion));
+        call.enqueue(new retrofit2.Callback<CompanionMsg>() {
+            @Override
+            public void onResponse(@NonNull Call<CompanionMsg> call, @NonNull Response<CompanionMsg> response) {
+                CompanionMsg msg = response.body();
+                if (msg == null) {
+                    callback.onFailure(Msg.ERROR_STATUS, "msg == null");
+                } else {
+                    List<Companion> companions = msg.getCompanions();
+                    if (companions == null || companions.size() == 0) {
+                        callback.onFailure(Msg.NO_DATA, "no data");
+                    } else {
+                        callback.onSuccess(companions);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CompanionMsg> call, @NonNull Throwable t) {
                 callback.onFailure(Msg.ERROR_STATUS, t.getMessage());
             }
         });

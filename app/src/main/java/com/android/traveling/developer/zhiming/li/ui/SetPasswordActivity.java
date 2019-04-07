@@ -58,10 +58,10 @@ public class SetPasswordActivity extends BackableActivity {
         }
         if (currentUser.hasPassword()) {
             setTitle("修改密码");
-            ll_y_pass.setVisibility(View.GONE);
+            ll_y_pass.setVisibility(View.VISIBLE);
         } else {
             setTitle("设置密码");
-            ll_y_pass.setVisibility(View.VISIBLE);
+            ll_y_pass.setVisibility(View.GONE);
         }
     }
 
