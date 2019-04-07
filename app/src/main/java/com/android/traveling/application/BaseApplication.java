@@ -27,8 +27,9 @@ import cn.leancloud.chatkit.LCChatKit;
 
 public class BaseApplication extends Application {
 
-    private final String APP_ID = "WSYL5OvdOhS1y2m1AMefmgcB-gzGzoHsz";
-    private final String APP_KEY = "zgFTp1Vn0gEhGC2lMphmayW1";
+    //leanClound
+    private static final String APP_ID = "WSYL5OvdOhS1y2m1AMefmgcB-gzGzoHsz";
+    private static final String APP_KEY = "zgFTp1Vn0gEhGC2lMphmayW1";
 
     @Override
     public void onCreate() {

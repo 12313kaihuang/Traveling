@@ -4,7 +4,6 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.iflytek.cloud.ErrorCode;
-import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.ui.RecognizerDialog;
@@ -36,12 +35,9 @@ public class XunfeiUtil {
     public static void showSpeechDialog(Context context, onRecognizerResult onRecognizerResult) {
 
         //1. 创建RecognizerDialog对象
-        RecognizerDialog mDialog = new RecognizerDialog(context, new InitListener() {
-            @Override
-            public void onInit(int code) {
-                if (code != ErrorCode.SUCCESS) {
-                    Toast.makeText(context, "初始化失败 ", Toast.LENGTH_SHORT).show();
-                }
+        RecognizerDialog mDialog = new RecognizerDialog(context, code -> {
+            if (code != ErrorCode.SUCCESS) {
+                Toast.makeText(context, "初始化失败 ", Toast.LENGTH_SHORT).show();
             }
         });
         //2. 设置accent、 language等参数

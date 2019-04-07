@@ -9,7 +9,7 @@ import java.util.Date;
  * View视图
  * 首页所需一篇游记的全部信息
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class NoteList {
 
     private Integer id;

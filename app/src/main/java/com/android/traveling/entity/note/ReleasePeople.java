@@ -37,6 +37,7 @@ public class ReleasePeople implements Serializable {
 
     }
 
+    @SuppressWarnings("WeakerAccess")
     public ReleasePeople(NoteList noteList) {
         this.userId = noteList.getUserId();
         this.imgUrl = StaticClass.IMG_URL + noteList.getImgUrl();

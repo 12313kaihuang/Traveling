@@ -20,6 +20,7 @@ public class BinarySearch {
      * @param comparator 比较器
      * @return 如果找到 返回元素value的索引，否则返回 < 0
      * */
+    @SuppressWarnings("SameParameterValue")
     public static <T> int binarySearch (List<T> list, int lo, int hi, T value, Comparator<? super T> comparator){
 
         if(comparator == null){
@@ -66,7 +67,8 @@ public class BinarySearch {
      * @param value 查找的元素
      * @return 元素 如果找到 返回元素value的索引，否则返回 < 0
      * */
-    public static  <T extends Comparable<T>> int binarySearch (List<T> list,int lo,int hi, T value){
+    @SuppressWarnings("SameParameterValue")
+    public static  <T extends Comparable<T>> int binarySearch (List<T> list, int lo, int hi, T value){
 
         if(!checkList(list)){
             return 0;

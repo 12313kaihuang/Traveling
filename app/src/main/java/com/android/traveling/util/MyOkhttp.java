@@ -28,6 +28,7 @@ public class MyOkhttp {
         call.enqueue(callback);
     }
 
+    @SuppressWarnings("unused")
     public static void post(String url, Callback callback) {
         OkHttpClient client = new OkHttpClient();
 

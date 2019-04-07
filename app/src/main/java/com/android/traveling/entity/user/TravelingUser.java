@@ -4,7 +4,6 @@ package com.android.traveling.entity.user;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.android.traveling.MainActivity;
 import com.android.traveling.entity.leancloud.CustomUserProvider;
 import com.android.traveling.entity.msg.DetailUserInfoMsg;
 import com.android.traveling.entity.msg.LoginMsg;
