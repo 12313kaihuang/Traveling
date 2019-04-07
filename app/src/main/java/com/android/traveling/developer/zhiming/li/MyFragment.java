@@ -111,7 +111,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         fansNum = view.findViewById(R.id.my_fans_num); //粉丝数
         collectionsNum = view.findViewById(R.id.my_collections_num);  //获赞与收藏
         tv_no_notes = view.findViewById(R.id.tv_no_notes);  //没有发布过文章
-        refreshUserDetail();
+        refreshUserDetail(true);
 
 
         //点击事件
@@ -149,7 +149,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    private void refreshUserDetail() {
+    private void refreshUserDetail(boolean scroll) {
         User currentUser = TravelingUser.getCurrentUser();
         if (currentUser != null) {
             myActionBar.setTitle(currentUser.getNickName());
@@ -176,7 +176,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                             startActivityForResult(intent, 1);  //注意 跳转过去后setResult后需Finish()才会正确传回结果来！
                         });
                     }
-                    scrollToTop();
+                    if (scroll) scrollToTop();
                 }
 
                 @Override
@@ -275,7 +275,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            refreshUserDetail();
+            refreshUserDetail(true);
         }
     };
 
@@ -298,6 +298,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         super.onResume();
         LogUtil.d("MyFragment onResume");
         initData();
+        refreshUserDetail(false); //刷新文章
     }
 
     @Override
