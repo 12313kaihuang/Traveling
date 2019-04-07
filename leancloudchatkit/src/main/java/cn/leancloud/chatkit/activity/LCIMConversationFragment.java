@@ -179,12 +179,12 @@ public class LCIMConversationFragment extends Fragment {
 
   @Override
   public boolean onOptionsItemSelected (MenuItem item) {
-    if (item.getItemId() == R.id.menu_conv_setting) {
-      Intent intent = new Intent(getActivity(), LCIMConversationDetailActivity.class);
-      intent.putExtra(LCIMConstants.CONVERSATION_ID, imConversation.getConversationId());
-      getActivity().startActivity(intent);
-      return true;
-    }
+//    if (item.getItemId() == R.id.menu_conv_setting) {
+//      Intent intent = new Intent(getActivity(), LCIMConversationDetailActivity.class);
+//      intent.putExtra(LCIMConstants.CONVERSATION_ID, imConversation.getConversationId());
+//      getActivity().startActivity(intent);
+//      return true;
+//    }
     return super.onOptionsItemSelected(item);
   }
 

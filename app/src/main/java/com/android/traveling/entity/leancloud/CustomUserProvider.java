@@ -56,39 +56,46 @@ public class CustomUserProvider implements LCChatProfileProvider {
     @Override
     public void fetchProfiles(List<String> list, LCChatProfilesCallBack callBack) {
         LogUtil.d("fetchProfiles   list=" + new Gson().toJson(list));
-        List<LCChatKitUser> userList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             String userId = list.get(i);
             boolean isContains = false;
             for (int j = 0; j < partUsers.size(); j++) {
                 if (userId.equals(partUsers.get(j).getUserId())) {
-                    userList.add(partUsers.get(j));
                     isContains = true;
                     break;
                 }
             }
             if (!isContains) {
-                int finalI = i;
                 LogUtil.d("fetchProfiles userId=" + userId);
                 getLCChatKitUser(Integer.parseInt(userId), new mCallBack() {
                     @Override
                     public void onSuccess(LCChatKitUser lcChatKitUser) {
-                        partUsers.add(lcChatKitUser);
-                        if (finalI == list.size() - 1) {
-                            callBack.done(userList, null);
-                        }
+                        LogUtil.d("查找" + userId + "成功，添加");
+                        addUser(lcChatKitUser);
                     }
 
                     @Override
                     public void onFailure() {
-                        partUsers.add(createDefaultUser(userId));
-                        if (finalI == list.size() - 1) {
-                            callBack.done(userList, null);
-                        }
+                        LogUtil.d("查找" + userId + "失败，添加");
+                        addUser(createDefaultUser(userId));
                     }
                 });
             }
         }
+        LogUtil.d("回调接口 size=" + partUsers.size());
+        callBack.done(partUsers, null);
+    }
+
+    //添加User
+    private synchronized void addUser(LCChatKitUser lcChatKitUser) {
+        LogUtil.d("addUser size=" + partUsers.size() + ",userId=" + lcChatKitUser.getUserId());
+        for (int i = 0; i < partUsers.size(); i++) {
+            if (partUsers.get(i).getUserId().equals(lcChatKitUser.getUserId())) {
+                partUsers.set(i, lcChatKitUser);
+                break;
+            }
+        }
+        partUsers.add(lcChatKitUser);
     }
 
     @Override
@@ -109,6 +116,7 @@ public class CustomUserProvider implements LCChatProfileProvider {
                 LoginMsg msg = response.body();
                 if (msg != null && msg.isStatusCorrect()) {
                     User user = msg.getUser();
+                    LogUtil.d("fetchProfiles user=" + user.toString());
                     callBack.onSuccess(
                             new LCChatKitUser(String.valueOf(user.getUserId()), user.getNickName(),
                                     user.getImg())
