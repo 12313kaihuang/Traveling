@@ -239,5 +239,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
+    //上次点击时间
+    private long lastClickTime = 0;
+    @Override
+    public void onBackPressed() {
+        long timeMillis = System.currentTimeMillis();
+        if (timeMillis - lastClickTime > 2000) {
+            UtilTools.toast(this,"再次点击退出Traveling");
+            lastClickTime = timeMillis;
+        }else {
+            finish();
+        }
+    }
 }
