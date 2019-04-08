@@ -58,7 +58,7 @@ public class FriendsAdaptor extends BaseAdapter {
             viewHolder.endTime = convertView.findViewById(R.id.friends_news_time_end);
             viewHolder.target = convertView.findViewById(R.id.friends_news_time_place);
             viewHolder.views = convertView.findViewById(R.id.friends_news_time_views);
-            //viewHolder.discussNum = convertView.findViewById(R.id.friends_discussNum);
+            viewHolder.discussNum = convertView.findViewById(R.id.friends_discussNum);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (FriendsAdaptor.ViewHolder) convertView.getTag();
@@ -94,9 +94,9 @@ public class FriendsAdaptor extends BaseAdapter {
         if(companion.getViews() != null){
             viewHolder.views.setText(companion.getViews().toString()+"浏览");
         }
-        /*if(companion.getViews() != null){
-            viewHolder.discussNum.setText(companion.getViews().toString());
-        }*/
+        if(companion.getCommentNum() != null){
+            viewHolder.discussNum.setText(companion.getCommentNum().toString());
+        }
         return convertView;
     }
 
@@ -117,7 +117,7 @@ public class FriendsAdaptor extends BaseAdapter {
 
         private TextView views;
 
-        //private TextView discussNum;
+        private TextView discussNum;
 
     }
 }

@@ -51,6 +51,8 @@ public class Companion implements Serializable {
 
     private Integer views;
 
+    private Integer commentNum;
+
     public Companion() {
     }
 
@@ -337,7 +339,12 @@ public class Companion implements Serializable {
     public Integer getViews() {
         return views;
     }
-
+    public Integer getCommentNum() {
+        return commentNum;
+    }
+    public void setCommentNum(Integer commentNum) {
+        this.commentNum = commentNum;
+    }
     public void setViews(Integer views) {
         this.views = views;
     }

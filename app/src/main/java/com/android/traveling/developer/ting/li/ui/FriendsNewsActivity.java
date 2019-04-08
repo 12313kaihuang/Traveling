@@ -9,16 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.ting.li.adaptor.FriendsAdaptor;
 import com.android.traveling.developer.ting.li.adaptor.FriendsReplyAdaptor;
-import com.android.traveling.developer.ting.li.entity.FriendsNews;
-import com.android.traveling.developer.yu.hu.adaptor.CommentAdapter;
 import com.android.traveling.developer.zhiming.li.ui.PersonalActivity;
 import com.android.traveling.entity.comment.BaseComment;
-import com.android.traveling.entity.comment.Comment;
 import com.android.traveling.entity.comment.Reply;
 import com.android.traveling.entity.companion.Companion;
 import com.android.traveling.entity.leancloud.CustomUserProvider;
@@ -173,6 +168,13 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
             }
 
         });
+        //用户点击事件
+        findViewById(R.id.friends_news_img_detail).setOnClickListener(v -> {
+            Intent toPersonal = new Intent(this, PersonalActivity.class);
+            toPersonal.putExtra(PersonalActivity.USER_ID, companion.getUserId());
+            startActivity(toPersonal);
+        });
+
         //评论
         tv_write_comment.setOnClickListener(v -> {
             User currentUser = TravelingUser.checkLogin(this);

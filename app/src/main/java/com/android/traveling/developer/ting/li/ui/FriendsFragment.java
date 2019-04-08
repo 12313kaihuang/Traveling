@@ -87,8 +87,8 @@ public class FriendsFragment extends BaseFragment {
                 Companion.getNewest(new Companion.Callback() {
                     @Override
                     public void onSuccess(List<Companion> companions) {
-                        friendsNewsList.addAll(companions);
-                        //FriendsFragment.this.friendsNewsList = companions;
+                        //friendsNewsList.addAll(companions);
+                        FriendsFragment.this.friendsNewsList = companions;
                         LogUtil.d("333"+companions.get(0).getNickName()+companions.get(0).getImgUrl()+companions.get(0).getContent());
                         friendsAdaptor = new FriendsAdaptor(getActivity(), companions);
                         friends_listView.setAdapter(friendsAdaptor);
