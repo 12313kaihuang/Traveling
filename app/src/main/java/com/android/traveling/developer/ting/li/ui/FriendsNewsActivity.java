@@ -42,12 +42,10 @@ import cn.leancloud.chatkit.utils.LCIMConstants;
  * 创建时间：2018/10/4 17:22
  * 描述：  结伴消息详情页面
  */
-public class FriendsNewsActivity extends BackableActivity implements FriendsReplyAdaptor.DataChangeListener{
-    public static final String ID = "id";
+public class FriendsNewsActivity extends BackableActivity implements FriendsReplyAdaptor.DataChangeListener {
     public static final String s_COMPANION = "s_companion";
     public static final String POSITION = "position";
     private Companion companion;
-    private int id;
 
     ImageView imageView;
     TextView textViewNickName;
@@ -70,7 +68,8 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
         initView();
         initDate();
     }
-    private void initView(){
+
+    private void initView() {
         imageView = findViewById(R.id.friends_news_img_detail);
         textViewNickName = findViewById(R.id.friends_news_username_detail);
         textViewCreateTime = findViewById(R.id.friends_news_create_time_detail);
@@ -83,44 +82,45 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
         tv_write_comment = findViewById(R.id.tv_write_comment);
 
     }
+
     //初始化数据
     @SuppressLint("SetTextI18n")
     private void initDate() {
         Intent intent = getIntent();
         //id = intent.getIntExtra(ID, 0);
-        int position = intent.getIntExtra(POSITION, -1);
+        //        int position = intent.getIntExtra(POSITION, -1);
         companion = (Companion) intent.getSerializableExtra(s_COMPANION);
         setTitle(companion.getTitle());  //设置标题
         @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
-        if(companion.getImgUrl() != null){
+        if (companion.getImgUrl() != null) {
             Picasso.get().load(companion.getImgUrl()).into(imageView);
         }
         if (companion.getNickName() != null) {
             textViewNickName.setText(companion.getNickName());
-        }else {
+        } else {
             textViewNickName.setText(R.string.list_friends_item_username);
         }
-        if(companion.getCreateTime() != null){
+        if (companion.getCreateTime() != null) {
             textViewCreateTime.setText(format.format(companion.getCreateTime()));
         }
-        if(companion.getContent() != null){
+        if (companion.getContent() != null) {
             textViewContent.setText(companion.getContent());
         }
-        if(companion.getStartTime() != null){
+        if (companion.getStartTime() != null) {
             textViewStartTime.setText(format.format(companion.getStartTime()));
         }
-        if(companion.getEndTime() != null){
+        if (companion.getEndTime() != null) {
             textViewEndTime.setText(format.format(companion.getEndTime()));
         }
-        if(companion.getTarget() != null){
+        if (companion.getTarget() != null) {
             textViewPlace.setText(companion.getTarget());
         }
-        if(companion.getViews() != null){
+        if (companion.getViews() != null) {
             textViewViews.setText(companion.getViews().toString() + "浏览");
         }
         LogUtil.d("44" + companion.getId());
         //replyList = comment.getReplies();
-        Companion.getCompanionComments(companion.getId(),new Companion.Callback3() {
+        Companion.getCompanionComments(companion.getId(), new Companion.Callback3() {
             @Override
             public void onSuccess(List<Reply> replies) {
                 replyList = replies;
@@ -128,17 +128,18 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
                 recyclerView.setLayoutManager(new LinearLayoutManager(FriendsNewsActivity.this));
                 //关闭RecyclerView的嵌套滑动特性
                 //recyclerView.setNestedScrollingEnabled(false);
-                friendsReplyAdaptor = new FriendsReplyAdaptor(FriendsNewsActivity.this, companion.getId(),replyList);
+                friendsReplyAdaptor = new FriendsReplyAdaptor(FriendsNewsActivity.this, companion.getId(), replyList);
                 recyclerView.setAdapter(friendsReplyAdaptor);
                 friendsReplyAdaptor.notifyDataSetChanged();
                 UtilTools.toast(FriendsNewsActivity.this, "加载成功:" + replyList.size());
             }
+
             @Override
             public void onFailure(int errCode, String reason) {
-                if (errCode== Msg.NO_DATA){
+                if (errCode == Msg.NO_DATA) {
                     //refreshLayout.finishRefresh(false);
                     UtilTools.toast(FriendsNewsActivity.this, "加载失败:" + reason);
-                }else{
+                } else {
                     UtilTools.toast(FriendsNewsActivity.this, "加载失败:" + errCode);
                 }
             }
@@ -190,6 +191,7 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
                     public void onSuccess(BaseComment baseComment1) {
                         addCommentSuccess(currentUser, baseComment1, companion);
                     }
+
                     @Override
                     public void onFailure(String reason) {
                         UtilTools.toast(FriendsNewsActivity.this, "2发布失败：" + reason);
@@ -198,12 +200,13 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
             }).show();
         });
     }
+
     /**
      * 评论成功后UI界面的一些操作
      *
      * @param currentUser 当前登录的用户
      * @param baseComment baseComment
-     * @param companion        companion
+     * @param companion   companion
      */
     private void addCommentSuccess(User currentUser, BaseComment baseComment, Companion companion) {
         if (replyList == null || replyList.size() == 0) {
@@ -217,13 +220,14 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
         replyList.add(0, new Reply(currentUser, baseComment));
         LogUtil.d(replyList.get(0).getContent() + replyList.get(0).getUserImg());
         LogUtil.d("889" + rr.getContent() + rr.getUserImg());
-        LogUtil.d("889" + rr.getContent() + currentUser.getDirectImg() + currentUser.getImg() +currentUser.getNickName());
+        LogUtil.d("889" + rr.getContent() + currentUser.getDirectImg() + currentUser.getImg() + currentUser.getNickName());
         friendsReplyAdaptor.notifyItemInserted(0);
         recyclerView.getAdapter().notifyItemRangeChanged(0, replyList.size());
         //companion.setCommentNum(replyList.size());
         //tv_comment.setText(String.valueOf(replyList.size()));
         //all_comment_num.setText(getResources().getString(R.string.news_comment, replyList.size()));
     }
+
     @Override
     public void onDataChanged(List<Reply> replies) {
     }

@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.traveling.R;
-import com.android.traveling.developer.ting.li.entity.FriendsNews;
 import com.android.traveling.entity.companion.Companion;
 import com.squareup.picasso.Picasso;
 
@@ -18,19 +17,19 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class FriendsAdaptor extends BaseAdapter {
-    private Context context;
     private LayoutInflater inflater;
     private List<Companion> friendsNewsList;
 
     public FriendsAdaptor(Context context, List<Companion> friendsNewsList) {
-        this.context = context;
         this.friendsNewsList = friendsNewsList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
     @Override
     public int getCount() {
         return friendsNewsList.size();
     }
+
     @Override
     public Object getItem(int position) {
         return friendsNewsList.get(position);
@@ -40,6 +39,7 @@ public class FriendsAdaptor extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+
     @SuppressLint({"SetTextI18n", "InflateParams"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -68,39 +68,39 @@ public class FriendsAdaptor extends BaseAdapter {
         //viewHolder.xx.setText(news.getImgUrl())
         if (companion.getNickName() != null) {
             viewHolder.title.setText(companion.getNickName());
-        }else {
+        } else {
             viewHolder.title.setText(R.string.list_friends_item_username);
         }
         if (companion.getContent() != null) {
             viewHolder.content.setText(companion.getContent());
-        }else {
+        } else {
             viewHolder.content.setText(R.string.list_friends_item_content);
         }
-        if (companion.getImgUrl() != null){
+        if (companion.getImgUrl() != null) {
             Picasso.get().load(companion.getImgUrl()).into(viewHolder.img);
         }
-        if(companion.getCreateTime() != null){
+        if (companion.getCreateTime() != null) {
             viewHolder.createTime.setText(format.format(companion.getCreateTime()));
         }
-        if(companion.getStartTime() != null){
+        if (companion.getStartTime() != null) {
             viewHolder.startTime.setText(format.format(companion.getStartTime()));
         }
-        if(companion.getEndTime() != null){
+        if (companion.getEndTime() != null) {
             viewHolder.endTime.setText(format.format(companion.getEndTime()));
         }
-        if(companion.getTarget() != null){
+        if (companion.getTarget() != null) {
             viewHolder.target.setText(companion.getTarget());
         }
-        if(companion.getViews() != null){
-            viewHolder.views.setText(companion.getViews().toString()+"浏览");
+        if (companion.getViews() != null) {
+            viewHolder.views.setText(companion.getViews().toString() + "浏览");
         }
-        if(companion.getCommentNum() != null){
+        if (companion.getCommentNum() != null) {
             viewHolder.discussNum.setText(companion.getCommentNum().toString());
         }
         return convertView;
     }
 
-    class ViewHolder {
+    private class ViewHolder {
         private TextView title;
 
         private TextView content;

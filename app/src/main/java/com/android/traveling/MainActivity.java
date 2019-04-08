@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.android.traveling.developer.jiaming.liu.MessageFragment2;
+import com.android.traveling.developer.jiaming.liu.MessageFragment;
 import com.android.traveling.developer.jiaming.liu.activity.AddNoteActivity;
 import com.android.traveling.developer.ting.li.ui.AddFriendsNoteActivity;
 import com.android.traveling.developer.ting.li.ui.FriendsFragment;
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initFragments() {
         fragments.add(new HomeFragment());
         fragments.add(new FriendsFragment());
-        fragments.add(new MessageFragment2());
+        fragments.add(new MessageFragment());
         fragments.add(new MyFragment());
     }
 

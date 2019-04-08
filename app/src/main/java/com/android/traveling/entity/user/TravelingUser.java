@@ -22,7 +22,6 @@ import org.litepal.LitePal;
 import java.util.List;
 
 import cn.leancloud.chatkit.LCChatKit;
-import cn.leancloud.chatkit.cache.LCIMProfileCache;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

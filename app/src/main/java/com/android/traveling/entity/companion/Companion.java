@@ -1,17 +1,14 @@
 package com.android.traveling.entity.companion;
 
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import com.android.traveling.entity.comment.Reply;
 import com.android.traveling.entity.msg.CompanionMsg;
 import com.android.traveling.entity.msg.CompanionReplyMsg;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.entity.service.CompanionService;
-import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.ReflectionUtil;
 import com.android.traveling.util.UtilTools;
-import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.Date;

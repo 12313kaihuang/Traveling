@@ -2,7 +2,6 @@ package com.android.traveling.developer.ting.li.ui;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -15,13 +14,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.traveling.R;
-import com.android.traveling.developer.jiaming.liu.activity.AddNoteActivity;
 import com.android.traveling.entity.companion.BaseCompanion;
 import com.android.traveling.entity.companion.Companion;
 import com.android.traveling.entity.user.TravelingUser;
 import com.android.traveling.entity.user.User;
-import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
 import com.android.traveling.widget.dialog.PublishDialog;
 
@@ -62,14 +60,15 @@ public class AddFriendsNoteActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_add_friends);
         initView();
         setAction();
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("type");
+        //        Intent intent = getIntent();
+        //        String name = intent.getStringExtra("type");
         //        titleName.setText(name);
         Calendar ca = Calendar.getInstance();
         mYear = ca.get(Calendar.YEAR);
         mMonth = ca.get(Calendar.MONTH);
         mDay = ca.get(Calendar.DAY_OF_MONTH);
     }
+
     private void initView() {
         headlineEdit = findViewById(R.id.id_addfriendsnote_headline);
         destinationEdit = findViewById(R.id.id_addfriendsnote_destinationeditor);
@@ -79,19 +78,19 @@ public class AddFriendsNoteActivity extends AppCompatActivity implements View.On
         btnPublish = findViewById(R.id.btn_friends_publish);
         tv_cancel = findViewById(R.id.tv_cancel_friends);
         publishDialog = new PublishDialog(this);
-//        BaseCompanion baseCompanion = new BaseCompanion(2, "测试", "test", new Date(), new Date(), "ss");
-//        Companion.add(baseCompanion, new Companion.Callback() {
-//            @Override
-//            public void onSuccess(List<Companion> companions) {
-//                UtilTools.toast(AddFriendsNoteActivity.this, "success");
-//            }
-//
-//            @Override
-//            public void onFailure(int errCode, String reason) {
-//                UtilTools.toast(AddFriendsNoteActivity.this, "failure");
-//
-//            }
-//        });
+        //        BaseCompanion baseCompanion = new BaseCompanion(2, "测试", "test", new Date(), new Date(), "ss");
+        //        Companion.add(baseCompanion, new Companion.Callback() {
+        //            @Override
+        //            public void onSuccess(List<Companion> companions) {
+        //                UtilTools.toast(AddFriendsNoteActivity.this, "success");
+        //            }
+        //
+        //            @Override
+        //            public void onFailure(int errCode, String reason) {
+        //                UtilTools.toast(AddFriendsNoteActivity.this, "failure");
+        //
+        //            }
+        //        });
 
         //修改hint的文字大小
         /*String headline = "标题";
@@ -278,7 +277,7 @@ public class AddFriendsNoteActivity extends AppCompatActivity implements View.On
                             dialog.dismiss();
                         });
                     }
-                }else{
+                } else {
                     UtilTools.toast(AddFriendsNoteActivity.this, "请补全信息。");
                 }
             }

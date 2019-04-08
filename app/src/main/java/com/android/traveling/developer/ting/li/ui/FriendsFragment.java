@@ -12,18 +12,12 @@ import android.widget.ListView;
 
 import com.android.traveling.R;
 import com.android.traveling.developer.ting.li.adaptor.FriendsAdaptor;
-import com.android.traveling.developer.ting.li.adaptor.FriendsReplyAdaptor;
-import com.android.traveling.developer.ting.li.entity.FriendsNews;
-import com.android.traveling.entity.comment.Comment;
-import com.android.traveling.entity.comment.Reply;
 import com.android.traveling.entity.companion.Companion;
 import com.android.traveling.entity.msg.Msg;
 import com.android.traveling.fragment.BaseFragment;
 import com.android.traveling.util.LogUtil;
 import com.android.traveling.util.UtilTools;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +36,7 @@ public class FriendsFragment extends BaseFragment {
     List<Companion> friendsNewsList;
     FriendsAdaptor friendsAdaptor;
     ListView friends_listView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +44,7 @@ public class FriendsFragment extends BaseFragment {
         initView(view);
         return view;
     }
+
     //初始化View
     private void initView(View view) {
         friends_listView = view.findViewById(R.id.friends_news_listView);
@@ -59,8 +55,9 @@ public class FriendsFragment extends BaseFragment {
             @Override
             public void onSuccess(List<Companion> companions) {
                 friendsNewsList.addAll(companions);
-                LogUtil.d("222"+companions.get(0).getNickName()+companions.get(0).getImgUrl()+companions.get(0).getContent());
+                LogUtil.d("222" + companions.get(0).getNickName() + companions.get(0).getImgUrl() + companions.get(0).getContent());
             }
+
             @Override
             public void onFailure(int errCode, String reason) {
             }
@@ -81,55 +78,52 @@ public class FriendsFragment extends BaseFragment {
         });
 
         //下拉刷新
-        refreshLayout1.setOnRefreshListener(new OnRefreshListener() {
+        refreshLayout1.setOnRefreshListener(refreshLayout -> Companion.getNewest(new Companion.Callback() {
             @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                Companion.getNewest(new Companion.Callback() {
-                    @Override
-                    public void onSuccess(List<Companion> companions) {
-                        //friendsNewsList.addAll(companions);
-                        FriendsFragment.this.friendsNewsList = companions;
-                        LogUtil.d("333"+companions.get(0).getNickName()+companions.get(0).getImgUrl()+companions.get(0).getContent());
-                        friendsAdaptor = new FriendsAdaptor(getActivity(), companions);
-                        friends_listView.setAdapter(friendsAdaptor);
-                        friendsAdaptor.notifyDataSetChanged();
-                        refreshLayout.finishRefresh();
-                    }
-                    @Override
-                    public void onFailure(int errCode, String reason) {
-                        if (errCode == Msg.NO_DATA){
-                            refreshLayout.finishRefresh(false);
-                            UtilTools.toast(getContext(), "加载失败:" + reason);
-                        }
-                    }
-                });
+            public void onSuccess(List<Companion> companions) {
+                //friendsNewsList.addAll(companions);
+                FriendsFragment.this.friendsNewsList = companions;
+                LogUtil.d("333" + companions.get(0).getNickName() + companions.get(0).getImgUrl() + companions.get(0).getContent());
+                friendsAdaptor = new FriendsAdaptor(getActivity(), companions);
+                friends_listView.setAdapter(friendsAdaptor);
+                friendsAdaptor.notifyDataSetChanged();
+                refreshLayout.finishRefresh();
             }
-        });
+
+            @Override
+            public void onFailure(int errCode, String reason) {
+                if (errCode == Msg.NO_DATA) {
+                    refreshLayout.finishRefresh(false);
+                    UtilTools.toast(getContext(), "加载失败:" + reason);
+                }
+            }
+        }));
         //上拉加载更多
-        refreshLayout1.setOnLoadMoreListener(refreshLayout -> new Handler().postDelayed(() -> {
-            Companion.loadMore(friendsNewsList.get(friendsNewsList.size() - 1).getId(), new Companion.Callback() {
-                @Override
-                public void onSuccess(List<Companion> companions) {
-                    friendsNewsList.addAll(companions);
-                    friendsAdaptor.notifyDataSetChanged();
-                    refreshLayout.finishLoadMore();
+        refreshLayout1.setOnLoadMoreListener(refreshLayout -> new Handler().postDelayed(() -> Companion.loadMore(friendsNewsList.get(friendsNewsList.size() - 1).getId(), new Companion.Callback() {
+            @Override
+            public void onSuccess(List<Companion> companions) {
+                friendsNewsList.addAll(companions);
+                friendsAdaptor.notifyDataSetChanged();
+                refreshLayout.finishLoadMore();
+            }
+
+            @Override
+            public void onFailure(int errCode, String reason) {
+                if (reason.equals("no data")) {
+                    UtilTools.toast(getContext(), "没有更多数据了。");
+                } else {
+                    UtilTools.toast(getContext(), "加载失败：" + reason);
                 }
-                @Override
-                public void onFailure(int errCode, String reason) {
-                    if(reason.equals("no data")){
-                        UtilTools.toast(getContext(), "没有更多数据了。");
-                    }else {
-                        UtilTools.toast(getContext(), "加载失败：" + reason);
-                    }
-                    refreshLayout.finishLoadMore(false);
-                }
-            });
-        }, 1000));
+                refreshLayout.finishLoadMore(false);
+            }
+        }), 1000));
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
