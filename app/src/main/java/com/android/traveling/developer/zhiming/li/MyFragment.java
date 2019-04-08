@@ -198,6 +198,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             LogUtil.d("currentUser.getNickName()" + currentUser.getNickName());
             my_user_status.setText(currentUser.getNickName());
             Picasso.get().load(currentUser.getImg())
+                    .placeholder(R.drawable.err_img_bg)
                     .error(R.drawable.err_img_bg).fit()
                     .into(my_user_bg);
             Picasso.get().load(currentUser.getBackgroundImg())
@@ -325,4 +326,5 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         //noinspection ConstantConditions
         getActivity().unregisterReceiver(logoutReceiver);
     }
+
 }
