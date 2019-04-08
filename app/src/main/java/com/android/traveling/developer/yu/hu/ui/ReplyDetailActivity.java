@@ -89,7 +89,10 @@ public class ReplyDetailActivity extends BackableActivity implements ReplyAdapte
 
     //初始化数据
     private void initDate() {
-        Picasso.get().load(comment.getUserImg()).into(user_bg);
+        Picasso.get().load(comment.getUserImg())
+                .placeholder(R.drawable.err_img_bg)
+                .error(R.drawable.err_img_bg).fit()
+                .into(user_bg);
         tv_username.setText(comment.getNickName());
         tv_content.setText(comment.getContent());
         tv_time.setText(DateUtil.fromNow(comment.getCommentTime()));

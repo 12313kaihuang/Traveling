@@ -93,7 +93,10 @@ public class FriendsNewsActivity extends BackableActivity implements FriendsRepl
         setTitle(companion.getTitle());  //设置标题
         @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
         if (companion.getImgUrl() != null) {
-            Picasso.get().load(companion.getImgUrl()).into(imageView);
+            Picasso.get().load(companion.getImgUrl())
+                    .placeholder(R.drawable.err_img_bg)
+                    .error(R.drawable.err_img_bg).fit()
+                    .into(imageView);
         }
         if (companion.getNickName() != null) {
             textViewNickName.setText(companion.getNickName());

@@ -77,7 +77,10 @@ public class FriendsAdaptor extends BaseAdapter {
             viewHolder.content.setText(R.string.list_friends_item_content);
         }
         if (companion.getImgUrl() != null) {
-            Picasso.get().load(companion.getImgUrl()).into(viewHolder.img);
+            Picasso.get().load(companion.getImgUrl())
+                    .placeholder(R.drawable.err_img_bg)
+                    .error(R.drawable.err_img_bg).fit()
+                    .into(viewHolder.img);
         }
         if (companion.getCreateTime() != null) {
             viewHolder.createTime.setText(format.format(companion.getCreateTime()));

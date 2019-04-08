@@ -73,7 +73,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         Comment comment = commentList.get(position);
-        Picasso.get().load(comment.getUserImg()).into(holder.user_img);
+        Picasso.get().load(comment.getUserImg())
+                .placeholder(R.drawable.err_img_bg)
+                .error(R.drawable.err_img_bg)
+                .into(holder.user_img);
         holder.user_name.setText(comment.getNickName());
         holder.content.setText(comment.getContent());
         holder.tv_comment_time.setText(DateUtil.fromNow(comment.getCommentTime()));

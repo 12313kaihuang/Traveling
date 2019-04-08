@@ -1,3 +1,207 @@
 <resources>
+
+    <!--app_name-->
     <string name="app_name">Traveling</string>
+
+    <string name="level">%1s%2s</string>
+    <string name="searchContent">%1s:%2s</string>
+    <string name="verifiedMilliSecond">resend(%1ds)</string>
+
+    <!--MainActivity   主页-->
+
+    <!--fragment_home-->
+    <string name="fragment_home">Home</string>
+    <string name="voice_in">Voice In</string>
+
+    <!--fragment_friends-->
+    <string name="fragment_friends">Companion</string>
+
+    <!--fragment_message-->
+    <string name="fragment_message">Message</string>
+
+    <!--fragment_my-->
+    <string name="fragment_my">My</string>
+    <string name="to_guide_pager">To Guide Page</string>
+    <string name="ic_sort">More</string>
+    <string name="ic_share">Share</string>
+    <string name="user_status">Not Login</string>
+    <string name="init_username">Traveling User</string>
+    <string name="to_vip"><![CDATA[To Be A Member >]]></string>
+    <string name="num_zero">0</string>
+    <string name="focus">Focus</string>
+    <string name="collections">Collections</string>
+    <string name="edit_user">Edit</string>
+    <string name="fans">Fans</string>
+
+    <!--fragment_new-->
+    <string name="fragment_new">Newest</string>
+
+    <!--fragment_recommend-->
+    <string name="fragment_recommend">Recommend</string>
+
+    <!--fragment_focus_on-->
+    <string name="fragment_focus_on">Focus</string>
+
+    <!--activity_guide-->
+    <string name="guide_point">point</string>
+    <string name="guide_start">To Main Page</string>
+    <string name="guide_back">Skip</string>
+    <string name="smart">Smart</string>
+    <string name="concise">Concise</string>
+    <string name="strong">Strong</string>
+
+    <!--news_item-->
+    <string name="list_item_content">Test Content</string>
+    <string name="str_image">Picture</string>
+    <string name="like">Like</string>
+    <string name="like_num">515</string>
+    <string name="commit_num">72</string>
+    <string name="news_flag1">Note</string>
+    <string name="news_flag2">Strategy</string>
+    <string name="news_flag3">Companion</string>
+
+    <!--activity_news_detail-->
+    <string name="activity_news_detail">note/strategy</string>
+
+    <!--friends_news_item-->
+    <string name="list_friends_item_username">沙啦沙啦</string>
+    <string name="list_friends_item_content">一起去稻城吗</string>
+    <string name="list_friends_item_time">2018.10.01–2018.10.07</string>
+    <string name="list_friends_item_site">稻城</string>
+    <string name="list_friends_item_browse">5浏览</string>
+    <string name="list_friends_item_publishtime">3分钟前</string>
+    <string name="news_item_username">依云</string>
+    <string name="news_item_time">1天前</string>
+    <string name="news_item_level">LV.2</string>
+    <string name="news_item_focus">Add Focus</string>
+    <string name="news_item_focus_on">Focused</string>
+
+    <!--activity_friendsnews_detail-->
+    <string name="detail_friends_news_discuss">Comment</string>
+    <string name="detail_friends_news_chat">Chat</string>
+
+    <!--activity_login-->
+    <string name="login">Login</string>
+    <string name="not_login">未登陆</string>
+    <string name="login_by_email">邮箱账号</string>
+    <string name="login_by_phone">手机账号</string>
+    <string name="input_phone">请输入手机号</string>
+    <string name="input_email">请输入邮箱账号</string>
+    <string name="input_verified_code">请输入验证码</string>
+    <string name="login_by_verified">验证码登录</string>
+    <string name="login_by_password">账号密码登录</string>
+    <string name="get_verified_code">获取验证码</string>
+    <string name="forget">Forgot Password</string>
+    <string name="service_text">登录即代表阅读并同意</string>
+    <string name="service_terms">服务条款</string>
+    <string name="other_login">其他方式登录</string>
+    <string name="login_by_wechat">微信登录</string>
+    <string name="login_by_qq">qq登录</string>
+    <string name="login_by_weibo">微博登录</string>
+
+    <!--activity_register-->
+    <string name="tv_password">password：</string>
+    <string name="tv_y_password">原密码：</string>
+    <string name="tv_x_password">新密码：</string>
+
+    <!--activity_forget_pass-->
+    <string name="email">email：</string>
+    <string name="login_hint_pass">Please Input Password</string>
+
+    <!--fragment_about_more-->
+    <string name="about_more">More</string>
+    <string name="about_traveling">about Traveling</string>
+    <string name="about_logout">logout</string>
+    <string name="about_login">Login/Register</string>
+    <string name="about_edit">edit</string>
+    <string name="about_area">area</string>
+    <string name="about_live_area">area：%1s</string>
+    <string name="about_bind">Bind Setting</string>
+    <string name="about_message">Message Setting</string>
+    <string name="about_password">Password Setting</string>
+    <string name="about_clear_cache">Clean Cache</string>
+
+    <!--activity_user_edit-->
+    <string name="user_edit">edit</string>
+    <string name="user_edit_back">back</string>
+    <string name="user_edit_save">save</string>
+    <string name="user_edit_bg">Set Background</string>
+    <string name="user_edit_username">nickname</string>
+    <string name="gender">gender</string>
+    <string name="live_area">area</string>
+    <string name="signature">signature</string>
+
+    <!--load_progressbar-->
+    <string name="loading">Loading..</string>
+    <string name="load_faild">加载失败，点击重试</string>
+
+    <!--activity_config-->
+    <string name="version">Current Version:%1s</string>
+
+    <!--item_account_bind1-->
+    <string name="bind_uid">安全绑定当前账号(UID:%1s)</string>
+    <string name="bind_phone">Phone Number</string>
+    <string name="bind_phone_num">%1s</string>
+    <string name="bind_change">Modify</string>
+    <string name="bind_email">Email</string>
+    <string name="bind_bind">Bind</string>
+    <string name="bind_other_account">第三方账号登录</string>
+    <string name="other_bind">绑定账号均可登录</string>
+    <string name="bind_qq">QQ</string>
+    <string name="bind_wechat">WeChat</string>
+    <string name="bind_weibo">微博</string>
+    <string name="bind_cancel">解绑</string>
+    <string name="confirm">Confirm</string>
+    <string name="pass_hint">5–20位数字或字母密码</string>
+    <string name="on_loading">加载中，请稍后..</string>
+    <string name="on_login">Loading..</string>
+
+    <!--activity_news_setting-->
+    <string name="push_voice">推送声音</string>
+    <string name="search">search</string>
+
+    <string name="all_comment">共%1d条回复>></string>
+    <string name="comments">%1d条回复</string>
+    <string name="str_reply">Reply</string>
+    <string name="str_reply_to">reply %1s</string>
+    <string name="str_reply_to2">reply %1s：%1s</string>
+    <string name="news_comment">最新评论(%1d)</string>
+    <string name="comment">%1s：%1s</string>
+    <string name="comment_reply">%1s reply %1s：%1s</string>
+    <string name="str_write_comment">Write Comments..</string>
+    <string name="str">%1s</string>
+    <string name="num">%1d</string>
+    <string name="str_do_comment">Publish</string>
+    <string name="str_publish">Publish</string>
+    <string name="str_delete">Delete</string>
+    <string name="confirm_delete">Confirm to delete</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="confirm_delete_">确认删除该评论？</string>
+    <string name="like_and_comment_num">%1d 喜欢·%1d 评论</string>
+    <string name="str_voice">Voice</string>
+    <string name="str_search">Search</string>
+    <string name="str_line">分隔线</string>
+    <string name="clear_btn">清除按钮</string>
+    <string name="hint">Please Input Keyword</string>
+    <string name="str_not_login">You have not been login.</string>
+    <string name="str_to_login">To Login</string>
+    <string name="str_take_photo">Take Photo</string>
+    <string name="str_from_album">From Photo Album</string>
+    <string name="user_bg">background img</string>
+    <string name="no_notes">您还没有发布过文章噢</string>
+    <string name="no_notes2">Ta还没有发布过文章噢</string>
+    <string name="str_focus">+关注</string>
+    <string name="str_to_chat">Chat</string>
+    <string name="str_back">Back</string>
+    <string name="my_action_bar">action_bar</string>
+    <string name="tv_chat_need_login">登录之后才可显示对话列表哦</string>
+    <string name="private_chat">Chat</string>
+    <string name="share">Share news…</string>
+    <string name="choose_photo">Choose Photo</string>
+    <string name="title">Title</string>
+
+    <string name="list_friends_item_time_start">unavailable</string>
+    <string name="list_friends_item_time_middle"> - </string>
+    <string name="list_friends_item_time_end">unavailable</string>
+
 </resources>

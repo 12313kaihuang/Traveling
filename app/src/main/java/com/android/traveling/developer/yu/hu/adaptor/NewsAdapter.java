@@ -104,10 +104,16 @@ public class NewsAdapter extends BaseAdapter {
         viewHolder.news_item_commit_num.setText(String.valueOf(note.getCommentNum()));
         viewHolder.list_item_content.setText(String.format(context.getString(R.string.comment),
                 note.getTitle(), note.getContent()));
-        Picasso.get().load(note.getReleasePeople().getImgUrl()).into(viewHolder.user_bg);
+        Picasso.get().load(note.getReleasePeople().getImgUrl())
+                .placeholder(R.drawable.err_img_bg)
+                .error(R.drawable.err_img_bg)
+                .into(viewHolder.user_bg);
         if (note.getImgList().size() != 0) {
             viewHolder.list_item_icon.setVisibility(View.VISIBLE);
-            Picasso.get().load(note.getImgList().get(0)).into(viewHolder.list_item_icon);
+            Picasso.get().load(note.getImgList().get(0))
+                    .placeholder(R.drawable.err_img_bg)
+                    .error(R.drawable.err_img_bg)
+                    .into(viewHolder.list_item_icon);
         } else {
             viewHolder.list_item_icon.setVisibility(View.GONE);
         }

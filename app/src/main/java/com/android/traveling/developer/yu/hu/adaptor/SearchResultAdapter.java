@@ -66,7 +66,10 @@ SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder>
             holder.img.setVisibility(View.GONE);
         } else {
             holder.img.setVisibility(View.VISIBLE);
-            Picasso.get().load(note.getImgList().get(0)).into(holder.img);
+            Picasso.get().load(note.getImgList().get(0))
+                    .placeholder(R.drawable.err_img_bg)
+                    .error(R.drawable.err_img_bg)
+                    .into(holder.img);
         }
         //实现点击效果
         holder.itemView.setOnClickListener(v -> {

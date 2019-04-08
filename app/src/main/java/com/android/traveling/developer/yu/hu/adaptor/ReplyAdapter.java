@@ -68,7 +68,10 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHol
     @Override
     public void onBindViewHolder(@NonNull ReplyViewHolder holder, int position) {
         Reply reply = replyList.get(position);
-        Picasso.get().load(reply.getUserImg()).into(holder.user_img);
+        Picasso.get().load(reply.getUserImg())
+                .placeholder(R.drawable.err_img_bg)
+                .error(R.drawable.err_img_bg)
+                .into(holder.user_img);
         holder.user_name.setText(reply.getNickName());
         holder.tv_comment_time.setText(DateUtil.fromNow(reply.getCommentTime()));
         holder.content.setText(disPoseContent(reply));

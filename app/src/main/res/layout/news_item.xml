@@ -28,7 +28,7 @@
             android:layout_height="160dp"
             android:contentDescription="@string/str_image"
             android:scaleType="fitXY"
-            android:src="@drawable/test_news" />
+            android:src="@color/gray2" />
 
         <TextView
             android:id="@+id/list_item_content"
