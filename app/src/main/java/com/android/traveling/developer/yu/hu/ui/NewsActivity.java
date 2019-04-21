@@ -106,10 +106,16 @@ public class NewsActivity extends BackableActivity implements CommentAdapter.Dat
         addEvents(note);
 
         //头像
-        Picasso.get().load(note.getReleasePeople().getImgUrl()).into(user_bg);
+        Picasso.get().load(note.getReleasePeople().getImgUrl())
+                .placeholder(R.drawable.err_img_bg)
+                .error(R.drawable.err_img_bg).fit()
+                .into(user_bg);
         if (note.getImgList().size() > 0) {
             note_img.setVisibility(View.VISIBLE);
-            Picasso.get().load(note.getImgList().get(0)).into(note_img);
+            Picasso.get().load(note.getImgList().get(0))
+                    .placeholder(R.drawable.err_img_bg)
+                    .error(R.drawable.err_img_bg).fit()
+                    .into(note_img);
         }else {
             note_img.setVisibility(View.GONE);
         }

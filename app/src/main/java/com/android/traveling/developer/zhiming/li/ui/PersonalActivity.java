@@ -200,8 +200,14 @@ public class PersonalActivity extends AppCompatActivity {
                 tv_username.setText(detailUserInfo.getNickName());
                 PersonalActivity.this.isFocus = isFocus;
                 setFocus(isFocus);
-                Picasso.get().load(detailUserInfo.getImg()).error(R.drawable.err_img_bg).fit().into(user_img);
-                Picasso.get().load(detailUserInfo.getBackgroundImg()).error(R.drawable.err_img_bg).fit().into(iv_user_bg);
+                Picasso.get().load(detailUserInfo.getImg())
+                        .placeholder(R.drawable.err_img_bg)
+                        .error(R.drawable.err_img_bg).fit()
+                        .into(user_img);
+                Picasso.get().load(detailUserInfo.getBackgroundImg())
+                        .placeholder(R.drawable.err_img_bg)
+                        .error(R.drawable.err_img_bg).fit()
+                        .fit().into(iv_user_bg);
                 listView.setOnItemClickListener((parent, view, position, id) -> {
                     Note note = detailUserInfo.getNotes().get(position);
                     Intent intent = new Intent(PersonalActivity.this, NewsActivity.class);

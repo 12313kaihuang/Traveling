@@ -46,7 +46,7 @@ public class ConfigActivity extends BackableActivity {
         MyOkhttp.get(StaticClass.CHECK_UPDATE_URL, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                UtilTools.toast(ConfigActivity.this,"获取版本信息失败");
+                runOnUiThread(() -> UtilTools.toast(ConfigActivity.this,"获取版本信息失败"));
             }
 
             @Override

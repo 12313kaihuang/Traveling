@@ -41,7 +41,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".developer.zhiming.li.ui.SplashActivity"
             android:theme="@style/NoActionBarFullscreen">
@@ -67,8 +68,6 @@
             android:launchMode="standard"
             android:name=".developer.yu.hu.ui.NewsActivity"/>
 
-        <!-- 聊天消息页 -->
-        <activity android:name=".developer.jiaming.liu.activity.ChatActivity" />
         <!-- 编辑文本页 -->
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -78,8 +77,6 @@
         <activity android:name=".developer.ting.li.ui.AddFriendsNoteActivity"/>
         <!-- 结伴详情页 -->
         <activity android:name=".developer.ting.li.ui.FriendsNewsActivity" />
-        <activity android:name=".developer.jiaming.liu.activity.NoticeActivity" />
-        <activity android:name=".developer.jiaming.liu.activity.ChatMoreActivity"/>
 
         <!--登录-->
         <activity

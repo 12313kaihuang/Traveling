@@ -24,6 +24,13 @@ android {
         }
     }
 
+    //渠道配置
+//    productFlavors {
+//        uc {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "uc"]
+//        }
+//    }
+
     //为了解决部分第三方库重复打包了META-INF的问题
     packagingOptions{
         exclude 'META-INF/LICENSE.txt'
@@ -93,6 +100,13 @@ configurations.all {
     resolutionStrategy.force 'com.squareup.okio:okio:1.14.0'
     resolutionStrategy.force 'com.google.code.gson:gson:2.8.5'
     resolutionStrategy.force 'com.squareup.picasso:picasso:2.71828'
+}
+
+// 打包命名
+android.applicationVariants.all { variant ->
+    variant.outputs.all {
+        outputFileName = "Traveling-${variant.versionName}.apk"
+    }
 }
 
 
