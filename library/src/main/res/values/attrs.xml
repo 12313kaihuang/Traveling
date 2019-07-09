@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SimpleActionBar">
+        <!--标题-->
+        <attr name="title" format="string" />
+        <!--标题颜色-->
+        <attr name="title_color" format="color" />
+        <!--标题大小-->
+        <attr name="title_size" format="dimension" />
+        <!--左侧图标-->
+        <attr name="left_icon" format="reference" />
+        <!--右侧图标-->
+        <attr name="right_icon" format="reference" />
+    </declare-styleable>
+
+</resources>

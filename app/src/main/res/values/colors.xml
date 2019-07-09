@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1296db</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="color_normal">#FF000000</color>
+    <color name="color_selected">#1296db</color>
+
+
+    <color name="white1">#FBFBF9F9</color>
+    <color name="white_dark">#AAFFFFFF</color>
+    <color name="focus_on_bg">#F6F7F9</color>
+    <color name="gray1">#EFF3F5</color>
+    <color name="gray2">#CFCFCF</color>
+    <color name="gray3">#CCCCCC</color>
+    <color name="gray4">#CDCDCD</color>
+    <color name="gray5">#AEAEAE</color>
+    <color name="gray_comment">#F9F9F9</color>
+    <color name="gray_chat_list">#CDCED1</color>
+    <color name="verified_gray">#80C8CACC</color>
+    <color name="srl_primary">#444444</color>
+    <color name="loading_color">#8A8A8A</color>
+    <color name="black_3">#333333</color>
+    <color name="bind_gray">#D8D8D8</color>
+    <color name="publish_text_color">#AAAAAA</color>
+    <color name="publish_bg_color">#E9EBEC</color>
+
+    <color name="blue">#FF14A5E2</color>
+    <color name="et_blue">#BB14A5E2</color>
+    <color name="blue_comment">#5C87B5</color>
+
+    <color name="red">#d81e06</color>
+
+    <color name="news_flag1_color">#F4DB75</color>
+    <color name="news_flag2_color">#F98080</color>
+    <color name="news_flag3_color">#6EDFD2</color>
+
+    <color name="gold">#E7CD9E</color>
+    <color name="bind_yellow">#FFE247</color>
+    <color name="dialog_orange">#F4C237</color>
+
+    <color name="green_bg">#90EE90</color>
+
+    <color name="default_color_primary_dark">#FF757575</color>
+</resources>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="match_parent"
+    android:background="@color/focus_on_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="@string/about_more"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray4"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/about_edit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="0.5dp"
+            android:background="@color/white"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_edit"
+            android:gravity="center_vertical"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="@string/about_edit"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/about_area"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_about_area"
+            android:gravity="center_vertical"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="@string/about_area"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/gray4"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/about_bind"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_bind"
+            android:gravity="center_vertical"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="@string/about_bind"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/about_password"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="0.5dp"
+            android:background="@color/white"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_password"
+            android:gravity="center_vertical"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="@string/about_password"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/message_setting"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="0.5dp"
+            android:background="@color/white"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_about_message"
+            android:gravity="center_vertical"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="@string/about_message"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/clear_cache"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="0.5dp"
+            android:background="@color/white"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_clear_cache"
+            android:gravity="center_vertical"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="@string/about_clear_cache"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/gray4"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/about_more"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_about_more"
+            android:gravity="center_vertical"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="@string/about_traveling"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/about_logout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="0.5dp"
+            android:background="@color/white"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_logout"
+            android:gravity="center_vertical"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="@string/about_logout"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@color/white" />-->
+
+</LinearLayout>

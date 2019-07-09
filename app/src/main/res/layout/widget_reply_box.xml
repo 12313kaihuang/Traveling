@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:showIn="@layout/item_comment">
+
+    <!--ReplyBox-->
+
+    <TextView
+        android:id="@+id/tv_comment_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="0dp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        tools:text="回复1"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_comment_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        tools:text="回复2"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_comment_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/blue_comment"
+        android:visibility="gone"
+        tools:text="共xx条回复"
+        tools:visibility="visible" />
+</merge>

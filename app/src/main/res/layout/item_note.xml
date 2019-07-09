@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/adapter_item_white_dark">
+
+    <include
+        android:id="@+id/layout_user"
+        layout="@layout/item_user" />
+
+    <LinearLayout
+        android:id="@+id/ll_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_user">
+
+        <ImageView
+            android:id="@+id/list_item_icon"
+            android:layout_width="320dp"
+            android:layout_height="160dp"
+            android:contentDescription="@string/img"
+            android:scaleType="fitXY"
+            android:src="@color/gray2" />
+
+        <TextView
+            android:id="@+id/list_item_content"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="4"
+            tools:text="文章内容文章内容文章内容"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/badge_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ll_note"
+        app:layout_constraintTop_toBottomOf="@id/ll_note">
+
+
+        <TextView
+            android:id="@+id/news_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:background="@drawable/news_flag1_bg"
+            android:gravity="center"
+            android:text="@string/news_flag1"
+            android:textColor="@color/news_flag1_color"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ll_note"
+        app:layout_constraintTop_toBottomOf="@id/ll_note"
+        tools:layout_editor_absoluteX="240dp">
+
+        <ImageView
+            android:id="@+id/news_item_like"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:contentDescription="@string/img"
+            android:src="@drawable/ic_like" />
+
+        <TextView
+            android:id="@+id/news_item_like_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:paddingEnd="0dp"
+            android:paddingStart="3dp"
+            tools:text="510"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:contentDescription="@string/img"
+            android:src="@drawable/ic_comment" />
+
+        <TextView
+            android:id="@+id/news_item_commit_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="0dp"
+            android:paddingStart="3dp"
+            tools:text="12"
+            android:textColor="@color/black" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

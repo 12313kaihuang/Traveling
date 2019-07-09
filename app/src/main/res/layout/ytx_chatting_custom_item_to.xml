@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_custom_to"
+    style="@style/ChattingUIContent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@+id/chatting_avatar_mask"
+        style="@style/ChattingUIAvatarMaskTo"
+        layout="@layout/ytx_chatting_item_avatar_to" />
+
+
+    <!-- ID必须是chatting_state_iv 因为Holder根据这个id获取View进行状态展示-->
+    <ImageView
+        android:id="@+id/chatting_state_iv"
+        style="@style/ChattingUIState"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_toLeftOf="@id/layout_content_to"
+        android:layout_toStartOf="@id/layout_content_to" />
+
+    <!-- ID必须是 layout_content_to 因为已读未读需要展示在这个左边-->
+    <RelativeLayout
+        android:id="@id/layout_content_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/chatting_avatar_mask"
+        android:layout_toStartOf="@id/chatting_avatar_mask"
+        android:background="@drawable/ytx_chating_right_a">
+
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/image"
+            android:layout_toRightOf="@id/image"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/CircleLogPadding"
+                android:text="To Message"
+                android:textColor="@color/red" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

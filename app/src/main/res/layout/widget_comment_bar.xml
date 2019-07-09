@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    tools:showIn="@layout/activity_reclcler_with_comment_bar">
+
+    <TextView
+        android:id="@+id/tv_write_comment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:background="@drawable/comment_bg"
+        android:drawableStart="@drawable/ic_write"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        tools:hint="写评论.." />
+
+    <TextView
+        android:id="@+id/tv_like"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="3dp"
+        android:drawableTop="@drawable/ic_like"
+        android:gravity="center_horizontal"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="3dp"
+        android:drawableTop="@drawable/ic_comment"
+        android:gravity="center_horizontal"
+        tools:text="1" />
+
+</merge>

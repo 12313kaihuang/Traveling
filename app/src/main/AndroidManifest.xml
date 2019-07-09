@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.yu.hu.traveling">
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+
+    <!--接收消息权限-->
+    <permission
+        android:name="com.yu.hu.traveling.permission.RECEIVE_MSG"
+        android:protectionLevel="signature" />
+    <!--接收通话权限-->
+    <permission
+        android:name="com.yu.hu.traveling.permission.INCOMING_CALL"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.yu.hu.traveling.permission.RECEIVE_MSG" />
+    <uses-permission android:name="com.yu.hu.traveling.permission.INCOMING_CALL" />
+
+
+
+    <application
+        android:name=".application.TravelingApplication"
+        android:allowBackup="true"
+        android:appComponentFactory=""
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning"
+        tools:replace="android:appComponentFactory"
+        tools:targetApi="p">
+        <activity
+            android:theme="@style/SplashFullscreen"
+            android:name=".activity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.GuideActivity" />
+        <activity android:name=".activity.SearchResultActivity" />
+        <activity
+            android:theme="@style/Theme.AppCompat.Light"
+            android:name=".activity.NoteDetailActivity" />
+        <activity
+            android:theme="@style/Theme.AppCompat.Light"
+            android:name=".activity.ReplyDetailActivity" />
+
+
+        <!--容联云 声明自定义通知的广播接收器（需要替换包名，详见注意事项）-->
+        <receiver
+            android:name=".yonglian.YuntxNotifyReceiver"
+            android:exported="false">
+            <intent-filter>
+                <!--接收push消息
+                // action匹配规则{packageName + ".action" + "功能"}
+                // com.yuntongxun.imdemo 替换成自己的报名
+                // 以下三条action 可以根据自己需求来进行增删
+                // 用于电话会议-->
+                <action android:name="com.yu.hu.traveling.action.VOIP_CALL" />
+                <!-- 用于IM消息-->
+                <action android:name="com.yu.hu.traveling.action.MESSAGE" />
+                <!-- 用于通知点击-->
+                <action android:name="com.yu.hu.traveling.action.NOTIFICATION_CLICK" />
+            </intent-filter>
+        </receiver>
+        <!--应用处理程序逻辑服务 name为YuntxNotifyReceiver的位置加 $NotifyService-->
+        <service android:name=".yonglian.YuntxNotifyReceiver$NotifyService" />
+    </application>
+
+
+</manifest>

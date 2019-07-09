@@ -1,0 +1,5 @@
+<resources>
+    <string name="img">这是一张图片</string>
+    <string name="test_title">标题</string>
+    <string name="on_loading">加载中..</string>
+</resources>

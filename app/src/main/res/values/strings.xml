@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">Traveling</string>
+
+    <string name="copy_right_declaration">Copyright ©%d HY All Rights Reserved.</string>
+
+    <string name="guide_start">进入主页</string>
+    <string name="smart">智能</string>
+    <string name="concise">简洁</string>
+    <string name="strong">強大</string>
+
+    <string name="page_home">首页</string>
+    <string name="page_friend">结伴</string>
+    <string name="page_message">消息</string>
+    <string name="page_my">我的</string>
+
+    <string name="login">登录</string>
+    <string name="login_by_password">账号密码登录</string>
+    <string name="login_by_verified">验证码登录</string>
+    <string name="logout">退出登录</string>
+
+    <string name="input_phone">请输入手机号</string>
+    <string name="input_email">请输入邮箱账号</string>
+    <string name="input_pass">请输入密码</string>
+    <string name="input_verified_code">请输入验证码</string>
+    <string name="get_verified_code">获取验证码</string>
+
+    <string name="email">邮箱账号</string>
+    <string name="phone">手机账号</string>
+    <string name="forget">忘记密码</string>
+
+    <string name="login_by_wechat">微信登录</string>
+    <string name="login_by_qq">qq登录</string>
+    <string name="login_by_weibo">微博登录</string>
+    <string name="other_login">其他方式登录</string>
+
+    <string name="service_terms">服务条款</string>
+    <string name="service_text">登录即代表阅读并同意</string>
+
+    <string name="level">%1s%2s</string>
+    <string name="searchContent">%1s:%2s</string>
+    <string name="verifiedMilliSecond">重新发送(%1ds)</string>
+
+    <string name="landing">登录中..</string>
+    <string name="not_login">当前未登录</string>
+    <string name="chat_list">登陆后查看聊天记录</string>
+    <string name="hint">请输入关键字</string>
+
+    <string name="fragment_new">最新</string>
+    <string name="fragment_recommend">推荐</string>
+    <string name="fragment_focus_on">关注</string>
+
+    <string name="num">%1d</string>
+    <string name="comment">%1s：%2s</string>
+    <string name="reply_to">回复 %1s</string>
+    <string name="comment_reply">%1s 回复 %1s：%1s</string>
+    <string name="str_reply_to2">回复 %1s：%1s</string>
+    <string name="like_and_comment_num">%1d 喜欢·%2d 评论</string>
+    <string name="note_comments">最新评论(%1d)</string>
+    <string name="no_comments">暂无评论</string>
+    <string name="write_comments">写评论..</string>
+    <string name="comments">%1d条回复</string>
+    <string name="all_comment">共%1d条回复>></string>
+    <string name="reply">回复</string>
+    <string name="delete">删除</string>
+    <string name="publish_comment">发表评论</string>
+    <string name="publish">发表</string>
+
+    <string name="to_vip"><![CDATA[成为黑卡会员 >]]></string>
+    <string name="num_zero">0</string>
+    <string name="focus">关注</string>
+    <string name="collections">获赞与收藏</string>
+    <string name="edit_user">编辑个人资料</string>
+    <string name="fans">粉丝</string>
+    <string name="user_status">未登录</string>
+
+
+    <string name="about_more">更多</string>
+    <string name="about_traveling">关于Traveling</string>
+    <string name="about_logout">退出当前账号</string>
+    <string name="about_login">登录/注册</string>
+    <string name="about_edit">编辑个人资料</string>
+    <string name="about_area">常住地</string>
+    <string name="about_live_area">常住地：%1s</string>
+    <string name="about_bind">账号绑定与设置</string>
+    <string name="about_message">消息设置</string>
+    <string name="about_password">密码设置</string>
+    <string name="about_clear_cache">清除缓存</string>
+
+
+    <string name="news_flag1">游记</string>
+    <string name="news_flag2">攻略</string>
+    <string name="news_flag3">结伴</string>
+
+    <string name="no_notes">您还没有发布过文章噢</string>
+    <string name="no_notes2">Ta还没有发布过文章噢</string>
+</resources>

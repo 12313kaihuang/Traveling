@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SearchView" >
+        <!--hint-->
+        <attr name="hint" format="string"/>
+        <!--搜索图标-->
+        <attr name="search_ico" format="reference" />
+        <!--清空图标-->
+        <attr name="clear_ico" format="reference" />
+        <!--语音图标-->
+        <attr name="voice_ico" format="reference" />
+    </declare-styleable>
+</resources>
