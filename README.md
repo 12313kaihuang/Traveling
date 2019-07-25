@@ -1,7 +1,7 @@
 # Traveling——游记社交类App
 #### 大创项目——基于推荐系统的游记攻略一站式旅游社交平台  
 
-[APK下载](apk/Traveling-1.0.apk)
+[APK下载](app/release/Traveling-1.0.apk)
 
 *正在重构项目*，并已将部分成果上传至[new_version](https://github.com/12313kaihuang/Traveling/tree/new_version)分支
 
