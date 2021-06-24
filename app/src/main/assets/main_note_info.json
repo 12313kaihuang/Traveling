@@ -1,0 +1,639 @@
+{
+  "code": 200,
+  "msg": "成功",
+  "data": [
+    {
+      "noteId": 484,
+      "itemId": 1581239433864,
+      "noteType": 2,
+      "createTime": 1581239433891,
+      "duration": 14,
+      "title": "",
+      "content": "是时候表演真正的技术了",
+      "authorId": 1578919786,
+      "activityIcon": null,
+      "activityText": "攻略",
+      "imgs": [
+        {
+          "type": 1,
+          "width": 960,
+          "height": 528,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu2.png"
+        }
+      ],
+      "author": {
+        "id": 1250,
+        "userId": 1578919786,
+        "name": "、蓅哖╰伊人为谁笑",
+        "avatar": "http://qzapp.qlogo.cn/qzapp/101794421/FE41683AD4ECF91B7736CA9DB8104A5C/100",
+        "description": "这是一只神秘的jetpack",
+        "likeCount": 7,
+        "topCommentCount": 0,
+        "followCount": 3,
+        "followerCount": 57,
+        "qqOpenId": "FE41683AD4ECF91B7736CA9DB8104A5C",
+        "expires_time": 1586695789903,
+        "score": 0,
+        "historyCount": 4532,
+        "commentCount": 42,
+        "favoriteCount": 3,
+        "feedCount": 0,
+        "hasFollow": false
+      },
+      "topComment": null,
+      "ugc": {
+        "likeCount": 1305,
+        "shareCount": 127,
+        "commentCount": 618,
+        "hasFavorite": false,
+        "hasLiked": false,
+        "hasdiss": false,
+        "hasDissed": false
+      }
+    },
+    {
+      "noteId": 481,
+      "itemId": 1581239433861,
+      "noteType": 2,
+      "createTime": 1581239433888,
+      "duration": 14,
+      "title": "城市下的灯光",
+      "content": "城市下的灯光，这是繁华应有的模样。",
+      "authorId": 1578919786,
+      "activityIcon": null,
+      "activityText": "攻略",
+      "imgs": [
+        {
+          "type": 1,
+          "width": 2560,
+          "height": 1440,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/Night%20-%2028860.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2222.png"
+        },
+        {
+          "type": 1,
+          "width": 960,
+          "height": 528,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu2.png"
+        }
+      ],
+      "author": {
+        "id": 1250,
+        "userId": 1578919786,
+        "name": "、蓅哖╰伊人为谁笑",
+        "avatar": "http://qzapp.qlogo.cn/qzapp/101794421/FE41683AD4ECF91B7736CA9DB8104A5C/100",
+        "description": "这是一只神秘的jetpack",
+        "likeCount": 7,
+        "topCommentCount": 0,
+        "followCount": 3,
+        "followerCount": 57,
+        "qqOpenId": "FE41683AD4ECF91B7736CA9DB8104A5C",
+        "expires_time": 1586695789903,
+        "score": 0,
+        "historyCount": 4532,
+        "commentCount": 42,
+        "favoriteCount": 3,
+        "feedCount": 0,
+        "hasFollow": false
+      },
+      "topComment": null,
+      "ugc": {
+        "likeCount": 1583,
+        "shareCount": 24,
+        "commentCount": 563,
+        "hasFavorite": false,
+        "hasLiked": false,
+        "hasdiss": false,
+        "hasDissed": false
+      }
+    },
+    {
+      "noteId": 480,
+      "itemId": 1581239433860,
+      "noteType": 1,
+      "createTime": 1581239433860,
+      "duration": 0,
+      "title": "克尔维特公路",
+      "content": "克尔维特公路上的跑车,暖阳下我应芬芳，是谁家的姑娘，走在这条小桥上，我抚琴做忧伤",
+      "authorId": 1578919786,
+      "activityIcon": null,
+      "activityText": "游记",
+      "imgs": [
+        {
+          "type": 0,
+          "width": 0,
+          "height": 0,
+          "url": null,
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/corvette-4815234_640.jpg"
+        },
+        {
+          "type": 1,
+          "width": 2560,
+          "height": 1440,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/Night%20-%2028860.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2222.png"
+        },
+        {
+          "type": 1,
+          "width": 960,
+          "height": 528,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu2.png"
+        },
+        {
+          "type": 1,
+          "width": 2560,
+          "height": 1440,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/Night%20-%2028860.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2222.png"
+        }
+      ],
+      "author": {
+        "id": 1250,
+        "userId": 1578919786,
+        "name": "、蓅哖╰伊人为谁笑",
+        "avatar": "http://qzapp.qlogo.cn/qzapp/101794421/FE41683AD4ECF91B7736CA9DB8104A5C/100",
+        "description": "这是一只神秘的jetpack",
+        "likeCount": 7,
+        "topCommentCount": 0,
+        "followCount": 3,
+        "followerCount": 57,
+        "qqOpenId": "FE41683AD4ECF91B7736CA9DB8104A5C",
+        "expires_time": 1586695789903,
+        "score": 0,
+        "historyCount": 4532,
+        "commentCount": 42,
+        "favoriteCount": 3,
+        "feedCount": 0,
+        "hasFollow": false
+      },
+      "topComment": null,
+      "ugc": {
+        "likeCount": 1569,
+        "shareCount": 21,
+        "commentCount": 564,
+        "hasFavorite": false,
+        "hasLiked": false,
+        "hasdiss": false,
+        "hasDissed": false
+      }
+    },
+    {
+      "noteId": 428,
+      "itemId": 1578976510452,
+      "noteType": 2,
+      "createTime": 1578977844500,
+      "duration": 8,
+      "title": "",
+      "content": "2020他来了，就在眼前了",
+      "authorId": 1578919786,
+      "activityIcon": null,
+      "activityText": "攻略",
+      "imgs": [
+        {
+          "type": 1,
+          "width": 960,
+          "height": 540,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/New%20Year%20-%2029212-video.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2020%E5%B0%81%E9%9D%A2%E5%9B%BE.png"
+        },
+        {
+          "type": 0,
+          "width": 0,
+          "height": 0,
+          "url": null,
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/corvette-4815234_640.jpg"
+        },
+        {
+          "type": 1,
+          "width": 2560,
+          "height": 1440,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/Night%20-%2028860.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2222.png"
+        },
+        {
+          "type": 1,
+          "width": 960,
+          "height": 528,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu2.png"
+        },
+        {
+          "type": 1,
+          "width": 2560,
+          "height": 1440,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/Night%20-%2028860.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2222.png"
+        },
+        {
+          "type": 1,
+          "width": 960,
+          "height": 540,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/New%20Year%20-%2029212-video.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2020%E5%B0%81%E9%9D%A2%E5%9B%BE.png"
+        },
+        {
+          "type": 0,
+          "width": 0,
+          "height": 0,
+          "url": null,
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/corvette-4815234_640.jpg"
+        },
+        {
+          "type": 1,
+          "width": 2560,
+          "height": 1440,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/Night%20-%2028860.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2222.png"
+        },
+        {
+          "type": 1,
+          "width": 960,
+          "height": 528,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu2.png"
+        },
+        {
+          "type": 1,
+          "width": 2560,
+          "height": 1440,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/Night%20-%2028860.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2222.png"
+        },
+        {
+          "type": 1,
+          "width": 960,
+          "height": 528,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu2.png"
+        }
+      ],
+      "author": {
+        "id": 1250,
+        "userId": 1578919786,
+        "name": "、蓅哖╰伊人为谁笑",
+        "avatar": "http://qzapp.qlogo.cn/qzapp/101794421/FE41683AD4ECF91B7736CA9DB8104A5C/100",
+        "description": "这是一只神秘的jetpack",
+        "likeCount": 7,
+        "topCommentCount": 0,
+        "followCount": 3,
+        "followerCount": 57,
+        "qqOpenId": "FE41683AD4ECF91B7736CA9DB8104A5C",
+        "expires_time": 1586695789903,
+        "score": 0,
+        "historyCount": 4532,
+        "commentCount": 42,
+        "favoriteCount": 3,
+        "feedCount": 0,
+        "hasFollow": false
+      },
+      "topComment": {
+        "id": 1126,
+        "itemId": 1578976510452,
+        "commentId": 1579007787804000,
+        "userId": 1578919786,
+        "commentType": 1,
+        "createTime": 1579007787804,
+        "commentCount": 0,
+        "likeCount": 1001,
+        "commentText": "2020他来了，就在眼前了~Happy New Year",
+        "imageUrl": "",
+        "videoUrl": "",
+        "width": 0,
+        "height": 0,
+        "hasLiked": false,
+        "author": {
+          "id": 1250,
+          "userId": 1578919786,
+          "name": "、蓅哖╰伊人为谁笑",
+          "avatar": "http://qzapp.qlogo.cn/qzapp/101794421/FE41683AD4ECF91B7736CA9DB8104A5C/100",
+          "description": "这是一只神秘的jetpack",
+          "likeCount": 7,
+          "topCommentCount": 0,
+          "followCount": 3,
+          "followerCount": 57,
+          "qqOpenId": "FE41683AD4ECF91B7736CA9DB8104A5C",
+          "expires_time": 1586695789903,
+          "score": 0,
+          "historyCount": 4532,
+          "commentCount": 42,
+          "favoriteCount": 3,
+          "feedCount": 0,
+          "hasFollow": false
+        },
+        "ugc": {
+          "likeCount": 120,
+          "shareCount": 10,
+          "commentCount": 10,
+          "hasFavorite": false,
+          "hasLiked": false,
+          "hasdiss": false,
+          "hasDissed": false
+        }
+      },
+      "ugc": {
+        "likeCount": 1471,
+        "shareCount": 26,
+        "commentCount": 529,
+        "hasFavorite": false,
+        "hasLiked": false,
+        "hasdiss": false,
+        "hasDissed": false
+      }
+    },
+    {
+      "noteId": 426,
+      "itemId": 1579005335869,
+      "noteType": 1,
+      "createTime": 1579005335869,
+      "duration": 0,
+      "title": "",
+      "content": "大熏熏在唱歌",
+      "authorId": 1578919786,
+      "activityIcon": null,
+      "activityText": "游记",
+      "imgs": [
+        {
+          "type": 0,
+          "width": 0,
+          "height": 0,
+          "url": null,
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/music-3507317_640.jpg"
+        }
+      ],
+      "author": {
+        "id": 1250,
+        "userId": 1578919786,
+        "name": "、蓅哖╰伊人为谁笑",
+        "avatar": "http://qzapp.qlogo.cn/qzapp/101794421/FE41683AD4ECF91B7736CA9DB8104A5C/100",
+        "description": "这是一只神秘的jetpack",
+        "likeCount": 7,
+        "topCommentCount": 0,
+        "followCount": 3,
+        "followerCount": 57,
+        "qqOpenId": "FE41683AD4ECF91B7736CA9DB8104A5C",
+        "expires_time": 1586695789903,
+        "score": 0,
+        "historyCount": 4532,
+        "commentCount": 42,
+        "favoriteCount": 3,
+        "feedCount": 0,
+        "hasFollow": false
+      },
+      "topComment": null,
+      "ugc": {
+        "likeCount": 1764,
+        "shareCount": 8,
+        "commentCount": 557,
+        "hasFavorite": false,
+        "hasLiked": false,
+        "hasdiss": false,
+        "hasDissed": false
+      }
+    },
+    {
+      "noteId": 417,
+      "itemId": 1578921430555,
+      "noteType": 1,
+      "createTime": 1578921430555,
+      "duration": 0,
+      "title": "",
+      "content": "夜空中最亮的熏熏，2019的尾巴",
+      "authorId": 1578919786,
+      "activityIcon": null,
+      "activityText": "游记",
+      "imgs": [
+        {
+          "type": 0,
+          "width": 720,
+          "height": 1280,
+          "url": null,
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2222.jpeg"
+        },
+        {
+          "type": 1,
+          "width": 960,
+          "height": 540,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/New%20Year%20-%2029212-video.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2020%E5%B0%81%E9%9D%A2%E5%9B%BE.png"
+        },
+        {
+          "type": 0,
+          "width": 0,
+          "height": 0,
+          "url": null,
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/corvette-4815234_640.jpg"
+        },
+        {
+          "type": 1,
+          "width": 2560,
+          "height": 1440,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/Night%20-%2028860.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2222.png"
+        },
+        {
+          "type": 1,
+          "width": 960,
+          "height": 528,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/zhenjishu2.png"
+        },
+        {
+          "type": 1,
+          "width": 2560,
+          "height": 1440,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/Night%20-%2028860.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2222.png"
+        },
+        {
+          "type": 1,
+          "width": 960,
+          "height": 540,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/New%20Year%20-%2029212-video.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2020%E5%B0%81%E9%9D%A2%E5%9B%BE.png"
+        },
+        {
+          "type": 0,
+          "width": 0,
+          "height": 0,
+          "url": null,
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/corvette-4815234_640.jpg"
+        },
+        {
+          "type": 1,
+          "width": 2560,
+          "height": 1440,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/Night%20-%2028860.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/2222.png"
+        }
+      ],
+      "author": {
+        "id": 1250,
+        "userId": 1578919786,
+        "name": "、蓅哖╰伊人为谁笑",
+        "avatar": "http://qzapp.qlogo.cn/qzapp/101794421/FE41683AD4ECF91B7736CA9DB8104A5C/100",
+        "description": "这是一只神秘的jetpack",
+        "likeCount": 7,
+        "topCommentCount": 0,
+        "followCount": 3,
+        "followerCount": 57,
+        "qqOpenId": "FE41683AD4ECF91B7736CA9DB8104A5C",
+        "expires_time": 1586695789903,
+        "score": 0,
+        "historyCount": 4532,
+        "commentCount": 42,
+        "favoriteCount": 3,
+        "feedCount": 0,
+        "hasFollow": false
+      },
+      "topComment": null,
+      "ugc": {
+        "likeCount": 1976,
+        "shareCount": 7,
+        "commentCount": 522,
+        "hasFavorite": false,
+        "hasLiked": false,
+        "hasdiss": false,
+        "hasDissed": false
+      }
+    },
+    {
+      "noteId": 415,
+      "itemId": 1578920778984,
+      "noteType": 1,
+      "createTime": 1578920778984,
+      "duration": 0,
+      "title": "",
+      "content": "2020跨时代的新年快乐",
+      "authorId": 1578919786,
+      "activityIcon": null,
+      "activityText": "游记",
+      "imgs": [
+      ],
+      "author": {
+        "id": 1250,
+        "userId": 1578919786,
+        "name": "、蓅哖╰伊人为谁笑",
+        "avatar": "http://qzapp.qlogo.cn/qzapp/101794421/FE41683AD4ECF91B7736CA9DB8104A5C/100",
+        "description": "这是一只神秘的jetpack",
+        "likeCount": 7,
+        "topCommentCount": 0,
+        "followCount": 3,
+        "followerCount": 57,
+        "qqOpenId": "FE41683AD4ECF91B7736CA9DB8104A5C",
+        "expires_time": 1586695789903,
+        "score": 0,
+        "historyCount": 4532,
+        "commentCount": 42,
+        "favoriteCount": 3,
+        "feedCount": 0,
+        "hasFollow": false
+      },
+      "topComment": null,
+      "ugc": {
+        "likeCount": 1983,
+        "shareCount": 6,
+        "commentCount": 525,
+        "hasFavorite": false,
+        "hasLiked": false,
+        "hasdiss": false,
+        "hasDissed": false
+      }
+    },
+    {
+      "noteId": 416,
+      "itemId": 1578921365712,
+      "noteType": 2,
+      "createTime": 1578921365712,
+      "duration": 0,
+      "title": "",
+      "content": "夜空中最亮的熏熏",
+      "authorId": 1578919786,
+      "activityIcon": null,
+      "activityText": "攻略",
+      "imgs": [
+        {
+          "type": 1,
+          "width": 720,
+          "height": 1280,
+          "url": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/1578921330897.mp4",
+          "cover": "https://pipijoke.oss-cn-hangzhou.aliyuncs.com/1111.jpeg"
+        }
+      ],
+      "author": {
+        "id": 1250,
+        "userId": 1578919786,
+        "name": "、蓅哖╰伊人为谁笑",
+        "avatar": "http://qzapp.qlogo.cn/qzapp/101794421/FE41683AD4ECF91B7736CA9DB8104A5C/100",
+        "description": "这是一只神秘的jetpack",
+        "likeCount": 7,
+        "topCommentCount": 0,
+        "followCount": 3,
+        "followerCount": 57,
+        "qqOpenId": "FE41683AD4ECF91B7736CA9DB8104A5C",
+        "expires_time": 1586695789903,
+        "score": 0,
+        "historyCount": 4532,
+        "commentCount": 42,
+        "favoriteCount": 3,
+        "feedCount": 0,
+        "hasFollow": false
+      },
+      "topComment": {
+        "id": 1092,
+        "itemId": 1578921365712,
+        "commentId": 1578922158910003,
+        "userId": 1578919786,
+        "commentType": 1,
+        "createTime": 1578922158913,
+        "commentCount": 0,
+        "likeCount": 1002,
+        "commentText": "2020年新年快乐鸭~",
+        "imageUrl": null,
+        "videoUrl": null,
+        "width": 0,
+        "height": 0,
+        "hasLiked": false,
+        "author": {
+          "id": 1250,
+          "userId": 1578919786,
+          "name": "、蓅哖╰伊人为谁笑",
+          "avatar": "http://qzapp.qlogo.cn/qzapp/101794421/FE41683AD4ECF91B7736CA9DB8104A5C/100",
+          "description": "这是一只神秘的jetpack",
+          "likeCount": 7,
+          "topCommentCount": 0,
+          "followCount": 3,
+          "followerCount": 57,
+          "qqOpenId": "FE41683AD4ECF91B7736CA9DB8104A5C",
+          "expires_time": 1586695789903,
+          "score": 0,
+          "historyCount": 4532,
+          "commentCount": 42,
+          "favoriteCount": 3,
+          "feedCount": 0,
+          "hasFollow": false
+        },
+        "ugc": {
+          "likeCount": 113,
+          "shareCount": 10,
+          "commentCount": 10,
+          "hasFavorite": false,
+          "hasLiked": false,
+          "hasdiss": false,
+          "hasDissed": false
+        }
+      },
+      "ugc": {
+        "likeCount": 1972,
+        "shareCount": 13,
+        "commentCount": 529,
+        "hasFavorite": false,
+        "hasLiked": false,
+        "hasdiss": false,
+        "hasDissed": false
+      }
+    }
+  ]
+}

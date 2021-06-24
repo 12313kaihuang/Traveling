@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--平移动画-->
+    <translate
+        android:duration="@integer/anim_duration"
+        android:fromXDelta="0%"
+        android:toXDelta="100%"/>
+</set>

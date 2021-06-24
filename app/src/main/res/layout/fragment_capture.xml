@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextureView
+            android:id="@+id/texture_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/capture_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="@dimen/dp_200"
+            android:text="@string/capture_hint"
+            android:textColor="@color/color_white" />
+
+        <com.yu.hu.traveling.view.RecordView
+            android:id="@+id/record_view"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="60dp"
+            app:record_duration="20"
+            app:record_fill_color="@color/color_white"
+            app:record_progress_color="@color/color_theme"
+            app:record_progress_width="@dimen/dp_4"
+            app:record_radius="@dimen/dp_40" />
+    </FrameLayout>
+</layout>

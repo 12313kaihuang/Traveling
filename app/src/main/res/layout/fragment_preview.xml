@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.yu.hu.traveling.ui.capture.CaptureViewModel" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_000">
+
+        <!-- 播放视频 -->
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/player_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.isVideo?View.VISIBLE:View.GONE}"
+            app:buffered_color="@color/color_theme"
+            app:resize_mode="fixed_width"
+            app:show_buffering="when_playing"
+            app:surface_type="texture_view"
+            app:use_controller="false"
+            tools:visibility="gone" />
+
+        <!-- 预览图片 -->
+        <com.github.chrisbanes.photoview.PhotoView
+            android:id="@+id/photo_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="90dp"
+            android:layout_marginBottom="@dimen/dp_60"
+            android:scaleType="fitCenter"
+            android:visibility="@{viewModel.isVideo?View.GONE:View.VISIBLE}"
+            tools:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/close_btn"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_30"
+            app:srcCompat="@drawable/icon_close"
+            app:tint="@color/color_white" />
+        <!-- tint着色图标 -->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/finish_btn"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_30"
+            android:layout_gravity="end|top"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:gravity="center"
+            android:text="@{TextUtils.isEmpty(viewModel.btnText)?@string/preview_ok:viewModel.btnText}"
+            app:backgroundTint="@color/color_theme"
+            app:cornerRadius="@dimen/dp_5"
+            tools:text="@string/preview_ok" />
+    </FrameLayout>
+</layout>

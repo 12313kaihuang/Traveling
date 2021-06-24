@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">emoji</string>
+    <string name="img_content_description">图片</string>
+    <string name="recent_use">最近使用</string>
+    <string name="qq_emoji">全部表情</string>
+    <string name="default_emoji">emoji 表情</string>
+    <string name="emoji_comment_hint">献上你的一条热评</string>
+    <string name="emoji_puhlish">发表</string>
+</resources>

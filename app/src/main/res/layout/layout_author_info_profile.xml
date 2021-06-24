@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.yu.hu.traveling.model.User" />
+
+        <import type="com.yu.hu.traveling.utils.StringConvert" />
+
+        <import type="com.yu.hu.traveling.utils.UserManager" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:paddingStart="@dimen/dp_16"
+        android:paddingEnd="@dimen/dp_16"
+        android:paddingBottom="@dimen/dp_10">
+
+        <com.yu.hu.common.view.CircleImageView
+            android:id="@+id/author_avatar_large"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:image_url="@{user.avatar}"
+            app:isCircle="@{true}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:radius="@{0}"
+            tools:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:id="@+id/profile_info"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@+id/author_avatar_large"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/like_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.3"
+                android:text="@{StringConvert.convertSpannable(user.likeCount,@string/like_count)}"
+                android:textColor="@color/color_666"
+                tools:text="100\n获赞" />
+
+            <TextView
+                android:id="@+id/fans_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.3"
+                android:text="@{StringConvert.convertSpannable(user.followerCount,@string/fans_count)}"
+                android:textColor="@color/color_666"
+                tools:text="100\n粉丝" />
+
+
+            <TextView
+                android:id="@+id/follow_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.3"
+                android:text="@{StringConvert.convertSpannable(user.followCount,@string/follow_count)}"
+                android:textColor="@color/color_666"
+                tools:text="100\n关注" />
+
+
+            <TextView
+                android:id="@+id/score_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.3"
+                android:text="@{StringConvert.convertSpannable(user.score,@string/score_count)}"
+                android:textColor="@color/color_666"
+                tools:text="1000\n粉丝" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="@{user.description}"
+            android:textColor="@color/color_999"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintLeft_toRightOf="@id/author_avatar_large"
+            app:layout_constraintTop_toBottomOf="@+id/profile_info"
+            tools:text="神秘的jetpack" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/chat_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingTop="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_16"
+            android:paddingBottom="@dimen/dp_8"
+            android:text="@string/chat"
+            android:textColor="@color/color_theme"
+            android:textSize="@dimen/sp_14"
+            android:visibility="@{UserManager.isSelf(user.id)?View.GONE:View.VISIBLE}"
+            app:cornerRadius="@dimen/dp_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/author_avatar_large"
+            app:layout_constraintTop_toBottomOf="@+id/profile_info"
+            app:strokeColor="@color/color_theme"
+            app:strokeWidth="1dp"
+            tools:text="私聊" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="loadingText"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_dialog_white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="6dp">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/BaseProgressBar"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="23dp"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="6dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            app:text="@{loadingText}"
+            tools:text="加载中.."
+            tools:textColor="@color/colorPrimary" />
+    </LinearLayout>
+</layout>

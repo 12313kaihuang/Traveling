@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.yu.hu.emoji.entity.EmojiCommentModel" />
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:paddingTop="8dp">
+
+        <com.yu.hu.emoji.EmojiEditText
+            android:id="@+id/emoji_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_emoji_edit_view"
+            android:gravity="top|start"
+            android:hint="@{model.hint}"
+            android:imeOptions="actionSend"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:padding="4dp"
+            android:text="@={model.inputText}"
+            android:textColor="#000000"
+            android:textColorHint="#999999"
+            android:textSize="14sp"
+            tools:hint="@string/emoji_comment_hint"
+            tools:ignore="LabelFor" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/icon_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/img_content_description"
+                android:src="@{model.emojiListVisible?@drawable/icon_keyboard:@drawable/icon_emoji}"
+                tools:src="@drawable/icon_emoji" />
+
+            <Button
+                android:id="@+id/submit_btn"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:background="@{TextUtils.isEmpty(model.inputText)?model.builder.publishBtnNormalColorResource:model.builder.publishBtnActiveColorResource}"
+                android:text="@string/emoji_puhlish"
+                android:textColor="@{TextUtils.isEmpty(model.inputText)?@color/color_999:@color/color_fff}"
+                android:textSize="@{model.builder.publishBtnTextSize}"
+                tools:ignore="RelativeOverlap" />
+
+        </RelativeLayout>
+
+        <!-- NestedScrollView解决ScrollView嵌套RecyclerView导致RecyclerView item显示不全问题-->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/emoji_layout"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:visibility="@{model.emojiListVisible?View.VISIBLE:View.GONE}"
+            tools:visibility="gone">
+
+            <com.yu.hu.emoji.widget.EmojiListView
+                android:id="@+id/emoji_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</layout>

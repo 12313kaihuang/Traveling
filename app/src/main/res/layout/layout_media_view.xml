@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <merge
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.yu.hu.common.view.CircleImageView
+            android:id="@+id/blur_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:transitionName="blur_image" />
+
+        <!--    真正能够播放展示视频画面的view  会动态的添加到这里-->
+
+        <com.yu.hu.common.view.CircleImageView
+            android:id="@+id/cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:transitionName="cover" />
+
+        <ImageView
+            android:id="@+id/play_btn"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="center"
+            android:contentDescription="@string/img_description"
+            android:src="@drawable/icon_video_play"
+            android:transitionName="play_btn" />
+
+        <!--    视频播放时的底部进度条-->
+
+        <ProgressBar
+            android:id="@+id/buffer_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/color_theme"
+            android:transitionName="buffer_view"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </merge>
+</layout>

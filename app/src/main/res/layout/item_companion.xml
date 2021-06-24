@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="companion"
+            type="com.yu.hu.traveling.model.Companion" />
+
+        <import type="com.yu.hu.traveling.utils.StringConvert" />
+
+        <import type="com.yu.hu.common.utils.DateUtils" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:background="@drawable/item_selector"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingTop="@dimen/dp_8">
+
+        <include
+            android:id="@+id/author_layout"
+            layout="@layout/layout_note_author"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:user="@{companion.author}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:ellipsize="end"
+            android:gravity="start|top"
+            android:maxLines="3"
+            android:text="@{companion.content}"
+            android:textColor="@color/color_2f2"
+            android:textSize="@dimen/sp_16"
+            android:visibility="@{TextUtils.isEmpty(companion.content)?View.GONE:View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/target_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/author_layout"
+            tools:text="@string/app_name" />
+
+
+        <LinearLayout
+            android:id="@+id/target_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="@dimen/dp_6"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_8"
+            app:layout_constraintBottom_toTopOf="@id/browse_count"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/img_content_description"
+                android:src="@drawable/ic_time2" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{DateUtils.long2String(companion.targetTime)}"
+                android:textColor="@color/color_aaa"
+                tools:text="2020.4.24" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/img_content_description"
+                android:src="@drawable/ic_target"
+                android:visibility="@{TextUtils.isEmpty(companion.targetLocation)?View.GONE:View.VISIBLE}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{companion.targetLocation}"
+                android:textColor="@color/color_aaa"
+                tools:text="华山" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/browse_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:paddingStart="8dp"
+            android:text="@{StringConvert.convertBrowseCount(companion.ugc.browseCount)}"
+            android:textColor="@color/color_aaa"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/author_layout"
+            tools:ignore="RtlSymmetry"
+            tools:text="41浏览" />
+
+        <TextView
+            android:id="@+id/create_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:text="@{DateUtils.fromNow(companion.createTime)}"
+            android:textColor="@color/color_aaa"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/icon_comment"
+            tools:text="2020.4.24" />
+
+        <ImageView
+            android:id="@+id/icon_comment"
+            android:layout_width="@dimen/dp_18"
+            android:layout_height="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:contentDescription="@string/img_content_description"
+            android:src="@drawable/icon_comment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/comment_count" />
+
+        <TextView
+            android:id="@+id/comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:text="@{StringConvert.convertUgc(companion.ugc.commentCount)}"
+            android:textColor="@color/color_aaa"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

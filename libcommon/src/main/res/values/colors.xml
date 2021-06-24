@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- f8e97c -->
+    <color name="colorPrimary">#ff678f</color>
+    <color name="colorPrimaryDark">#ff678f</color>
+    <color name="colorAccent">#ff678f</color>
+
+    <color name="color_theme">#ff678f</color>
+
+    <color name="transparent">#00FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#666666</color>
+    <color name="color_000">#000000</color>
+    <color name="color_666">#666666</color>
+    <color name="color_999">#999999</color>
+    <color name="color_gray">#F8F9F9</color>
+    <color name="color_3d3">#3d3d3d</color>
+    <color name="lightYellow">#f8e97c</color>
+
+
+    <color name="color_item_normal">#FFFFFF</color>
+    <color name="color_item_pressed">#CFCFCF</color>
+</resources>

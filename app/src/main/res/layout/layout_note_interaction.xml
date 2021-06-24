@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="note"
+            type="Note" />
+
+        <variable
+            name="shareContent"
+            type="String" />
+
+        <import type="com.yu.hu.traveling.model.Note" />
+
+        <import type="com.yu.hu.traveling.utils.StringConvert" />
+
+        <import type="com.yu.hu.traveling.utils.InteractionPresenter" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dp_8"
+        android:paddingEnd="@dimen/dp_8">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/like"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:onClick="@{()->InteractionPresenter.toggleNoteLike(note)}"
+            android:text="@{note.ugc.likeCount>0?StringConvert.convertUgc(note.ugc.likeCount):@string/like}"
+            android:textColor="@{note.ugc.hasLiked?@color/theme_color:@color/color_3d3}"
+            android:textSize="@dimen/sp_14"
+            app:cornerRadius="@dimen/dp_0"
+            app:icon="@{note.ugc.hasLiked?@drawable/icon_cell_liked:@drawable/icon_cell_like}"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/dp_4"
+            app:iconTint="@{note.ugc.hasLiked?@color/theme_color:@color/color_3d3}"
+            tools:icon="@drawable/icon_cell_liked"
+            tools:iconTint="@color/theme_color"
+            tools:text="1000"
+            tools:textColor="@color/theme_color" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/diss"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:onClick="@{()->InteractionPresenter.toggleNoteDiss(note)}"
+            android:text="@string/diss"
+            android:textColor="@{note.ugc.hasDissed?@color/theme_color:@color/color_3d3}"
+            android:textSize="@dimen/sp_14"
+            app:cornerRadius="@dimen/dp_0"
+            app:icon="@{note.ugc.hasDissed?@drawable/icon_cell_dissed:@drawable/icon_cell_diss}"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/dp_4"
+            app:iconTint="@{note.ugc.hasDissed?@color/theme_color:@color/color_3d3}"
+            tools:icon="@drawable/icon_cell_diss"
+            tools:iconTint="@color/color_3d3"
+            tools:textColor="@color/color_3d3" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="@{note.ugc.commentCount>0?StringConvert.convertUgc(note.ugc.commentCount):@string/feed_comment}"
+            android:textColor="@color/color_3d3"
+            android:textSize="@dimen/sp_14"
+            app:cornerRadius="@dimen/dp_0"
+            app:icon="@drawable/icon_cell_comment"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/dp_4"
+            app:iconTint="@color/color_3d3"
+            tools:text="1000" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/share"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:onClick="@{() -> InteractionPresenter.openShare(shareContent,note)}"
+            android:text="@{note.ugc.shareCount>0?StringConvert.convertUgc(note.ugc.shareCount):@string/share}"
+            android:textColor="@color/color_3d3"
+            android:textSize="@dimen/sp_14"
+            app:cornerRadius="@dimen/dp_0"
+            app:icon="@drawable/icon_cell_share"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/dp_4"
+            app:iconTint="@color/color_3d3"
+            tools:text="14" />
+    </LinearLayout>
+</layout>

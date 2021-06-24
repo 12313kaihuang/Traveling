@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.yu.hu.traveling.ui.splash.SplashViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="150dp"
+            android:contentDescription="@string/img_content_description"
+            android:scaleType="centerCrop"
+            app:image_url="@{viewModel.imgModel.url}"
+            app:viewModel="@{viewModel}"
+            tools:background="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginBottom="170dp"
+            android:background="@drawable/bg_skip"
+            android:text="@string/skip"
+            android:textColor="@color/white"
+            android:visibility="@{viewModel.loadSuccess?View.VISIBLE:View.GONE}"
+            tools:text="跳过" />
+
+    </FrameLayout>
+</layout>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Common</string>
+    <string name="loading">加载中..</string>
+    <string name="developing">开发中..</string>
+    <string name="img_description">这是一张图片</string>
+    <string name="try_to_refresh">虽然什么也没有,要不下拉刷新试试</string>
+</resources>

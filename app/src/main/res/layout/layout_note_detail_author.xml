@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="note"
+            type="com.yu.hu.traveling.model.Note" />
+
+        <variable
+            name="marginStart"
+            type="Integer" />
+
+        <variable
+            name="fullScreen"
+            type="Boolean" />
+
+        <import type="com.yu.hu.common.utils.DateUtils" />
+
+        <import type="com.yu.hu.traveling.utils.InteractionPresenter" />
+
+        <import type="com.yu.hu.traveling.utils.UserManager" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/author_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:paddingStart="@{marginStart}"
+        android:paddingTop="@dimen/dp_3"
+        android:paddingEnd="@dimen/dp_0"
+        android:paddingBottom="@dimen/dp_3"
+        tools:layout_marginStart="60dp">
+
+        <com.yu.hu.common.view.CircleImageView
+            android:id="@+id/author_avatar"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_1"
+            app:image_url="@{note.author.avatar}"
+            app:isCircle="@{true}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/dp_3"
+            android:text="@{note.author.name}"
+            android:textColor="@{fullScreen?@color/color_white:@color/color_000}"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@+id/author_avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/app_name" />
+
+        <TextView
+            android:id="@+id/create_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_2"
+            android:text="@{DateUtils.fromNow(note.createTime)}"
+            android:textColor="@{fullScreen?@color/color_white:@color/color_000}"
+            android:textSize="@dimen/sp_12"
+            android:textStyle="normal"
+            app:layout_constraintLeft_toRightOf="@+id/author_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/author_name"
+            tools:text="3天前" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:backgroundTint="@{fullScreen?@color/transparent:@color/theme_color}"
+            android:gravity="center"
+            android:onClick="@{()->InteractionPresenter.toggleFocus(note)}"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_16"
+            android:paddingBottom="@dimen/dp_5"
+            android:text="@{note.author.hasFollow?@string/has_follow:@string/unfollow}"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/sp_14"
+            android:visibility="@{UserManager.isSelf(note.authorId)?View.GONE:View.VISIBLE}"
+            app:backgroundTint="@color/color_theme"
+            app:cornerRadius="@dimen/dp_13"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@{fullScreen?@color/color_white:@color/transparent}"
+            app:strokeWidth="1dp"
+            tools:text="已关注" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

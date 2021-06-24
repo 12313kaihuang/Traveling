@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.exoplayer2.ui.PlayerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/player_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    app:keep_content_on_player_reset="false"
+    app:player_layout_id="@layout/layout_simple_exo_player_view"
+    app:resize_mode="zoom"
+    app:show_buffering="never"
+    app:show_timeout="1000"
+    app:surface_type="texture_view"
+    app:use_controller="false">
+
+    <!-- keepScreenOn 保持屏幕常亮
+         show_timeout 播放控制器（进度条等）多久之后自动隐藏掉
+         keep_content_on_player_reset playerView重置时是否保留最后一帧
+         resize_mode 视频帧画面缩放形式
+         show_buffering 是否显示默认的加载进度条（progress）-->
+
+
+</com.google.android.exoplayer2.ui.PlayerView>

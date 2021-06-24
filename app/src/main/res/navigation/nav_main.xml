@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.yu.hu.traveling.ui.splash.SplashFragment"
+        android:label="SplashFragment">
+
+        <action
+            android:id="@+id/splash_to_Main2"
+            app:destination="@id/mainFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/publishFragment"
+        android:name="com.yu.hu.traveling.ui.publish.PublishFragment"
+        android:label="PublishFragment" />
+
+    <fragment
+        android:id="@+id/mainFragment2"
+        android:name="com.yu.hu.traveling.ui.MainFragment2"
+        android:label="MainFragment2" >
+        <action
+            android:id="@+id/action_mainFragment2_to_publishFragment"
+            app:destination="@id/publishFragment"
+            app:enterAnim="@anim/slide_in_left"/>
+    </fragment>
+</navigation>

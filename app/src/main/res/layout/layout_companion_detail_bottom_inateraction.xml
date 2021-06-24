@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="companion"
+            type="com.yu.hu.traveling.model.Companion" />
+
+        <import type="com.yu.hu.traveling.utils.InteractionPresenter" />
+
+        <import type="com.yu.hu.traveling.utils.UserManager" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        tools:background="@color/white">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/input_view"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_4"
+                android:layout_marginRight="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_4"
+                android:layout_weight="4"
+                android:background="@drawable/bg_edit_view"
+                android:gravity="center_vertical"
+                android:hint="@string/emoji_comment_hint"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_0"
+                android:textColor="@color/color_333"
+                android:textColorHint="@color/color_333"
+                android:textSize="12sp"
+                tools:ignore="NestedWeights" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{()->InteractionPresenter.toggleCompanionLike(companion)}"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:background="@{companion.ugc.hasLiked?@drawable/icon_cell_liked:@drawable/icon_cell_like}"
+                    android:backgroundTint="@{companion.ugc.hasLiked?@color/color_theme:@color/color_666}"
+                    tools:src="@drawable/icon_cell_liked" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:gravity="center"
+                    android:text="@{companion.ugc.likeCount>0?String.valueOf(companion.ugc.likeCount):@string/like}"
+                    android:textColor="@{companion.ugc.hasLiked?@color/color_theme:@color/color_666}"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="赞" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{()->InteractionPresenter.toggleCompanionCollect(companion)}"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:background="@{companion.ugc.hasFavorite?@drawable/ic_collected:@drawable/ic_collect}"
+                    android:backgroundTint="@{companion.ugc.hasFavorite?@color/color_theme:@color/color_666}"
+                    tools:src="@drawable/ic_collected" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:gravity="center"
+                    android:text="@{companion.ugc.hasFavorite?@string/has_collect:@string/collect}"
+                    android:textColor="@{companion.ugc.hasFavorite?@color/color_theme:@color/color_666}"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="收藏" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{() -> InteractionPresenter.openShare(companion)}"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:background="@drawable/icon_cell_share"
+                    android:backgroundTint="@color/color_666"
+                    tools:src="@drawable/icon_cell_share" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:gravity="center"
+                    android:text="@string/share"
+                    android:textColor="@color/color_666"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="分享" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/delete_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="@{UserManager.isSelf(companion.authorId)?View.VISIBLE:View.GONE}">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:background="@drawable/ic_delete"
+                    android:backgroundTint="@color/color_666" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:gravity="center"
+                    android:text="@string/delete"
+                    android:textColor="@color/color_666"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="删除" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

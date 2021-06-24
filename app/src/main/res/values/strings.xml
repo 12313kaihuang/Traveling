@@ -1,0 +1,94 @@
+<resources>
+    <string name="app_name">Traveling</string>
+    <string name="app_name_simple">Traveling</string>
+    <string name="img_content_description">这是一张图片</string>
+    <string name="skip">跳过</string>
+    <string name="home">首页</string>
+    <string name="companion">结伴</string>
+    <string name="information">消息</string>
+    <string name="my">我的</string>
+    <string name="other_login">快捷登录</string>
+    <string name="has_follow">已关注</string>
+    <string name="unfollow">关注</string>
+    <string name="like_count">\n获赞</string>
+    <string name="fans_count">\n粉丝</string>
+    <string name="follow_count">\n关注</string>
+    <string name="score_count">\n积分</string>
+    <string name="fragment_my_feed">游记</string>
+    <string name="fragment_my_companion">结伴</string>
+    <string name="fragment_my_favorite">收藏</string>
+    <string name="fragment_my_history">浏览历史</string>
+    <string name="click_to_login">点击登录</string>
+    <string name="fragment_my_logout">确定要继续退出吗？</string>
+    <string name="fragment_my_logout_ok">确定</string>
+    <string name="fragment_my_logout_cancel">取消</string>
+    <string name="like">赞</string>
+    <string name="feed_comment">评论</string>
+    <string name="has_collect">已收藏</string>
+    <string name="collect">收藏</string>
+    <string name="share">分享</string>
+    <string name="diss">踩</string>
+    <string name="reload">重新加载</string>
+    <string name="feed_detail_type_image_title">详情页</string>
+    <string name="note_detil_hint">写评论</string>
+    <string name="author">作者</string>
+    <string name="feed_comment_empty">还没有评论，快来抢一楼吧</string>
+    <string name="publish_title">发布</string>
+    <string name="publish_button">发布</string>
+    <string name="publish_format">发布%s</string>
+    <string name="publish_title_hint">添加标题更容易被推荐哦(选填)</string>
+    <string name="publish_companion_location_hint">目的地</string>
+    <string name="publish_target_time_hint">出发日期</string>
+    <string name="publish_content_hint">记得添加标题并选择图片/视频，让你的笔记更容易被推荐，更有机会赢得旅行奖品哦~</string>
+    <string name="publish_add_tag">选择类型</string>
+    <string name="choose_type">选择类型</string>
+    <string name="search">搜索</string>
+    <string name="search_hint">请输入搜索关键词</string>
+    <string name="input_search_content">请输入关键词</string>
+    <string name="search_history">搜索历史</string>
+    <string name="clear">清空</string>
+    <string name="list_item_content">眉山一日游：眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游
+        眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游眉山一日游</string>
+    <string name="like_and_comment_num">%1d 喜欢·%1d 评论</string>
+    <string name="no_data_searched">没有找到相关文章~</string>
+    <string name="str_take_photo">拍摄</string>
+    <string name="str_from_album">选择本地图片</string>
+    <string name="str_cancel">取消</string>
+    <string name="capture_hint">轻点拍照，长按录像</string>
+    <string name="preview_ok">完成</string>
+    <string name="private_chat">私聊</string>
+    <string name="tv_chat_need_login">登录之后才可显示回话列表</string>
+    <string name="none_publish_hint">您还没有发布过相关文章哦~</string>
+    <string name="focus_note_hint_with_noLogin">登录之后才可查看关注的人的文章哦~</string>
+    <string name="multi_preview_hint">%d/%d</string>
+    <string name="to_login">去登陆</string>
+    <string name="confirm_delete_comment">确定要删除此条评论吗?</string>
+    <string name="confirm_delete_note">确定要删除此篇文章?</string>
+    <string name="upload_file_hint">上传中…</string>
+    <string name="upload_file_failure">图片上传失败，请检查您的网络是否通畅</string>
+    <string name="publish_hint">发布中…</string>
+    <string name="publish_max_img_hint">最多添加%d张图片或视频</string>
+    <string name="please_input_content_hint">请填写内容</string>
+    <string name="choose_note_type_hint">请选择发布文章类型</string>
+    <string name="choose_video">选择本地视频</string>
+    <string name="delete">删除</string>
+    <string name="publish_success">发布成功</string>
+    <string name="confirm">确认</string>
+    <string name="back">返回</string>
+    <string name="target_location">请输入目的地</string>
+    <string name="target_time">请选择预计触发时间</string>
+    <string name="login_by_qq">QQ快捷登录</string>
+    <string name="logining">登录中…</string>
+    <string name="chat">私聊</string>
+    <string name="emoji_comment_hint">献上你的一条热评</string>
+    <string name="comment_detail">评论详情</string>
+    <string name="reply_count">%d条回复></string>
+    <string name="reply_hint">回复@%s</string>
+    <string name="comment_reply">回复 %s：%s</string>
+
+    <string-array name="profile_tabs">
+        <item>游记</item>
+        <item>攻略</item>
+        <item>结伴</item>
+    </string-array>
+</resources>

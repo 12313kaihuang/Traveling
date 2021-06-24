@@ -1,0 +1,9 @@
+{
+  "code":200,
+  "msg":"ok",
+  "response":{
+    "id":1001,
+    "name":"Bob",
+    "age":23
+  }
+}

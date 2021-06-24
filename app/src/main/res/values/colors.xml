@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF678F</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="colorAccent">#FF678F</color>
+
+    <color name="transparent">@android:color/transparent</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="red">#d81e06</color>
+    <color name="gray">#666666</color>
+    <color name="color_000">#000000</color>
+    <color name="color_666">#666666</color>
+    <color name="color_999">#999999</color>
+    <color name="color_gray">#F8F9F9</color>
+    <color name="color_3d3">#3d3d3d</color>
+    <!--主题色-->
+    <color name="theme_color">#ff678f</color>
+    <color name="color_333">#333333</color>
+    <color name="white_dark">#AAFFFFFF</color>
+    <color name="color_2f2">#2f2f2f</color>
+    <color name="color_text_normal">#8A000000</color>
+    <color name="color_divider">#f2f2f2</color>
+    <color name="color_gray2">#F4F3F4</color>
+    <color name="color_aaa">#AAAAAA</color>
+    <color name="color_cfc">#CFCFCF</color>
+    <color name="color_line">#9C9C9C</color>
+    <color name="color_item_dark">#888888</color>
+</resources>

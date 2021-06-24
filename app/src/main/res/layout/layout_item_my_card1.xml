@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.yu.hu.traveling.model.User" />
+
+        <import type="com.yu.hu.traveling.utils.StringConvert" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_90"
+        android:background="@color/white"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        tools:showIn="@layout/fragment_my">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/like_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.3"
+                android:text="@{StringConvert.convertSpannable(user.likeCount,@string/like_count)}"
+                android:textColor="@color/color_666"
+                tools:text="100\n获赞" />
+
+            <TextView
+                android:id="@+id/fans_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.3"
+                android:text="@{StringConvert.convertSpannable(user.followerCount,@string/fans_count)}"
+                android:textColor="@color/color_666"
+                tools:text="100\n粉丝" />
+
+
+            <TextView
+                android:id="@+id/follow_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.3"
+                android:text="@{StringConvert.convertSpannable(user.followCount,@string/follow_count)}"
+                android:textColor="@color/color_666"
+                tools:text="100\n关注" />
+
+
+            <TextView
+                android:id="@+id/score_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.3"
+                android:text="@{StringConvert.convertSpannable(user.score,@string/score_count)}"
+                android:textColor="@color/color_666"
+                tools:text="1000\n积分" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

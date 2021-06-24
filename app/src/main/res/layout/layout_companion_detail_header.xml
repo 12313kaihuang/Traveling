@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="companion"
+            type="com.yu.hu.traveling.model.Companion" />
+
+        <import type="com.yu.hu.ninegridlayout.utils.PixUtils" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <import type="com.yu.hu.common.utils.DateUtils" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/author_info_layout"
+            layout="@layout/layout_companion_detail_author"
+            app:companion="@{companion}"
+            app:marginStart="@{PixUtils.dp2px(8)}" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_10" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:text="@{companion.content}"
+            android:textColor="@color/color_2f2"
+            android:textSize="@dimen/sp_16"
+            android:visibility="@{TextUtils.isEmpty(companion.content)?View.GONE:View.VISIBLE}"
+            tools:text="@string/app_name" />
+
+        <LinearLayout
+            android:id="@+id/target_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="@dimen/dp_6"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_8"
+            app:layout_constraintBottom_toTopOf="@id/browse_count"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/img_content_description"
+                android:src="@drawable/ic_time2" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{DateUtils.long2String(companion.targetTime)}"
+                android:textColor="@color/color_aaa"
+                tools:text="2020.4.24" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/img_content_description"
+                android:src="@drawable/ic_target"
+                android:visibility="@{TextUtils.isEmpty(companion.targetLocation)?View.GONE:View.VISIBLE}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{companion.targetLocation}"
+                android:textColor="@color/color_aaa"
+                tools:text="华山" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_10"
+            android:layout_marginTop="6dp"
+            android:background="@color/color_divider" />
+
+    </LinearLayout>
+</layout>

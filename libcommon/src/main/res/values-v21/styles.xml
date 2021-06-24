@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--设置progressBar颜色  要两个属性一起才有用-->
+    <style name="BaseProgressBar" parent="Base.Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateTint">@color/colorPrimary</item>
+        <item name="android:indeterminateTintMode">src_atop</item>
+    </style>
+
+    <style name="BaseAppTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <!-- 自己设置图片背景 -->
+        <item name="android:windowBackground">@color/transparent</item>
+        <!-- 加载图片则选择false 否则选择true -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 设置window过渡效果 禁用窗口的预览动画 -->
+        <item name="android:windowDisablePreview">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <!-- 在5.0后，增加了一个windowDrawsSystemBarBackgrounds属性，用来标志此窗口是否负责绘制系统栏背景，
+        我们把它设成false，这样当它绘制windowBackground的时候，就会在NavigationBar之上。-->
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+
+        <!-- 图片延伸到状态栏 -->
+        <!--windowTranslucentNavigation这个属性设置成true，则navigationBarColor设置会失效-->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+        <!-- 导航栏透明 -->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+
+        <!-- 设置statusBarColor 为透明-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+</resources>

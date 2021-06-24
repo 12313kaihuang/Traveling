@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="note"
+            type="com.yu.hu.traveling.model.Note" />
+
+        <import type="com.yu.hu.ninegridlayout.utils.PixUtils" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/author_info_layout"
+            layout="@layout/layout_note_detail_author"
+            app:fullScreen="@{false}"
+            app:marginStart="@{PixUtils.dp2px(8)}"
+            app:note="@{note}" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_10" />
+
+        <include
+            app:lines="@{1000}"
+            layout="@layout/layout_note_text"
+            app:content="@{note.content}" />
+
+
+        <com.yu.hu.common.view.CircleImageView
+            android:id="@+id/image_view"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:visibility="@{note.imgItems.size()==0?View.GONE:View.VISIBLE}"
+            tools:src="@mipmap/ic_launcher" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_10"
+            android:layout_marginTop="6dp"
+            android:background="@color/color_divider" />
+
+    </LinearLayout>
+</layout>

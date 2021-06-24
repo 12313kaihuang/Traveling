@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="smallPaddingSize">5dp</dimen>
+    <dimen name="normalPaddingSize">8dp</dimen>
+    <dimen name="largePaddingSize">16dp</dimen>
+
+    <dimen name="smallMarginSize">5dp</dimen>
+    <dimen name="normalMarginSize">8dp</dimen>
+    <dimen name="largeMarginSize">16dp</dimen>
+</resources>

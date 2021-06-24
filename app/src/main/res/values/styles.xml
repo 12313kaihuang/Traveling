@@ -1,0 +1,26 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="BaseAppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="materialButtonStyle">@style/materialButton</item>
+    </style>
+
+    <!-- 启动页主题 v21 v28有适配 -->
+    <style name="AppTheme.Splash" parent="BaseAppTheme.Splash">
+        <item name="android:windowBackground">@drawable/layer_launcher</item>
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
+    <declare-styleable name="view_anchor_behavior">
+        <attr name="anchor_behavior_anchorId" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="view_zoom_behavior">
+        <attr name="vz_min_height" format="dimension" />
+        <attr name="vz_scrolling_id" format="integer" />
+    </declare-styleable>
+</resources>

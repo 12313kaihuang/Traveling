@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="note"
+            type="com.yu.hu.traveling.model.Note" />
+
+        <variable
+            name="fullScreen"
+            type="Boolean" />
+
+        <import type="com.blankj.utilcode.util.ConvertUtils" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <com.yu.hu.traveling.view.MediaView
+            android:id="@+id/media_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior=".ui.detail.ViewZoomBehavior"
+            app:vz_min_height="@dimen/dp_200"
+            app:vz_scrolling_id="@+id/recycler_view" />
+
+        <!-- include 使用behavior是无效的 所以在代码中自己又设置了一遍-->
+        <include
+            android:id="@+id/author_info"
+            layout="@layout/layout_note_detail_author"
+            android:visibility="visible"
+            app:fullScreen="@{false}"
+            app:layout_behavior=".ui.detail.ViewAnchorBehavior"
+            app:marginStart="@{ConvertUtils.dp2px(16)}"
+            app:note="@{note}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            app:anchor_behavior_anchorId="@+id/author_info"
+            app:layout_behavior=".ui.detail.ViewAnchorBehavior" />
+
+        <include
+            android:id="@+id/interaction_layout"
+            layout="@layout/layout_note_detail_bottom_inateraction"
+            app:fullScreen="@{fullScreen}"
+            app:note="@{note}" />
+
+        <include
+            android:id="@+id/fullscreen_author_info"
+            layout="@layout/layout_note_detail_author"
+            android:visibility="visible"
+            app:fullScreen="@{fullScreen}"
+            app:marginStart="@{ConvertUtils.dp2px(60)}"
+            app:note="@{note}" />
+
+        <ImageView
+            android:id="@+id/action_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_8"
+            android:contentDescription="@string/img_description"
+            android:fitsSystemWindows="true"
+            android:src="@drawable/icon_back_white" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

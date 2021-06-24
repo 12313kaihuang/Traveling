@@ -1,0 +1,34 @@
+{
+  "activeSize": 16,
+  "normalSize": 14,
+  "activeColor": "#ED7282",
+  "normalColor": "#666666",
+  "select": 1,
+  "tabGravity": 1,
+  "tabs": [
+    {
+      "title": "关注",
+      "index": 0,
+      "tag": "focus",
+      "enable": true
+    },
+    {
+      "title": "最新",
+      "index": 1,
+      "tag": "new",
+      "enable": true
+    },
+    {
+      "title": "游记",
+      "index": 1,
+      "tag": "note",
+      "enable": true
+    },
+    {
+      "title": "攻略",
+      "index": 1,
+      "tag": "strategy",
+      "enable": true
+    }
+  ]
+}

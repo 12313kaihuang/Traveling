@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="emojiTextColor">#6F6F6F</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="color_fff">#FFFFFF</color>
+    <color name="color_999">#999999</color>
+    <color name="publish_bg_color_active">#FF14A5E2</color>
+    <color name="publish_bg_color_normal">#E9EBEC</color>
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="content"
+            type="String" />
+
+        <variable
+            name="lines"
+            type="java.lang.Integer" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <com.yu.hu.emoji.EmojiTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:ellipsize="end"
+        android:maxLines="@{lines}"
+        android:textColor="@color/color_2f2"
+        android:textSize="@dimen/sp_16"
+        android:visibility="@{TextUtils.isEmpty(content)?View.GONE:View.VISIBLE}"
+        app:emojiText="@{content}"
+        tools:background="@color/white"
+        tools:text="@string/app_name">
+
+    </com.yu.hu.emoji.EmojiTextView>
+</layout>

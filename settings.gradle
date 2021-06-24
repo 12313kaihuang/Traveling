@@ -1,0 +1,8 @@
+include ':app',':libcommon', ':test',':libnetwork'
+rootProject.name='Traveling-Jetpack'
+include ':libnavannotation'
+include ':libnavcompiler'
+include ':ninegridlayout'
+include ':emoji'
+include ':leancloudchatkit'
+

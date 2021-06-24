@@ -1,0 +1,49 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+//    buildToolsVersion '28.0.2'
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    //api 'com.android.support:support-v4:26.1.0'
+    //implementation 'com.android.support:appcompat-v7:26.1.0'
+
+//    compile fileTree(dir:"libs", include:["*.jar"])
+
+    //avoscloud-sdk 为 LeanCloud基础包
+    implementation('cn.leancloud.android:avoscloud-sdk:v4.7.9')
+    //avoscloud-push 为推送与实时聊天需要的包
+    implementation('cn.leancloud.android:avoscloud-push:v4.7.9@aar') { transitive = true }
+
+    implementation 'com.alibaba:fastjson:1.1.70.android'
+    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
+
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.github.stuxuhai:jpinyin:1.0'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'de.greenrobot:eventbus:2.4.0'
+
+    // Lifecycle components
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"
+    //noinspection LifecycleAnnotationProcessorWithJava8
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
+}
+
+//apply from: '../maven_push.gradle'
+

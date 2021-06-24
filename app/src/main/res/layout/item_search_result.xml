@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="note"
+            type="com.yu.hu.traveling.model.Note" />
+
+        <variable
+            name="cover"
+            type="String" />
+
+        <variable
+            name="url"
+            type="String" />
+
+        <variable
+            name="searchContent"
+            type="String" />
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="com.yu.hu.traveling.utils.StringConvert" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_selector"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_8">
+
+        <!-- 把这个单独出来是因为content依赖title定位，
+             界面显示出来之后Title隐藏掉会导致隐藏了但是还是占据着位置-->
+        <TextView
+            android:id="@+id/note_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{StringConvert.convertHighlightString(searchContent,note.title)}"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="@{TextUtils.isEmpty(note.title)?View.GONE:View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/app_name" />
+
+        <!--
+            ConstraintLayout 有坑
+            1. 设置wrap_content，由于其内部复杂的实现，
+            加上每个item的高度不是固定，可能会出现item高度异常问题
+            所以这里设置了固定高度   -->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80">
+
+            <TextView
+                android:id="@+id/note_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_4"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:ellipsize="end"
+                android:gravity="top|start"
+                android:maxLines="2"
+                android:paddingStart="@dimen/dp_0"
+                android:paddingEnd="@dimen/dp_5"
+                android:text="@{StringConvert.convertHighlightString(searchContent,note.content)}"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@id/like_comment_num"
+                app:layout_constraintEnd_toStartOf="@id/img_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/list_item_content" />
+
+            <com.yu.hu.common.view.CircleImageView
+                android:id="@+id/img_view"
+                android:layout_width="@dimen/dp_120"
+                android:layout_height="@dimen/dp_80"
+                android:contentDescription="@string/img_description"
+                android:scaleType="fitXY"
+                android:visibility="@{TextUtils.isEmpty(cover)?View.GONE:View.VISIBLE}"
+                app:image_url="@{cover}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/login_bg"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/video_icon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/img_description"
+                android:src="@drawable/icon_video_play"
+                android:visibility="@{TextUtils.isEmpty(url)?View.GONE:View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="@id/img_view"
+                app:layout_constraintEnd_toEndOf="@id/img_view"
+                app:layout_constraintStart_toStartOf="@id/img_view"
+                app:layout_constraintTop_toTopOf="@id/img_view"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/like_comment_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:lines="1"
+                android:text="@{StringConvert.convertLikeAndCommentNum(note.ugc.likeCount,note.ugc.commentCount)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/note_content"
+                tools:text="@string/like_and_comment_num" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!--  备用
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/note_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_marginBottom="@dimen/dp_8"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:paddingStart="@dimen/dp_0"
+                    android:paddingEnd="@dimen/dp_5"
+                    android:text="@{StringConvert.disposeTitle(searchContent,note.content)}"
+                    android:textColor="@color/black"
+                    tools:text="@string/list_item_content" />
+
+                <TextView
+                    android:id="@+id/like_comment_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="@{StringConvert.convertLikeAndCommentNum(note.ugc.likeCount,note.ugc.commentCount)}"
+                    tools:text="@string/like_and_comment_num" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/img_view"
+                android:layout_width="@dimen/dp_120"
+                android:layout_height="@dimen/dp_80"
+                android:contentDescription="@string/img_description"
+                android:scaleType="fitXY"
+                android:visibility="@{TextUtils.isEmpty(cover)?View.GONE:View.VISIBLE}"
+                app:image_url="@{cover}"
+
+                tools:src="@drawable/login_bg"
+                tools:visibility="visible" />
+
+
+        </LinearLayout> -->
+    </LinearLayout>
+
+</layout>

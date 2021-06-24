@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.yu.hu.traveling.model.User" />
+
+        <variable
+            name="expand"
+            type="java.lang.Boolean" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_white">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:divider="@drawable/list_divider_2px"
+            android:fitsSystemWindows="true"
+            android:showDividers="middle|end"
+            app:statusBarForeground="@color/color_white"
+            app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:minHeight="@dimen/dp_48"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:statusBarScrim="@color/color_white">
+
+                <!--  exitUntilCollapsed 需scroll配合使用后面的才有效
+                   表示当View被推出屏幕时，会跟着滑动，直到折叠到View的最小高度；-->
+                <include
+                    android:id="@+id/author_info_layout"
+                    layout="@layout/layout_author_info_profile"
+                    app:user="@{user}" />
+
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:background="@color/color_white"
+                    app:layout_collapseMode="pin">
+
+                    <!-- pin 当CollapsingToolbarLayout完全收缩后，Toolbar还可以保留在屏幕上。-->
+
+                    <include
+                        android:id="@+id/header_layout"
+                        layout="@layout/layout_header_profile"
+                        app:expand="@{expand}"
+                        app:user="@{user}" />
+
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="bottom"
+                app:tabGravity="center"
+                app:tabIndicator="@null"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/color_theme"
+                app:tabTextColor="@color/color_999" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+        <!-- ScrollingViewBehavior"
+            Behavior which should be used by Views which can scroll vertically and support nested scrolling to automatically scroll any AppBarLayout siblings.-->
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
