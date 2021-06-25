@@ -6,7 +6,11 @@ Jetpack组件库重新编写，同时新增了发布视频类型的游记功能�
  
 Introduction
 ------------
-[APK](/app/release/)
+* [下载APK](./app/release/Traveling1.0.apk)
+
+### previews
+![./效果展示/demo.gif]
+
 
 ### application
 * [**app**](/app) —— 程序`application`
