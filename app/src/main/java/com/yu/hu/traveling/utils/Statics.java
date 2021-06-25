@@ -22,6 +22,6 @@ public class Statics {
     public static final String CHATKIT_APP_ID = "23MM7AIgH17cxvBsq3hg0C4i-gzGzoHsz";
     public static final String CHATKIT_APP_KEY = "fW1k7weKPWepuakSXlxPQj3w";
 
-    public static final String BASE_URL = "http://47.106.131.58/traveling-jetpack/";
-    public static final String BASE_URL_TEST = "http://192.168.0.102:8080/traveling-jetpack/";
+    public static final String BASE_URL = "http://47.106.131.58:8085/";
+    public static final String BASE_URL_TEST = "http://10.220.39.210:8085/";
 }

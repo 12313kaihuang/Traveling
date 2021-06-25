@@ -15,6 +15,8 @@ import cn.leancloud.chatkit.LCChatKit;
  **/
 public class TravelingApplication extends BaseApplication {
 
+    private static final boolean DEBUG = false;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -24,6 +26,6 @@ public class TravelingApplication extends BaseApplication {
         LCChatKit.getInstance().setProfileProvider(TravelingUserProvider.getInstance());
         LCChatKit.getInstance().init(getApplicationContext(), Statics.CHATKIT_APP_ID, Statics.CHATKIT_APP_KEY);
         //baseUrl设置
-        RetrofitManager.init(Statics.BASE_URL);
+        RetrofitManager.init(DEBUG ? Statics.BASE_URL_TEST : Statics.BASE_URL);
     }
 }
