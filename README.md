@@ -9,7 +9,7 @@ Introduction
 * [下载APK](./app/release/Traveling1.0.apk)
 
 ### previews
-![./效果展示/demo.gif]
+![](./效果展示/demo.gif)
 
 
 ### application
