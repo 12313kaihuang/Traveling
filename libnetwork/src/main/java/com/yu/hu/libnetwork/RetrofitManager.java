@@ -31,12 +31,12 @@ public class RetrofitManager {
     private static int sConnectTimeout = 10;
 
     //用于存储retrofit
-    private static ConcurrentHashMap<String, Retrofit> sRetrofitMap;
+    private static final ConcurrentHashMap<String, Retrofit> sRetrofitMap;
 
-    private static OkHttpClient.Builder sOkHttpBuilder;
+    private static final OkHttpClient.Builder sOkHttpBuilder;
 
     //用于日期转换
-    private static Gson sDataFormat;
+    private static final Gson sDataFormat;
 
     static {
         sRetrofitMap = new ConcurrentHashMap<>();
