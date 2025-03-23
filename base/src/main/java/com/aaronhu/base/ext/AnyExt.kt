@@ -9,7 +9,7 @@ import java.lang.reflect.ParameterizedType
  * 2025/3/17 11:11
  */
 @Suppress("UNCHECKED_CAST")
-fun <VB : ViewBinding> LayoutInflater.inflateBindingWithReflect(): VB {
+fun <VB : ViewBinding> Any.inflateBindingWithReflect(inflater: LayoutInflater): VB {
     var genericSuperClass = javaClass.genericSuperclass // 获取当前类的泛型父类
     var supperClass = javaClass.superclass
     while (supperClass != null) {
@@ -23,7 +23,7 @@ fun <VB : ViewBinding> LayoutInflater.inflateBindingWithReflect(): VB {
                     return (bindingClass as Class<VB>).getMethod(
                         "inflate",
                         LayoutInflater::class.java
-                    ) as VB
+                    ).invoke(null, inflater) as VB
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

@@ -2,6 +2,7 @@ package com.aaronhu.base.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.aaronhu.base.ext.inflateBindingWithReflect
@@ -14,9 +15,11 @@ abstract class ABindingActivity<VB : ViewBinding> : AppCompatActivity() {
     @Suppress("MemberVisibilityCanBePrivate")
     protected lateinit var binding: VB
 
+    @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = LayoutInflater.from(this).inflateBindingWithReflect()
+        binding = inflateBindingWithReflect(LayoutInflater.from(this))
+        setContentView(binding.root)
     }
 
 }
