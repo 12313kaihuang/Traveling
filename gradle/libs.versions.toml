@@ -13,6 +13,7 @@ appcompat = "1.6.1"
 material = "1.10.0"
 viewbindingVersion = "8.9.0"
 splashscreen = "1.0.1"
+viewmodel = "2.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,6 +34,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 viewbinding = { group = "androidx.databinding", name = "viewbinding", version.ref = "viewbindingVersion" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "viewmodel" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

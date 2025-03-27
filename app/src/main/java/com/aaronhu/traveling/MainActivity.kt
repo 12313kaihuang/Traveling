@@ -1,13 +1,22 @@
 package com.aaronhu.traveling
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.aaronhu.base.ext.viewModels
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
+
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
+        val splashScreen = installSplashScreen()
+        setContentView(R.layout.activity_main)
+        splashScreen.setKeepOnScreenCondition {
+            //如果返回 true，则初始屏幕将保持可见,以隐藏下面的 Activity。
+            !viewModel.isInitialized
+        }
+        viewModel.init()
     }
 }

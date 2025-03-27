@@ -36,9 +36,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-//    buildFeatures {
-//        compose = true
-//    }
+    buildFeatures {
+        viewBinding = true
+    }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-
+    //todo huyu fun 依赖挪到base里去
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 //    implementation(libs.androidx.activity.compose)
