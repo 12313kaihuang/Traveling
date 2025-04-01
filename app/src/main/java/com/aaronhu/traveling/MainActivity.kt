@@ -11,6 +11,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //todo fun 闪屏页实现
         val splashScreen = installSplashScreen()
         setContentView(R.layout.activity_main)
         splashScreen.setKeepOnScreenCondition {

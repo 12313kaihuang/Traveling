@@ -61,8 +61,11 @@ dependencies {
 //    implementation(libs.androidx.ui.graphics)
 //    implementation(libs.androidx.ui.tooling.preview)
 //    implementation(libs.androidx.material3)
-    implementation(project(":base"))
     implementation(libs.viewbinding)
+
+    //项目依赖
+    implementation(project(":base"))
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
