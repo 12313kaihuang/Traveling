@@ -1,4 +1,4 @@
-package com.aaronhu.traveling.model
+package com.aaronhu.traveling.data.model
 
 import com.aaronhu.base.ext.toJson
 

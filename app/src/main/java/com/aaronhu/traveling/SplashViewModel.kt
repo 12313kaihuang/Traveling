@@ -9,15 +9,23 @@ import kotlinx.coroutines.launch
  * huyu create
  * 2025/3/27 10:38
  */
-class MainViewModel : TravelingViewModel() {
-    var isInitialized = false
-        private set
+class SplashViewModel : TravelingViewModel() {
 
-    fun init() {
+    fun init(block: () -> Unit) {
         viewModelScope.launch {
             delay(1500)
-            isInitialized = true
+            block()
         }
     }
+
+//    var isInitialized = false
+//        private set
+//
+//    fun init() {
+//        viewModelScope.launch {
+//            delay(1500)
+//            isInitialized = true
+//        }
+//    }
 
 }

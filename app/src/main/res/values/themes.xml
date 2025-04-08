@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Traveling" parent="Theme.AppCompat.DayNight.NoActionBar" />
+    <style name="TravelingTheme" parent="BaseAppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="materialButtonStyle">@style/materialButton</item>
+    </style>
 
-    <style name="Theme.Splash" parent="Theme.AppCompat.DayNight.NoActionBar" >
+    <style name="TravelingTheme.Splash" parent="BaseAppTheme.Splash">
         <item name="android:windowBackground">@drawable/layer_launcher</item>
         <item name="android:windowIsTranslucent">false</item>
     </style>
+
 </resources>
